@@ -1,9 +1,42 @@
 @import "tailwindcss";
 
+/* Import Hermaiona font for the Creative Developer text */
+@font-face {
+  font-family: 'Hermaiona';
+  src: url('/assets/fonts/Hermaiona.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Color variables */
+  --color-background: #171717; /* neutral-900 */
+  --color-text-primary: #f3f4f6; /* white/gray-100 */
+  --color-text-secondary: #9ca3af; /* gray-400 */
+  
+  /* Fonts */
+  --font-main: 'Source Sans Pro', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-creative: 'Hermaiona', cursive, serif;
+  
+  /* Sizes */
+  --folder-width: clamp(6rem, 10vw, 10rem); /* Responsive folder size */
+  --folder-height: clamp(4.8rem, 8vw, 8rem); /* Maintain aspect ratio */
+  
+  /* Spacing */
+  --title-spacing: clamp(2rem, 8vw, 10rem); /* Responsive spacing for title text */
+  
+  /* Transitions */
+  --transition-standard: 900ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 300ms ease-out;
+}
+
 /* Base styles for html and body */
 html, body {
-  @apply bg-neutral-900 text-gray-100;
-  font-family: 'Source Sans Pro', ui-sans-serif, system-ui, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100%;
@@ -20,16 +53,225 @@ html, body {
   background: transparent;
 }
 
-/* Responsive utility classes for images and containers (use in JSX) */
-/*
-  Example for images:
-  className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 object-contain"
-
-  Example for padding/layout:
-  className="px-4 sm:px-8 md:px-16"
-*/
-
 /* Remove tap highlight on mobile for a cleaner look */
 html {
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Layout utility classes */
+.full-screen {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.absolute-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.folder-icon {
+  width: var(--folder-width);
+  height: var(--folder-height);
+  object-fit: contain;
+}
+
+.folder-clickable {
+  cursor: pointer;
+  filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.08)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.1));
+  transition: transform var(--transition-fast), filter var(--transition-fast);
+}
+
+.folder-clickable:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15)) drop-shadow(0 10px 10px rgb(0 0 0 / 0.2));
+}
+
+.role-label {
+  position: absolute;
+  color: var(--color-text-secondary);
+  font-size: 0.75rem; /* text-xs */
+  opacity: 0.7;
+  transition: all 0.5s ease;
+  animation: floatAnimation 5s ease-in-out infinite;
+}
+
+.role-label:hover {
+  color: var(--color-text-primary);
+  opacity: 1;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* Different animation delays for role labels */
+.role-label:nth-child(1) { animation-delay: 0s; }
+.role-label:nth-child(2) { animation-delay: 0.5s; }
+.role-label:nth-child(3) { animation-delay: 1s; }
+.role-label:nth-child(4) { animation-delay: 1.5s; }
+.role-label:nth-child(5) { animation-delay: 2s; }
+.role-label:nth-child(6) { animation-delay: 2.5s; }
+.role-label:nth-child(7) { animation-delay: 3s; }
+
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-7px) translateX(3px);
+  }
+}
+
+@media (min-width: 768px) {
+  .role-label {
+    font-size: 0.875rem; /* text-sm */
+  }
+}
+
+.title-text {
+  font-family: var(--font-creative);
+  font-style: italic;
+  font-size: clamp(5rem, 7vw, 8rem); /* Fluid responsive font size */
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  line-height: 1.1;
+  text-shadow: 0 0 35px rgba(255, 255, 255, 0.05);
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.05),
+                 0 0 10px rgba(255, 255, 255, 0.05);
+  }
+  to {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1),
+                 0 0 20px rgba(255, 255, 255, 0.1),
+                 0 0 30px rgba(255, 255, 255, 0.05);
+  }
+}
+
+@media (min-width: 768px) {
+  .title-text {
+    font-size: clamp(8rem, 12vw, 16rem); /* Increased size for desktop */
+  }
+}
+
+/* For very small screens, stack the title text */
+@media (max-width: 480px) {
+  .title-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .left-title, .right-title {
+    position: static !important;
+    margin: 0.5rem 0 !important;
+    transform: none !important;
+  }
+  
+  .center-folder {
+    margin: 1rem 0;
+  }
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 1s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-transition {
+  transition: opacity var(--transition-standard);
+}
+
+.pointer-none {
+  pointer-events: none;
+}
+
+.pointer-auto {
+  pointer-events: auto;
+}
+
+.z-front {
+  z-index: 20;
+}
+
+.main-section {
+  width: 100%;
+  height: 70vh;
+  max-width: 1280px; /* max-w-screen-xl */
+  margin: 0 auto;
+}
+
+/* Title positioning classes */
+.left-title {
+  position: absolute;
+  right: 50%;
+  margin-right: var(--title-spacing);
+}
+
+.right-title {
+  position: absolute;
+  left: 50%;
+  margin-left: var(--title-spacing);
+}
+
+/* Animated particles background */
+.stars-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  filter: blur(1px);
+  opacity: 0;
+  animation: twinkle 5s infinite;
+}
+
+.title-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20vh);
+  }
 }

@@ -22,7 +22,7 @@ export default function Loader() {
           setShowFolder(true); // Show folder page
         }, 800); // Match fade out duration
       }
-    }, 200);
+    }, 50);
     return () => clearInterval(interval);
   }, []);
 
@@ -32,14 +32,11 @@ export default function Loader() {
       <div className="fixed inset-0 flex flex-col items-center justify-center">
         <div
           className={`
-            animate-fadein
             transition-opacity duration-[900ms] ease-[cubic-bezier(0.4,0,0.2,1)]
             ${fadeOut ? "opacity-0 pointer-events-none" : "opacity-100"}
           `}
         >
-          <div className="px-4 sm:px-8 md:px-16">
-            <LoadingScreen progress={progress} />
-          </div>
+          <LoadingScreen progress={progress} />
         </div>
       </div>
     );
@@ -49,9 +46,7 @@ export default function Loader() {
   if (showFolder) {
     return (
       <div className="animate-fadein transition-opacity duration-[900ms] ease-[cubic-bezier(0.4,0,0.2,1)]">
-        <div className="px-4 sm:px-8 md:px-16">
-          <FolderPage />
-        </div>
+        <FolderPage />
       </div>
     );
   }

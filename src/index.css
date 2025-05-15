@@ -3,7 +3,7 @@
 /* Import Hermaiona font for the Creative Developer text */
 @font-face {
   font-family: 'Hermaiona';
-  src: url('/assets/fonts/Hermaiona.ttf') format('truetype');
+  src: url('../assets/fonts/Hermaiona.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
 
 :root {
   /* Color variables */
-  --color-background: #000000; /* neutral-900 */
+  --color-background: #080808; /* neutral-900 */
   --color-text-primary: #f3f4f6; /* white/gray-100 */
   --color-text-secondary: #9ca3af; /* gray-400 */
   
@@ -51,7 +51,7 @@ html, body {
 #root {
   min-height: 100vh;
   min-width: 100vw;
-  background: #000000;
+  background: #080808;
 }
 
 /* Remove tap highlight on mobile for a cleaner look */

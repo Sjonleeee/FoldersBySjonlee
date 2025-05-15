@@ -1,4 +1,5 @@
 import React from "react";
+import folderIcon from "../assets/images/folder.svg";
 
 const CreativeDeveloperTitle = () => {
   return (
@@ -23,7 +24,7 @@ const CreativeDeveloperTitle = () => {
         <div className="z-front">
           <div className="center-content flex-column">
             <img
-              src="/assets/images/folder.svg"
+              src={folderIcon}
               alt="Folder"
               className="folder-icon"
               draggable={false}

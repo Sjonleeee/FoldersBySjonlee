@@ -5,6 +5,7 @@ import FolderDisplay from "../components/FolderDisplay";
 import ModelCanvas from "../components/ModelCanvas";
 import CreativeDeveloperTitle from "../components/CreativeDeveloperTitle";
 import StarBackground from "../components/StarBackground";
+import folderIcon from "../assets/images/folder.svg";
 
 export default function FolderPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,7 @@ export default function FolderPage() {
           <div className="z-front center-folder">
             {/* Folder icon - always visible */}
             <img
-              src="/assets/images/folder.svg"
+              src={folderIcon}
               alt="Folder"
               className={`folder-icon ${!isOpen ? "folder-clickable" : ""}`}
               draggable={false}

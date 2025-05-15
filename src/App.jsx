@@ -1,7 +1,14 @@
 import React from "react";
-// import Loader from "./components/Loader";
+import { LoadingProvider } from "./context/LoadingContext";
+import MainLayout from "./layout/MainLayout";
 import FolderPage from "./sections/FolderPage";
 
 export default function App() {
-  return <FolderPage />;
+  return (
+    <LoadingProvider>
+      <MainLayout>
+        <FolderPage />
+      </MainLayout>
+    </LoadingProvider>
+  );
 }

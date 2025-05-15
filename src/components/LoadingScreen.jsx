@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function LoadingScreen({ progress }) {
+const LoadingScreen = ({ progress }) => {
   const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
@@ -9,7 +9,7 @@ export default function LoadingScreen({ progress }) {
   }, []);
 
   return (
-    <div 
+    <div
       style={{
         position: "fixed",
         inset: 0,
@@ -18,17 +18,19 @@ export default function LoadingScreen({ progress }) {
         alignItems: "center",
         justifyContent: "center",
         transition: "opacity 1400ms",
-        opacity: fadeIn ? 1 : 0
+        opacity: fadeIn ? 1 : 0,
+        zIndex: 100,
       }}
     >
-      <div 
+      <div
         style={{
           borderRadius: "50%",
           overflow: "hidden",
           width: "6rem",
           height: "6rem",
           marginBottom: "2rem",
-          boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)"
+          boxShadow:
+            "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)",
         }}
       >
         <img
@@ -37,18 +39,18 @@ export default function LoadingScreen({ progress }) {
           style={{
             width: "100%",
             height: "100%",
-            objectFit: "cover"
+            objectFit: "cover",
           }}
         />
       </div>
-      <div 
+      <div
         style={{
           width: "16rem",
           height: "0.5rem",
           backgroundColor: "#1f2937",
           borderRadius: "9999px",
           overflow: "hidden",
-          marginTop: "2rem"
+          marginTop: "2rem",
         }}
       >
         <div
@@ -56,7 +58,7 @@ export default function LoadingScreen({ progress }) {
             height: "100%",
             borderRadius: "9999px",
             transition: "all 300ms ease-out",
-            width: `${progress}%`,
+            width: `${Math.min(progress, 100)}%`,
             background: `
               linear-gradient(
                 90deg,
@@ -68,13 +70,18 @@ export default function LoadingScreen({ progress }) {
                 #ffffff 100%
               )
             `,
-            boxShadow: "0 0 12px 2px rgba(176, 176, 176, 0.53), 0 1px 8px 0 rgba(255, 255, 255, 0.53)"
+            boxShadow:
+              "0 0 12px 2px rgba(176, 176, 176, 0.53), 0 1px 8px 0 rgba(255, 255, 255, 0.53)",
           }}
         />
       </div>
-      <div style={{ marginTop: "1rem", color: "white", fontFamily: "monospace" }}>
-        {Math.floor(progress)}%
+      <div
+        style={{ marginTop: "1rem", color: "white", fontFamily: "monospace" }}
+      >
+        {Math.min(Math.floor(progress), 100)}%
       </div>
     </div>
   );
-}
+};
+
+export default LoadingScreen;

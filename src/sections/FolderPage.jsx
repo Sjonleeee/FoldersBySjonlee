@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FolderDisplay from "../components/FolderDisplay";
@@ -8,11 +8,26 @@ import StarBackground from "../components/StarBackground";
 
 export default function FolderPage() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showFullAnimations, setShowFullAnimations] = useState(false);
+  
+  // Check for device capabilities and preferences
+  useEffect(() => {
+    // Only show full animations on desktop devices that don't prefer reduced motion
+    const isDesktop = window.innerWidth >= 768;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    
+    setShowFullAnimations(isDesktop && !prefersReducedMotion);
+  }, []);
+
+  // Only render the stars when the folder is open and animations are enabled
+  const renderStars = useMemo(() => {
+    return showFullAnimations && isOpen ? <StarBackground /> : null;
+  }, [showFullAnimations, isOpen]);
 
   return (
     <div className="full-screen">
-      {/* Background animation */}
-      <StarBackground />
+      {/* Background animation - only when folder is open */}
+      {renderStars}
       
       {/* Common container with fixed dimensions to prevent layout shifts */}
       <div className="full-screen center-content">

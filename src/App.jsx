@@ -5,10 +5,10 @@ import FolderPage from "./sections/FolderPage";
 
 export default function App() {
   return (
-    <LoadingProvider>
-      <MainLayout>
+    // <LoadingProvider>
+      // <MainLayout>
         <FolderPage />
-      </MainLayout>
-    </LoadingProvider>
+      // </MainLayout>
+    // </LoadingProvider>
   );
 }

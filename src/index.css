@@ -40,11 +40,12 @@ html, body {
   font-family: var(--font-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100%;
-  height: 100%;
+  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 /* Ensure root container fills the viewport */
@@ -312,4 +313,81 @@ html {
   animation: none !important;
   opacity: 0 !important;
   transition: opacity 0.5s ease-out;
+}
+
+/* Header Styles */
+.header {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 2.5rem;
+  gap: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.header-logo-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 90px;
+}
+
+.header-logo {
+  font-weight: bold;
+  line-height: 1.25;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+}
+
+.header-status-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #22c55e;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.header-freelance {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-align: left;
+  /* min-width: 180px; */
+}
+
+.header-email {
+  color: white;
+}
+
+.header-skills {
+  font-size: 0.75rem;
+  text-align: right;
+  min-width: 180px;
+}
+
+.header-skills-secondary {
+  color: #9ca3af;
+}
+
+.header-menu {
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.875rem;
+  min-width: 60px;
+  text-align: right;
+}
+
+/* Canvas styles */
+.canvas-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
 }

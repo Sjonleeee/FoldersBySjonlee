@@ -1,14 +1,36 @@
 import React, { Suspense, useState, useEffect } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import { OrbitControls, PresentationControls } from "@react-three/drei";
 import Model from "./three/Model";
+
+// Camera movement component
+const CameraMovement = ({ mousePosition }) => {
+  const { camera } = useThree();
+  const initialPosition = [0, 0, 7];
+
+  useFrame(() => {
+    if (!mousePosition) return;
+
+    // Calculate target position with subtle movement
+    const targetX = initialPosition[0] + mousePosition.x * 1.5;
+    const targetY = initialPosition[1] + mousePosition.y * 1.5;
+    
+    // Smoothly interpolate camera position
+    camera.position.x += (targetX - camera.position.x) * 0.5;
+    camera.position.y += (targetY - camera.position.y) * 0.5;
+    
+    // Look at the model's body center
+    camera.lookAt(0, -1.5, 0);
+  });
+
+  return null;
+};
 
 const ModelCanvas = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (event) => {
-      // Convert mouse position to normalized device coordinates (-1 to +1)
       const x = (event.clientX / window.innerWidth) * 2 - 1;
       const y = -(event.clientY / window.innerHeight) * 2 + 1;
       setMousePosition({ x, y });
@@ -19,17 +41,10 @@ const ModelCanvas = () => {
   }, []);
 
   return (
-    <div style={{
-      position: "absolute",
-      inset: 0,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      zIndex: 0
-    }}>
+    <div className="canvas-wrapper">
       <Canvas 
         camera={{ 
-          position: [0, -2, 7], // Adjusted camera height to match model's new position
+          position: [0, 0, 7],
           fov: 45 
         }}
       >
@@ -48,6 +63,7 @@ const ModelCanvas = () => {
             <Model mousePosition={mousePosition} />
           </PresentationControls>
         </Suspense>
+        <CameraMovement mousePosition={mousePosition} />
         <OrbitControls
           enableZoom={false}
           enablePan={false}

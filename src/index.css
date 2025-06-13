@@ -1,20 +1,32 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;500;600;700&display=swap');
+
+/* Import Tailwind */
 @import "tailwindcss";
 
 /* Import Hermaiona font for the Creative Developer text */
 @font-face {
   font-family: 'Hermaiona';
-  src: url('../assets/fonts/Hermaiona.ttf') format('truetype');
+  src: url('/src/assets/fonts/Hermaiona.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 :root {
   /* Color variables */
-  --color-background: #080808; /* neutral-900 */
-  --color-text-primary: #f3f4f6; /* white/gray-100 */
-  --color-text-secondary: #9ca3af; /* gray-400 */
+  --color-primary: #3b82f6;
+  --color-secondary: #1e40af;
+  --color-background: #0f172a;
+  --color-text: #ffffff;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #94a3b8;
+  --color-border: #334155;
+  --color-hover: #2563eb;
+  --color-active: #1d4ed8;
+  --color-error: #ef4444;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
   
   /* Fonts */
   --font-main: 'Source Sans Pro', ui-sans-serif, system-ui, sans-serif;
@@ -22,18 +34,18 @@
   --font-creative: 'Hermaiona', cursive, serif;
   
   /* Sizes */
-  --folder-width: clamp(6rem, 10vw, 10rem); /* Responsive folder size */
-  --folder-height: clamp(4.8rem, 8vw, 8rem); /* Maintain aspect ratio */
+  --folder-width: clamp(6rem, 10vw, 10rem);
+  --folder-height: clamp(4.8rem, 8vw, 8rem);
   
   /* Spacing */
-  --title-spacing: clamp(2rem, 8vw, 10rem); /* Responsive spacing for title text */
+  --title-spacing: clamp(2rem, 8vw, 10rem);
   
   /* Transitions */
   --transition-standard: 900ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-fast: 300ms ease-out;
 }
 
-/* Base styles for html and body */
+/* Base styles */
 html, body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
@@ -48,14 +60,12 @@ html, body {
   overflow: hidden;
 }
 
-/* Ensure root container fills the viewport */
 #root {
   min-height: 100vh;
   min-width: 100vw;
   background: #080808;
 }
 
-/* Remove tap highlight on mobile for a cleaner look */
 html {
   -webkit-tap-highlight-color: transparent;
 }
@@ -103,14 +113,13 @@ html {
   filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15)) drop-shadow(0 10px 10px rgb(0 0 0 / 0.2));
 }
 
-/* Optimized Animations */
+/* Role Labels */
 .role-label {
   position: absolute;
   color: var(--color-text-secondary);
-  font-size: 0.75rem; /* text-xs */
+  font-size: 0.75rem;
   opacity: 0.7;
   transition: all 0.5s ease;
-  /* Remove all animation-related properties */
 }
 
 .role-label:hover {
@@ -119,86 +128,44 @@ html {
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
-/* Optimize title text with less intense animation */
+/* Title Text */
 .title-text {
   font-family: var(--font-creative);
   font-style: italic;
-  font-size: clamp(5rem, 7vw, 8rem); /* Fluid responsive font size */
-  color: var(--color-text-primary);
+  font-size: clamp(5rem, 7vw, 8rem);
+  color: #ffffff;
   white-space: nowrap;
   line-height: 1.1;
-  /* Only use subtle shadow by default */
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-  /* Use transform3d for GPU acceleration */
-  transform: translate3d(0, 0, 0);
-  will-change: text-shadow;
-}
-
-/* Only apply glow animation on non-mobile devices that don't prefer reduced motion */
-@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
-  .title-text {
-    animation: glow 6s ease-in-out infinite alternate;
-  }
-}
-
-/* Less intense glow effect */
-@keyframes glow {
-  from {
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
-  }
-  to {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-  }
-}
-
-/* Optimize star animation */
-.star {
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  filter: blur(1px);
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-/* Remove the media query that applied animations */
-@media (min-width: 768px) {
-  .role-label {
-    font-size: 0.875rem; /* text-sm */
-    /* No animations */
-  }
-}
-
-.title-text {
-  font-family: var(--font-creative);
-  font-style: italic;
-  font-size: clamp(5rem, 7vw, 8rem); /* Fluid responsive font size */
-  color: var(--color-text-primary);
-  white-space: nowrap;
-  line-height: 1.1;
-  text-shadow: 0 0 35px rgba(255, 255, 255, 0.05);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+               0 0 20px rgba(255, 255, 255, 0.3),
+               0 0 30px rgba(255, 255, 255, 0.2);
   animation: glow 3s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
   from {
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.05),
-                 0 0 10px rgba(255, 255, 255, 0.05);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+                 0 0 20px rgba(255, 255, 255, 0.3),
+                 0 0 30px rgba(255, 255, 255, 0.2);
   }
   to {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1),
-                 0 0 20px rgba(255, 255, 255, 0.1),
-                 0 0 30px rgba(255, 255, 255, 0.05);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.6),
+                 0 0 40px rgba(255, 255, 255, 0.4),
+                 0 0 60px rgba(255, 255, 255, 0.3);
   }
 }
 
+/* Media Queries */
 @media (min-width: 768px) {
+  .role-label {
+    font-size: 0.875rem;
+  }
+  
   .title-text {
-    font-size: clamp(8rem, 12vw, 16rem); /* Increased size for desktop */
+    font-size: clamp(8rem, 12vw, 16rem);
   }
 }
 
-/* For very small screens, stack the title text */
 @media (max-width: 480px) {
   .title-container {
     flex-direction: column;
@@ -245,11 +212,11 @@ html {
 .main-section {
   width: 100%;
   height: 70vh;
-  max-width: 1280px; /* max-w-screen-xl */
+  max-width: 1280px;
   margin: 0 auto;
 }
 
-/* Title positioning classes */
+/* Title positioning */
 .left-title {
   position: absolute;
   right: 50%;
@@ -262,15 +229,6 @@ html {
   margin-left: var(--title-spacing);
 }
 
-/* Animated particles background */
-.stars-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0;
-}
-
 .title-container {
   position: absolute;
   inset: 0;
@@ -279,40 +237,11 @@ html {
   justify-content: center;
 }
 
-/* Star animation */
-@keyframes twinkle {
-  0% {
-    opacity: 0;
-    transform: translateY(0) scale(0.8);
-  }
-  25% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.2;
-    transform: translateY(-8vh) scale(1);
-  }
-  75% {
-    opacity: 0.1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-15vh) scale(0.8);
-  }
-}
-
-/* MainLayout Styles */
+/* MainLayout */
 .main-layout {
   min-height: 100vh;
   width: 100%;
   position: relative;
-}
-
-/* Add this class to help with cleanup */
-.cleanup .star {
-  animation: none !important;
-  opacity: 0 !important;
-  transition: opacity 0.5s ease-out;
 }
 
 /* Header Styles */
@@ -357,7 +286,6 @@ html {
   font-size: 0.75rem;
   color: #6b7280;
   text-align: left;
-  /* min-width: 180px; */
 }
 
 .header-email {

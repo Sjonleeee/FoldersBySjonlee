@@ -6,9 +6,9 @@ import FolderPage from "./sections/FolderPage";
 export default function App() {
   return (
     // <LoadingProvider>
-      // <MainLayout>
+    //   <MainLayout>
         <FolderPage />
-      // </MainLayout>
+    //   </MainLayout>
     // </LoadingProvider>
   );
 }

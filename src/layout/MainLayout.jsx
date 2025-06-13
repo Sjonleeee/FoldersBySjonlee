@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLoading } from '../context/LoadingContext';
-import LoadingScreen from '../components/LoadingScreen';
+import LoadingScreen from '../components/common/LoadingScreen';
 
 const MainLayout = ({ children }) => {
   const { loading, progress } = useLoading();

@@ -1,28 +1,22 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Create context
-const LoadingContext = createContext({
-  loading: true,
-  progress: 0,
-  setLoading: () => {},
-});
+const LoadingContext = createContext();
+
+export const useLoading = () => useContext(LoadingContext);
 
 // Font loading check using FontFaceObserver
 const loadFonts = async () => {
-  // We'll use a timeout promise to make sure we don't wait forever
-  const timeoutPromise = new Promise((resolve) => setTimeout(resolve, 3000)); // 3 second timeout
-
   try {
     // Create a font loading checker
     const fontLoader = () => {
       return new Promise((resolve) => {
-        // Create a test element
-        const testElement = document.createElement("span");
+        const testElement = document.createElement('div');
+        testElement.style.position = 'absolute';
+        testElement.style.visibility = 'hidden';
         testElement.style.fontFamily = "Hermaiona, serif";
         testElement.style.fontSize = "0px";
-        testElement.style.visibility = "hidden";
-        testElement.innerHTML = "Font loading test";
         document.body.appendChild(testElement);
+        testElement.innerHTML = "Font loading test";
 
         // Check if font is loaded every 100ms
         const checkFont = () => {
@@ -34,78 +28,59 @@ const loadFonts = async () => {
               return;
             }
           }
-
           setTimeout(checkFont, 100);
         };
-
         checkFont();
       });
     };
 
+    // Set a timeout for font loading
+    const timeoutPromise = new Promise((resolve) => {
+      setTimeout(() => resolve(false), 5000); // 5 second timeout
+    });
+
     // Race the font loading against the timeout
-    await Promise.race([fontLoader(), timeoutPromise]);
-    return true;
+    const fontLoaded = await Promise.race([fontLoader(), timeoutPromise]);
+    if (!fontLoaded) {
+      console.warn("Font loading timed out");
+    }
+    return fontLoaded;
   } catch (error) {
     console.warn("Font loading issue:", error);
-    return false; // Continue even if font failed to load
+    return false;
   }
 };
 
-// Provider component
 export const LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
-  // Font loading effect
   useEffect(() => {
-    loadFonts().then(() => setFontsLoaded(true));
+    let current = 0;
+    const increment = () => {
+      if (current < 98) {
+        current += 1;
+        setProgress(current);
+        setTimeout(increment, 20);
+      }
+    };
+
+    // Start loading fonts immediately
+    loadFonts().then((loaded) => {
+      setFontsLoaded(loaded);
+      if (loaded) {
+        setProgress(100);
+        setTimeout(() => setLoading(false), 500);
+      }
+    });
+
+    increment();
   }, []);
 
-  // Simulate loading progress
-  useEffect(() => {
-    if (loading) {
-      let current = 0;
-      const interval = setInterval(() => {
-        // Increment by smaller amounts to allow time for font loading
-        current += 3;
-        setProgress(current);
-
-        // Only complete loading when fonts are ready and progress >= 100
-        if (current >= 100 && fontsLoaded) {
-          clearInterval(interval);
-          setTimeout(() => {
-            setLoading(false);
-          }, 800); // Delay hiding loader for transition
-        } else if (current >= 98 && !fontsLoaded) {
-          // Hold at 98% until fonts are loaded
-          clearInterval(interval);
-
-          // Check for fonts every 100ms
-          const fontCheckInterval = setInterval(() => {
-            if (fontsLoaded) {
-              setProgress(100);
-              clearInterval(fontCheckInterval);
-              setTimeout(() => {
-                setLoading(false);
-              }, 800); // Delay hiding loader for transition
-            }
-          }, 100);
-        }
-      }, 120);
-
-      return () => clearInterval(interval);
-    }
-  }, [loading, fontsLoaded]);
-
   return (
-    <LoadingContext.Provider value={{ loading, progress, setLoading }}>
+    <LoadingContext.Provider value={{ loading, progress, fontsLoaded }}>
       {children}
     </LoadingContext.Provider>
   );
 };
-
-// Custom hook for using the loading context
-export const useLoading = () => useContext(LoadingContext);
-
-export default LoadingContext;

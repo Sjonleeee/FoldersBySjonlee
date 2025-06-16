@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import profileImage from "../assets/images/sjonlee.JPG";
+import profileImage from "../../assets/images/sjonleeCH1.JPG";
 
 /**
  * LoadingScreen Component

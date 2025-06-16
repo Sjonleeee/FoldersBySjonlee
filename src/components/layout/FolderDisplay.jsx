@@ -1,5 +1,5 @@
 import React from "react";
-import folderIcon from "../assets/images/folder.svg";
+import folderIcon from "../../assets/images/folder.svg";
 
 const FolderDisplay = ({ onClick }) => {
   return (
@@ -17,4 +17,4 @@ const FolderDisplay = ({ onClick }) => {
   );
 };
 
-export default FolderDisplay; 
+export default FolderDisplay;

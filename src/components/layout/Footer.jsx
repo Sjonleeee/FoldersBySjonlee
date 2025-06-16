@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import photoshopIcon from "../assets/images/photoshop.png";
-import illustratorIcon from "../assets/images/illustrator.png";
-import substanceIcon from "../assets/images/substance.svg";
-import claudeIcon from "../assets/images/claude.svg";
-import figmaIcon from "../assets/images/figma.png";
-import vscodeIcon from "../assets/images/vscode.svg";
-import blenderIcon from "../assets/images/blender.svg";
-import cinemaIcon from "../assets/images/cinema.svg";
+import photoshopIcon from "../../assets/images/photoshop.png";
+import illustratorIcon from "../../assets/images/illustrator.png";
+import substanceIcon from "../../assets/images/substance.svg";
+import claudeIcon from "../../assets/images/claude.svg";
+import figmaIcon from "../../assets/images/figma.png";
+import vscodeIcon from "../../assets/images/vscode.svg";
+import blenderIcon from "../../assets/images/blender.svg";
+import cinemaIcon from "../../assets/images/cinema.svg";
 
 const Footer = () => {
   const [currentTime, setCurrentTime] = useState(new Date());

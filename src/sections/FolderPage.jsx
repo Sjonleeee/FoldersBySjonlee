@@ -70,7 +70,9 @@ export default function FolderPage() {
                 className="flex-column center-content"
                 style={{ flex: 1, position: "relative", width: "100%" }}
               >
-                <section className="main-section flex-column center-content">
+                <section className="main-section flex-column center-content"
+                  style={{ position: "relative" }}
+                >
                   {/* CreativeDeveloperTitle but without its own folder */}
                   <div
                     className="full-screen"

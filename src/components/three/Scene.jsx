@@ -15,18 +15,35 @@ const Scene = () => {
   };
 
   return (
-    <Canvas
-      camera={{ position: [0, 1, 2.5], fov: 45 }}
-      onMouseMove={handleMouseMove}
-    >
-      <color attach="background" args={['#f0f0f0']} />
-      <ambientLight intensity={1} />
-      <directionalLight position={[0, 20, 20]} intensity={10} />
-      <Suspense fallback={null}>
-        <Model mousePosition={mousePosition} />
-        <CameraController mousePosition={mousePosition} />
-      </Suspense>
-    </Canvas>
+    <div style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      zIndex: 5
+    }}>
+      <Canvas
+        onMouseMove={handleMouseMove}
+        camera={{ 
+          position: [0, -1.0, 5],
+          fov: 40,
+          near: 0.1,
+          far: 1000
+        }}
+        style={{
+          width: '100%',
+          height: '100%',
+          background: 'transparent'
+        }}
+      >
+        <color attach="background" args={['transparent']} />
+        <Suspense fallback={null}>
+          <Model mousePosition={mousePosition} />
+          <CameraController mousePosition={mousePosition} />
+        </Suspense>
+      </Canvas>
+    </div>
   );
 };
 

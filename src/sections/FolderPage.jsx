@@ -10,13 +10,15 @@ import folderIcon from "../assets/images/folder.svg";
 export default function FolderPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [showFullAnimations, setShowFullAnimations] = useState(false);
-  
+
   // Check for device capabilities and preferences
   useEffect(() => {
     // Only show full animations on desktop devices that don't prefer reduced motion
     const isDesktop = window.innerWidth >= 768;
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
     setShowFullAnimations(isDesktop && !prefersReducedMotion);
   }, []);
 
@@ -29,7 +31,7 @@ export default function FolderPage() {
     <div className="full-screen">
       {/* Background animation - only when folder is open */}
       {renderStars}
-      
+
       {/* Common container with fixed dimensions to prevent layout shifts */}
       <div className="full-screen center-content">
         {/* The folder is always in the exact center */}
@@ -132,12 +134,28 @@ export default function FolderPage() {
                     <div className="absolute-center title-container">
                       {/* Position Creative text to the left */}
                       <div className="pointer-none left-title">
-                        <span className="title-text" style={{ display: "block", transform: "translateY(0.25em)" }}>Creative</span>
+                        <span
+                          className="title-text"
+                          style={{
+                            display: "block",
+                            transform: "translateY(0.25em)",
+                          }}
+                        >
+                          Creative
+                        </span>
                       </div>
 
                       {/* Position Developer text to the right */}
                       <div className="pointer-none right-title">
-                        <span className="title-text" style={{ display: "block", transform: "translateY(0.25em)" }}>Developer</span>
+                        <span
+                          className="title-text"
+                          style={{
+                            display: "block",
+                            transform: "translateY(0.25em)",
+                          }}
+                        >
+                          Developer
+                        </span>
                       </div>
                     </div>
                   </div>

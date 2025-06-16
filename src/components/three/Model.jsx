@@ -4,7 +4,7 @@ import { useGLTF, useAnimations } from '@react-three/drei';
 import * as THREE from 'three';
 
 const Model = ({ mousePosition }) => {
-  const { scene, animations, cameras, lights } = useGLTF('/src/assets/model/SjonleeTop.glb');
+  const { scene, animations, cameras, lights } = useGLTF('/src/assets/model/RUN.glb');
   const { actions } = useAnimations(animations, scene);
   const headRef = useRef();
   const { camera } = useThree();
@@ -65,7 +65,7 @@ const Model = ({ mousePosition }) => {
       console.log('Lights:', lights);
       
       // Adjust scale - Aangepast om de Creative Developer sectie te vullen en hoofd zichtbaar te houden
-      scene.scale.set(2.2, 2.2, 2.2); 
+      scene.scale.set(2, 2, 2); 
       
       // Position the model - Aangepast om in het midden van de Creative Developer sectie te staan en hoofd zichtbaar
       scene.position.set(0, -2.5, 0); // Lager geplaatst zodat het hoofd zichtbaar is en gecentreerd

@@ -7,23 +7,22 @@ import Model from "./three/Model";
 const CameraMovement = ({ mousePosition }) => {
   const { camera } = useThree();
   const initialPosition = [0, 0, 7];
-  const maxVerticalMovement = 1.5; // Maximum vertical movement range
+  const maxVerticalMovement = 1.5;
 
   useFrame(() => {
     if (!mousePosition) return;
 
-    // Calculate target position with subtle movement
-    const targetX = initialPosition[0] + mousePosition.x * 1.5;
-    // Limit vertical movement
-    const targetY = initialPosition[1] + Math.max(Math.min(mousePosition.y * 1.5, maxVerticalMovement), -maxVerticalMovement);
+    // Calculate target position with reduced movement range
+    const targetX = initialPosition[0] + mousePosition.x * 0.8;
+    const targetY = initialPosition[1] + Math.max(Math.min(mousePosition.y * 0.8, maxVerticalMovement), -maxVerticalMovement);
     
     // Keep the Z position fixed at the initial distance
     const targetZ = initialPosition[2];
     
-    // Smoothly interpolate camera position
-    camera.position.x += (targetX - camera.position.x) * 0.5;
-    camera.position.y += (targetY - camera.position.y) * 0.5;
-    camera.position.z = targetZ; // Keep Z position fixed
+    // Smoother interpolation with reduced speed
+    camera.position.x += (targetX - camera.position.x) * 0.3;
+    camera.position.y += (targetY - camera.position.y) * 0.3;
+    camera.position.z = targetZ;
     
     // Look at the model's body center
     camera.lookAt(0, -1.5, 0);

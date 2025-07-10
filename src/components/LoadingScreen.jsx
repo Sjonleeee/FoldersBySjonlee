@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import profileImage from "../assets/images/sjonlee.JPG";
+import profileImage from "../assets/images/sjonlee.jpeg";
 
 /**
  * LoadingScreen Component
@@ -97,7 +97,6 @@ const LoadingScreen = ({ progress }) => {
           style={styles.image}
         />
       </div>
-      
       {/* Progress bar */}
       <div style={styles.progressContainer}>
         <div
@@ -107,7 +106,6 @@ const LoadingScreen = ({ progress }) => {
           }}
         />
       </div>
-      
       {/* Progress percentage */}
       <div style={styles.progressText}>
         {displayProgress}%

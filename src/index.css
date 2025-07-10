@@ -2,12 +2,14 @@
 
 /* Import Hermaiona font for the Creative Developer text */
 @font-face {
-  font-family: 'Hermaiona';
-  src: url('../assets/fonts/Hermaiona.ttf') format('truetype');
+  font-family: "Hermaiona";
+  src: url("../assets/fonts/Hermaiona.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: block; /* Change from swap to block to prevent FOUT */
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
 }
 
 :root {
@@ -15,26 +17,31 @@
   --color-background: #080808; /* neutral-900 */
   --color-text-primary: #f3f4f6; /* white/gray-100 */
   --color-text-secondary: #9ca3af; /* gray-400 */
-  
+
   /* Fonts */
-  --font-main: 'Source Sans Pro', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
-  --font-creative: 'Hermaiona', cursive, serif;
-  
+  --font-main: "Source Sans Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-creative: "Hermaiona", cursive, serif;
+
   /* Sizes */
   --folder-width: clamp(6rem, 10vw, 10rem); /* Responsive folder size */
   --folder-height: clamp(4.8rem, 8vw, 8rem); /* Maintain aspect ratio */
-  
+
   /* Spacing */
-  --title-spacing: clamp(2rem, 8vw, 10rem); /* Responsive spacing for title text */
-  
+  --title-spacing: clamp(
+    2rem,
+    8vw,
+    10rem
+  ); /* Responsive spacing for title text */
+
   /* Transitions */
   --transition-standard: 900ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-fast: 300ms ease-out;
 }
 
 /* Base styles for html and body */
-html, body {
+html,
+body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
   font-family: var(--font-main);
@@ -94,23 +101,25 @@ html {
 
 .folder-clickable {
   cursor: pointer;
-  filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.08)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.1));
+  filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.08))
+    drop-shadow(0 8px 5px rgb(0 0 0 / 0.1));
   transition: transform var(--transition-fast), filter var(--transition-fast);
 }
 
 .folder-clickable:hover {
   transform: scale(1.05);
-  filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15)) drop-shadow(0 10px 10px rgb(0 0 0 / 0.2));
+  filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))
+    drop-shadow(0 10px 10px rgb(0 0 0 / 0.2));
 }
 
 /* Optimized Animations */
 .role-label {
   position: absolute;
-  color: var(--color-text-secondary);
+  color: #fff;
   font-size: 0.75rem; /* text-xs */
-  opacity: 0.7;
-  transition: all 0.5s ease;
-  /* Remove all animation-related properties */
+  opacity: 1;
+  font-weight: 600;
+  /* Remove any text-shadow or glow */
 }
 
 .role-label:hover {
@@ -130,24 +139,20 @@ html {
   opacity: 0;
   animation: fadeInAndGlow 1s ease-out forwards;
   will-change: opacity, text-shadow;
-  text-shadow: 
-    0 0 20px rgba(255, 255, 255, 0.2),
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2),
     0 0 40px rgba(255, 255, 255, 0.1);
 }
 
 @keyframes fadeInAndGlow {
   0% {
     opacity: 0;
-    text-shadow: 
-      0 0 20px rgba(255, 255, 255, 0),
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0),
       0 0 40px rgba(255, 255, 255, 0);
   }
   100% {
     opacity: 1;
-    text-shadow: 
-      0 0 20px rgba(255, 255, 255, 0.2),
-      0 0 40px rgba(255, 255, 255, 0.1),
-      0 0 60px rgba(255, 255, 255, 0.1);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2),
+      0 0 40px rgba(255, 255, 255, 0.1), 0 0 60px rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -155,31 +160,24 @@ html {
 @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
   .title-text {
     animation: fadeInAndGlow 1s ease-out forwards,
-               outerGlow 4s ease-in-out infinite alternate;
+      outerGlow 4s ease-in-out infinite alternate;
   }
 }
 
 @keyframes outerGlow {
   0% {
-    text-shadow: 
-      0 0 20px rgba(255, 255, 255, 0.2),
-      0 0 40px rgba(255, 255, 255, 0.1),
-      0 0 60px rgba(255, 255, 255, 0.1);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2),
+      0 0 40px rgba(255, 255, 255, 0.1), 0 0 60px rgba(255, 255, 255, 0.1);
   }
   50% {
-    text-shadow: 
-      0 0 30px rgba(255, 255, 255, 0.3),
-      0 0 60px rgba(255, 255, 255, 0.2),
-      0 0 90px rgba(255, 255, 255, 0.1),
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.3),
+      0 0 60px rgba(255, 255, 255, 0.2), 0 0 90px rgba(255, 255, 255, 0.1),
       0 0 120px rgba(255, 255, 255, 0.1);
   }
   100% {
-    text-shadow: 
-      0 0 40px rgba(255, 255, 255, 0.4),
-      0 0 80px rgba(255, 255, 255, 0.3),
-      0 0 120px rgba(255, 255, 255, 0.2),
-      0 0 160px rgba(255, 255, 255, 0.1),
-      0 0 200px rgba(255, 255, 255, 0.1);
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.4),
+      0 0 80px rgba(255, 255, 255, 0.3), 0 0 120px rgba(255, 255, 255, 0.2),
+      0 0 160px rgba(255, 255, 255, 0.1), 0 0 200px rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -213,13 +211,14 @@ html {
     flex-direction: column;
     align-items: center;
   }
-  
-  .left-title, .right-title {
+
+  .left-title,
+  .right-title {
     position: static !important;
     margin: 0.5rem 0 !important;
     transform: none !important;
   }
-  
+
   .center-folder {
     margin: 1rem 0;
   }
@@ -231,8 +230,12 @@ html {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .fade-transition {
@@ -399,4 +402,32 @@ html {
   width: 100vw;
   height: 100vh;
   z-index: 0;
+}
+
+/* Footer icon bar styling (MacBook Dock look) */
+.footer-icon-bar {
+  display: flex;
+  gap: 0.5rem;
+  border-radius: 28px;
+  border: 2px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.32),
+    0 1.5px 4px 0 rgba(0, 0, 0, 0.18), 0 0 0 2px rgba(255, 255, 255, 0.09);
+  padding: 0.65rem 3.2rem;
+  align-items: center;
+  justify-content: center;
+  min-width: 340px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-icon {
+  will-change: transform;
+  transition: none;
+  cursor: pointer;
+}
+.footer-icon:hover {
+  transform: scale(1.25);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  z-index: 2;
 }

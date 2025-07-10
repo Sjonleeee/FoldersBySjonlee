@@ -12,7 +12,9 @@ export default function FolderPage() {
 
   useEffect(() => {
     const isDesktop = window.innerWidth >= 768;
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     setShowFullAnimations(isDesktop && !prefersReducedMotion);
   }, []);
 
@@ -23,11 +25,19 @@ export default function FolderPage() {
   // Animation variants
   const fadeDown = {
     hidden: { opacity: 0, y: -40 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] } },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
+    },
   };
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] } },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
+    },
   };
   const fadeIn = {
     hidden: { opacity: 0 },
@@ -65,7 +75,12 @@ export default function FolderPage() {
               initial="hidden"
               animate="show"
               exit="hidden"
-              style={{ width: "100%", height: "100%", position: "absolute", inset: 0 }}
+              style={{
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+                inset: 0,
+              }}
             >
               {/* Header at the top, fade down */}
               <motion.div
@@ -99,23 +114,88 @@ export default function FolderPage() {
                 className="full-screen flex-column center-content"
                 style={{ zIndex: 5 }}
               >
-                <section className="main-section flex-column center-content" style={{ position: "relative" }}>
+                <section
+                  className="main-section flex-column center-content"
+                  style={{ position: "relative" }}
+                >
                   {/* ...letters and 3D model as before... */}
-                  <div className="full-screen" style={{ position: "relative", zIndex: 10 }}>
+                  <div
+                    className="full-screen"
+                    style={{ position: "relative", zIndex: 10 }}
+                  >
                     {/* Role Labels */}
-                    <span className="role-label" style={{ top: "35%", left: "28%" }}>3D Designer</span>
-                    <span className="role-label" style={{ top: "25%", left: "50%", transform: "translateX(-50%)" }}>Entrepreneur</span>
-                    <span className="role-label" style={{ top: "35%", right: "28%" }}>Designer</span>
-                    <span className="role-label" style={{ bottom: "35%", left: "32%" }}>Teamplayer</span>
-                    <span className="role-label" style={{ bottom: "35%", right: "32%" }}>Thinker</span>
-                    <span className="role-label" style={{ top: "60%", right: "25%" }}>Director</span>
-                    <span className="role-label" style={{ bottom: "20%", left: "50%", transform: "translateX(-50%)" }}>Hussler</span>
+                    <span
+                      className="role-label"
+                      style={{ top: "35%", left: "28%" }}
+                    >
+                      3D Designer
+                    </span>
+                    <span
+                      className="role-label"
+                      style={{
+                        top: "25%",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                      }}
+                    >
+                      Entrepreneur
+                    </span>
+                    <span
+                      className="role-label"
+                      style={{ top: "35%", right: "28%" }}
+                    >
+                      Designer
+                    </span>
+                    <span
+                      className="role-label"
+                      style={{ bottom: "35%", left: "32%" }}
+                    >
+                      Teamplayer
+                    </span>
+                    <span
+                      className="role-label"
+                      style={{ bottom: "35%", right: "32%" }}
+                    >
+                      Thinker
+                    </span>
+                    <span
+                      className="role-label"
+                      style={{ top: "60%", right: "25%" }}
+                    >
+                      Director
+                    </span>
+                    <span
+                      className="role-label"
+                      style={{
+                        bottom: "20%",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                      }}
+                    >
+                      Hussler
+                    </span>
                     <div className="absolute-center title-container">
                       <div className="pointer-none left-title">
-                        <span className="title-text" style={{ display: "block", transform: "translateY(0.25em)" }}>Creative</span>
+                        <span
+                          className="title-text"
+                          style={{
+                            display: "block",
+                            transform: "translateY(0.25em)",
+                          }}
+                        >
+                          Creative
+                        </span>
                       </div>
                       <div className="pointer-none right-title">
-                        <span className="title-text" style={{ display: "block", transform: "translateY(0.25em)" }}>Developer</span>
+                        <span
+                          className="title-text"
+                          style={{
+                            display: "block",
+                            transform: "translateY(0.25em)",
+                          }}
+                        >
+                          Developer
+                        </span>
                       </div>
                     </div>
                   </div>

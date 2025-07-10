@@ -86,7 +86,7 @@ const Model = ({ mousePosition }) => {
 
       scene.traverse((child) => {
         if (child.isLight) {
-          child.intensity *= 0.065;
+          child.intensity *= 0.045;
         }
       });
 

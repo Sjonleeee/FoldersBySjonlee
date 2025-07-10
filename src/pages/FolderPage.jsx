@@ -17,10 +17,6 @@ export default function FolderPage() {
     setShowFullAnimations(isDesktop && !prefersReducedMotion);
   }, []);
 
-  const renderStars = useMemo(() => {
-    return showFullAnimations && isOpen ? <StarBackground /> : null;
-  }, [showFullAnimations, isOpen]);
-
   // Animation variants
   const fadeDown = {
     hidden: { opacity: 0, y: -40 },
@@ -53,7 +49,6 @@ export default function FolderPage() {
 
   return (
     <div className="full-screen">
-      {renderStars}
       <div className="full-screen center-content">
         {/* Folder icon always in the center */}
         <div className="absolute-center">

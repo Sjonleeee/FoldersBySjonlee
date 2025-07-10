@@ -1,7 +1,7 @@
 import React, { Suspense, useState, useEffect } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import { OrbitControls, PresentationControls } from "@react-three/drei";
-import Model from "./three/Model";
+import Model from "../three/Model";
 
 // Camera movement component
 const CameraMovement = ({ mousePosition }) => {

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Header from "../components/Header";
+import Header from "../layout/Header";
 import Footer from "../components/Footer";
 import ModelCanvas from "../components/ModelCanvas";
-import StarBackground from "../components/StarBackground";
 import folderIcon from "../assets/images/folder.svg";
 
 export default function FolderPage() {

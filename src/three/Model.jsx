@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import * as THREE from "three";
+import { useLoading } from "../context/LoadingContext";
 
 const Model = ({ mousePosition }) => {
   const { scene, animations, cameras, lights } = useGLTF(
@@ -10,6 +11,7 @@ const Model = ({ mousePosition }) => {
   const { actions } = useAnimations(animations, scene);
   const headRefs = useRef([]);
   const { camera } = useThree();
+  const { setLoading } = useLoading();
 
   useFrame(() => {
     headRefs.current.forEach((head) => {
@@ -116,8 +118,10 @@ const Model = ({ mousePosition }) => {
           firstAnimation.setLoop(THREE.LoopRepeat);
         }
       }
+      // Notify loading is done
+      setLoading(false);
     }
-  }, [scene, actions, cameras, lights]);
+  }, [scene, actions, cameras, lights, setLoading]);
 
   return <primitive object={scene} />;
 };

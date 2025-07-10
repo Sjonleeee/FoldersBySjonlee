@@ -1,23 +1,12 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Header from "../layout/Header";
-import Footer from "../components/Footer";
-import ModelCanvas from "../components/ModelCanvas";
+import Footer from "../layout/Footer";
 import folderIcon from "../assets/images/folder.svg";
+import ModelCanvas from "../components/ModelCanvas";
+import { useLoading } from "../context/LoadingContext";
 
 export default function FolderPage() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [showFullAnimations, setShowFullAnimations] = useState(false);
-
-  useEffect(() => {
-    const isDesktop = window.innerWidth >= 768;
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    setShowFullAnimations(isDesktop && !prefersReducedMotion);
-  }, []);
-
-  // Animation variants
   const fadeDown = {
     hidden: { opacity: 0, y: -40 },
     show: {
@@ -26,6 +15,7 @@ export default function FolderPage() {
       transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
     },
   };
+
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
     show: {
@@ -34,172 +24,144 @@ export default function FolderPage() {
       transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
     },
   };
+
   const fadeIn = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] } },
-  };
-  const containerVariants = {
     show: {
-      transition: {
-        staggerChildren: 0.18,
-        delayChildren: 0.1,
-      },
+      opacity: 1,
+      transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1], delay: 0.2 },
     },
   };
 
+  const { loading } = useLoading();
+
+  useEffect(() => {
+    // Optional entrance logic
+  }, []);
+
   return (
-    <div className="full-screen">
-      <div className="full-screen center-content">
-        {/* Folder icon always in the center */}
-        <div className="absolute-center">
-          <div className="z-front center-folder">
-            <img
-              src={folderIcon}
-              alt="Folder"
-              className={`folder-icon ${!isOpen ? "folder-clickable" : ""}`}
-              draggable={false}
-              onClick={() => !isOpen && setIsOpen(true)}
-            />
-          </div>
+    <>
+      {/* Folder icon in the exact same position and structure as FolderLanding, but now fades in (opacity only) */}
+      <motion.div
+        className="absolute-center pointer-events-none z-[1000]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+      >
+        <div className="z-front center-folder">
+          <img
+            src={folderIcon}
+            alt="Folder"
+            className="folder-icon"
+            draggable={false}
+          />
         </div>
+      </motion.div>
+
+      {/* ✅ Page wrapper with fade-ins */}
+      <div className="folder-page-container relative">
+        <motion.div variants={fadeDown} initial="hidden" animate="show">
+          <Header />
+        </motion.div>
+
         <AnimatePresence>
-          {isOpen && (
+          {!loading && (
             <motion.div
-              variants={containerVariants}
+              className="main-content"
+              variants={fadeIn}
               initial="hidden"
               animate="show"
-              exit="hidden"
-              style={{
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                inset: 0,
-              }}
+              style={{ zIndex: 1 }}
             >
-              {/* Header at the top, fade down */}
-              <motion.div
-                variants={fadeDown}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  zIndex: 10,
-                }}
-              >
-                <Header />
-              </motion.div>
-              {/* Footer at the bottom, fade up */}
-              <motion.div
-                variants={fadeUp}
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  width: "100%",
-                  zIndex: 10,
-                }}
-              >
-                <Footer />
-              </motion.div>
-              {/* Middle content (letters + 3D) just fade in */}
-              <motion.div
-                variants={fadeIn}
-                className="full-screen flex-column center-content"
-                style={{ zIndex: 5 }}
-              >
-                <section
-                  className="main-section flex-column center-content"
-                  style={{ position: "relative" }}
-                >
-                  {/* ...letters and 3D model as before... */}
-                  <div
-                    className="full-screen"
-                    style={{ position: "relative", zIndex: 10 }}
+              <section className="main-section flex-column center-content relative">
+                <div className="full-screen relative z-10">
+                  {/* Role labels */}
+                  <span
+                    className="role-label"
+                    style={{ top: "35%", left: "28%" }}
                   >
-                    {/* Role Labels */}
-                    <span
-                      className="role-label"
-                      style={{ top: "35%", left: "28%" }}
-                    >
-                      3D Designer
-                    </span>
-                    <span
-                      className="role-label"
-                      style={{
-                        top: "25%",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                      }}
-                    >
-                      Entrepreneur
-                    </span>
-                    <span
-                      className="role-label"
-                      style={{ top: "35%", right: "28%" }}
-                    >
-                      Designer
-                    </span>
-                    <span
-                      className="role-label"
-                      style={{ bottom: "35%", left: "32%" }}
-                    >
-                      Teamplayer
-                    </span>
-                    <span
-                      className="role-label"
-                      style={{ bottom: "35%", right: "32%" }}
-                    >
-                      Thinker
-                    </span>
-                    <span
-                      className="role-label"
-                      style={{ top: "60%", right: "25%" }}
-                    >
-                      Director
-                    </span>
-                    <span
-                      className="role-label"
-                      style={{
-                        bottom: "20%",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                      }}
-                    >
-                      Hussler
-                    </span>
-                    <div className="absolute-center title-container">
-                      <div className="pointer-none left-title">
-                        <span
-                          className="title-text"
-                          style={{
-                            display: "block",
-                            transform: "translateY(0.25em)",
-                          }}
-                        >
-                          Creative
-                        </span>
-                      </div>
-                      <div className="pointer-none right-title">
-                        <span
-                          className="title-text"
-                          style={{
-                            display: "block",
-                            transform: "translateY(0.25em)",
-                          }}
-                        >
-                          Developer
-                        </span>
-                      </div>
+                    3D Designer
+                  </span>
+                  <span
+                    className="role-label"
+                    style={{
+                      top: "25%",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
+                  >
+                    Entrepreneur
+                  </span>
+                  <span
+                    className="role-label"
+                    style={{ top: "35%", right: "28%" }}
+                  >
+                    Designer
+                  </span>
+                  <span
+                    className="role-label"
+                    style={{ bottom: "35%", left: "32%" }}
+                  >
+                    Teamplayer
+                  </span>
+                  <span
+                    className="role-label"
+                    style={{ bottom: "35%", right: "32%" }}
+                  >
+                    Thinker
+                  </span>
+                  <span
+                    className="role-label"
+                    style={{ top: "60%", right: "25%" }}
+                  >
+                    Director
+                  </span>
+                  <span
+                    className="role-label"
+                    style={{
+                      bottom: "20%",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
+                  >
+                    Hussler
+                  </span>
+
+                  <div className="absolute-center title-container">
+                    <div className="pointer-none left-title">
+                      <span
+                        className="title-text"
+                        style={{
+                          display: "block",
+                          transform: "translateY(0.25em)",
+                        }}
+                      >
+                        Creative
+                      </span>
+                    </div>
+                    <div className="pointer-none right-title">
+                      <span
+                        className="title-text"
+                        style={{
+                          display: "block",
+                          transform: "translateY(0.25em)",
+                        }}
+                      >
+                        Developer
+                      </span>
                     </div>
                   </div>
-                  <ModelCanvas />
-                </section>
-              </motion.div>
+                </div>
+                <ModelCanvas />
+              </section>
             </motion.div>
           )}
         </AnimatePresence>
+
+        <motion.div variants={fadeUp} initial="hidden" animate="show">
+          <Footer />
+        </motion.div>
       </div>
-    </div>
+    </>
   );
 }

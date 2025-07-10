@@ -431,3 +431,10 @@ html {
   box-shadow: 0 4px 24px rgba(0,0,0,0.18);
   z-index: 2;
 }
+
+/* Prevent any fade or animation on the folder icon in FolderPage */
+.folder-page-container .folder-icon {
+  opacity: 1 !important;
+  animation: none !important;
+  transition: none !important;
+}

@@ -503,8 +503,8 @@ html {
 }
 
 .stats-video {
-  max-width: 50vw;
-  max-height: 60vh;
+  max-width: 100vw;
+  max-height: 100vh;
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
   background: #222;
 }
@@ -527,4 +527,42 @@ html {
     max-width: 90vw;
     max-height: 30vh;
   }
+}
+
+.stats-laptop-wrapper {
+  position: relative;
+  width: 1000px;
+  max-width: 95vw;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.laptop-video {
+  position: absolute;
+  top: 25%;
+  left: 25.5%;
+  width: 49%;
+  height: 55%;
+  border-radius: 0.2rem;
+  object-fit: cover;
+}
+
+.laptop-img {
+  width: 100%;
+  display: block;
+  pointer-events: none;
+  position: relative;
+}
+
+.stats-desk-img {
+  width: 100%;
+  max-width: 10000px;
+  top: 100px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  pointer-events: none;
 }

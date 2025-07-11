@@ -4,6 +4,9 @@ import FolderPage from "./FolderPage";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import rinkitouVideo from "../assets/videos/rinkitou.mp4";
+import laptopImg from "../assets/images/mackbookmockup.png";
+import laptopDeskImg from "../assets/images/LaptopDesk.png";
+import deskImg from "../assets/images/DESK.png";
 
 const sections = [
   { key: "folder", component: <FolderPage /> },
@@ -19,18 +22,20 @@ const sections = [
               <span className="stats-label">Years of creating</span>
             </div>
             <div className="stats-block">
-              <span className="stats-number">48+</span>
-              <span className="stats-label">Completed projects</span>
+              <span className="stats-number">150+</span>
+              <span className="stats-label">Completed Projects</span>
             </div>
           </div>
-          {/* Centered Video */}
-          <div className="stats-video-center">
+          {/* Centered Laptop + Desk */}
+          <div className="stats-laptop-stack">
+            <div className="stats-laptop-wrapper"></div>
+            <img src={deskImg} alt="Desk" className="stats-desk-img" />
             <video
               src={rinkitouVideo}
               autoPlay
               loop
               muted
-              className="stats-video"
+              className="laptop-video"
             />
           </div>
           {/* Right stats */}
@@ -41,7 +46,7 @@ const sections = [
             </div>
             <div className="stats-block">
               <span className="stats-number">100%</span>
-              <span className="stats-label">On Time delivery</span>
+              <span className="stats-label">On-Time Delivery rate</span>
             </div>
           </div>
         </div>

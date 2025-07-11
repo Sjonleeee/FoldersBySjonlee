@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import FolderPage from "./FolderPage";
+import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 const sections = [
   { key: "folder", component: <FolderPage /> },
@@ -13,10 +15,11 @@ const sections = [
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#181818",
         }}
       >
-        <h1 style={{ color: "white", fontSize: "3rem" }}>Stats Section (example)</h1>
+        <h1 style={{ color: "white", fontSize: "3rem" }}>
+          Stats Section (example)
+        </h1>
       </div>
     ),
   },
@@ -56,6 +59,21 @@ export default function OnePagerSections() {
       }}
       onWheel={handleWheel}
     >
+      {/* Overlay Header */}
+      {pageIndex !== 0 && (
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            zIndex: 100,
+          }}
+        >
+          <Header />
+        </div>
+      )}
+      {/* Animated Section Content */}
       <AnimatePresence mode="wait">
         <motion.div
           key={sections[pageIndex].key}
@@ -68,6 +86,18 @@ export default function OnePagerSections() {
           {sections[pageIndex].component}
         </motion.div>
       </AnimatePresence>
+      {/* Overlay Footer */}
+      {pageIndex !== 0 && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            width: "100%",
+            zIndex: 100,
+          }}
+        ></div>
+      )}
       {/* Overlay transition */}
       <AnimatePresence>
         {isTransitioning && (
@@ -80,8 +110,7 @@ export default function OnePagerSections() {
             style={{
               position: "fixed",
               inset: 0,
-              background: "#111",
-              zIndex: 10,
+              zIndex: 110,
               transformOrigin: "top",
               pointerEvents: "none",
             }}
@@ -90,4 +119,4 @@ export default function OnePagerSections() {
       </AnimatePresence>
     </div>
   );
-} 
+}

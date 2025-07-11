@@ -3,23 +3,48 @@ import { AnimatePresence, motion } from "framer-motion";
 import FolderPage from "./FolderPage";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
+import rinkitouVideo from "../assets/videos/rinkitou.mp4";
 
 const sections = [
   { key: "folder", component: <FolderPage /> },
   {
     key: "stats",
     component: (
-      <div
-        style={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <h1 style={{ color: "white", fontSize: "3rem" }}>
-          Stats Section (example)
-        </h1>
+      <div className="stats-video-section">
+        <div className="stats-content-flex">
+          {/* Left stats */}
+          <div className="stats-side left">
+            <div className="stats-block">
+              <span className="stats-number">4+</span>
+              <span className="stats-label">Years of creating</span>
+            </div>
+            <div className="stats-block">
+              <span className="stats-number">48+</span>
+              <span className="stats-label">Completed projects</span>
+            </div>
+          </div>
+          {/* Centered Video */}
+          <div className="stats-video-center">
+            <video
+              src={rinkitouVideo}
+              autoPlay
+              loop
+              muted
+              className="stats-video"
+            />
+          </div>
+          {/* Right stats */}
+          <div className="stats-side right">
+            <div className="stats-block">
+              <span className="stats-number">26+</span>
+              <span className="stats-label">Collaborations</span>
+            </div>
+            <div className="stats-block">
+              <span className="stats-number">100%</span>
+              <span className="stats-label">On Time delivery</span>
+            </div>
+          </div>
+        </div>
       </div>
     ),
   },
@@ -98,7 +123,7 @@ export default function OnePagerSections() {
             zIndex: 100,
           }}
         >
-          <Footer hideIcons={true} />
+          <Footer hideIconBar={true} />
         </div>
       )}
       {/* Overlay transition */}

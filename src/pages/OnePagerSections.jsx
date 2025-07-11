@@ -87,6 +87,7 @@ export default function OnePagerSections() {
         </motion.div>
       </AnimatePresence>
       {/* Overlay Footer */}
+
       {pageIndex !== 0 && (
         <div
           style={{
@@ -96,7 +97,9 @@ export default function OnePagerSections() {
             width: "100%",
             zIndex: 100,
           }}
-        ></div>
+        >
+          <Footer hideIcons={true} />
+        </div>
       )}
       {/* Overlay transition */}
       <AnimatePresence>

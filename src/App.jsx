@@ -7,7 +7,7 @@ export default function App() {
     // <LoadingProvider>
     // <MainLayout>
     <MainPage />
-    //   </MainLayout>
+    // </MainLayout>
     // </LoadingProvider>
   );
 }

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import folderIcon from "../assets/images/folder.svg";
-import ModelCanvas from '../components/ModelCanvas';
+import ModelCanvas from "../components/ModelCanvas";
 
 export default function FolderPage() {
   const fadeDown = {

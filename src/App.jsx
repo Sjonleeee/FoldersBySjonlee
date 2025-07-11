@@ -5,9 +5,9 @@ import MainPage from "./pages/MainPage";
 export default function App() {
   return (
     // <LoadingProvider>
-    // <MainLayout>
+    //   <MainLayout>
     <MainPage />
-    // </MainLayout>
+    //   </MainLayout>
     // </LoadingProvider>
   );
 }

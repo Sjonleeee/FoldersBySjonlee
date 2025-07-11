@@ -1,6 +1,6 @@
-import React from 'react';
-import { useLoading } from '../context/LoadingContext';
-import LoadingScreen from '../components/LoadingScreen';
+import React from "react";
+import { useLoading } from "../context/LoadingContext";
+import LoadingScreen from "../components/LoadingScreen";
 
 const MainLayout = ({ children }) => {
   const { loading, progress } = useLoading();
@@ -17,7 +17,7 @@ const MainLayout = ({ children }) => {
       {/* Main content with fade-in animation when loaded */}
       <div
         className={`transition-opacity duration-[900ms] ease-[cubic-bezier(0.4,0,0.2,1)] ${
-          loading ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          loading ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
         {children}
@@ -26,4 +26,4 @@ const MainLayout = ({ children }) => {
   );
 };
 
-export default MainLayout; 
+export default MainLayout;

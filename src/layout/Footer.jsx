@@ -43,7 +43,7 @@ const Footer = ({ hideIconBar }) => {
         paddingLeft: 0,
         paddingRight: 0,
         paddingBottom: "2.5rem",
-        marginTop: "2rem",
+        marginTop: "5rem",
       }}
     >
       <div style={{ fontSize: "0.75rem", color: "#9ca3af" }}>

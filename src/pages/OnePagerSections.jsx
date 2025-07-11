@@ -4,8 +4,8 @@ import FolderPage from "./FolderPage";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import rinkitouVideo from "../assets/videos/rinkitou.mp4";
-import laptopImg from "../assets/images/mackbookmockup.png";
-import laptopDeskImg from "../assets/images/LaptopDesk.png";
+// import laptopImg from "../assets/images/mackbookmockup.png";
+// import laptopDeskImg from "../assets/images/LaptopDesk.png";
 import deskImg from "../assets/images/DESK.png";
 
 const sections = [

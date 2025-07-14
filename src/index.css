@@ -593,3 +593,18 @@ html {
     font-size: 0.9rem;
   }
 }
+
+.footer {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 2.5rem;
+  margin-top: 5rem;
+  position: relative;
+  z-index: 1;
+}

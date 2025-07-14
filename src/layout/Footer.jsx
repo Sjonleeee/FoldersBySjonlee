@@ -32,20 +32,7 @@ const Footer = ({ hideIconBar }) => {
   };
 
   return (
-    <footer
-      style={{
-        width: "100%",
-        maxWidth: "1280px",
-        margin: "0 auto",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-end",
-        paddingLeft: 0,
-        paddingRight: 0,
-        paddingBottom: "2.5rem",
-        marginTop: "5rem",
-      }}
-    >
+    <footer className="footer">
       <div style={{ fontSize: "0.75rem", color: "#9ca3af" }}>
         Local Time:
         <br />

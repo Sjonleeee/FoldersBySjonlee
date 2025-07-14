@@ -6,7 +6,7 @@ export default function App() {
   return (
     // <LoadingProvider>
     //   <MainLayout>
-    <MainPage />
+        <MainPage />
     //   </MainLayout>
     // </LoadingProvider>
   );

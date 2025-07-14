@@ -69,7 +69,7 @@ const Footer = ({ hideIconBar }) => {
                     boxShadow: "0 4px 24px rgba(0,0,0,0.18)",
                     fontSize: "0.95rem",
                     minWidth: "180px",
-                    zIndex: 10,
+                    zIndex: 0,
                     whiteSpace: "pre-line",
                   }}
                   onClick={(e) => e.stopPropagation()}

@@ -7,6 +7,7 @@ import rinkitouVideo from "../assets/videos/rinkitou.mp4";
 // import laptopImg from "../assets/images/mackbookmockup.png";
 // import laptopDeskImg from "../assets/images/LaptopDesk.png";
 import deskImg from "../assets/images/DESK.png";
+import '../styles/onepager.css';
 
 // CountUpNumber component for animated numbers
 function CountUpNumber({ end, suffix = "", duration = 1.2 }) {
@@ -159,27 +160,11 @@ export default function OnePagerSections() {
   );
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
-        position: "relative",
-      }}
-      onWheel={handleWheel}
-    >
+    <div className="page-root" onWheel={handleWheel}>
       {/* Overlay Header */}
       {pageIndex !== 0 && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            zIndex: 100,
-          }}
-        >
-          <Header />
+        <div className="overlay-header">
+          <Header onLogoClick={() => window.location.reload()} />
         </div>
       )}
       {/* Animated Section Content */}
@@ -190,23 +175,15 @@ export default function OnePagerSections() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -40 }}
           transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
-          style={{ position: "absolute", inset: 0, zIndex: 1 }}
+          className="main-content-centered"
         >
           {sections[pageIndex].component}
         </motion.div>
       </AnimatePresence>
       {/* Overlay Footer */}
-
       {pageIndex !== 0 && (
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            width: "100%",
-          }}
-        >
-          <Footer hideIconBar={true} />
+        <div className="overlay-footer">
+          <Footer />
         </div>
       )}
       {/* Overlay transition */}

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import iconData from "../config/iconData";
+import { useMenu } from "../context/MenuContext";
+import '../styles/footer.css';
 
-const Footer = ({ hideIconBar }) => {
+const Footer = () => {
+  const { menuOpen } = useMenu();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activePopup, setActivePopup] = useState(null);
 
@@ -38,7 +41,7 @@ const Footer = ({ hideIconBar }) => {
         <br />
         <span style={{ color: "white" }}>{formatTime()}</span>
       </div>
-      {!hideIconBar && (
+      {!menuOpen && (
         <div className="footer-icon-bar">
           {iconData.map((icon) => (
             <div

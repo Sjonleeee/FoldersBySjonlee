@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import folderIcon from "../assets/images/folder.svg";
 import ModelCanvas from "../components/ModelCanvas";
+import '../styles/folderpage.css';
 
 export default function FolderPage() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const fadeDown = {
     hidden: { opacity: 0, y: -40 },
     show: {
@@ -28,44 +28,22 @@ export default function FolderPage() {
   }, []);
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
-        position: "relative",
-      }}
-    >
+    <div className="page-root">
       {/* Overlay Header */}
       <motion.div
         variants={fadeDown}
         initial="hidden"
         animate="show"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          zIndex: 100,
-        }}
+        className="overlay-header"
       >
-        <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <Header onLogoClick={() => window.location.reload()} />
       </motion.div>
       {/* Main Content */}
       <motion.div
         variants={fadeIn}
         initial="hidden"
         animate="show"
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: 0,
-        }}
+        className="main-content-centered"
       >
         {/* Folder icon in the exact same position and structure as FolderLanding, but now fades in (opacity only) */}
         <div className="absolute-center pointer-events-none z-[1000]">
@@ -78,87 +56,24 @@ export default function FolderPage() {
             />
           </div>
         </div>
-        <div
-          className="folder-page-container relative"
-          style={{ width: "100%" }}
-        >
-          <div className="main-content" style={{ zIndex: 1 }}>
+        <div className="folder-page-container relative">
+          <div className="main-content main-content-z1">
             <section className="main-section flex-column center-content relative">
-              <div className="full-screen relative z-10">
+              <div className="full-screen full-screen-z10">
                 {/* Role labels */}
-                <span
-                  className="role-label"
-                  style={{ top: "35%", left: "28%" }}
-                >
-                  3D Designer
-                </span>
-                <span
-                  className="role-label"
-                  style={{
-                    top: "25%",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                  }}
-                >
-                  Entrepreneur
-                </span>
-                <span
-                  className="role-label"
-                  style={{ top: "35%", right: "28%" }}
-                >
-                  Designer
-                </span>
-                <span
-                  className="role-label"
-                  style={{ bottom: "35%", left: "32%" }}
-                >
-                  Teamplayer
-                </span>
-                <span
-                  className="role-label"
-                  style={{ bottom: "35%", right: "32%" }}
-                >
-                  Thinker
-                </span>
-                <span
-                  className="role-label"
-                  style={{ top: "60%", right: "25%" }}
-                >
-                  Director
-                </span>
-                <span
-                  className="role-label"
-                  style={{
-                    bottom: "20%",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                  }}
-                >
-                  Hussler
-                </span>
-
+                <span className="role-label top-left">3D Designer</span>
+                <span className="role-label top-center">Entrepreneur</span>
+                <span className="role-label top-right">Designer</span>
+                <span className="role-label bottom-left">Teamplayer</span>
+                <span className="role-label bottom-right">Thinker</span>
+                <span className="role-label mid-right">Director</span>
+                <span className="role-label bottom-center">Hussler</span>
                 <div className="absolute-center title-container">
                   <div className="pointer-none left-title">
-                    <span
-                      className="title-text"
-                      style={{
-                        display: "block",
-                        transform: "translateY(0.25em)",
-                      }}
-                    >
-                      Creative
-                    </span>
+                    <span className="title-text">Creative</span>
                   </div>
                   <div className="pointer-none right-title">
-                    <span
-                      className="title-text"
-                      style={{
-                        display: "block",
-                        transform: "translateY(0.25em)",
-                      }}
-                    >
-                      Developer
-                    </span>
+                    <span className="title-text">Developer</span>
                   </div>
                 </div>
               </div>
@@ -168,15 +83,8 @@ export default function FolderPage() {
         </div>
       </motion.div>
       {/* Overlay Footer */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-        }}
-      >
-        <Footer hideIconBar={menuOpen} />
+      <div className="overlay-footer">
+        <Footer />
       </div>
     </div>
   );

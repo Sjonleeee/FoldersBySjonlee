@@ -1,0 +1,160 @@
+/* Header-specific styles extracted from index.css */
+
+.header {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 2.5rem;
+  gap: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.header-logo-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 90px;
+}
+
+.header-logo {
+  font-weight: bold;
+  line-height: 1.25;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+}
+
+.header-status-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #22c55e;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.header-freelance {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-align: left;
+}
+
+.header-email {
+  color: white;
+}
+
+.header-skills {
+  font-size: 0.75rem;
+  text-align: right;
+  min-width: 180px;
+}
+
+.header-skills-secondary {
+  color: #9ca3af;
+}
+
+.header-dropdown-menu {
+  position: absolute;
+  top: 2.2rem;
+  right: 0;
+  background: rgba(30,32,38,0.55);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 4px 0 rgba(0,0,0,0.10);
+  padding: 0.7rem 1.2rem;
+  min-width: 180px;
+  z-index: 1000;
+  animation: fadeInMenu 0.22s;
+  backdrop-filter: blur(16px) saturate(1.2);
+  border: 1.5px solid rgba(80,80,90,0.22);
+}
+
+@keyframes fadeInMenu {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.header-dropdown-item {
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  color: #f3f4f6;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.header-dropdown-item:hover {
+  background: rgba(60,60,70,0.32);
+}
+
+.header-menu {
+  position: relative;
+}
+
+.header-fullscreen-menu {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30,32,38,0.48);
+  backdrop-filter: blur(22px) saturate(1.2);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInMenu 0.22s;
+  padding: 0;
+}
+
+.header-menu-close {
+  position: absolute;
+  top: 2.5rem;
+  right: 3.5rem;
+  font-size: 3.2rem;
+  color: #f3f4f6;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 3100;
+  line-height: 1;
+  padding: 0.2em 0.5em;
+  transition: color 0.18s;
+}
+.header-menu-close:hover {
+  color: #fff;
+}
+
+.header-fullscreen-menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0;
+  max-width: 90vw;
+  word-break: break-word;
+}
+
+.header-fullscreen-menu .header-dropdown-item {
+  font-size: 3.6rem;
+  font-weight: 700;
+  color: #f3f4f6;
+  background: none;
+  border-radius: 16px;
+  padding: 0.7rem 0 0.7rem 0.2rem;
+  transition: none;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 0.09em;
+}
+
+.header-fullscreen-menu .header-dropdown-item .menu-initial {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 1.5em;
+  font-style: italic;
+  color: #fff;
+  letter-spacing: 0.09em;
+  margin-right: 0.08em;
+} 

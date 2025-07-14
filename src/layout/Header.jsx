@@ -1,8 +1,11 @@
 import React, { useRef, useEffect } from "react";
+import { useMenu } from "../context/MenuContext";
+import '../styles/header.css';
 
 const menuItems = ["Home", "Projects", "About", "Contact"];
 
-const Header = ({ menuOpen, setMenuOpen }) => {
+const Header = ({ onLogoClick }) => {
+  const { menuOpen, setMenuOpen } = useMenu();
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -22,7 +25,11 @@ const Header = ({ menuOpen, setMenuOpen }) => {
   return (
     <header className="header">
       <div className="header-logo-container">
-        <div className="header-logo">
+        <div
+          className="header-logo"
+          style={{ cursor: onLogoClick ? "pointer" : undefined }}
+          onClick={onLogoClick}
+        >
           <div className="header-status-dot"></div>
           Sjonlee
           <br />

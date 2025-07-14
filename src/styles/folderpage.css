@@ -1,0 +1,20 @@
+/* FolderPage-specific styles extracted from index.css */
+
+.folder-page-container {
+  width: 100%;
+}
+.main-content-z1 {
+  z-index: 1;
+}
+.full-screen-z10 {
+  position: relative;
+  z-index: 10;
+}
+/* Role label position helpers */
+.role-label.top-left { top: 35%; left: 28%; }
+.role-label.top-center { top: 25%; left: 50%; transform: translateX(-50%); }
+.role-label.top-right { top: 35%; right: 28%; }
+.role-label.bottom-left { bottom: 35%; left: 32%; }
+.role-label.bottom-right { bottom: 35%; right: 32%; }
+.role-label.bottom-center { bottom: 20%; left: 50%; transform: translateX(-50%); }
+.role-label.mid-right { top: 60%; right: 25%; } 

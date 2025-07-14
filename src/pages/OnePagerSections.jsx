@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import FolderPage from "./FolderPage";
 import Header from "../layout/Header";
@@ -7,6 +7,47 @@ import rinkitouVideo from "../assets/videos/rinkitou.mp4";
 // import laptopImg from "../assets/images/mackbookmockup.png";
 // import laptopDeskImg from "../assets/images/LaptopDesk.png";
 import deskImg from "../assets/images/DESK.png";
+
+// CountUpNumber component for animated numbers
+function CountUpNumber({ end, suffix = '', duration = 1.2 }) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    let start = 0;
+    const increment = end / (duration * 60); // 60fps
+    let frame;
+    function animate() {
+      start += increment;
+      if (start < end) {
+        setCount(Math.floor(start));
+        frame = requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    }
+    animate();
+    return () => cancelAnimationFrame(frame);
+  }, [end, duration]);
+  return <span>{count}{suffix}</span>;
+}
+
+// Add fade variants for sequential animation
+const fadeBlock = (delay = 0) => ({
+  hidden: { opacity: 0, y: 30 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 1.1, delay, ease: [0.4, 0, 0.2, 1] },
+  },
+});
+
+// Add fadeInCenter variant for the center stack
+const fadeInCenter = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { duration: 1.1, delay: 2.0, ease: [0.4, 0, 0.2, 1] },
+  },
+};
 
 const sections = [
   { key: "folder", component: <FolderPage /> },
@@ -17,17 +58,32 @@ const sections = [
         <div className="stats-content-flex">
           {/* Left stats */}
           <div className="stats-side left">
-            <div className="stats-block">
-              <span className="stats-number">4+</span>
+            <motion.div
+              className="stats-block"
+              variants={fadeBlock(0)}
+              initial="hidden"
+              animate="show"
+            >
+              <span className="stats-number"><CountUpNumber end={4} suffix="+" duration={2.2} /></span>
               <span className="stats-label">Years of creating</span>
-            </div>
-            <div className="stats-block">
-              <span className="stats-number">150+</span>
+            </motion.div>
+            <motion.div
+              className="stats-block"
+              variants={fadeBlock(1.0)}
+              initial="hidden"
+              animate="show"
+            >
+              <span className="stats-number"><CountUpNumber end={150} suffix="+" duration={2.2} /></span>
               <span className="stats-label">Completed Projects</span>
-            </div>
+            </motion.div>
           </div>
           {/* Centered Laptop + Desk */}
-          <div className="stats-laptop-stack">
+          <motion.div
+            className="stats-laptop-stack"
+            variants={fadeInCenter}
+            initial="hidden"
+            animate="show"
+          >
             <div className="stats-laptop-wrapper"></div>
             <img src={deskImg} alt="Desk" className="stats-desk-img" />
             <video
@@ -37,17 +93,27 @@ const sections = [
               muted
               className="laptop-video"
             />
-          </div>
+          </motion.div>
           {/* Right stats */}
           <div className="stats-side right">
-            <div className="stats-block">
-              <span className="stats-number">26+</span>
+            <motion.div
+              className="stats-block"
+              variants={fadeBlock(0.5)}
+              initial="hidden"
+              animate="show"
+            >
+              <span className="stats-number"><CountUpNumber end={26} suffix="+" duration={2.2} /></span>
               <span className="stats-label">Collaborations</span>
-            </div>
-            <div className="stats-block">
-              <span className="stats-number">100%</span>
+            </motion.div>
+            <motion.div
+              className="stats-block"
+              variants={fadeBlock(1.5)}
+              initial="hidden"
+              animate="show"
+            >
+              <span className="stats-number"><CountUpNumber end={100} suffix="%" duration={2.2} /></span>
               <span className="stats-label">On-Time Delivery rate</span>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

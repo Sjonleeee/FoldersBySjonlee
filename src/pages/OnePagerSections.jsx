@@ -9,7 +9,7 @@ import rinkitouVideo from "../assets/videos/rinkitou.mp4";
 import deskImg from "../assets/images/DESK.png";
 
 // CountUpNumber component for animated numbers
-function CountUpNumber({ end, suffix = '', duration = 1.2 }) {
+function CountUpNumber({ end, suffix = "", duration = 1.2 }) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     let start = 0;
@@ -27,7 +27,12 @@ function CountUpNumber({ end, suffix = '', duration = 1.2 }) {
     animate();
     return () => cancelAnimationFrame(frame);
   }, [end, duration]);
-  return <span>{count}{suffix}</span>;
+  return (
+    <span>
+      {count}
+      {suffix}
+    </span>
+  );
 }
 
 // Add fade variants for sequential animation
@@ -64,7 +69,9 @@ const sections = [
               initial="hidden"
               animate="show"
             >
-              <span className="stats-number"><CountUpNumber end={4} suffix="+" duration={2.2} /></span>
+              <span className="stats-number">
+                <CountUpNumber end={4} suffix="+" duration={2.2} />
+              </span>
               <span className="stats-label">Years of creating</span>
             </motion.div>
             <motion.div
@@ -73,7 +80,9 @@ const sections = [
               initial="hidden"
               animate="show"
             >
-              <span className="stats-number"><CountUpNumber end={150} suffix="+" duration={2.2} /></span>
+              <span className="stats-number">
+                <CountUpNumber end={150} suffix="+" duration={2.2} />
+              </span>
               <span className="stats-label">Completed Projects</span>
             </motion.div>
           </div>
@@ -102,7 +111,9 @@ const sections = [
               initial="hidden"
               animate="show"
             >
-              <span className="stats-number"><CountUpNumber end={26} suffix="+" duration={2.2} /></span>
+              <span className="stats-number">
+                <CountUpNumber end={26} suffix="+" duration={2.2} />
+              </span>
               <span className="stats-label">Collaborations</span>
             </motion.div>
             <motion.div
@@ -111,7 +122,9 @@ const sections = [
               initial="hidden"
               animate="show"
             >
-              <span className="stats-number"><CountUpNumber end={100} suffix="%" duration={2.2} /></span>
+              <span className="stats-number">
+                <CountUpNumber end={100} suffix="%" duration={2.2} />
+              </span>
               <span className="stats-label">On-Time Delivery rate</span>
             </motion.div>
           </div>
@@ -191,7 +204,6 @@ export default function OnePagerSections() {
             bottom: 0,
             left: 0,
             width: "100%",
-         
           }}
         >
           <Footer hideIconBar={true} />

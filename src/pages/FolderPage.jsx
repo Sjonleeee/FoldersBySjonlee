@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
@@ -6,16 +6,9 @@ import folderIcon from "../assets/images/folder.svg";
 import ModelCanvas from "../components/ModelCanvas";
 
 export default function FolderPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const fadeDown = {
     hidden: { opacity: 0, y: -40 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
-    },
-  };
-  const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
     show: {
       opacity: 1,
       y: 0,
@@ -56,7 +49,7 @@ export default function FolderPage() {
           zIndex: 100,
         }}
       >
-        <Header />
+        <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       </motion.div>
       {/* Main Content */}
       <motion.div
@@ -75,9 +68,7 @@ export default function FolderPage() {
         }}
       >
         {/* Folder icon in the exact same position and structure as FolderLanding, but now fades in (opacity only) */}
-        <div
-          className="absolute-center pointer-events-none z-[1000]"
-        >
+        <div className="absolute-center pointer-events-none z-[1000]">
           <div className="z-front center-folder">
             <img
               src={folderIcon}
@@ -87,11 +78,11 @@ export default function FolderPage() {
             />
           </div>
         </div>
-        <div className="folder-page-container relative" style={{ width: '100%' }}>
-          <div
-            className="main-content"
-            style={{ zIndex: 1 }}
-          >
+        <div
+          className="folder-page-container relative"
+          style={{ width: "100%" }}
+        >
+          <div className="main-content" style={{ zIndex: 1 }}>
             <section className="main-section flex-column center-content relative">
               <div className="full-screen relative z-10">
                 {/* Role labels */}
@@ -177,20 +168,16 @@ export default function FolderPage() {
         </div>
       </motion.div>
       {/* Overlay Footer */}
-      <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        animate="show"
+      <div
         style={{
           position: "absolute",
           bottom: 0,
           left: 0,
           width: "100%",
-          zIndex: 0,
         }}
       >
-        <Footer />
-      </motion.div>
+        <Footer hideIconBar={menuOpen} />
+      </div>
     </div>
   );
 }

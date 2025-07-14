@@ -1,0 +1,16 @@
+.mouse-follower-circle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  pointer-events: none;
+  z-index: 2999;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.10);
+  transition: border-color 0.2s, background 0.2s;
+  mix-blend-mode: lighten;
+  will-change: transform;
+} 

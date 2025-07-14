@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 
 const menuItems = ["Home", "Projects", "About", "Contact"];
 
-const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+const Header = ({ menuOpen, setMenuOpen }) => {
   const menuRef = useRef(null);
 
   useEffect(() => {

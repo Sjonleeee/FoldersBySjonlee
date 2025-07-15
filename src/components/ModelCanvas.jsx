@@ -14,16 +14,21 @@ const CameraMovement = ({ mousePosition }) => {
 
     // Calculate target position with reduced movement range
     const targetX = initialPosition[0] + mousePosition.x * 0.8;
-    const targetY = initialPosition[1] + Math.max(Math.min(mousePosition.y * 0.8, maxVerticalMovement), -maxVerticalMovement);
-    
+    const targetY =
+      initialPosition[1] +
+      Math.max(
+        Math.min(mousePosition.y * 0.8, maxVerticalMovement),
+        -maxVerticalMovement
+      );
+
     // Keep the Z position fixed at the initial distance
     const targetZ = initialPosition[2];
-    
+
     // Smoother interpolation with reduced speed
     camera.position.x += (targetX - camera.position.x) * 0.3;
     camera.position.y += (targetY - camera.position.y) * 0.3;
     camera.position.z = targetZ;
-    
+
     // Look at the model's body center
     camera.lookAt(0, -1.5, 0);
   });
@@ -41,16 +46,16 @@ const ModelCanvas = () => {
       setMousePosition({ x, y });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
     <div className="canvas-wrapper">
-      <Canvas 
-        camera={{ 
+      <Canvas
+        camera={{
           position: [0, 0, 7],
-          fov: 45 
+          fov: 45,
         }}
       >
         <ambientLight intensity={0.5} />
@@ -81,4 +86,4 @@ const ModelCanvas = () => {
   );
 };
 
-export default ModelCanvas; 
+export default ModelCanvas;

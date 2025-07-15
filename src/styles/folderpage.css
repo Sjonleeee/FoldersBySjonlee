@@ -46,3 +46,26 @@
   .role-label.bottom-center { bottom: 20%; left: 50%; transform: translateX(-50%); }
   .role-label.bottom-right { bottom: 35%; right: 32%; }
 } 
+
+.canvas-wrapper {
+  width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .canvas-wrapper {
+    width: 450px;
+    height: 450px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+} 

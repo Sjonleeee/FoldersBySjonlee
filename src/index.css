@@ -676,7 +676,6 @@ html {
 @media (max-width: 900px) {
   .stats-content-flex {
     flex-direction: column;
-    gap: 2rem;
     align-items: center;
   }
   .stats-side.left,

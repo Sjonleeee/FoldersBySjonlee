@@ -9,6 +9,17 @@ import rinkitouVideo from "../assets/videos/rinkitou.mp4";
 import deskImg from "../assets/images/DESK.png";
 import '../styles/onepager.css';
 
+// Responsive hook
+function useIsMobile(breakpoint = 900) {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= breakpoint);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= breakpoint);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [breakpoint]);
+  return isMobile;
+}
+
 // CountUpNumber component for animated numbers
 function CountUpNumber({ end, suffix = "", duration = 1.2 }) {
   const [count, setCount] = useState(0);
@@ -60,80 +71,153 @@ const sections = [
   {
     key: "stats",
     component: (
-      <div className="stats-video-section">
-        <div className="stats-content-flex">
-          {/* Left stats */}
-          <div className="stats-side left">
-            <motion.div
-              className="stats-block"
-              variants={fadeBlock(0)}
-              initial="hidden"
-              animate="show"
-            >
-              <span className="stats-number">
-                <CountUpNumber end={4} suffix="+" duration={2.2} />
-              </span>
-              <span className="stats-label">Years of creating</span>
-            </motion.div>
-            <motion.div
-              className="stats-block"
-              variants={fadeBlock(1.0)}
-              initial="hidden"
-              animate="show"
-            >
-              <span className="stats-number">
-                <CountUpNumber end={150} suffix="+" duration={2.2} />
-              </span>
-              <span className="stats-label">Completed Projects</span>
-            </motion.div>
-          </div>
-          {/* Centered Laptop + Desk */}
-          <motion.div
-            className="stats-laptop-stack"
-            variants={fadeInCenter}
-            initial="hidden"
-            animate="show"
-          >
-            <div className="stats-laptop-wrapper"></div>
-            <img src={deskImg} alt="Desk" className="stats-desk-img" />
-            <video
-              src={rinkitouVideo}
-              autoPlay
-              loop
-              muted
-              className="laptop-video"
-            />
-          </motion.div>
-          {/* Right stats */}
-          <div className="stats-side right">
-            <motion.div
-              className="stats-block"
-              variants={fadeBlock(0.5)}
-              initial="hidden"
-              animate="show"
-            >
-              <span className="stats-number">
-                <CountUpNumber end={26} suffix="+" duration={2.2} />
-              </span>
-              <span className="stats-label">Collaborations</span>
-            </motion.div>
-            <motion.div
-              className="stats-block"
-              variants={fadeBlock(1.5)}
-              initial="hidden"
-              animate="show"
-            >
-              <span className="stats-number">
-                <CountUpNumber end={100} suffix="%" duration={2.2} />
-              </span>
-              <span className="stats-label">On-Time Delivery rate</span>
-            </motion.div>
-          </div>
-        </div>
-      </div>
+      <StatsSection />
     ),
   },
 ];
+
+function StatsSection() {
+  const isMobile = useIsMobile();
+  return (
+    <div className="stats-video-section">
+      <div className="stats-content-flex">
+        {isMobile ? (
+          <>
+            <motion.div
+              className="stats-laptop-stack"
+              variants={fadeInCenter}
+              initial="hidden"
+              animate="show"
+            >
+              <div className="stats-laptop-wrapper"></div>
+              <img src={deskImg} alt="Desk" className="stats-desk-img" />
+              <video
+                src={rinkitouVideo}
+                autoPlay
+                loop
+                muted
+                className="laptop-video"
+              />
+            </motion.div>
+            <div className="stats-blocks-grid">
+              <motion.div
+                className="stats-block"
+                variants={fadeBlock(0)}
+                initial="hidden"
+                animate="show"
+              >
+                <span className="stats-number">
+                  <CountUpNumber end={4} suffix="+" duration={2.2} />
+                </span>
+                <span className="stats-label">Years of creating</span>
+              </motion.div>
+              <motion.div
+                className="stats-block"
+                variants={fadeBlock(1.0)}
+                initial="hidden"
+                animate="show"
+              >
+                <span className="stats-number">
+                  <CountUpNumber end={150} suffix="+" duration={2.2} />
+                </span>
+                <span className="stats-label">Completed Projects</span>
+              </motion.div>
+              <motion.div
+                className="stats-block"
+                variants={fadeBlock(0.5)}
+                initial="hidden"
+                animate="show"
+              >
+                <span className="stats-number">
+                  <CountUpNumber end={26} suffix="+" duration={2.2} />
+                </span>
+                <span className="stats-label">Collaborations</span>
+              </motion.div>
+              <motion.div
+                className="stats-block"
+                variants={fadeBlock(1.5)}
+                initial="hidden"
+                animate="show"
+              >
+                <span className="stats-number">
+                  <CountUpNumber end={100} suffix="%" duration={2.2} />
+                </span>
+                <span className="stats-label">On-Time Delivery rate</span>
+              </motion.div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="stats-side left">
+              <motion.div
+                className="stats-block"
+                variants={fadeBlock(0)}
+                initial="hidden"
+                animate="show"
+              >
+                <span className="stats-number">
+                  <CountUpNumber end={4} suffix="+" duration={2.2} />
+                </span>
+                <span className="stats-label">Years of creating</span>
+              </motion.div>
+              <motion.div
+                className="stats-block"
+                variants={fadeBlock(1.0)}
+                initial="hidden"
+                animate="show"
+              >
+                <span className="stats-number">
+                  <CountUpNumber end={150} suffix="+" duration={2.2} />
+                </span>
+                <span className="stats-label">Completed Projects</span>
+              </motion.div>
+            </div>
+            <motion.div
+              className="stats-laptop-stack"
+              variants={fadeInCenter}
+              initial="hidden"
+              animate="show"
+            >
+              <div className="stats-laptop-wrapper"></div>
+              <img src={deskImg} alt="Desk" className="stats-desk-img" />
+              <video
+                src={rinkitouVideo}
+                autoPlay
+                loop
+                muted
+                className="laptop-video"
+              />
+            </motion.div>
+            <div className="stats-side right">
+              <motion.div
+                className="stats-block"
+                variants={fadeBlock(0.5)}
+                initial="hidden"
+                animate="show"
+              >
+                <span className="stats-number">
+                  <CountUpNumber end={26} suffix="+" duration={2.2} />
+                </span>
+                <span className="stats-label">Collaborations</span>
+              </motion.div>
+              <motion.div
+                className="stats-block"
+                variants={fadeBlock(1.5)}
+                initial="hidden"
+                animate="show"
+              >
+                <span className="stats-number">
+                  <CountUpNumber end={100} suffix="%" duration={2.2} />
+                </span>
+                <span className="stats-label">On-Time Delivery rate</span>
+              </motion.div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function OnePagerSections() {
   const [pageIndex, setPageIndex] = useState(0);

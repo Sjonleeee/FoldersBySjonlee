@@ -17,6 +17,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.1vw;
+  flex-direction: row;
 }
 
 .stats-side {
@@ -94,6 +95,18 @@
   margin-top: -32px;
 }
 
+.stats-blocks-grid {
+  /* No grid on desktop, only on mobile */
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  justify-items: unset;
+  align-items: unset;
+}
+
 /* --- Responsive styles --- */
 @media (max-width: 1100px) {
   .stats-laptop-wrapper {
@@ -108,17 +121,37 @@
 @media (max-width: 900px) {
   .stats-content-flex {
     flex-direction: column;
-    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 420px;
+  }
+  .stats-laptop-stack {
+    order: 0;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .stats-blocks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem 2.2rem;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    justify-items: center;
     align-items: center;
   }
-  .stats-side.left,
-  .stats-side.right {
-    align-items: center;
-    margin: 0;
-    min-width: 0;
+  .stats-side {
+    display: contents;
   }
   .stats-block {
     align-items: center;
+    text-align: center;
+    width: 100%;
+    justify-content: center;
   }
   .stats-laptop-wrapper {
     width: 100vw;

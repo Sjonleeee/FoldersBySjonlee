@@ -77,7 +77,7 @@ export default function FolderPage() {
                   </div>
                 </div>
               </div>
-              {/* <ModelCanvas /> */}
+              <ModelCanvas />
             </section>
           </div>
         </div>

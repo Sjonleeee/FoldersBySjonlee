@@ -156,3 +156,13 @@
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+@media (max-width: 768px) {
+  .footer {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+  .footer-center {
+    display: none !important;
+  }
+}

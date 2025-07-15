@@ -132,7 +132,7 @@ html {
 .title-text {
   font-family: var(--font-creative);
   font-style: italic;
-  font-size: clamp(5rem, 7vw, 8rem);
+  font-size: 8rem; /* Larger for mobile, adjust as needed */
   color: #000; /* Black fill */
   -webkit-text-stroke: 2.5px #fff; /* White border */
   text-stroke: 2.5px #fff;         /* Standard property (fallback) */
@@ -202,7 +202,7 @@ html {
 
 @media (min-width: 768px) {
   .title-text {
-    font-size: clamp(8rem, 12vw, 16rem); /* Increased size for desktop */
+    font-size: clamp(10rem, 12vw, 16rem); /* Increased size for desktop */
   }
 }
 
@@ -216,7 +216,7 @@ html {
   .left-title,
   .right-title {
     position: static !important;
-    margin: 0.5rem 0 !important;
+    margin: 1.5rem 0 !important;
     transform: none !important;
   }
 
@@ -288,8 +288,17 @@ html {
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column; /* Stack vertically on mobile */
   align-items: center;
-  justify-content: center;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .title-container {
+    flex-direction: row; /* Side by side on desktop */
+    justify-content: space-between;
+    text-align: left;
+  }
 }
 
 /* Star animation */
@@ -788,4 +797,23 @@ html {
   color: #fff;
   letter-spacing: 0.09em;
   margin-right: 0.08em;
+}
+
+.role-labels {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 1.3rem; /* Mobiel: goed leesbaar */
+  color: #222;        /* Donkerder voor zichtbaarheid */
+  font-weight: 500;
+  opacity: 0.85;      /* Iets minder transparant */
+  letter-spacing: 0.1em;
+}
+
+@media (min-width: 768px) {
+  .role-labels {
+    font-size: 1rem;   /* Kleiner op desktop */
+    margin-top: 1.5rem;
+    text-align: left;  /* Of zoals gewenst */
+    /* plaatsing ongeveer behouden */
+  }
 }

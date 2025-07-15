@@ -166,6 +166,9 @@
   .stats-label {
     font-size: 1rem;
   }
+  .laptop-video {
+    height: 38%;
+  }
 }
 
 @media (max-width: 600px) {

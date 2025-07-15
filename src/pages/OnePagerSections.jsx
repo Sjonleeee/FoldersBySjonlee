@@ -7,7 +7,7 @@ import rinkitouVideo from "../assets/videos/rinkitou.mp4";
 // import laptopImg from "../assets/images/mackbookmockup.png";
 // import laptopDeskImg from "../assets/images/LaptopDesk.png";
 import deskImg from "../assets/images/DESK.png";
-import '../styles/onepager.css';
+import "../styles/onepager.css";
 
 // Responsive hook
 function useIsMobile(breakpoint = 900) {
@@ -47,22 +47,12 @@ function CountUpNumber({ end, suffix = "", duration = 1.2 }) {
   );
 }
 
-// Add fade variants for sequential animation
-const fadeBlock = (delay = 0) => ({
-  hidden: { opacity: 0, y: 30 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 1.1, delay, ease: [0.4, 0, 0.2, 1] },
-  },
-});
-
 // Add fadeInCenter variant for the center stack
 const fadeInCenter = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { duration: 1.1, delay: 2.0, ease: [0.4, 0, 0.2, 1] },
+    transition: { duration: 0.7, delay: 0, ease: [0.4, 0, 0.2, 1] },
   },
 };
 
@@ -70,14 +60,24 @@ const sections = [
   { key: "folder", component: <FolderPage /> },
   {
     key: "stats",
-    component: (
-      <StatsSection />
-    ),
+    component: <StatsSection />,
   },
 ];
 
 function StatsSection() {
   const isMobile = useIsMobile();
+  const [showStats, setShowStats] = useState(false);
+
+  // Custom fadeBlock with faster duration on mobile
+  const fadeBlockCustom = (delay = 0) => ({
+    hidden: { opacity: 0, y: 30 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: isMobile ? 0.5 : 1.1, delay, ease: [0.4, 0, 0.2, 1] },
+    },
+  });
+
   return (
     <div className="stats-video-section">
       <div className="stats-content-flex">
@@ -88,6 +88,7 @@ function StatsSection() {
               variants={fadeInCenter}
               initial="hidden"
               animate="show"
+              onAnimationComplete={() => setShowStats(true)}
             >
               <div className="stats-laptop-wrapper"></div>
               <img src={deskImg} alt="Desk" className="stats-desk-img" />
@@ -99,12 +100,15 @@ function StatsSection() {
                 className="laptop-video"
               />
             </motion.div>
-            <div className="stats-blocks-grid">
+            <div
+              className="stats-blocks-grid"
+              style={!showStats ? { visibility: 'hidden', minHeight: '8rem' } : {}}
+            >
               <motion.div
                 className="stats-block"
-                variants={fadeBlock(0)}
+                variants={fadeBlockCustom(0)}
                 initial="hidden"
-                animate="show"
+                animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
                   <CountUpNumber end={4} suffix="+" duration={2.2} />
@@ -113,9 +117,9 @@ function StatsSection() {
               </motion.div>
               <motion.div
                 className="stats-block"
-                variants={fadeBlock(1.0)}
+                variants={fadeBlockCustom(0.2)}
                 initial="hidden"
-                animate="show"
+                animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
                   <CountUpNumber end={150} suffix="+" duration={2.2} />
@@ -124,9 +128,9 @@ function StatsSection() {
               </motion.div>
               <motion.div
                 className="stats-block"
-                variants={fadeBlock(0.5)}
+                variants={fadeBlockCustom(0.4)}
                 initial="hidden"
-                animate="show"
+                animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
                   <CountUpNumber end={26} suffix="+" duration={2.2} />
@@ -135,9 +139,9 @@ function StatsSection() {
               </motion.div>
               <motion.div
                 className="stats-block"
-                variants={fadeBlock(1.5)}
+                variants={fadeBlockCustom(0.6)}
                 initial="hidden"
-                animate="show"
+                animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
                   <CountUpNumber end={100} suffix="%" duration={2.2} />
@@ -151,9 +155,9 @@ function StatsSection() {
             <div className="stats-side left">
               <motion.div
                 className="stats-block"
-                variants={fadeBlock(0)}
+                variants={fadeBlockCustom(0)}
                 initial="hidden"
-                animate="show"
+                animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
                   <CountUpNumber end={4} suffix="+" duration={2.2} />
@@ -162,9 +166,9 @@ function StatsSection() {
               </motion.div>
               <motion.div
                 className="stats-block"
-                variants={fadeBlock(1.0)}
+                variants={fadeBlockCustom(0.2)}
                 initial="hidden"
-                animate="show"
+                animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
                   <CountUpNumber end={150} suffix="+" duration={2.2} />
@@ -177,6 +181,7 @@ function StatsSection() {
               variants={fadeInCenter}
               initial="hidden"
               animate="show"
+              onAnimationComplete={() => setShowStats(true)}
             >
               <div className="stats-laptop-wrapper"></div>
               <img src={deskImg} alt="Desk" className="stats-desk-img" />
@@ -191,9 +196,9 @@ function StatsSection() {
             <div className="stats-side right">
               <motion.div
                 className="stats-block"
-                variants={fadeBlock(0.5)}
+                variants={fadeBlockCustom(0.4)}
                 initial="hidden"
-                animate="show"
+                animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
                   <CountUpNumber end={26} suffix="+" duration={2.2} />
@@ -202,9 +207,9 @@ function StatsSection() {
               </motion.div>
               <motion.div
                 className="stats-block"
-                variants={fadeBlock(1.5)}
+                variants={fadeBlockCustom(0.6)}
                 initial="hidden"
-                animate="show"
+                animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
                   <CountUpNumber end={100} suffix="%" duration={2.2} />

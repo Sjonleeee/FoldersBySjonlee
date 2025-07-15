@@ -4,20 +4,20 @@ import { OrbitControls, PresentationControls } from "@react-three/drei";
 import Model from "../three/Model";
 
 // Camera movement component
-const CameraMovement = ({ mousePosition }) => {
+const CameraMovement = ({ inputPosition }) => {
   const { camera } = useThree();
   const initialPosition = [0, 0, 7];
   const maxVerticalMovement = 1.5;
 
   useFrame(() => {
-    if (!mousePosition) return;
+    if (!inputPosition) return;
 
     // Calculate target position with reduced movement range
-    const targetX = initialPosition[0] + mousePosition.x * 0.8;
+    const targetX = initialPosition[0] + inputPosition.x * 0.8;
     const targetY =
       initialPosition[1] +
       Math.max(
-        Math.min(mousePosition.y * 0.8, maxVerticalMovement),
+        Math.min(inputPosition.y * 0.8, maxVerticalMovement),
         -maxVerticalMovement
       );
 
@@ -37,17 +37,52 @@ const CameraMovement = ({ mousePosition }) => {
 };
 
 const ModelCanvas = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [inputPosition, setInputPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleMouseMove = (event) => {
-      const x = (event.clientX / window.innerWidth) * 2 - 1;
-      const y = -(event.clientY / window.innerHeight) * 2 + 1;
-      setMousePosition({ x, y });
-    };
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    let permissionRequested = false;
+    let orientationHandler;
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    if (isMobile && window.DeviceOrientationEvent) {
+      orientationHandler = (event) => {
+        // Map device orientation to x/y in range [-1, 1]
+        const x = event.gamma ? event.gamma / 45 : 0; // gamma: left-right
+        const y = event.beta ? event.beta / 90 : 0;   // beta: front-back
+        setInputPosition({
+          x: Math.max(-1, Math.min(1, x)),
+          y: Math.max(-1, Math.min(1, y)),
+        });
+      };
+
+      // iOS 13+ requires permission
+      if (
+        typeof DeviceOrientationEvent.requestPermission === "function" &&
+        !permissionRequested
+      ) {
+        DeviceOrientationEvent.requestPermission()
+          .then((response) => {
+            if (response === "granted") {
+              window.addEventListener("deviceorientation", orientationHandler, true);
+            }
+          })
+          .catch(console.error);
+        permissionRequested = true;
+      } else {
+        window.addEventListener("deviceorientation", orientationHandler, true);
+      }
+      return () => {
+        window.removeEventListener("deviceorientation", orientationHandler, true);
+      };
+    } else {
+      const handleMouseMove = (event) => {
+        const x = (event.clientX / window.innerWidth) * 2 - 1;
+        const y = -(event.clientY / window.innerHeight) * 2 + 1;
+        setInputPosition({ x, y });
+      };
+      window.addEventListener("mousemove", handleMouseMove);
+      return () => window.removeEventListener("mousemove", handleMouseMove);
+    }
   }, []);
 
   return (
@@ -70,10 +105,10 @@ const ModelCanvas = () => {
             config={{ mass: 2, tension: 400 }}
             enabled={false}
           >
-            <Model mousePosition={mousePosition} />
+            <Model mousePosition={inputPosition} />
           </PresentationControls>
         </Suspense>
-        <CameraMovement mousePosition={mousePosition} />
+        <CameraMovement inputPosition={inputPosition} />
         <OrbitControls
           enableZoom={false}
           enablePan={false}

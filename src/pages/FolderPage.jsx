@@ -4,7 +4,7 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import folderIcon from "../assets/images/folder.svg";
 import ModelCanvas from "../components/ModelCanvas";
-import '../styles/folderpage.css';
+import "../styles/folderpage.css";
 
 export default function FolderPage() {
   const fadeDown = {
@@ -77,14 +77,14 @@ export default function FolderPage() {
                   </div>
                 </div>
               </div>
-              <ModelCanvas />
+              {/* <ModelCanvas /> */}
             </section>
           </div>
         </div>
       </motion.div>
       {/* Overlay Footer */}
       <div className="overlay-footer">
-        <Footer />
+        <Footer showScrollDown={true} />
       </div>
     </div>
   );

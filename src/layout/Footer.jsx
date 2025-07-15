@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import iconData from "../config/iconData";
 import { useMenu } from "../context/MenuContext";
-import '../styles/footer.css';
+import "../styles/footer.css";
 
-const Footer = () => {
+const Footer = ({ showScrollDown }) => {
   const { menuOpen } = useMenu();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activePopup, setActivePopup] = useState(null);
@@ -36,7 +36,7 @@ const Footer = () => {
 
   return (
     <footer className="footer">
-      <div style={{ fontSize: "0.75rem", color: "#9ca3af" }}>
+      <div style={{ fontSize: "0.75rem" }}>
         Local Time:
         <br />
         <span style={{ color: "white" }}>{formatTime()}</span>
@@ -85,11 +85,22 @@ const Footer = () => {
           ))}
         </div>
       )}
-      <div style={{ fontSize: "0.75rem", textAlign: "right" }}>
-        2025
-        <br />
-        <span style={{ color: "#9ca3af" }}>by rinkitou®</span>
-      </div>
+      {(!menuOpen && showScrollDown) ? (
+        <div className="footer-scroll-card">
+          <div className="footer-scroll-content">
+            <div className="footer-scroll-textblock">
+              <span className="footer-scroll-label">Scroll Down</span>
+              <span className="footer-scroll-desc">to discover</span>
+            </div>
+            <span className="footer-scroll-arrow">&#x25BC;</span>
+          </div>
+        </div>
+      ) : (
+        <div className="footer-copyright">
+          <span className="footer-copyright-label">2025</span>
+          <span className="footer-copyright-value">by rinkitou®</span>
+        </div>
+      )}
     </footer>
   );
 };

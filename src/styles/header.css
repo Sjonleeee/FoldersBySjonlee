@@ -34,7 +34,20 @@
   height: 0.75rem;
   background-color: #22c55e;
   border-radius: 50%;
-  margin-right: 0.5rem;
+  margin-right: 0.7rem;
+  box-shadow: 0 0 12px 4px #22c55e, 0 0 24px 8px #22c55e44;
+  animation: online-flicker 2.4s infinite alternate;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+  top: 0.08em;
+}
+
+@keyframes online-flicker {
+  0%   { box-shadow: 0 0 12px 4px #22c55e, 0 0 24px 8px #22c55e44; opacity: 1; }
+  40%  { box-shadow: 0 0 13px 4.5px #22c55e, 0 0 25px 8.5px #22c55e44; opacity: 0.96; }
+  60%  { box-shadow: 0 0 11px 3.5px #22c55e, 0 0 20px 7px #22c55e33; opacity: 0.92; }
+  100% { box-shadow: 0 0 12px 4px #22c55e, 0 0 24px 8px #22c55e44; opacity: 1; }
 }
 
 .header-freelance {

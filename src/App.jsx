@@ -7,13 +7,13 @@ import MouseFollower from "./components/MouseFollower";
 export default function App() {
   return (
     <>
-      <MouseFollower />
+      {/* <MouseFollower /> */}
       <MenuProvider>
-        <LoadingProvider>
-          <MainLayout>
-            <MainPage />
-          </MainLayout>
-        </LoadingProvider>
+      {/* <LoadingProvider> */}
+      {/* <MainLayout> */}
+      <MainPage />
+      {/* </MainLayout> */}
+      {/* </LoadingProvider> */}
       </MenuProvider>
     </>
   );

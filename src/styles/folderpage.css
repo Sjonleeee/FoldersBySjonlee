@@ -28,9 +28,9 @@
 .role-label.top-center { top: 8%; left: 50%; transform: translateX(-50%); }
 .role-label.top-right { top: 18%; right: 7%; }
 .role-label.mid-right { top: 48%; right: 7%; }
-.role-label.bottom-left { bottom: 18%; left: 10%; }
-.role-label.bottom-center { bottom: 8%; left: 50%; transform: translateX(-50%); }
-.role-label.bottom-right { bottom: 18%; right: 10%; }
+.role-label.bottom-left { bottom: 25%; left: 10%; }
+.role-label.bottom-center { bottom: 15%; left: 50%; transform: translateX(-50%); }
+.role-label.bottom-right { bottom: 25%; right: 10%; }
 
 @media (min-width: 768px) {
   .role-label {
@@ -42,9 +42,9 @@
   .role-label.top-center { top: 25%; left: 50%; transform: translateX(-50%); }
   .role-label.top-right { top: 35%; right: 28%; }
   .role-label.mid-right { top: 60%; right: 25%; }
-  .role-label.bottom-left { bottom: 35%; left: 32%; }
-  .role-label.bottom-center { bottom: 20%; left: 50%; transform: translateX(-50%); }
-  .role-label.bottom-right { bottom: 35%; right: 32%; }
+  .role-label.bottom-left { bottom: 45%; left: 32%; }
+  .role-label.bottom-center { bottom: 30%; left: 50%; transform: translateX(-50%); }
+  .role-label.bottom-right { bottom: 45%; right: 32%; }
 } 
 
 .canvas-wrapper {

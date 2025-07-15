@@ -134,7 +134,7 @@ html {
   font-style: italic;
   font-size: 8rem; /* Larger for mobile, adjust as needed */
   color: #000; /* Black fill */
-  -webkit-text-stroke: 2.5px #fff; /* White border */
+  -webkit-text-stroke: 1.5px #fff; /* Thinner border for mobile */
   text-stroke: 2.5px #fff;         /* Standard property (fallback) */
   white-space: nowrap;
   line-height: 1.1;
@@ -203,6 +203,7 @@ html {
 @media (min-width: 768px) {
   .title-text {
     font-size: clamp(10rem, 12vw, 16rem); /* Increased size for desktop */
+    -webkit-text-stroke: 2.5px #fff; /* Thicker border for desktop */
   }
 }
 

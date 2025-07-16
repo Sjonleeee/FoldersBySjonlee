@@ -24,13 +24,36 @@
 }
 
 /* Mobile absolute positions for each label */
-.role-label.top-left { top: 18%; left: 7%; }
-.role-label.top-center { top: 8%; left: 50%; transform: translateX(-50%); }
-.role-label.top-right { top: 18%; right: 7%; }
-.role-label.mid-right { top: 48%; right: 7%; }
-.role-label.bottom-left { bottom: 25%; left: 10%; }
-.role-label.bottom-center { bottom: 15%; left: 50%; transform: translateX(-50%); }
-.role-label.bottom-right { bottom: 25%; right: 10%; }
+.role-label.top-left {
+  top: 18%;
+  left: 7%;
+}
+.role-label.top-center {
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.role-label.top-right {
+  top: 18%;
+  right: 7%;
+}
+.role-label.mid-right {
+  top: 48%;
+  right: 7%;
+}
+.role-label.bottom-left {
+  bottom: 25%;
+  left: 10%;
+}
+.role-label.bottom-center {
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.role-label.bottom-right {
+  bottom: 25%;
+  right: 10%;
+}
 
 @media (min-width: 768px) {
   .role-label {
@@ -38,14 +61,37 @@
     opacity: 0.85;
     letter-spacing: 0.1em;
   }
-  .role-label.top-left { top: 35%; left: 28%; }
-  .role-label.top-center { top: 25%; left: 50%; transform: translateX(-50%); }
-  .role-label.top-right { top: 35%; right: 28%; }
-  .role-label.mid-right { top: 60%; right: 25%; }
-  .role-label.bottom-left { bottom: 45%; left: 32%; }
-  .role-label.bottom-center { bottom: 30%; left: 50%; transform: translateX(-50%); }
-  .role-label.bottom-right { bottom: 45%; right: 32%; }
-} 
+  .role-label.top-left {
+    top: 35%;
+    left: 28%;
+  }
+  .role-label.top-center {
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .role-label.top-right {
+    top: 35%;
+    right: 28%;
+  }
+  .role-label.mid-right {
+    top: 60%;
+    right: 25%;
+  }
+  .role-label.bottom-left {
+    bottom: 45%;
+    left: 32%;
+  }
+  .role-label.bottom-center {
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .role-label.bottom-right {
+    bottom: 45%;
+    right: 32%;
+  }
+}
 
 .canvas-wrapper {
   width: 950px;
@@ -68,7 +114,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-} 
+}
 
 @media (max-width: 900px) {
   .title-container {
@@ -90,7 +136,7 @@
     font-size: 8rem;
     font-weight: 400;
     color: #000;
-    line-height:18%;
+    line-height: 18git push;
     -webkit-text-stroke: 2px #fff;
     text-stroke: 2px #fff;
     white-space: normal;
@@ -98,4 +144,4 @@
     text-align: center;
     letter-spacing: 0.04em;
   }
-} 
+}

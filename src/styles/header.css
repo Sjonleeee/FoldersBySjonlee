@@ -116,7 +116,8 @@
 
 .header-dropdown-item .menu-initial {
   transition: color 0.18s, background 0.18s;
-  /* No color or background here! */
+  /* Remove color and background so it inherits from parent */
+  pointer-events: none;
 }
 
 .header-dropdown-item:hover {

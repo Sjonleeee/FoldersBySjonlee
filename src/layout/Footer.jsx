@@ -3,7 +3,7 @@ import iconData from "../config/iconData";
 import { useMenu } from "../context/MenuContext";
 import "../styles/footer.css";
 
-const Footer = ({ showScrollDown }) => {
+const Footer = ({ showScrollDown, hideIconBar }) => {
   const { menuOpen } = useMenu();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activePopup, setActivePopup] = useState(null);
@@ -44,7 +44,7 @@ const Footer = ({ showScrollDown }) => {
         </div>
       </div>
       <div className="footer-center">
-        {!menuOpen && (
+        {!menuOpen && !hideIconBar && (
           <div className="footer-icon-bar">
             {iconData.map((icon) => (
               <div

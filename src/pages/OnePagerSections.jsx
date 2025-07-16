@@ -74,7 +74,11 @@ function StatsSection() {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: isMobile ? 0.5 : 1.1, delay, ease: [0.4, 0, 0.2, 1] },
+      transition: {
+        duration: isMobile ? 0.5 : 1.1,
+        delay,
+        ease: [0.4, 0, 0.2, 1],
+      },
     },
   });
 
@@ -102,7 +106,9 @@ function StatsSection() {
             </motion.div>
             <div
               className="stats-blocks-grid"
-              style={!showStats ? { visibility: 'hidden', minHeight: '8rem' } : {}}
+              style={
+                !showStats ? { visibility: "hidden", minHeight: "8rem" } : {}
+              }
             >
               <motion.div
                 className="stats-block"
@@ -272,7 +278,7 @@ export default function OnePagerSections() {
       {/* Overlay Footer */}
       {pageIndex !== 0 && (
         <div className="overlay-footer">
-          <Footer />
+          <Footer hideIconBar={true} />
         </div>
       )}
       {/* Overlay transition */}

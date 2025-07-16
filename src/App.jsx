@@ -9,11 +9,11 @@ export default function App() {
     <>
       {/* <MouseFollower /> */}
       <MenuProvider>
-      {/* <LoadingProvider> */}
-      {/* <MainLayout> */}
-      <MainPage />
-      {/* </MainLayout> */}
-      {/* </LoadingProvider> */}
+        {/* <LoadingProvider> */}
+        {/* <MainLayout> */}
+        <MainPage />
+        {/* </MainLayout> */}
+        {/* </LoadingProvider> */}
       </MenuProvider>
     </>
   );

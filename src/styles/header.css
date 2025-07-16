@@ -44,10 +44,22 @@
 }
 
 @keyframes online-flicker {
-  0%   { box-shadow: 0 0 12px 4px #22c55e, 0 0 24px 8px #22c55e44; opacity: 1; }
-  40%  { box-shadow: 0 0 13px 4.5px #22c55e, 0 0 25px 8.5px #22c55e44; opacity: 0.96; }
-  60%  { box-shadow: 0 0 11px 3.5px #22c55e, 0 0 20px 7px #22c55e33; opacity: 0.92; }
-  100% { box-shadow: 0 0 12px 4px #22c55e, 0 0 24px 8px #22c55e44; opacity: 1; }
+  0% {
+    box-shadow: 0 0 12px 4px #22c55e, 0 0 24px 8px #22c55e44;
+    opacity: 1;
+  }
+  40% {
+    box-shadow: 0 0 13px 4.5px #22c55e, 0 0 25px 8.5px #22c55e44;
+    opacity: 0.96;
+  }
+  60% {
+    box-shadow: 0 0 11px 3.5px #22c55e, 0 0 20px 7px #22c55e33;
+    opacity: 0.92;
+  }
+  100% {
+    box-shadow: 0 0 12px 4px #22c55e, 0 0 24px 8px #22c55e44;
+    opacity: 1;
+  }
 }
 
 .header-freelance {
@@ -74,36 +86,93 @@
   position: absolute;
   top: 2.2rem;
   right: 0;
-  background: rgba(30,32,38,0.55);
+  background: rgba(30, 32, 38, 0.55);
   border-radius: 14px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 4px 0 rgba(0,0,0,0.10);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 1.5px 4px 0 rgba(0, 0, 0, 0.1);
   padding: 0.7rem 1.2rem;
   min-width: 180px;
   z-index: 1000;
   animation: fadeInMenu 0.22s;
   backdrop-filter: blur(16px) saturate(1.2);
-  border: 1.5px solid rgba(80,80,90,0.22);
+  border: 1.5px solid rgba(80, 80, 90, 0.22);
 }
 
 @keyframes fadeInMenu {
-  from { opacity: 0; transform: translateY(-10px);}
-  to { opacity: 1; transform: translateY(0);}
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .header-dropdown-item {
-  padding: 0.5rem 0.7rem;
-  border-radius: 8px;
-  font-size: 1.05rem;
+  transition: color 0.18s, background 0.18s;
+  background: none;
   color: #f3f4f6;
-  cursor: pointer;
-  transition: background 0.18s;
 }
+
+.header-dropdown-item .menu-initial {
+  transition: color 0.18s, background 0.18s;
+  /* No color or background here! */
+}
+
 .header-dropdown-item:hover {
-  background: rgba(60,60,70,0.32);
+  color: transparent;
+  background: linear-gradient(90deg,
+    #ffffff 0%,
+    #e0e6eb 10%,
+    #bfc6ce 18%,
+    #eaf3fa 25%,
+    #f8f8f8 32%,
+    #bdbcbc 40%,
+    #e0e0e0 50%,
+    #f8f8f8 60%,
+    #eaf3fa 70%,
+    #bfc6ce 80%,
+    #e0e6eb 90%,
+    #ffffff 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px #fff) drop-shadow(0 0px 16px #eaf3fa88);
 }
 
 .header-menu {
   position: relative;
+}
+
+.header-menu span {
+  transition: color 0.18s;
+  background: none !important;
+  color: #f3f4f6;
+}
+
+.header-menu span:hover {
+  color: transparent !important;
+  background: linear-gradient(90deg,
+    #ffffff 0%,
+    #e0e6eb 10%,
+    #bfc6ce 18%,
+    #eaf3fa 25%,
+    #f8f8f8 32%,
+    #bdbcbc 40%,
+    #e0e0e0 50%,
+    #f8f8f8 60%,
+    #eaf3fa 70%,
+    #bfc6ce 80%,
+    #e0e6eb 90%,
+    #ffffff 100%
+  ) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  text-fill-color: transparent !important;
+  filter: drop-shadow(0 2px 8px #fff) drop-shadow(0 0px 16px #eaf3fa88) !important;
 }
 
 .header-fullscreen-menu {
@@ -111,7 +180,6 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(30,32,38,0.48);
   backdrop-filter: blur(22px) saturate(1.2);
   z-index: 3000;
   display: flex;
@@ -152,21 +220,18 @@
 
 .header-fullscreen-menu .header-dropdown-item {
   font-size: 3.6rem;
-  font-weight: 600;
   border-radius: 16px;
   transition: none;
   cursor: pointer;
-  text-align: center;
+  line-height: 2.3em;
 }
 
 .header-fullscreen-menu .header-dropdown-item .menu-initial {
   font-family: "Hermaiona", cursive, serif;
-  font-size: 1.5em;
+  font-size: 1.9em;
   font-style: italic;
   color: #fff;
-  letter-spacing: 0.09em;
-  margin-right: 0.08em;
-} 
+}
 
 @media (max-width: 768px) {
   .header {
@@ -194,4 +259,4 @@
   .header-fullscreen-menu .header-dropdown-item {
     font-size: 2rem;
   }
-} 
+}

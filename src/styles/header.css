@@ -232,7 +232,7 @@
   font-size: 1.9em;
   font-style: italic;
   color: #fff;
-}
+} 
 
 @media (max-width: 768px) {
   .header {
@@ -260,4 +260,4 @@
   .header-fullscreen-menu .header-dropdown-item {
     font-size: 2rem;
   }
-}
+} 

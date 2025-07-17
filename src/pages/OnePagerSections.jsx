@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import FolderPage from "./FolderPage";
 import Header from "../layout/Header";
@@ -8,6 +8,8 @@ import rinkitouVideo from "../assets/videos/rinkitou.mp4";
 // import laptopDeskImg from "../assets/images/LaptopDesk.png";
 import deskImg from "../assets/images/DESK.png";
 import "../styles/onepager.css";
+import AboutSection from "./AboutSection";
+import PhotoGridSection from "./PhotoGridSection";
 
 // Responsive hook
 function useIsMobile(breakpoint = 900) {
@@ -55,14 +57,6 @@ const fadeInCenter = {
     transition: { duration: 0.7, delay: 0, ease: [0.4, 0, 0.2, 1] },
   },
 };
-
-const sections = [
-  { key: "folder", component: <FolderPage /> },
-  {
-    key: "stats",
-    component: <StatsSection />,
-  },
-];
 
 function StatsSection() {
   const isMobile = useIsMobile();
@@ -231,75 +225,12 @@ function StatsSection() {
 }
 
 export default function OnePagerSections() {
-  const [pageIndex, setPageIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const handleWheel = useCallback(
-    (e) => {
-      if (isTransitioning) return;
-      if (e.deltaY > 0 && pageIndex < sections.length - 1) {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setPageIndex(pageIndex + 1);
-          setIsTransitioning(false);
-        }, 900);
-      } else if (e.deltaY < 0 && pageIndex > 0) {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setPageIndex(pageIndex - 1);
-          setIsTransitioning(false);
-        }, 900);
-      }
-    },
-    [isTransitioning, pageIndex]
-  );
-
   return (
-    <div className="page-root" onWheel={handleWheel}>
-      {/* Overlay Header */}
-      {pageIndex !== 0 && (
-        <div className="overlay-header">
-          <Header onLogoClick={() => window.location.reload()} />
-        </div>
-      )}
-      {/* Animated Section Content */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={sections[pageIndex].key}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -40 }}
-          transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
-          className="main-content-centered"
-        >
-          {sections[pageIndex].component}
-        </motion.div>
-      </AnimatePresence>
-      {/* Overlay Footer */}
-      {pageIndex !== 0 && (
-        <div className="overlay-footer">
-          <Footer hideIconBar={true} />
-        </div>
-      )}
-      {/* Overlay transition */}
-      <AnimatePresence>
-        {isTransitioning && (
-          <motion.div
-            key="overlay"
-            initial={{ scaleY: 0 }}
-            animate={{ scaleY: 1 }}
-            exit={{ scaleY: 0 }}
-            transition={{ duration: 0.9, ease: [0.4, 0, 0.2, 1] }}
-            style={{
-              position: "fixed",
-              inset: 0,
-              zIndex: 110,
-              transformOrigin: "top",
-              pointerEvents: "none",
-            }}
-          />
-        )}
-      </AnimatePresence>
+    <div className="onepager-root">
+      <FolderPage />
+      <StatsSection />
+      <AboutSection />
+      {/* <PhotoGridSection /> removed, now merged in AboutSection */}
     </div>
   );
 }

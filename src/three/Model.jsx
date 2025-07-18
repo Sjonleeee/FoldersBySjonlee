@@ -79,16 +79,19 @@ const Model = ({ mousePosition }) => {
       console.log("Lights:", lights);
 
       // Adjust scale - Aangepast om de Creative Developer sectie te vullen en hoofd zichtbaar te houden
-      scene.scale.set(2, 2, 2);
+      scene.scale.set(2.2, 2.2,2.2);
 
       // Position the model - Aangepast om in het midden van de Creative Developer sectie te staan en hoofd zichtbaar
       scene.position.set(0, -2.5, 0); // Lager geplaatst zodat het hoofd zichtbaar is en gecentreerd
 
+      let lightCount = 0;
       scene.traverse((child) => {
         if (child.isLight) {
-          child.intensity *= 0.045;
+          child.intensity = 1.0;
+          lightCount++;
         }
       });
+      console.log('Aantal lichten in model:', lightCount);
 
       // Log the model's bounding box to help debug positioning
       const box = new THREE.Box3().setFromObject(scene);
@@ -119,7 +122,13 @@ const Model = ({ mousePosition }) => {
     }
   }, [scene, actions, cameras, lights]);
 
-  return <primitive object={scene} />;
+  return (
+    <>
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[10, 10, 5]} intensity={2.5} />
+      <primitive object={scene} />
+    </>
+  );
 };
 
 export default Model;

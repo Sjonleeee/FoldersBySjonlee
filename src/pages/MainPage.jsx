@@ -15,7 +15,7 @@ export default function MainPage() {
       {!folderOpen ? (
         <FolderLanding onOpen={handleOpen} />
       ) : (
-        <OnePagerSections />
+        <OnePagerSections onBackToLanding={() => setFolderOpen(false)} />
       )}
     </>
   );

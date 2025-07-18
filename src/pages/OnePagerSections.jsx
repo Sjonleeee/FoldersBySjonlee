@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   AnimatePresence,
   motion,
-  useViewportScroll,
+  useScroll,
   useTransform,
 } from "framer-motion";
 import FolderPage from "./FolderPage";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import rinkitouVideo from "../assets/videos/rinkitou.mp4";
-// import laptopImg from "../assets/images/mackbookmockup.png";
-// import laptopDeskImg from "../assets/images/LaptopDesk.png";
 import deskImg from "../assets/images/DESK.png";
 import sjonlee1 from "../assets/images/sjonlee1.jpeg";
 import sjonlee2 from "../assets/images/sjonlee2.jpeg";
@@ -18,7 +16,6 @@ import sjonlee3 from "../assets/images/sjonlee3.jpeg";
 import sjonlee4 from "../assets/images/sjonlee4.jpeg";
 import sjonlee from "../assets/images/sjonlee.jpeg";
 import "../styles/onepager.css";
-import { useRef } from "react";
 
 // Responsive hook
 function useIsMobile(breakpoint = 900) {
@@ -340,9 +337,9 @@ function AboutPhotoSection() {
   );
 }
 
-function ParallaxHeroStats() {
+function ParallaxHeroStats({ onHeroGone }) {
   const ref = useRef(null);
-  const { scrollY } = useViewportScroll();
+  const { scrollY } = useScroll();
   const heroHeight = 700; // px, adjust as needed for your design
 
   // FolderPage fades out and moves up
@@ -360,6 +357,18 @@ function ParallaxHeroStats() {
     [heroHeight * 0.3, heroHeight],
     [100, 0]
   );
+
+  const [opacity, setOpacity] = useState(1);
+  useEffect(() => {
+    const unsubOpacity = folderOpacity.on("change", (v) => setOpacity(v));
+    return () => {
+      unsubOpacity();
+    };
+  }, [folderOpacity]);
+
+  useEffect(() => {
+    if (onHeroGone) onHeroGone(opacity <= 0.53);
+  }, [opacity, onHeroGone]);
 
   return (
     <div ref={ref} style={{ position: "relative", minHeight: heroHeight * 2 }}>
@@ -406,8 +415,9 @@ const fadeUp = {
   },
 };
 
-export default function OnePagerSections() {
-  // Gebruik vaste hoogte of CSS-variabelen voor header/footer spacing
+export default function OnePagerSections({ onBackToLanding }) {
+  const [showCopyright, setShowCopyright] = useState(false);
+
   return (
     <div
       className="onepager-root"
@@ -425,10 +435,10 @@ export default function OnePagerSections() {
           zIndex: 5000,
         }}
       >
-        <Header />
+        <Header onLogoClick={onBackToLanding} />
       </motion.div>
       <div className="onepager-content">
-        <ParallaxHeroStats />
+        <ParallaxHeroStats onHeroGone={setShowCopyright} />
         <AboutPhotoSection />
       </div>
       <motion.div
@@ -443,7 +453,7 @@ export default function OnePagerSections() {
           zIndex: 5000,
         }}
       >
-        <Footer showScrollDown={true} />
+        <Footer showCopyright={showCopyright} />
       </motion.div>
     </div>
   );

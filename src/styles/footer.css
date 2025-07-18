@@ -1,6 +1,6 @@
 /* Footer-specific styles extracted from index.css */
 
-.footer {
+.footer-inner {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
@@ -9,10 +9,17 @@
   justify-content: center;
   padding-left: 0;
   padding-right: 0;
+}
+
+.footer {
+  width: 100vw;
+  max-width: none;
+  margin: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 5000;
   padding-bottom: 2.5rem;
-  margin-top: 5rem;
-  position: relative;
-  z-index: 2000;
 }
 .footer-left,
 .footer-right {

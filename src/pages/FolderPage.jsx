@@ -1,20 +1,9 @@
 import React, { useEffect } from "react";
-import { motion } from "framer-motion";
-import Header from "../layout/Header";
-import Footer from "../layout/Footer";
 import folderIcon from "../assets/images/folder.svg";
 import ModelCanvas from "../components/ModelCanvas";
 import "../styles/folderpage.css";
 
 export default function FolderPage() {
-  const fadeDown = {
-    hidden: { opacity: 0, y: -40 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
-    },
-  };
   const fadeIn = {
     hidden: { opacity: 0 },
     show: {
@@ -29,17 +18,8 @@ export default function FolderPage() {
 
   return (
     <div className="page-root">
-      {/* Overlay Header */}
-      <motion.div
-        variants={fadeDown}
-        initial="hidden"
-        animate="show"
-        className="overlay-header"
-      >
-        <Header onLogoClick={() => window.location.reload()} />
-      </motion.div>
       {/* Main Content */}
-      <motion.div
+      <div
         variants={fadeIn}
         initial="hidden"
         animate="show"
@@ -69,11 +49,13 @@ export default function FolderPage() {
                 <span className="role-label mid-right">Director</span>
                 <span className="role-label bottom-center">Hussler</span>
                 <div className="absolute-center title-container">
-                  <div className="pointer-none left-title">
-                    <span className="title-text">Creative</span>
-                  </div>
-                  <div className="pointer-none right-title">
-                    <span className="title-text">Developer</span>
+                  <div className="title-center-flex">
+                    <div className="pointer-none left-title">
+                      <span className="title-text">Creative</span>
+                    </div>
+                    <div className="pointer-none right-title">
+                      <span className="title-text">Developer</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -81,10 +63,6 @@ export default function FolderPage() {
             </section>
           </div>
         </div>
-      </motion.div>
-      {/* Overlay Footer */}
-      <div className="overlay-footer">
-        <Footer showScrollDown={true} />
       </div>
     </div>
   );

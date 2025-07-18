@@ -1,16 +1,84 @@
-/* FolderPage-specific styles extracted from index.css */
-
-.folder-page-container {
-  width: 100%;
-}
-.main-content-z1 {
-  z-index: 1;
-}
+/* =====================
+   Layout & Centering
+   ===================== */
+.full-screen,
 .full-screen-z10 {
   position: relative;
-  z-index: 10;
+  width: 100vw;
+  min-height: 100vh;
+  left: 0;
 }
 
+.main-content-centered,
+.main-content,
+.folder-page-container {
+  width: 100vw;
+  margin: 0;
+  max-width: none;
+}
+
+/* =====================
+   Title Centering
+   ===================== */
+.title-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  pointer-events: none;
+}
+
+.title-center-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 2vw;
+}
+
+.left-title,
+.right-title {
+  display: block;
+  text-align: center;
+}
+
+.title-text {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 8rem;
+  font-weight: 400;
+  color: #000;
+  -webkit-text-stroke: 2px #fff;
+  text-stroke: 2px #fff;
+  white-space: normal;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+/* =====================
+   Canvas
+   ===================== */
+.canvas-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =====================
+   Role Labels
+   ===================== */
 .role-label {
   position: absolute;
   font-size: 0.7rem;
@@ -23,125 +91,62 @@
   white-space: nowrap;
 }
 
-/* Mobile absolute positions for each label */
-.role-label.top-left {
-  top: 18%;
-  left: 7%;
-}
-.role-label.top-center {
-  top: 8%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.role-label.top-right {
-  top: 18%;
-  right: 7%;
-}
-.role-label.mid-right {
-  top: 48%;
-  right: 7%;
-}
-.role-label.bottom-left {
-  bottom: 25%;
-  left: 10%;
-}
-.role-label.bottom-center {
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.role-label.bottom-right {
-  bottom: 25%;
-  right: 10%;
-}
+.role-label.top-left { top: 18%; left: 7%; }
+.role-label.top-center { top: 8%; left: 50%; transform: translateX(-50%); }
+.role-label.top-right { top: 18%; right: 7%; }
+.role-label.mid-right { top: 48%; right: 7%; }
+.role-label.bottom-left { bottom: 25%; left: 10%; }
+.role-label.bottom-center { bottom: 15%; left: 50%; transform: translateX(-50%); }
+.role-label.bottom-right { bottom: 25%; right: 10%; }
 
+/* =====================
+   Media Queries
+   ===================== */
 @media (min-width: 768px) {
   .role-label {
     font-size: 0.8rem;
     opacity: 0.85;
     letter-spacing: 0.1em;
   }
-  .role-label.top-left {
-    top: 35%;
-    left: 28%;
-  }
-  .role-label.top-center {
-    top: 25%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .role-label.top-right {
-    top: 35%;
-    right: 28%;
-  }
-  .role-label.mid-right {
-    top: 60%;
-    right: 25%;
-  }
-  .role-label.bottom-left {
-    bottom: 45%;
-    left: 32%;
-  }
-  .role-label.bottom-center {
-    bottom: 30%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .role-label.bottom-right {
-    bottom: 45%;
-    right: 32%;
-  }
-}
-
-.canvas-wrapper {
-  width: 950px;
-  height: 950px;
-  margin: 0 auto;
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@media (max-width: 767px) {
-  .canvas-wrapper {
-    width: 450px;
-    height: 450px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+  .role-label.top-left { top: 35%; left: 28%; }
+  .role-label.top-center { top: 25%; left: 50%; transform: translateX(-50%); }
+  .role-label.top-right { top: 35%; right: 28%; }
+  .role-label.mid-right { top: 60%; right: 25%; }
+  .role-label.bottom-left { bottom: 45%; left: 32%; }
+  .role-label.bottom-center { bottom: 30%; left: 50%; transform: translateX(-50%); }
+  .role-label.bottom-right { bottom: 45%; right: 32%; }
 }
 
 @media (max-width: 900px) {
   .title-container {
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    flex-grow: 1;
     min-height: 60vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
   }
-  .left-title,
-  .right-title {
-    display: block;
-    text-align: center;
+  .title-center-flex {
+    flex-direction: column;
+    gap: 0.5em;
   }
   .title-text {
-    font-family: "Hermaiona", cursive, serif;
-    font-size: 8rem;
-    font-weight: 400;
-    color: #000;
-    line-height: 18git push;
-    -webkit-text-stroke: 2px #fff;
-    text-stroke: 2px #fff;
-    white-space: normal;
-    margin: 0;
-    text-align: center;
-    letter-spacing: 0.04em;
+    font-size: 4rem;
+  }
+  .canvas-wrapper {
+    width: 100vw;
+    height: 60vh;
+    top: 50%;
+  }
+}
+
+@media (max-width: 767px) {
+  .canvas-wrapper {
+    width: 100vw;
+    height: 50vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }

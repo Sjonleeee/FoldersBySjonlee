@@ -1,18 +1,25 @@
 /* Header-specific styles extracted from index.css */
 
-.header {
+.header-inner {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 3rem;
   padding-left: 0;
   padding-right: 0;
-  padding-top: 2.5rem;
-  gap: 3rem;
-  position: relative;
-  z-index: 1;
+}
+
+.header {
+  width: 100vw;
+  max-width: none;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5000;
 }
 
 .header-logo-container {
@@ -91,8 +98,7 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 1.5px 4px 0 rgba(0, 0, 0, 0.1);
   padding: 0.7rem 1.2rem;
   min-width: 180px;
-  z-index: 1000;
-  animation: fadeInMenu 0.22s;
+s  animation: fadeInMenu 0.22s;
   backdrop-filter: blur(16px) saturate(1.2);
   border: 1.5px solid rgba(80, 80, 90, 0.22);
 }
@@ -122,7 +128,8 @@
 
 .header-dropdown-item:hover {
   color: transparent;
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     #ffffff 0%,
     #e0e6eb 10%,
     #bfc6ce 18%,
@@ -155,7 +162,8 @@
 
 .header-menu span:hover {
   color: transparent !important;
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     #ffffff 0%,
     #e0e6eb 10%,
     #bfc6ce 18%,
@@ -181,13 +189,15 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  backdrop-filter: blur(22px) saturate(1.2);
   z-index: 3000;
   display: flex;
   align-items: center;
   justify-content: center;
   animation: fadeInMenu 0.22s;
   padding: 0;
+  background: rgba(30, 32, 38, 0.38); /* Licht/transparant voor glassmorphism */
+  backdrop-filter: blur(32px) saturate(1.3);
+  -webkit-backdrop-filter: blur(32px) saturate(1.3);
 }
 
 .header-menu-close {
@@ -232,7 +242,7 @@
   font-size: 1.9em;
   font-style: italic;
   color: #fff;
-} 
+}
 
 @media (max-width: 768px) {
   .header {
@@ -260,4 +270,4 @@
   .header-fullscreen-menu .header-dropdown-item {
     font-size: 2rem;
   }
-} 
+}

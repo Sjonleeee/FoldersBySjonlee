@@ -50,11 +50,11 @@ export default function FolderPage() {
                 <span className="role-label bottom-center">Hussler</span>
                 <div className="absolute-center title-container">
                   <div className="title-center-flex">
-                    <div className="pointer-none left-title">
-                      <span className="title-text">Creative</span>
-                    </div>
-                    <div className="pointer-none right-title">
-                      <span className="title-text">Developer</span>
+                  <div className="pointer-none left-title">
+                    <span className="title-text">Creative</span>
+                  </div>
+                  <div className="pointer-none right-title">
+                    <span className="title-text">Developer</span>
                     </div>
                   </div>
                 </div>

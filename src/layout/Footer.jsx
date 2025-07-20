@@ -37,76 +37,61 @@ const Footer = ({ hideIconBar, showCopyright }) => {
   return (
     <footer className="footer">
       <div className="footer-inner">
-        <div className="footer-left">
-          <div style={{ fontSize: "0.75rem" }}>
-            Local Time:
-            <br />
-            <span style={{ color: "white" }}>{formatTime()}</span>
-          </div>
+      <div className="footer-left">
+        <div style={{ fontSize: "0.75rem" }}>
+          Local Time:
+          <br />
+          <span style={{ color: "white" }}>{formatTime()}</span>
         </div>
-        <div className="footer-center">
+      </div>
+      <div className="footer-center">
           {!menuOpen && !hideIconBar && (
-            <div className="footer-icon-bar">
-              {iconData.map((icon) => (
-                <div
-                  key={icon.key}
-                  style={{ position: "relative", display: "inline-block" }}
-                >
-                  <img
-                    src={icon.icon}
-                    alt={icon.label}
-                    className="footer-icon"
-                    style={{ width: "2.25rem", height: "2.25rem" }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActivePopup(activePopup === icon.key ? null : icon.key);
-                    }}
-                  />
-                  {activePopup === icon.key && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        bottom: "120%",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        background: "#222",
-                        color: "#fff",
-                        padding: "0.7rem 1.2rem",
-                        borderRadius: "0.7rem",
-                        boxShadow: "0 4px 24px rgba(0,0,0,0.18)",
-                        fontSize: "0.95rem",
-                        minWidth: "180px",
-                        zIndex: 10,
-                        whiteSpace: "pre-line",
-                      }}
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <strong>{icon.label}</strong>
-                      <div style={{ marginTop: "0.3rem" }}>{icon.description}</div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="footer-right">
-          {!menuOpen && !showCopyright ? (
-            <div className="footer-scroll-card">
-              <div className="footer-scroll-content">
-                <div className="footer-scroll-textblock">
-                  <span className="footer-scroll-label">Scroll Down</span>
-                  <span className="footer-scroll-desc">to discover</span>
-                </div>
-                <span className="footer-scroll-arrow">&#x25BC;</span>
+          <div className="footer-icon-bar">
+            {iconData.map((icon) => (
+              <div
+                key={icon.key}
+                style={{ position: "relative", display: "inline-block" }}
+              >
+                <img
+                  src={icon.icon}
+                  alt={icon.label}
+                  className="footer-icon footer-icon-img"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActivePopup(activePopup === icon.key ? null : icon.key);
+                  }}
+                />
+                {activePopup === icon.key && (
+                  <div
+                    className="footer-icon-popup"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <strong>{icon.label}</strong>
+                    <div style={{ marginTop: "0.3rem" }}>{icon.description}</div>
+                  </div>
+                )}
               </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="footer-right">
+          {!menuOpen && !showCopyright ? (
+          <div className="footer-scroll-card">
+            <div className="footer-scroll-content">
+              <div className="footer-scroll-textblock">
+                <span className="footer-scroll-label">Scroll Down</span>
+                <span className="footer-scroll-desc">to discover</span>
+              </div>
+              <span className="footer-scroll-arrow">&#x25BC;</span>
             </div>
-          ) : (
-            <div className="footer-copyright">
-              <span className="footer-copyright-label">2025</span>
-              <span className="footer-copyright-value">by rinkitou®</span>
-            </div>
-          )}
+          </div>
+        ) : (
+          <div className="footer-copyright">
+            <span className="footer-copyright-label">2025</span>
+            <span className="footer-copyright-value">by rinkitou®</span>
+          </div>
+        )}
         </div>
       </div>
     </footer>

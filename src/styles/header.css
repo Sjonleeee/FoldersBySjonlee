@@ -244,6 +244,15 @@ s  animation: fadeInMenu 0.22s;
   color: #fff;
 }
 
+.header-logo-clickable {
+  cursor: pointer;
+}
+
+.header-menu-span {
+  cursor: pointer;
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .header {
     padding-top: 1.2rem;

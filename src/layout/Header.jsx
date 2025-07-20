@@ -25,58 +25,57 @@ const Header = ({ onLogoClick }) => {
   return (
     <header className="header">
       <div className="header-inner">
-        <div className="header-logo-container">
-          <div
-            className="header-logo"
-            style={{ cursor: onLogoClick ? "pointer" : undefined }}
-            onClick={onLogoClick}
-          >
-            <div className="header-status-dot"></div>
-            Sjonlee
-            <br />
-            Ha
+      <div className="header-logo-container">
+        <div
+          className={`header-logo${onLogoClick ? " header-logo-clickable" : ""}`}
+          onClick={onLogoClick}
+        >
+          <div className="header-status-dot"></div>
+          Sjonlee
+          <br />
+          Ha
+        </div>
+      </div>
+      <div className="header-freelance">
+        Available for freelance:
+        <br />
+        <span className="header-email">info.sjonlee@gmail.com</span>
+      </div>
+      <div className="header-skills">
+        React, Three.js, Blender
+        <br />
+        <span className="header-skills-secondary">
+          Figma, Illustrator, Photoshop,
+          <br />
+          Premiere pro,
+        </span>
+      </div>
+      <div className="header-menu" ref={menuRef}>
+        <span
+          className="header-menu-span"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          MENU
+        </span>
+        {menuOpen && (
+          <div className="header-fullscreen-menu">
+            <button
+              className="header-menu-close"
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close menu"
+            >
+              &times;
+            </button>
+            <nav className="header-fullscreen-menu-content">
+              {menuItems.map((item) => (
+                <div className="header-dropdown-item" key={item}>
+                  <span className="menu-initial">{item[0]}</span>
+                  {item.slice(1)}
+                </div>
+              ))}
+            </nav>
           </div>
-        </div>
-        <div className="header-freelance">
-          Available for freelance:
-          <br />
-          <span className="header-email">info.sjonlee@gmail.com</span>
-        </div>
-        <div className="header-skills">
-          React, Three.js, Blender
-          <br />
-          <span className="header-skills-secondary">
-            Figma, Illustrator, Photoshop,
-            <br />
-            Premiere pro,
-          </span>
-        </div>
-        <div className="header-menu" ref={menuRef}>
-          <span
-            style={{ cursor: "pointer", fontWeight: 600 }}
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            MENU
-          </span>
-          {menuOpen && (
-            <div className="header-fullscreen-menu">
-              <button
-                className="header-menu-close"
-                onClick={() => setMenuOpen(false)}
-                aria-label="Close menu"
-              >
-                &times;
-              </button>
-              <nav className="header-fullscreen-menu-content">
-                {menuItems.map((item) => (
-                  <div className="header-dropdown-item" key={item}>
-                    <span className="menu-initial">{item[0]}</span>
-                    {item.slice(1)}
-                  </div>
-                ))}
-              </nav>
-            </div>
-          )}
+        )}
         </div>
       </div>
     </header>

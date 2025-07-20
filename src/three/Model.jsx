@@ -74,31 +74,16 @@ const Model = ({ mousePosition }) => {
 
   useEffect(() => {
     if (scene) {
-      console.log("Scene loaded, available objects:", scene.children);
-      console.log("Cameras:", cameras);
-      console.log("Lights:", lights);
-
       // Adjust scale - Aangepast om de Creative Developer sectie te vullen en hoofd zichtbaar te houden
       scene.scale.set(2.2, 2.2,2.2);
 
       // Position the model - Aangepast om in het midden van de Creative Developer sectie te staan en hoofd zichtbaar
       scene.position.set(0, -2.5, 0); // Lager geplaatst zodat het hoofd zichtbaar is en gecentreerd
 
-      let lightCount = 0;
       scene.traverse((child) => {
         if (child.isLight) {
           child.intensity = 1.0;
-          lightCount++;
         }
-      });
-      console.log('Aantal lichten in model:', lightCount);
-
-      // Log the model's bounding box to help debug positioning
-      const box = new THREE.Box3().setFromObject(scene);
-      console.log("Model bounds:", {
-        min: box.min,
-        max: box.max,
-        center: box.getCenter(new THREE.Vector3()),
       });
 
       // Find all heads named Head_*
@@ -108,7 +93,6 @@ const Model = ({ mousePosition }) => {
           headRefs.current.push(child);
         }
       });
-      console.log("Heads found:", headRefs.current);
 
       // Play animation if it exists
       if (actions && Object.keys(actions).length > 0) {

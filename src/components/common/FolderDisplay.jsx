@@ -1,5 +1,5 @@
 import React from "react";
-import folderIcon from "../assets/images/folder.svg";
+import folderIcon from "../../assets/images/folder.svg";
 
 const FolderDisplay = ({ onClick }) => {
   return (

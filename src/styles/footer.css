@@ -58,7 +58,8 @@
 
 .footer-icon {
   will-change: transform;
-  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s, opacity 0.18s;
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s,
+    opacity 0.18s;
   cursor: pointer;
 }
 .footer-icon:hover {
@@ -128,14 +129,14 @@
   justify-content: center;
 }
 .footer-scroll-label {
-  font-family: 'Source Sans Pro', ui-sans-serif, system-ui, sans-serif;
+  font-family: "Source Sans Pro", ui-sans-serif, system-ui, sans-serif;
   font-size: 0.75rem;
   font-weight: 400;
   line-height: 1.2;
   /* No color: default is white */
 }
 .footer-scroll-desc {
-  font-family: 'Source Sans Pro', ui-sans-serif, system-ui, sans-serif;
+  font-family: "Source Sans Pro", ui-sans-serif, system-ui, sans-serif;
   font-size: 0.95rem;
   font-weight: 400;
   line-height: 1.2;
@@ -144,7 +145,7 @@
 
 .footer-copyright {
   text-align: right;
-  font-family: 'Source Sans Pro', ui-sans-serif, system-ui, sans-serif;
+  font-family: "Source Sans Pro", ui-sans-serif, system-ui, sans-serif;
   font-weight: 400;
   line-height: 1.2;
   opacity: 0;
@@ -159,8 +160,35 @@
   display: block;
 }
 @keyframes copyright-fade-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer-icon-img {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.footer-icon-popup {
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border-radius: 0.7rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  font-size: 0.95rem;
+  min-width: 180px;
+  z-index: 10;
+  white-space: pre-line;
 }
 
 @media (max-width: 768px) {

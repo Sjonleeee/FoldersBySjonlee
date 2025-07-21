@@ -1,0 +1,129 @@
+@import url("https://fonts.googleapis.com/css2?family=Hermaiona&display=swap");
+
+.latest-projects-section {
+  padding: 3rem 1rem;
+}
+
+.latest-projects-title {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 6vw;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 3rem;
+  text-shadow: 3px 6px 0 #000, 0 2px 0 #fff;
+  filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.8));
+}
+
+.latest-projects-list {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.latest-project-row {
+  position: relative;
+  width: 100%;
+  min-height: 180px;
+  margin-bottom: 0;
+  margin-top: -32px;
+  background-color: transparent;
+  display: flex;
+  align-items: stretch;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: bottom;
+}
+
+.latest-project-row:first-child {
+  margin-top: 0;
+}
+
+.latest-project-title {
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  min-width: 300px;
+}
+
+.latest-project-fancy {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 3rem;
+  color: #fff;
+  margin-right: 0.5rem;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.7));
+}
+
+.latest-project-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.latest-project-tags {
+  color: #38bdf8;
+  font-size: 1rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.latest-project-desc {
+  color: #fff;
+  font-size: 1rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.latest-project-image {
+  display: flex;
+  align-items: flex-end; /* Verticaal centreren */
+  justify-content: flex-end; /* Horizontaal centreren */
+  width: 500px; /* Pas aan naar wens */
+  height: 190px; /* Pas aan naar wens */
+  border-radius: 0 1rem 1rem 0;
+  overflow: hidden;
+}
+
+.latest-project-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Hele afbeelding zichtbaar, geen crop */
+  border-radius: 0 1rem 1rem 0;
+  display: block;
+}
+
+.latest-project-image-text {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  z-index: 20;
+  text-shadow: 0 2px 4px #000;
+}
+
+.folder {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.stacked-folders {
+  position: relative;
+  width: 320px;
+  height: 140px;
+}
+
+@media (max-width: 600px) {
+  .latest-project-image {
+    width: 120px;
+    height: 70px;
+  }
+}

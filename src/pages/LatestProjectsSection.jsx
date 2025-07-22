@@ -35,7 +35,7 @@ export default function LatestProjectsSection() {
               <div className="folder-title-row">
                 <span className="project-fancy-letter">{project.fancy}</span>
                 <span className="project-title">{project.title}</span>
-              </div>
+            </div>
               <div className="project-tags">{project.tags}</div>
             </div>
           </div>

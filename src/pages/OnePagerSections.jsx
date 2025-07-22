@@ -4,6 +4,7 @@ import Footer from "../layout/Footer";
 import ParallaxHeroStats from "./ParallaxHeroStats";
 import AboutSection from "./AboutSection";
 import LatestProjectsSection from "./LatestProjectsSection";
+import ContactSection from "./ContactSection";
 import "../styles/onepager.css";
 
 export default function OnePagerSections({ onBackToLanding }) {
@@ -33,6 +34,9 @@ export default function OnePagerSections({ onBackToLanding }) {
         </section>
         <section style={{ minHeight: "100vh" }}>
           <LatestProjectsSection />
+        </section>
+        <section style={{ minHeight: "60vh" }}>
+          <ContactSection />
         </section>
       </div>
       {/* Footer */}

@@ -1,0 +1,123 @@
+.contact-section {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 0 2rem 0;
+}
+
+.contact-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.contact-fancy-name {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 10rem;
+  color: #fff;
+  margin: 0 0 -4rem 0;
+  letter-spacing: 0.02em;
+}
+
+.contact-subtitle {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.contact-socials {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.contact-social-icon {
+  font-size: 2rem;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.2s, color 0.2s;
+}
+.contact-social-icon:hover {
+  color: #38bdf8;
+  transform: scale(1.2);
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.folder-btn-bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-folder-btn {
+  color: #fff;
+  width: 100%; /* Set to your image's width */
+  height: 80px;
+  font-size: 1.1rem;
+  font-family: inherit;
+  border: none;
+  padding: 1rem 2.5rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: transform 0.2s;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 2;
+  background: none; /* Remove fallback color */
+}
+
+.contact-folder-btn:hover {
+  /* No background color, just animation */
+  transform: translateY(-4px) scale(1.05);
+}
+
+.folder-btn-bg {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  outline: none;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 700px) {
+  .contact-fancy-name {
+    font-size: 5.3rem;
+    margin: 0 0 -2rem 0;
+  }
+  .contact-subtitle {
+    font-size: 0.75rem;
+  }
+  .contact-buttons {
+    gap: 1rem;
+  }
+  .contact-folder-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+  }
+  .contact-social-icon {
+    font-size: 1.3rem;
+  }
+}

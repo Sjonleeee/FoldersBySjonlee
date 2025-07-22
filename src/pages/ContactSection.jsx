@@ -3,8 +3,10 @@ import "../styles/contactsection.css";
 import smallFolder from "../assets/images/smallFolder.png";
 import { FiMail } from "react-icons/fi";
 import { FaBehance, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function ContactSection() {
+  const navigate = useNavigate();
   return (
     <section className="contact-section">
       <div className="contact-hero">
@@ -21,6 +23,10 @@ export default function ContactSection() {
         <button
           className="contact-folder-btn folder-btn-bg"
           style={{ backgroundImage: `url(${smallFolder})` }}
+          onClick={() => {
+            console.log("PROJECTS button clicked, navigating to /projects");
+            navigate("/projects");
+          }}
         >
           PROJECTS_
         </button>

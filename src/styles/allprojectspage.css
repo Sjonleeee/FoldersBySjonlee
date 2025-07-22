@@ -3,7 +3,7 @@
   min-height: 100vh;
   height: 100vh;
   background: #222;
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   padding-top: 120px; /* height of the fixed header */
   overflow: hidden;
 }
@@ -17,8 +17,8 @@
   justify-content: space-between;
   align-items: flex-start;
   min-height: 100vh;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.12);
-  border-right: 2px solid #232323;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.12);
+  border-right: 1px solid #444;
   padding: 0;
   position: relative;
 }
@@ -35,9 +35,15 @@
   display: inline-block;
   background: #444;
 }
-.sidebar-dot.green { background: #2ecc40; }
-.sidebar-dot.yellow { background: #ffdc00; }
-.sidebar-dot.red { background: #ff4136; }
+.sidebar-dot.green {
+  background: #2ecc40;
+}
+.sidebar-dot.yellow {
+  background: #ffdc00;
+}
+.sidebar-dot.red {
+  background: #ff4136;
+}
 
 .sidebar-user {
   display: flex;
@@ -63,14 +69,13 @@
   flex-direction: column;
   gap: 1.7rem;
   flex: 1;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
+  margin-top: 4rem;
+  justify-content: flex-start;
   padding: 0 2rem;
 }
 .sidebar-menu-item {
   color: #bdbdbd;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   cursor: pointer;
   transition: color 0.2s;
   display: flex;
@@ -107,20 +112,70 @@
 
 .allprojects-topbar {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 2.2rem 0 1.2rem 0; /* Remove side padding */
+  align-items: center;
+  padding: 2.2rem 0 1.2rem 0;
   background: #232323;
   color: #fff;
   border-bottom: 1px solid #444;
   min-height: 90px;
-  width: 100vw;
   box-sizing: border-box;
   position: relative;
   left: 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
   z-index: 10;
   border-radius: 0 0 1.2rem 1.2rem;
+}
+
+.topbar-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
+
+.topbar-arrows {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: #bbb;
+  font-size: 2rem;
+}
+
+.allprojects-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 0.01em;
+  margin: 0 2.5rem 0 1.5rem;
+  padding: 0;
+  text-align: left;
+}
+
+.topbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+  margin-left: auto;
+}
+
+.topbar-icon {
+  font-size: 1.3rem;
+  color: #fff;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.topbar-icon:hover {
+  opacity: 1;
+}
+
+.topbar-arrow {
+  font-size: 1.1rem;
+  color: #bbb;
+  vertical-align: middle;
 }
 
 .allprojects-topbar > .topbar-left,
@@ -146,8 +201,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
   padding: 0;
   width: 100%;
   box-sizing: border-box;
@@ -160,35 +214,36 @@
   gap: 3rem 3rem;
   width: 100%;
   max-width: 1200px;
-  justify-items: center;
+  justify-items: flex-start;
   align-items: center;
+  margin: 4rem;
 }
 
 .project-folder {
   width: 170px;
   height: 140px;
-  /* Remove background color */
   border-radius: 0.7rem 0.7rem 0.5rem 0.5rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.13);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   position: relative;
   overflow: visible;
   background: none;
 }
+
 .folder-img {
-  width: 100%;
-  height: 100%;
+  width: 110px;
+  height: auto;
   object-fit: contain;
   display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: static;
+  margin: 0 auto;
   z-index: 1;
   pointer-events: none;
 }
+
 .folder-preview-images {
   position: absolute;
   top: -35px;
@@ -203,16 +258,16 @@
   height: 40px;
   object-fit: cover;
   border-radius: 0.4rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   background: #fff;
 }
 .folder-label {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-weight: bold;
-  color: #222;
+  color: #fff;
   text-align: center;
-  margin-bottom: 1.1rem;
-  margin-top: 1.2rem;
+  margin-top: 0.7rem;
+  margin-bottom: 0;
   word-break: break-word;
   position: relative;
   z-index: 3;
@@ -259,4 +314,4 @@
     width: 140px;
     height: 110px;
   }
-} 
+}

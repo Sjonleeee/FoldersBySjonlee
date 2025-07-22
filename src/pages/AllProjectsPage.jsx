@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/allprojectspage.css";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import { FaChevronLeft, FaChevronRight, FaRandom, FaImage, FaPalette, FaShareSquare } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaTh, FaRandom, FaShareSquare } from "react-icons/fa";
 import folderIcon from "../assets/images/projectFolder.png";
 
 export default function AllProjectsPage() {
@@ -33,24 +33,28 @@ export default function AllProjectsPage() {
           <div className="sidebar-menu-item">Untitled</div>
           <div className="sidebar-menu-item">Coming soon</div>
         </nav>
-      
+        <div className="sidebar-footer">
+          <div>Local Time:</div>
+          <div>3:04 PM - Belgium</div>
+        </div>
       </aside>
       {/* Main Content */}
       <main className="allprojects-main">
         {/* Topbar */}
         <header className="allprojects-topbar">
-          <div className="topbar-left">
-            <FaChevronLeft className="topbar-arrow" />
+          <div className="topbar-title-row">
+            <span className="topbar-arrows">
+              <FaChevronLeft className="topbar-arrow" />
+              <FaChevronRight className="topbar-arrow" />
+            </span>
             <span className="allprojects-title">All projects</span>
-            <FaChevronRight className="topbar-arrow" />
-          </div>
-          <div className="topbar-right">
-            <div className="topbar-icons">
-              <FaRandom title="Shuffle" />
-              <FaImage title="Image" />
-              <FaPalette title="Palette" />
-              <FaShareSquare title="Share" />
-            </div>
+            <span className="topbar-icons">
+              <FaTh className="topbar-icon" />
+              <FaRandom className="topbar-icon" />
+              <span className="topbar-icon" role="img" aria-label="Image">🖼️</span>
+              <span className="topbar-icon" role="img" aria-label="Palette">🎨</span>
+              <FaShareSquare className="topbar-icon" />
+            </span>
           </div>
         </header>
         {/* Project Grid */}
@@ -58,23 +62,14 @@ export default function AllProjectsPage() {
           <div className="allprojects-grid">
             {/* Example folders with previews */}
             <div className="project-folder with-preview">
-              <div className="folder-preview-images">
-                <img src="/folder-preview1.png" alt="Preview 1" />
-              </div>
               <img src={folderIcon} alt="Folder" className="folder-img" />
               <div className="folder-label">Volkswagen Project</div>
             </div>
             <div className="project-folder with-preview">
-              <div className="folder-preview-images">
-                <img src="/folder-preview2.png" alt="Preview 2" />
-              </div>
               <img src={folderIcon} alt="Folder" className="folder-img" />
               <div className="folder-label">Chrome Magazine<sup>®</sup></div>
             </div>
             <div className="project-folder with-preview">
-              <div className="folder-preview-images">
-                <img src="/folder-preview3.png" alt="Preview 3" />
-              </div>
               <img src={folderIcon} alt="Folder" className="folder-img" />
               <div className="folder-label">Rinkitou<br />Creative Agency<sup>®</sup></div>
             </div>

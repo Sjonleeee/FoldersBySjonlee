@@ -233,16 +233,18 @@
 
 .allprojects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 3rem 3rem;
+  grid-template-columns: repeat(auto-fit, 170px);
+  gap: 0.7rem 0.7rem;
   width: 100%;
-  max-width: 1200px;
-  justify-items: center;
+  justify-content: start;
   align-items: start;
-  margin: 0 auto;
   padding-left: 2vw;
   padding-right: 2vw;
   box-sizing: border-box;
+}
+
+.allprojects-grid.grid-narrow {
+  gap: 0.7rem 0.7rem;
 }
 
 .project-folder {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/allprojectspage.css";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
@@ -19,9 +19,40 @@ const sidebarItems = [
   { label: "Coming soon", key: "coming" },
 ];
 
-const activeKey = "all";
+const allFolders = [
+  { name: "Volkswagen Project", sup: "®" },
+  { name: "Chrome Magazine", sup: "®" },
+  { name: "Rinkitou\nCreative Agency", sup: "®" },
+  { name: "Branding", sup: "®" },
+  { name: "Clothing Design", sup: "®" },
+  { name: "3D design", sup: "®" },
+  { name: "Graphic Design", sup: "®" },
+];
+
+const hiddenFolders = [
+  { name: "Younger me", sup: "®" },
+  { name: "FirstPortfolio", sup: "®" },
+  { name: "Old Designs", sup: "®" },
+];
+
+const untitledFolders = [
+  { name: "Moodboard 1", sup: "®" },
+  { name: "Untitled 1", sup: "®" },
+  { name: "Untitled 2", sup: "®" },
+];
+
+const comingSoonFolders = [
+  { name: "rinkitou® new collection", sup: "®" },
+  { name: "Letter to future me", sup: "®" },
+];
 
 export default function AllProjectsPage() {
+  const [activeKey, setActiveKey] = useState("all");
+  let foldersToShow = allFolders;
+  if (activeKey === "hidden") foldersToShow = hiddenFolders;
+  else if (activeKey === "untitled") foldersToShow = untitledFolders;
+  else if (activeKey === "coming") foldersToShow = comingSoonFolders;
+
   return (
     <div className="allprojects-root">
       {/* Header (fixed at top) */}
@@ -50,6 +81,7 @@ export default function AllProjectsPage() {
                 activeKey === item.key ? " active" : ""
               }`}
               key={item.key}
+              onClick={() => setActiveKey(item.key)}
             >
               <FiFolder
                 className={`sidebar-folder-icon${
@@ -86,43 +118,26 @@ export default function AllProjectsPage() {
         </header>
         {/* Project Grid */}
         <section className="allprojects-grid-section">
-          <div className="allprojects-grid">
-            {/* Example folders with previews */}
-            <div className="project-folder with-preview">
-              <img src={folderIcon} alt="Folder" className="folder-img" />
-              <div className="folder-label">Volkswagen Project</div>
-            </div>
-            <div className="project-folder with-preview">
-              <img src={folderIcon} alt="Folder" className="folder-img" />
-              <div className="folder-label">
-                Chrome Magazine<sup>®</sup>
+          <div
+            className={
+              "allprojects-grid" +
+              (foldersToShow.length <= 3 ? " grid-narrow" : "")
+            }
+          >
+            {foldersToShow.map((folder, idx) => (
+              <div className="project-folder" key={idx}>
+                <img src={folderIcon} alt="Folder" className="folder-img" />
+                <div className="folder-label">
+                  {folder.name.split("\n").map((line, i) => (
+                    <React.Fragment key={i}>
+                      {line}
+                      {i < folder.name.split("\n").length - 1 && <br />}
+                    </React.Fragment>
+                  ))}
+                  {folder.sup && <sup>{folder.sup}</sup>}
+                </div>
               </div>
-            </div>
-            <div className="project-folder with-preview">
-              <img src={folderIcon} alt="Folder" className="folder-img" />
-              <div className="folder-label">
-                Rinkitou
-                <br />
-                Creative Agency<sup>®</sup>
-              </div>
-            </div>
-            {/* Example folders without previews */}
-            <div className="project-folder">
-              <img src={folderIcon} alt="Folder" className="folder-img" />
-              <div className="folder-label">Branding</div>
-            </div>
-            <div className="project-folder">
-              <img src={folderIcon} alt="Folder" className="folder-img" />
-              <div className="folder-label">Clothing Design</div>
-            </div>
-            <div className="project-folder">
-              <img src={folderIcon} alt="Folder" className="folder-img" />
-              <div className="folder-label">3D design</div>
-            </div>
-            <div className="project-folder">
-              <img src={folderIcon} alt="Folder" className="folder-img" />
-              <div className="folder-label">Graphic Design</div>
-            </div>
+            ))}
           </div>
         </section>
         {/* Footer (fixed at bottom) */}

@@ -79,11 +79,7 @@ export default function AllProjectsPage() {
       </div>
       {/* Sidebar */}
       <aside className="allprojects-sidebar">
-        <div className="sidebar-header">
-          <span className="sidebar-dot green"></span>
-          <span className="sidebar-dot yellow"></span>
-          <span className="sidebar-dot red"></span>
-        </div>
+       
         <nav className="sidebar-menu">
           {sidebarItems.map((item) => (
             <div
@@ -122,10 +118,7 @@ export default function AllProjectsPage() {
             ) : null}
             <span className="allprojects-title">
               {selectedProject
-                ? (
-                    projectLookup[selectedProject] ||
-                    projectLookup["volkswagenproject"]
-                  )?.title || "Project"
+                ? (projectLookup[selectedProject] || projectLookup["volkswagenproject"]).title || "Project"
                 : activeKey === "all"
                 ? "All projects"
                 : activeKey === "hidden"
@@ -136,17 +129,7 @@ export default function AllProjectsPage() {
                 ? "Coming soon"
                 : "Projects"}
             </span>
-            <span className="topbar-icons">
-              <FaTh className="topbar-icon" />
-              <FaRandom className="topbar-icon" />
-              <span className="topbar-icon" role="img" aria-label="Image">
-                🖼️
-              </span>
-              <span className="topbar-icon" role="img" aria-label="Palette">
-                🎨
-              </span>
-              <FaShareSquare className="topbar-icon" />
-            </span>
+            {/* Remove the topbar-icons span completely */}
           </div>
         </header>
         {/* Project Detail of Grid */}

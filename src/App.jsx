@@ -7,6 +7,7 @@ import MainPage from "./pages/MainPage";
 import AllProjectsPage from "./pages/AllProjectsPage";
 import MouseFollower from "./components/MouseFollower";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -24,6 +25,7 @@ function AnimatedRoutes() {
           <Routes location={location}>
             <Route path="/" element={<MainPage />} />
             <Route path="/projects" element={<AllProjectsPage />} />
+            <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
           </Routes>
         </div>
       </CSSTransition>

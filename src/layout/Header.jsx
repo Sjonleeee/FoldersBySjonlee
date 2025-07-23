@@ -1,12 +1,14 @@
 import React, { useRef, useEffect } from "react";
 import { useMenu } from "../context/MenuContext";
 import '../styles/header.css';
+import { useNavigate } from "react-router-dom";
 
 const menuItems = ["Home", "Projects", "About", "Contact"];
 
 const Header = ({ onLogoClick }) => {
   const { menuOpen, setMenuOpen } = useMenu();
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -21,6 +23,17 @@ const Header = ({ onLogoClick }) => {
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
+
+  const handleMenuClick = (item) => {
+    if (item === "Home") {
+      navigate("/");
+      setMenuOpen(false);
+    } else if (item === "Projects") {
+      navigate("/projects");
+      setMenuOpen(false);
+    }
+    // You can add more navigation for About/Contact if needed
+  };
 
   return (
     <header className="header">
@@ -68,7 +81,12 @@ const Header = ({ onLogoClick }) => {
             </button>
             <nav className="header-fullscreen-menu-content">
               {menuItems.map((item) => (
-                <div className="header-dropdown-item" key={item}>
+                <div
+                  className="header-dropdown-item"
+                  key={item}
+                  onClick={() => handleMenuClick(item)}
+                  style={{ cursor: item === "Home" || item === "Projects" ? "pointer" : "default" }}
+                >
                   <span className="menu-initial">{item[0]}</span>
                   {item.slice(1)}
                 </div>

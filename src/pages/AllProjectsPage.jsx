@@ -2,8 +2,24 @@ import React from "react";
 import "../styles/allprojectspage.css";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import { FaChevronLeft, FaChevronRight, FaTh, FaRandom, FaShareSquare } from "react-icons/fa";
+import {
+  FaChevronLeft,
+  FaChevronRight,
+  FaTh,
+  FaRandom,
+  FaShareSquare,
+} from "react-icons/fa";
+import { FiFolder } from "react-icons/fi";
 import folderIcon from "../assets/images/projectFolder.png";
+
+const sidebarItems = [
+  { label: "All Projects", key: "all" },
+  { label: "Hidden", key: "hidden" },
+  { label: "Untitled", key: "untitled" },
+  { label: "Coming soon", key: "coming" },
+];
+
+const activeKey = "all";
 
 export default function AllProjectsPage() {
   return (
@@ -28,15 +44,22 @@ export default function AllProjectsPage() {
           <span className="sidebar-dot red"></span>
         </div>
         <nav className="sidebar-menu">
-          <div className="sidebar-menu-item active">All Projects</div>
-          <div className="sidebar-menu-item">Hidden</div>
-          <div className="sidebar-menu-item">Untitled</div>
-          <div className="sidebar-menu-item">Coming soon</div>
+          {sidebarItems.map((item) => (
+            <div
+              className={`sidebar-menu-item${
+                activeKey === item.key ? " active" : ""
+              }`}
+              key={item.key}
+            >
+              <FiFolder
+                className={`sidebar-folder-icon${
+                  activeKey === item.key ? " active" : ""
+                }`}
+              />
+              <span>{item.label}</span>
+            </div>
+          ))}
         </nav>
-        <div className="sidebar-footer">
-          <div>Local Time:</div>
-          <div>3:04 PM - Belgium</div>
-        </div>
       </aside>
       {/* Main Content */}
       <main className="allprojects-main">
@@ -51,8 +74,12 @@ export default function AllProjectsPage() {
             <span className="topbar-icons">
               <FaTh className="topbar-icon" />
               <FaRandom className="topbar-icon" />
-              <span className="topbar-icon" role="img" aria-label="Image">🖼️</span>
-              <span className="topbar-icon" role="img" aria-label="Palette">🎨</span>
+              <span className="topbar-icon" role="img" aria-label="Image">
+                🖼️
+              </span>
+              <span className="topbar-icon" role="img" aria-label="Palette">
+                🎨
+              </span>
               <FaShareSquare className="topbar-icon" />
             </span>
           </div>
@@ -67,11 +94,17 @@ export default function AllProjectsPage() {
             </div>
             <div className="project-folder with-preview">
               <img src={folderIcon} alt="Folder" className="folder-img" />
-              <div className="folder-label">Chrome Magazine<sup>®</sup></div>
+              <div className="folder-label">
+                Chrome Magazine<sup>®</sup>
+              </div>
             </div>
             <div className="project-folder with-preview">
               <img src={folderIcon} alt="Folder" className="folder-img" />
-              <div className="folder-label">Rinkitou<br />Creative Agency<sup>®</sup></div>
+              <div className="folder-label">
+                Rinkitou
+                <br />
+                Creative Agency<sup>®</sup>
+              </div>
             </div>
             {/* Example folders without previews */}
             <div className="project-folder">

@@ -1,44 +1,29 @@
-import React, { useRef } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { LoadingProvider } from "./context/LoadingContext";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import { MenuProvider } from "./context/MenuContext";
-import MainLayout from "./layout/MainLayout";
-import MainPage from "./pages/MainPage";
-import AllProjectsPage from "./pages/AllProjectsPage";
-import MouseFollower from "./components/MouseFollower";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
-import ProjectDetailPage from "./pages/ProjectDetailPage";
+import { LoadingProvider } from "./context/LoadingContext";
+import AnimatedRoutes from "./routes/AnimatedRoutes";
+// import LoadingScreen from "./components/LoadingScreen";
 
-function AnimatedRoutes() {
-  const location = useLocation();
-  const nodeRef = useRef(null);
+function AppContent() {
+  // const { loading, progress } = useLoading();
+  // Loader tijdelijk uitgezet voor development
   return (
-    <SwitchTransition>
-      <CSSTransition
-        key={location.pathname}
-        classNames="fade"
-        timeout={800}
-        nodeRef={nodeRef}
-        unmountOnExit
-      >
-        <div ref={nodeRef}>
-          <Routes location={location}>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/projects" element={<AllProjectsPage />} />
-            <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
-          </Routes>
-        </div>
-      </CSSTransition>
-    </SwitchTransition>
+    <>
+      {/* {loading && <LoadingScreen progress={progress} />} */}
+      <AnimatedRoutes />
+    </>
   );
 }
 
 export default function App() {
   return (
     <Router>
-      <MenuProvider>
-        <AnimatedRoutes />
-      </MenuProvider>
+      <LoadingProvider>
+        <MenuProvider>
+          <AppContent />
+        </MenuProvider>
+      </LoadingProvider>
     </Router>
   );
 }

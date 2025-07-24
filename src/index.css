@@ -90,14 +90,14 @@ html {
   min-height: 100vh;
   width: 100%;
   position: relative;
-  }
+}
 .full-screen-z10 {
   position: relative;
   z-index: 10;
 }
 .main-content-z1 {
   z-index: 1;
-  }
+}
 .pointer-auto {
   pointer-events: auto;
 }
@@ -331,7 +331,7 @@ html {
   word-break: break-word;
 }
 .header-fullscreen-menu .header-dropdown-item {
-  font-size: 3rem;
+  font-size: 3.2rem;
   font-weight: 700;
   color: #f3f4f6;
   background: none;
@@ -344,7 +344,7 @@ html {
 }
 .header-fullscreen-menu .header-dropdown-item .menu-initial {
   font-family: "Hermaiona", cursive, serif;
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-style: italic;
   letter-spacing: 0.09em;
   margin-right: 0.08em;
@@ -701,14 +701,14 @@ html {
   .title-container {
     flex-direction: column;
     align-items: center;
-}
+  }
 
   .left-title {
     position: absolute;
     top: 30%;
   }
   .right-title {
-  position: absolute;
+    position: absolute;
     bottom: 28%;
   }
   .center-folder {
@@ -735,21 +735,40 @@ html {
     opacity: 1;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.2),
       0 0 40px rgba(255, 255, 255, 0.1), 0 0 60px rgba(255, 255, 255, 0.1);
-}
+  }
 }
 @keyframes outerGlow {
   0% {
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.2),
       0 0 40px rgba(255, 255, 255, 0.1), 0 0 60px rgba(255, 255, 255, 0.1);
-}
+  }
   50% {
     text-shadow: 0 0 30px rgba(255, 255, 255, 0.3),
       0 0 60px rgba(255, 255, 255, 0.2), 0 0 90px rgba(255, 255, 255, 0.1),
       0 0 120px rgba(255, 255, 255, 0.1);
-}
+  }
   100% {
     text-shadow: 0 0 40px rgba(255, 255, 255, 0.4),
       0 0 80px rgba(255, 255, 255, 0.3), 0 0 120px rgba(255, 255, 255, 0.2),
       0 0 160px rgba(255, 255, 255, 0.1), 0 0 200px rgba(255, 255, 255, 0.1);
   }
+}
+
+.bindery-hero-sticky {
+  position: sticky; /* <-- blijft plakken */
+  top: 0;
+  width: 100vw;
+  height: 100vh; /* <-- altijd volledig in beeld */
+  overflow: hidden;
+  z-index: 10;
+}
+.bindery-hero-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: #111;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

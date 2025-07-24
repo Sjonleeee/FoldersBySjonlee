@@ -56,10 +56,21 @@ export const LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [modelLoaded, setModelLoaded] = useState(false);
 
   // Font loading effect
   useEffect(() => {
     loadFonts().then(() => setFontsLoaded(true));
+  }, []);
+
+  // Preload 3D model effect
+  useEffect(() => {
+    // Use drei's useGLTF.preload to cache the model
+    import("@react-three/drei").then(({ useGLTF }) => {
+      useGLTF.preload && useGLTF.preload("/src/assets/model/3LOCKEDIN.glb");
+      // Simuleer een kleine delay zodat het model echt geladen is
+      setTimeout(() => setModelLoaded(true), 400);
+    });
   }, []);
 
   // Simulate loading progress
@@ -71,19 +82,19 @@ export const LoadingProvider = ({ children }) => {
         current += 3;
         setProgress(current);
 
-        // Only complete loading when fonts are ready and progress >= 100
-        if (current >= 100 && fontsLoaded) {
+        // Only complete loading when fonts AND model are ready and progress >= 100
+        if (current >= 100 && fontsLoaded && modelLoaded) {
           clearInterval(interval);
           setTimeout(() => {
             setLoading(false);
           }, 800); // Delay hiding loader for transition
-        } else if (current >= 98 && !fontsLoaded) {
-          // Hold at 98% until fonts are loaded
+        } else if (current >= 98 && (!fontsLoaded || !modelLoaded)) {
+          // Hold at 98% until fonts and model are loaded
           clearInterval(interval);
 
-          // Check for fonts every 100ms
+          // Check for fonts/model every 100ms
           const fontCheckInterval = setInterval(() => {
-            if (fontsLoaded) {
+            if (fontsLoaded && modelLoaded) {
               setProgress(100);
               clearInterval(fontCheckInterval);
               setTimeout(() => {
@@ -96,7 +107,7 @@ export const LoadingProvider = ({ children }) => {
 
       return () => clearInterval(interval);
     }
-  }, [loading, fontsLoaded]);
+  }, [loading, fontsLoaded, modelLoaded]);
 
   return (
     <LoadingContext.Provider value={{ loading, progress, setLoading }}>

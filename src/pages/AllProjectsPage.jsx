@@ -12,6 +12,7 @@ import {
 import { FiFolder } from "react-icons/fi";
 import folderIcon from "../assets/images/projectFolder.png";
 import { projects } from "../config/projectData.js";
+import { useNavigate } from "react-router-dom";
 
 const sidebarItems = [
   { label: "All Projects", key: "all" },
@@ -46,6 +47,20 @@ const comingSoonFolders = [
   { name: "Letter to future me", sup: "®" },
 ];
 
+function useIsMobile(breakpoint = 900) {
+  const [isMobile, setIsMobile] = React.useState(
+    typeof window !== "undefined" ? window.innerWidth <= breakpoint : false
+  );
+  React.useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= breakpoint);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [breakpoint]);
+  return isMobile;
+}
+
 export default function AllProjectsPage() {
   const [activeKey, setActiveKey] = useState("all");
   const [selectedProject, setSelectedProject] = useState(null);
@@ -63,13 +78,15 @@ export default function AllProjectsPage() {
     if (p.slug) projectLookup[p.slug] = p;
   });
 
+  const isMobile = useIsMobile(900);
+  const navigate = useNavigate();
+
   return (
     <div className="allprojects-root">
       {/* Header (bovenaan, niet meer fixed) */}
-      <Header />
+      <Header onLogoClick={() => navigate('/')} />
       {/* Sidebar */}
       <aside className="allprojects-sidebar">
-       
         <nav className="sidebar-menu">
           {sidebarItems.map((item) => (
             <div
@@ -77,9 +94,17 @@ export default function AllProjectsPage() {
                 activeKey === item.key ? " active" : ""
               }`}
               key={item.key}
-              onClick={() => {
+              onClick={(e) => {
                 setActiveKey(item.key);
                 setSelectedProject(null); // reset detail als je wisselt
+                // Scroll het aangeklikte item in beeld op mobiel
+                if (window.innerWidth <= 900 && e.currentTarget) {
+                  e.currentTarget.scrollIntoView({
+                    behavior: "smooth",
+                    inline: "center",
+                    block: "nearest",
+                  });
+                }
               }}
             >
               <FiFolder
@@ -108,7 +133,10 @@ export default function AllProjectsPage() {
             ) : null}
             <span className="allprojects-title">
               {selectedProject
-                ? (projectLookup[selectedProject] || projectLookup["volkswagenproject"]).title || "Project"
+                ? (
+                    projectLookup[selectedProject] ||
+                    projectLookup["volkswagenproject"]
+                  ).title || "Project"
                 : activeKey === "all"
                 ? "All projects"
                 : activeKey === "hidden"
@@ -127,62 +155,129 @@ export default function AllProjectsPage() {
         (projectLookup[selectedProject] ||
           projectLookup["volkswagenproject"]) ? (
           <section className="project-detail-section">
-            <div className="project-detail-image">
-              <img
-                src={
-                  (
-                    projectLookup[selectedProject] ||
-                    projectLookup["volkswagenproject"]
-                  ).image
-                }
-                alt={
-                  (
-                    projectLookup[selectedProject] ||
-                    projectLookup["volkswagenproject"]
-                  ).title
-                }
-                style={{ width: "100%" }}
-              />
-            </div>
-            <div className="project-detail-info">
-              <h2 style={{ marginTop: 0 }}>
-                {
-                  (
-                    projectLookup[selectedProject] ||
-                    projectLookup["volkswagenproject"]
-                  ).title
-                }
-              </h2>
-              <div className="project-detail-description">
-                {/* Render body als paragraphs, tags en dropcap */}
-                {projectLookup[selectedProject]?.body ? (
-                  <div className="project-detail-content-design">
-                    <div className="project-detail-body-design">
-                      <span className="fancy-dropcap">
-                        {projectLookup[selectedProject].dropcap}
-                      </span>
-                      {projectLookup[selectedProject].body.map((line, idx) => (
-                        <p key={idx} style={{ display: "inline" }}>
-                          {line}
-                          {idx <
-                          projectLookup[selectedProject].body.length - 1 ? (
-                            <br />
-                          ) : null}
-                        </p>
-                      ))}
-                    </div>
-                    <div className="project-detail-tags-design">
-                      [ {projectLookup[selectedProject].tags.join(", ")} ]
-                    </div>
+            {isMobile ? (
+              <>
+                <div className="project-detail-info">
+                  <h2 style={{ marginTop: 0 }}>
+                    {
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).title
+                    }
+                  </h2>
+                  <div className="project-detail-description">
+                    {projectLookup[selectedProject]?.body ? (
+                      <div className="project-detail-content-design">
+                        <div className="project-detail-body-design">
+                          <span className="fancy-dropcap">
+                            {projectLookup[selectedProject].dropcap}
+                          </span>
+                          {projectLookup[selectedProject].body.map(
+                            (line, idx) => (
+                              <p key={idx} style={{ display: "inline" }}>
+                                {line}
+                                {idx <
+                                projectLookup[selectedProject].body.length -
+                                  1 ? (
+                                  <br />
+                                ) : null}
+                              </p>
+                            )
+                          )}
+                        </div>
+                        <div className="project-detail-tags-design">
+                          [ {projectLookup[selectedProject].tags.join(", ")} ]
+                        </div>
+                      </div>
+                    ) : (
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).description
+                    )}
                   </div>
-                ) : (
-                  (
-                    projectLookup[selectedProject] ||
-                    projectLookup["volkswagenproject"]
-                  ).description
-                )}
-              </div>
-            </div>
+                </div>
+                <div className="project-detail-image">
+                  <img
+                    src={
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).image
+                    }
+                    alt={
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).title
+                    }
+                    style={{ width: "100%" }}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="project-detail-image">
+                  <img
+                    src={
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).image
+                    }
+                    alt={
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).title
+                    }
+                    style={{ width: "100%" }}
+                  />
+                </div>
+                <div className="project-detail-info">
+                  <h2 style={{ marginTop: 0 }}>
+                    {
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).title
+                    }
+                  </h2>
+                  <div className="project-detail-description">
+                    {projectLookup[selectedProject]?.body ? (
+                      <div className="project-detail-content-design">
+                        <div className="project-detail-body-design">
+                          <span className="fancy-dropcap">
+                            {projectLookup[selectedProject].dropcap}
+                          </span>
+                          {projectLookup[selectedProject].body.map(
+                            (line, idx) => (
+                              <p key={idx} style={{ display: "inline" }}>
+                                {line}
+                                {idx <
+                                projectLookup[selectedProject].body.length -
+                                  1 ? (
+                                  <br />
+                                ) : null}
+                              </p>
+                            )
+                          )}
+                        </div>
+                        <div className="project-detail-tags-design">
+                          [ {projectLookup[selectedProject].tags.join(", ")} ]
+                        </div>
+                      </div>
+                    ) : (
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).description
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
           </section>
         ) : (
           <section className="allprojects-grid-section">
@@ -227,10 +322,9 @@ export default function AllProjectsPage() {
             zIndex: 5000,
           }}
         >
-          <Footer hideIconBar={true} />
+          <Footer hideIconBar={true} showCopyright={true} />
         </div>
       </main>
     </div>
   );
 }
- 

@@ -75,7 +75,7 @@
   .project-folder-card {
     max-width: 100vw;
     min-width: unset;
-  }
+}
 }
 
 @media (max-width: 900px) {
@@ -106,14 +106,14 @@
     padding: 0 4vw; /* Ensures grid never touches the edge */
   }
   .project-folder-card {
-    width: 100%;
+  width: 100%;
     max-width: 92vw;      /* Guarantees space on both sides */
     margin: 0 auto;       /* Center the card */
     min-width: unset;
     border-radius: 1rem;
     height: auto;
     min-height: 300px;
-  }
+}
   .folder-content {
     padding: 0 1.5rem 1.5rem 1.5rem;
     padding-top: 130px; /* Move content further down */

@@ -34,6 +34,10 @@
   font-size: 0.875rem;
   display: flex;
   align-items: center;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.header-logo:hover {
+  transform: scale(1.2);
 }
 
 .header-status-dot {
@@ -251,6 +255,31 @@
 .header-menu-span {
   cursor: pointer;
   font-weight: 600;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.header-menu-span:hover {
+  transform: scale(1.2);
+  color: transparent !important;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #e0e6eb 10%,
+    #bfc6ce 18%,
+    #eaf3fa 25%,
+    #f8f8f8 32%,
+    #bdbcbc 40%,
+    #e0e0e0 50%,
+    #f8f8f8 60%,
+    #eaf3fa 70%,
+    #bfc6ce 80%,
+    #e0e6eb 90%,
+    #ffffff 100%
+  ) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  text-fill-color: transparent !important;
+  filter: drop-shadow(0 2px 8px #fff) drop-shadow(0 0px 16px #eaf3fa88) !important;
 }
 
 @media (max-width: 768px) {

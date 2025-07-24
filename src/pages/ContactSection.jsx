@@ -10,7 +10,7 @@ export default function ContactSection() {
   return (
     <section className="contact-section">
       <div className="contact-hero">
-        <h1 className="contact-fancy-name">Sjonlee Ha</h1>
+        <h1 className="hermaiona-title-style">Sjonlee Ha</h1>
         <div className="contact-subtitle">Creative Developer | Entrepreneur</div>
       </div>
       <div className="contact-socials">

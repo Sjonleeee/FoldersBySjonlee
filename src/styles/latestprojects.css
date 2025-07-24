@@ -3,9 +3,7 @@
 }
 
 .latest-projects-title {
-  font-family: "Hermaiona", cursive, serif;
-  font-size: 6vw;
-  text-align: center;
+  /* Gebruik nu alleen de utility class indien nodig */
 }
 
 .latest-projects-grid {
@@ -53,10 +51,7 @@
 }
 
 .project-fancy-letter {
-  font-family: "Hermaiona", cursive, serif;
-  font-size: 6rem;
-  color: #fff;
-  line-height: 1;
+  /* Gebruik nu alleen de utility class indien nodig */
 }
 
 .project-title {

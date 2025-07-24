@@ -157,17 +157,7 @@
 }
 
 .about-title {
-  font-family: "Hermaiona", serif;
-  font-size: 7vw;
-  font-weight: 400;
-  margin: 0;
-  text-align: center;
-  line-height: 1.05;
-  color: #fff;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
-  pointer-events: none;
-  z-index: 2;
-  position: relative;
+  /* Styling wordt nu volledig bepaald door .hermaiona-title-style */
 }
 
 .about-text {
@@ -184,13 +174,7 @@
 }
 
 .about-name-script {
-  font-family: 'Hermaione', cursive;
-  font-size: 5rem;
-  color: #fff;
-  margin-bottom: 1.5rem;
-  line-height: 1;
-  font-weight: 400;
-  letter-spacing: 0.05em;
+  /* Styling wordt nu volledig bepaald door .hermaiona-title-style */
 }
 
 /* --- Responsive styles --- */

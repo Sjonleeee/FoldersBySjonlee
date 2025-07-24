@@ -23,7 +23,7 @@ const projects = [
 export default function LatestProjectsSection() {
   return (
     <section className="latest-projects-section">
-      <h2 className="latest-projects-title">Latest Projects</h2>
+      <h2 className="latest-projects-title hermaiona-title-style">Latest Projects</h2>
       <div className="latest-projects-grid">
         {projects.map((project, idx) => (
           <div
@@ -33,7 +33,7 @@ export default function LatestProjectsSection() {
           >
             <div className="folder-content">
               <div className="folder-title-row">
-                <span className="project-fancy-letter">{project.fancy}</span>
+                <span className="project-fancy-letter hermaiona-title-style">{project.fancy}</span>
                 <span className="project-title">{project.title}</span>
             </div>
               <div className="project-tags">{project.tags}</div>

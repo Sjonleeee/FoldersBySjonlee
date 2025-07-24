@@ -65,18 +65,8 @@ export default function AllProjectsPage() {
 
   return (
     <div className="allprojects-root">
-      {/* Header (fixed at top) */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          zIndex: 5000,
-        }}
-      >
-        <Header />
-      </div>
+      {/* Header (bovenaan, niet meer fixed) */}
+      <Header />
       {/* Sidebar */}
       <aside className="allprojects-sidebar">
        
@@ -243,3 +233,4 @@ export default function AllProjectsPage() {
     </div>
   );
 }
+ 

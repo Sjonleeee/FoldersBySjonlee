@@ -227,20 +227,23 @@
 
 /* === Utility Chrome Glow & Scale === */
 .chrome-glow {
-  filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 8px #38bdf8) drop-shadow(0 0 24px #eaf3fa88);
+  filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 8px #38bdf8)
+    drop-shadow(0 0 24px #eaf3fa88);
 }
 .chrome-scale {
   transform: scale(1.08);
 }
 .chrome-transition {
-  transition: transform 0.22s cubic-bezier(0.4,0,0.2,1), filter 0.22s cubic-bezier(0.4,0,0.2,1);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* === Project Folder Hover === */
 .project-folder:hover .folder-img {
   /* Only folder image gets chrome effect */
   transform: scale(0.9);
-  filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #38bdf8) drop-shadow(0 0 10px #eaf3fa88);
+  filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #38bdf8)
+    drop-shadow(0 0 10px #eaf3fa88);
   z-index: 10;
 }
 .project-folder:hover .folder-label {
@@ -255,7 +258,8 @@
   margin: 0 auto;
   z-index: 1;
   pointer-events: none;
-  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), filter 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .folder-label {
   font-size: 0.9rem;
@@ -272,7 +276,8 @@
 
 /* === Topbar Go Back Icon === */
 .topbar-arrow.clickable {
-  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), filter 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.22s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 .topbar-arrow.clickable:hover {
@@ -437,15 +442,22 @@
   position: relative;
 }
 .fancy-dropcap {
+  /* Restore Hermaiona font and fancy style for first letter in All Projects Page */
+  display: inline-block;
+  vertical-align: middle;
+  /* Use utility class for font, stroke, etc. */
   font-family: "Hermaiona", cursive, serif;
+  font-style: italic;
+  color: #fff;
+  -webkit-text-stroke: 2px lightgray;
+  text-stroke: 2px lightgray;
+  -webkit-text-stroke-position: outside;
   font-size: 4.2rem;
-  float: left;
   line-height: 1;
   margin-right: 0.18em;
   margin-top: 0.08em;
-  color: #fff;
   font-weight: 400;
-  display: inline-block;
+  letter-spacing: 0.04em;
 }
 .project-detail-tags-design {
   font-size: 12px;
@@ -537,6 +549,143 @@ body,
   .project-detail-tags-design {
     font-size: 12px;
     margin-top: 1.2rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .allprojects-root {
+    flex-direction: column;
+    padding-top: 0;
+    min-height: 100vh;
+    height: auto;
+    display: flex;
+  }
+  .allprojects-root .header {
+    width: 100vw;
+    background: #262626;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem 1.2rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    border-bottom: 2px solid #222;
+    min-height: 60px;
+    position: static;
+  }
+  .allprojects-sidebar {
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-height: unset;
+    height: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    border-right: none;
+    border-bottom: 1px solid #444;
+    position: static;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    gap: 1.2rem;
+    background: #262626;
+    z-index: 10;
+    display: flex;
+    order: 1;
+    overflow-x: auto;
+    max-width: 100vw;
+  }
+  .allprojects-main {
+    order: 2;
+    width: 100vw;
+  }
+  .allprojects-header-row {
+    /* Verwijderd, want niet gebruikt */
+  }
+  .sidebar-header {
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+    flex: 1 1 0;
+  }
+  .sidebar-menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1.2rem;
+    margin-top: 0;
+    padding: 0 1rem;
+    flex: 2 1 0;
+    max-width: 100vw;
+    min-width: 0;
+    white-space: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+  }
+  .sidebar-menu::-webkit-scrollbar {
+    display: none;
+  }
+  .sidebar-menu-item {
+    font-size: 11px;
+    padding: 0.2rem 0.3rem;
+    white-space: nowrap;
+    margin-left: 0;
+    min-width: 0;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  .sidebar-folder-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    font-size: 1.1rem;
+    margin-right: 0.15rem;
+  }
+  .sidebar-menu-item:first-child {
+    margin-left: 0;
+  }
+  .sidebar-footer {
+    display: none;
+  }
+  .allprojects-topbar {
+    min-height: 60px;
+    padding: 1rem 0 0.5rem 0;
+    font-size: 1.1rem;
+  }
+  .topbar-title-row {
+    padding-left: 1rem;
+    gap: 0.7rem;
+  }
+  .allprojects-title {
+    font-size: 1.2rem;
+  }
+  .allprojects-grid-section {
+    margin-top: 1.2rem;
+    padding: 0;
+  }
+  .allprojects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem 0.7rem;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    max-width: 100vw;
+  }
+  .project-folder {
+    width: 44vw;
+    min-width: 120px;
+    max-width: 100vw;
+    height: 120px;
+    margin: 0 auto;
+  }
+  .folder-img {
+    width: 80px;
+  }
+  .folder-label {
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
   }
 }
 

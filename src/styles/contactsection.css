@@ -16,11 +16,7 @@
 }
 
 .contact-fancy-name {
-  font-family: "Hermaiona", cursive, serif;
-  font-size: 10rem;
-  color: #fff;
-  margin: 0 0 -4rem 0;
-  letter-spacing: 0.02em;
+  /* Styling wordt nu volledig bepaald door .hermaiona-title-style */
 }
 
 .contact-subtitle {

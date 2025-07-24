@@ -13,13 +13,8 @@ export default function AboutSection() {
       }}
     >
       <h1
-        className="about-name-script"
-        style={{
-          fontFamily: "Hermaiona, cursive, serif",
-          fontSize: "6vw",
-          color: "#fff",
-          margin: 0,
-        }}
+        className="hermaiona-title-style"
+        style={{ fontSize: "6vw", color: "#fff", margin: 0 }}
       >
         Sjonlee Ha
       </h1>

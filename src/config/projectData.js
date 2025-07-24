@@ -5,7 +5,7 @@ import popUpStoreBerlinImg from "../assets/images/popup.png";
 
 export const projects = [
   // All Projects
-  {
+  { 
     slug: "volkswagenproject",
     title: "Volkswagen Project",
     image: volkswagen,
@@ -37,7 +37,7 @@ export const projects = [
       "Thrilled to share that my very first pop-up store in collaboration with ObeyArtSpace was a huge success!",
       "Over 280 people attended — all fresh faces, young creatives, and amazing energy throughout the event. The space was filled with curiosity, community, and great vibes.",
       "A huge thank you to ObeyArtSpace for believing in the idea, and to my creative agency and everyone involved in making this happen — from the projects to the event itself. ❤️",
-      "See you next year. Bigger, louder, weirder."
+      "See you next year. Bigger, louder, weirder.",
     ],
     tags: ["Graphic design", "Posters", "Clothing"],
     dropcap: "T",

@@ -4,8 +4,8 @@
 
 .latest-projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(3, minmax(480px, 1fr));
+  gap: 1rem;
   justify-items: center;
   width: 100%;
   padding-left: 2vw;
@@ -13,13 +13,11 @@
 }
 
 .project-folder-card {
-  background-image: url("../assets/images/bigFolder.png");
   background-size: cover;
   background-position: top center;
-  border-radius: 1.5rem 1.5rem 1rem 1rem;
-  width: 100%;
-  min-width: 280px;
-  max-width: 500px;
+  width: 100%;         /* <-- Laat de grid de breedte bepalen */
+  min-width: 380px;   /* was 300px */
+  max-width: 600px;   /* was 500px */
   height: 450px;
   min-height: 400px;
   max-height: 700px;
@@ -106,7 +104,6 @@
     max-width: 92vw; /* Guarantees space on both sides */
     margin: 0 auto; /* Center the card */
     min-width: unset;
-    border-radius: 1rem;
     height: auto;
     min-height: 300px;
   }
@@ -229,8 +226,6 @@ body {
   position: absolute;
   width: 340px;
   height: 420px;
-  border-radius: 18px;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.12);
   z-index: 3;
   left: 50%;
   top: 50%;
@@ -238,10 +233,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 1.5rem 2rem 1.5rem;
-  color: #fff;
-  background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
   overflow: hidden;
 }

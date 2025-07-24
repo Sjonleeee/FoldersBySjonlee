@@ -9,18 +9,21 @@ gsap.registerPlugin(ScrollTrigger);
 const folders = [
   {
     fancy: "V",
-    title: <>olkswagen<br />Project Wolfsburg<sup>®</sup></>,
-    tags: "{ UX / UI,  Interface Design, Concept }"
+    title: "olkswagen Project Wolfsburg",
+    subtitle: <sup>®</sup>,
+    tags: "{ UX / UI, Interface Design, Concept }"
   },
   {
     fancy: "C",
-    title: <>hrome<br />Magazine Berlin<sup>®</sup></>,
-    tags: "{ Magazine design, Graphic Assistant , Video editting }"
+    title: "hrome Magazine Berlin",
+    subtitle: <sup>®</sup>,
+    tags: "{ Magazine design, Graphic Assistant, Video editing }"
   },
   {
     fancy: "R",
-    title: <>inkitou<br />Creative Agency<sup>®</sup></>,
-    tags: "{ Branding  Entrepreneurship Management }"
+    title: "inkitou Creative Agency",
+    subtitle: <sup>®</sup>,
+    tags: "{ Branding, Entrepreneurship, Management }"
   }
 ];
 
@@ -64,10 +67,10 @@ export default function LatestProjectsSection() {
         {folders.map((folder, i) => (
           <div ref={folderRefs[i]} key={i}>
             <FolderCard
-              fancy="V"
-              title="olkswagen Project Wolfsburg"
-              subtitle={<sup>®</sup>}
-              tags="{ UX / UI, Interface Design, Concept }"
+              fancy={folder.fancy}
+              title={folder.title}
+              subtitle={folder.subtitle}
+              tags={folder.tags}
             />
           </div>
         ))}

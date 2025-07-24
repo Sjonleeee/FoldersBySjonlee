@@ -2,7 +2,7 @@ import React from "react";
 import bigFolder from "../assets/images/bigFolder.png";
 import "./FolderCard.css";
 
-export default function FolderCard({ fancy, title, tags }) {
+export default function FolderCard({ fancy, title, subtitle, tags }) {
   return (
     <div
       className="folder-card"
@@ -13,8 +13,13 @@ export default function FolderCard({ fancy, title, tags }) {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="folder-fancy hermaiona-title-style">{fancy}</div>
-      <div className="folder-title">{title}</div>
+      <div className="folder-card-content">
+        <div className="folder-title-row">
+          <span className="folder-fancy hermaiona-title-style">{fancy}</span>
+          <span className="folder-title">{title}</span>
+          {subtitle && <span className="folder-subtitle">{subtitle}</span>}
+        </div>
+      </div>
       <div className="folder-tags">{tags}</div>
     </div>
   );

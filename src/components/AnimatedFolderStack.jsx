@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useLayoutEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FolderCard from "./FolderCard";
@@ -37,6 +37,8 @@ function AnimatedFolderStack() {
   const sectionRef = useRef();
   const folderRefs = [useRef(), useRef(), useRef()];
   const titleRef = useRef();
+  const [mouseX, setMouseX] = useState(null);
+  const [mouseY, setMouseY] = useState(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -82,19 +84,33 @@ function AnimatedFolderStack() {
         { y: 32, x: 16, rotation: -4, opacity: 1, zIndex: 3, duration: 0.32 }
       );
       // 3. Folders spreiden uit naar grid/rij (reset rotation)
-      tl.to(folderRefs[0].current, { x: "-33vw", y: "10vh", scale: 1, rotation: 0, zIndex: 1, duration: 0.32 });
+      tl.to(folderRefs[0].current, { x: "-31vw", y: "10vh", scale: 1, rotation: 0, zIndex: 1, duration: 0.32 });
       tl.to(folderRefs[1].current, { x: "0vw", y: "10vh", scale: 1, rotation: 0, zIndex: 2, duration: 0.32 }, "<");
-      tl.to(folderRefs[2].current, { x: "33vw", y: "10vh", scale: 1, rotation: 0, zIndex: 3, duration: 0.32 }, "<");
+      tl.to(folderRefs[2].current, { x: "31vw", y: "10vh", scale: 1, rotation: 0, zIndex: 3, duration: 0.32 }, "<");
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
+
+  // Track mouse X position relative to the section
+  function handleMouseMove(e) {
+    if (!sectionRef.current) return;
+    const bounds = sectionRef.current.getBoundingClientRect();
+    setMouseX(e.clientX - bounds.left);
+    setMouseY(e.clientY - bounds.top);
+  }
+  function handleMouseLeave() {
+    setMouseX(null);
+    setMouseY(null);
+  }
 
   return (
     <section
       className="latest-projects-hero"
       ref={sectionRef}
       style={{ position: "relative" }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Sticky titel van de sectie, animatie op scale/position */}
       <div
@@ -140,6 +156,8 @@ function AnimatedFolderStack() {
               subtitle={folder.subtitle}
               tags={folder.tags}
               video={folder.video}
+              mouseX={mouseX}
+              mouseY={mouseY}
             />
           </div>
         ))}

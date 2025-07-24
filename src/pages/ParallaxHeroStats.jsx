@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import FolderPage from "./FolderPage";
-import StatsSection from "./StatsSection";
+import { useScroll, useTransform } from "framer-motion";
+import FolderPage from "../components/FolderPage";
+import StatsSection from "../components/StatsSection";
 
 export default function ParallaxHeroStats() {
   const ref = useRef(null);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FolderLanding from "./FolderLanding";
+import FolderLanding from "../components/FolderLanding";
 import OnePagerSections from "./OnePagerSections";
 
 export default function MainPage() {

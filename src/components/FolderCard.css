@@ -1,0 +1,50 @@
+.folder-card {
+  position: absolute;
+  width: 340px;
+  height: 420px;
+  border-radius: 18px;
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2.5rem 1.5rem 2rem 1.5rem;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* eventueel een lichte overlay voor leesbaarheid: */
+  /* background-blend-mode: multiply; */
+}
+.folder-fancy {
+  font-size: 4.5rem;
+  font-family: "Hermaiona", cursive, serif;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.folder-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  line-height: 1.1;
+  margin-bottom: 1.2rem;
+}
+.folder-tags {
+  font-size: 1rem;
+  color: #6ec1e4;
+  margin-top: 0.5rem;
+}
+@media (max-width: 900px) {
+  .folder-card {
+    width: 200px;
+    height: 260px;
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  }
+  .folder-fancy {
+    font-size: 2.2rem;
+  }
+  .folder-title {
+    font-size: 1rem;
+  }
+} 

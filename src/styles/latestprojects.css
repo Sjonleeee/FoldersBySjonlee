@@ -2,10 +2,6 @@
   padding: 3rem 1rem;
 }
 
-.latest-projects-title {
-  /* Gebruik nu alleen de utility class indien nodig */
-}
-
 .latest-projects-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -75,7 +71,7 @@
   .project-folder-card {
     max-width: 100vw;
     min-width: unset;
-}
+  }
 }
 
 @media (max-width: 900px) {
@@ -106,14 +102,14 @@
     padding: 0 4vw; /* Ensures grid never touches the edge */
   }
   .project-folder-card {
-  width: 100%;
-    max-width: 92vw;      /* Guarantees space on both sides */
-    margin: 0 auto;       /* Center the card */
+    width: 100%;
+    max-width: 92vw; /* Guarantees space on both sides */
+    margin: 0 auto; /* Center the card */
     min-width: unset;
     border-radius: 1rem;
     height: auto;
     min-height: 300px;
-}
+  }
   .folder-content {
     padding: 0 1.5rem 1.5rem 1.5rem;
     padding-top: 130px; /* Move content further down */
@@ -129,7 +125,7 @@
     font-size: 1.35rem;
   }
   .project-tags {
-    font-size: 0.8rem;  /* Smaller tags */
+    font-size: 0.8rem; /* Smaller tags */
     height: 2rem;
   }
 }
@@ -138,4 +134,181 @@ body {
   margin: 0;
   padding: 0;
   background: #111;
+}
+
+.latest-projects-hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.latest-projects-title {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 8rem;
+  z-index: 2;
+  pointer-events: none;
+}
+.latest-projects-stack {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.latest-folder {
+  position: absolute;
+  width: 400px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.12);
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+@media (max-width: 900px) {
+  .latest-folder {
+    width: 220px;
+    height: 140px;
+  }
+  .latest-projects-title {
+    font-size: 2rem;
+  }
+}
+
+.folder-card-content {
+  margin-bottom: 1.2rem;
+  min-height: 120px;
+}
+
+.folder-title-line {
+  display: flex;
+  align-items: baseline; /* Zorgt dat fancy en rest op één lijn staan */
+  font-size: 1.6rem;
+  font-weight: bold;
+  line-height: 1.1;
+  flex-wrap: wrap;
+}
+
+.folder-fancy {
+  font-size: 4.5rem;
+  font-family: "Hermaiona", cursive, serif;
+  line-height: 1;
+  margin-right: 0.1em;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: baseline;
+  /* optioneel: */
+  /* margin-bottom: -0.1em; */
+}
+
+.folder-title-rest {
+  display: inline-block;
+  vertical-align: baseline;
+  font-family: inherit;
+  font-size: 1.6rem;
+  font-weight: bold;
+  line-height: 1.1;
+  /* optioneel: */
+  /* margin-left: 0.05em; */
+}
+
+.folder-card {
+  position: absolute;
+  width: 340px;
+  height: 420px;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 1.5rem 2rem 1.5rem;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.folder-card-content {
+  margin-bottom: 1.2rem;
+}
+
+.folder-title-block {
+  display: flex;
+  align-items: flex-end;
+}
+
+.folder-fancy {
+  font-size: 4.5rem;
+  font-family: "Hermaiona", cursive, serif;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 0.2em;
+  margin-bottom: 0.1em;
+}
+
+.folder-title-lines {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 0.2em;
+}
+
+.folder-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  line-height: 1.1;
+  display: block;
+  color: #fff;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+}
+
+.folder-subtitle {
+  font-size: 1.1rem;
+  margin-left: 0.1em;
+  font-weight: normal;
+  vertical-align: super;
+}
+
+.folder-tags {
+  font-size: 1rem;
+  color: #6ec1e4;
+  margin-top: 0.5rem;
+  margin-left: 0.2rem;
+  margin-bottom: 0.2rem;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 900px) {
+  .folder-card {
+    width: 200px;
+    height: 260px;
+    padding: 0 0.7rem 1.2rem 0.7rem;
+  }
+  .folder-fancy {
+    font-size: 2.2rem;
+  }
+  .folder-title {
+    font-size: 1rem;
+  }
 }

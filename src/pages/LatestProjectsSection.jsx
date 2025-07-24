@@ -1,43 +1,74 @@
-import React from "react";
-import bigFolder from "../assets/images/bigFolder.png";
+import React, { useRef, useLayoutEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import FolderCard from "../components/FolderCard";
 import "../styles/latestprojects.css";
 
-const projects = [
+gsap.registerPlugin(ScrollTrigger);
+
+const folders = [
   {
     fancy: "V",
-    title: "olkswagen Project®",
-    tags: "[ UX / UI, Interface Design, Concept ]",
+    title: <>olkswagen<br />Project Wolfsburg<sup>®</sup></>,
+    tags: "{ UX / UI,  Interface Design, Concept }"
   },
   {
     fancy: "C",
-    title: "hrome Magazine Berlin®",
-    tags: "[ Magazine design, Graphic Design, Video edits ]",
+    title: <>hrome<br />Magazine Berlin<sup>®</sup></>,
+    tags: "{ Magazine design, Graphic Assistant , Video editting }"
   },
   {
     fancy: "R",
-    title: "inkitou Creative Agency®",
-    tags: "[ Branding, Entrepreneurship, Management ]",
-  },
+    title: <>inkitou<br />Creative Agency<sup>®</sup></>,
+    tags: "{ Branding  Entrepreneurship Management }"
+  }
 ];
 
 export default function LatestProjectsSection() {
+  const sectionRef = useRef();
+  const folderRefs = [useRef(), useRef(), useRef()];
+  const titleRef = useRef();
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=250%",
+          scrub: true,
+          pin: true,
+        }
+      });
+
+      tl.fromTo(titleRef.current, { opacity: 0 }, { opacity: 1, duration: 0.2 });
+      tl.fromTo(folderRefs[0].current, { y: "100vh" }, { y: 0, duration: 0.3 });
+      tl.fromTo(folderRefs[1].current, { y: "100vh" }, { y: 0, duration: 0.3 });
+      tl.fromTo(folderRefs[2].current, { y: "100vh" }, { y: 0, duration: 0.3 });
+
+      // Folders naar grid/rij
+      tl.to(folderRefs[0].current, { x: "-33vw", y: "10vh", scale: 1, duration: 0.3 });
+      tl.to(folderRefs[1].current, { x: "0vw", y: "10vh", scale: 1, duration: 0.3 }, "<");
+      tl.to(folderRefs[2].current, { x: "33vw", y: "10vh", scale: 1, duration: 0.3 }, "<");
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="latest-projects-section">
-      <h2 className="latest-projects-title hermaiona-title-style">Latest Projects</h2>
-      <div className="latest-projects-grid">
-        {projects.map((project, idx) => (
-          <div
-            className="project-folder-card"
-            key={idx}
-            style={{ backgroundImage: `url(${bigFolder})` }}
-          >
-            <div className="folder-content">
-              <div className="folder-title-row">
-                <span className="project-fancy-letter hermaiona-title-style">{project.fancy}</span>
-                <span className="project-title">{project.title}</span>
-            </div>
-              <div className="project-tags">{project.tags}</div>
-            </div>
+    <section className="latest-projects-hero" ref={sectionRef}>
+      <div className="latest-projects-title hermaiona-title-style" ref={titleRef}>
+        Latest Projects
+      </div>
+      <div className="latest-projects-stack">
+        {folders.map((folder, i) => (
+          <div ref={folderRefs[i]} key={i}>
+            <FolderCard
+              fancy="V"
+              title="olkswagen Project Wolfsburg"
+              subtitle={<sup>®</sup>}
+              tags="{ UX / UI, Interface Design, Concept }"
+            />
           </div>
         ))}
       </div>

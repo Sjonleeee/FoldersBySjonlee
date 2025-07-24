@@ -1,6 +1,6 @@
 import React from "react";
-import bigFolder from "../assets/images/bigFolder.png";
-import "./FolderCard.css";
+import bigFolder from "../assets/images/folderBig.png";
+import "../styles/FolderCard.css";
 
 export default function FolderCard({ fancy, title, subtitle, tags }) {
   return (

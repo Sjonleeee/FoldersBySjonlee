@@ -1,0 +1,113 @@
+/* FolderCard component styles */
+.folder-card {
+  width: 100%;
+  min-width: 420px;
+  max-width: 700px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2.5rem 1.5rem 2rem 1.5rem;
+  color: #fff;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.latest-projects-hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.folder-card-content {
+  margin-bottom: 1.2rem;
+}
+.folder-title-row {
+  display: flex;
+  align-items: baseline;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.folder-fancy {
+  font-size: 4.5rem;
+  font-family: "Hermaiona", cursive, serif;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 0.05em;
+}
+
+.folder-subtitle {
+  font-size: 1.2rem;
+  margin-left: 0.2em;
+  font-weight: normal;
+  display: inline-block;
+  vertical-align: super;
+}
+.folder-tags {
+  font-size: 1rem;
+  color: #6ec1e4;
+  margin-top: 0.5rem;
+  margin-left: 0.2rem;
+  margin-bottom: 0.2rem;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+  white-space: normal;
+  word-break: normal;
+}
+
+.folder-card {
+  position: absolute;
+  width: 340px;
+  height: 420px;
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.folder-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  line-height: 1.1;
+  display: block;
+  color: #fff;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 900px) {
+  .folder-card {
+    width: 200px;
+    height: 260px;
+    padding: 0 0.7rem 1.2rem 0.7rem;
+  }
+  .folder-fancy {
+    font-size: 2.2rem;
+  }
+  .folder-title {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 900px) {
+  .folder-card {
+    min-width: 200px;
+    max-width: 260px;
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  }
+  .folder-fancy {
+    font-size: 2.2rem;
+  }
+  .folder-title {
+    font-size: 1rem;
+  }
+}

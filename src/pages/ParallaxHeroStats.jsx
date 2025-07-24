@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import FolderPage from "../components/FolderPage";
 import StatsSection from "../components/StatsSection";
 

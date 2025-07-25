@@ -152,13 +152,13 @@
 
 @media (max-width: 600px) {
   .latest-projects-title {
-    font-size: 3.5rem !important;   /* Groter dan eerst */
+    font-size: 3.5rem !important; /* Groter dan eerst */
     margin-bottom: 1.5rem !important;
   }
 }
 
 @media (max-width: 600px) {
   .folder-fancy {
-    font-size: 2.5rem !important;   /* Groter dan eerst */
+    font-size: 2.5rem !important; /* Groter dan eerst */
   }
 }

@@ -94,6 +94,16 @@
   letter-spacing: 0.01em;
 }
 
+.latest-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(480px, 1fr));
+  gap: 1rem; /* Standaard spacing tussen de folders op desktop */
+  justify-items: center;
+  width: 100%;
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+
 @media (max-width: 900px) {
   .folder-card {
     width: 200px;
@@ -121,6 +131,18 @@
   }
 }
 
+@media (min-width: 901px) {
+  .folder-card {
+    width: 500px;
+    max-width: 600px;
+    height: 450px;
+    max-height: 520px;
+    min-width: 420px;
+    min-height: 340px;
+    padding: 2.8rem 2rem 2.2rem 2rem;
+  }
+}
+
 @media (max-width: 600px) {
   .latest-projects-hero {
     justify-content: flex-start !important;
@@ -140,7 +162,7 @@
     transform: translate(-50%, -50%) !important;
     width: 96vw !important;
     max-width: 96vw !important;
-    padding: 1.2rem 1rem 1.1rem 1.2rem !important; /* mooie binnenruimte */
+    margin: 1.2rem 1rem 1.1rem 1.2rem !important; /* mooie binnenruimte */
     background-position: top center !important;
   }
   .folder-card-content {

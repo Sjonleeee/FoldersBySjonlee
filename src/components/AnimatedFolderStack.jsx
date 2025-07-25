@@ -65,12 +65,12 @@ function AnimatedFolderStack() {
           {
             top: "50%",
             transform: "translateX(-50%)",
-            fontSize: "8.4rem", 
+            fontSize: "8.4rem",
             opacity: 0,
           },
           {
-            top: "15vh", 
-            fontSize: "8.4rem", 
+            top: "15vh",
+            fontSize: "8.4rem",
             opacity: 1,
             duration: 0.38,
             ease: "power2.inOut",
@@ -128,16 +128,16 @@ function AnimatedFolderStack() {
           tl.fromTo(
             folderRefs[1].current,
             { y: "100vh", x: 0, rotation: 0, zIndex: 2 },
-            { y: 16, x: 0, rotation: 0, zIndex: 2, duration: 0.32 }
+            { y: 8, x: 0, rotation: 0, zIndex: 2, duration: 0.32 }
           );
           tl.fromTo(
             folderRefs[2].current,
             { y: "100vh", x: 16, rotation: -4, zIndex: 3 },
-            { y: 32, x: 16, rotation: -4, zIndex: 3, duration: 0.32 }
+            { y: 16, x: 16, rotation: -4, zIndex: 3, duration: 0.32 }
           );
           tl.to(folderRefs[0].current, {
             x: "-30.5vw",
-            y: "10vh",
+            y: "2vh",
             scale: 1,
             rotation: 0,
             zIndex: 1,
@@ -147,7 +147,7 @@ function AnimatedFolderStack() {
             folderRefs[1].current,
             {
               x: "0vw",
-              y: "10vh",
+              y: "2vh",
               scale: 1,
               rotation: 0,
               zIndex: 2,
@@ -159,7 +159,7 @@ function AnimatedFolderStack() {
             folderRefs[2].current,
             {
               x: "30.5vw",
-              y: "10vh",
+              y: "2vh",
               scale: 1,
               rotation: 0,
               zIndex: 3,
@@ -235,7 +235,7 @@ function AnimatedFolderStack() {
             style={{
               position: "absolute",
               left: "50%",
-              top: "46%",
+              top: "56%",
               transform: "translate(-50%, 0)",
               zIndex: i + 1,
               // GSAP will animate x/y/zIndex

@@ -53,6 +53,16 @@
   font-size: 1.1rem;
 }
 
+.latest-projects-title {
+  font-size: 7rem; /* Maak de titel echt groot */
+  line-height: 1.05;
+  font-family: "Hermaiona", cursive, serif;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
 /* Responsive: op mobiel onder elkaar */
 @media (max-width: 1000px) {
   .latest-projects-grid {
@@ -84,7 +94,7 @@
     padding: 1.5rem 0.5rem;
   }
   .latest-projects-title {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 2rem;
   }
   .latest-projects-grid {
@@ -116,8 +126,6 @@
   }
 }
 
-
-
 @media (max-width: 900px) {
   .latest-folder {
     width: 220px;
@@ -139,5 +147,18 @@
   }
   .folder-title {
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .latest-projects-title {
+    font-size: 3.5rem !important;   /* Groter dan eerst */
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .folder-fancy {
+    font-size: 2.5rem !important;   /* Groter dan eerst */
   }
 }

@@ -2,7 +2,7 @@ import React, { useRef, useLayoutEffect, useState, useCallback, useEffect } from
 import { gsap } from "gsap";
 import bigFolder from "../assets/images/folderBig.png";
 import "../styles/FolderCard.css";
-import "../styles/FolderCardOverlay.css";
+import "../styles/OverlayVideoCard.css";
 import testImg from "../assets/images/sjonlee1.jpeg";
 
 export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX, mouseY }) {

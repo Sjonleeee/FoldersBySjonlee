@@ -52,17 +52,19 @@ function AnimatedFolderStack() {
         },
       });
 
-      // 1. Titel groot en perfect gecentreerd (start)
+      // 1. Titel groot en perfect gecentreerd (start) + fade in
       tl.fromTo(
         titleRef.current,
         {
           top: "50%",
           transform: "translateX(-50%)",
           fontSize: "8rem",
+          opacity: 0,
         },
         {
           top: "10vh",
           fontSize: "rem",
+          opacity: 1,
           duration: 0.38,
           ease: "power2.inOut",
         }
@@ -70,23 +72,25 @@ function AnimatedFolderStack() {
       // 2. Folders komen één voor één omhoog en stacken (elke volgende folder iets lager)
       tl.fromTo(
         folderRefs[0].current,
-        { y: "100vh", x: -16, rotation: 4, opacity: 0, zIndex: 1 },
-        { y: 0, x: -16, rotation: 4, opacity: 1, zIndex: 1, duration: 0.32 }
+        { y: "100vh", x: -16, rotation: 4, zIndex: 1 },
+        { y: 0, x: -16, rotation: 4, zIndex: 1, duration: 0.32 }
       );
       tl.fromTo(
         folderRefs[1].current,
-        { y: "100vh", x: 0, rotation: 0, opacity: 0, zIndex: 2 },
-        { y: 16, x: 0, rotation: 0, opacity: 1, zIndex: 2, duration: 0.32 }
+        { y: "100vh", x: 0, rotation: 0, zIndex: 2 },
+        { y: 16, x: 0, rotation: 0, zIndex: 2, duration: 0.32 }
       );
       tl.fromTo(
         folderRefs[2].current,
-        { y: "100vh", x: 16, rotation: -4, opacity: 0, zIndex: 3 },
-        { y: 32, x: 16, rotation: -4, opacity: 1, zIndex: 3, duration: 0.32 }
+        { y: "100vh", x: 16, rotation: -4, zIndex: 3 },
+        { y: 32, x: 16, rotation: -4, zIndex: 3, duration: 0.32 }
       );
       // 3. Folders spreiden uit naar grid/rij (reset rotation)
-      tl.to(folderRefs[0].current, { x: "-31vw", y: "10vh", scale: 1, rotation: 0, zIndex: 1, duration: 0.32 });
+      tl.to(folderRefs[0].current, { x: "-30.5vw", y: "10vh", scale: 1, rotation: 0, zIndex: 1, duration: 0.32 });
       tl.to(folderRefs[1].current, { x: "0vw", y: "10vh", scale: 1, rotation: 0, zIndex: 2, duration: 0.32 }, "<");
-      tl.to(folderRefs[2].current, { x: "31vw", y: "10vh", scale: 1, rotation: 0, zIndex: 3, duration: 0.32 }, "<");
+      tl.to(folderRefs[2].current, { x: "30.5vw", y: "10vh", scale: 1, rotation: 0, zIndex: 3, duration: 0.32 }, "<");
+      // Hold at the end so the section stays pinned for a bit
+      tl.to({}, { duration: 0.4 });
     }, sectionRef);
 
     return () => ctx.revert();

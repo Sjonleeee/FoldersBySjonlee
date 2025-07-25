@@ -1,6 +1,8 @@
-import React, { useRef, useLayoutEffect, useState, useMemo } from "react";
+import React, { useRef, useLayoutEffect, useState, useCallback, useEffect } from "react";
+import { gsap } from "gsap";
 import bigFolder from "../assets/images/folderBig.png";
 import "../styles/FolderCard.css";
+import "../styles/FolderCardOverlay.css";
 import testImg from "../assets/images/sjonlee1.jpeg";
 
 export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX, mouseY }) {
@@ -13,8 +15,8 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
   const overlayHeight = 120;
   const overlayRadius = 6;
 
-  // Memoize card bounds for performance
-  const cardBounds = useMemo(() => {
+  // Efficiently get card bounds only when needed
+  const getCardBounds = useCallback(() => {
     if (!cardRef.current) return null;
     const rect = cardRef.current.getBoundingClientRect();
     const sectionRect = cardRef.current.parentElement.parentElement.getBoundingClientRect();
@@ -26,13 +28,28 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
       width: rect.width,
       height: rect.height,
     };
-  }, [cardRef.current]);
+  }, []);
 
-  // Use refs to store last mouse position for rAF
-  const lastPos = useRef({ x: 0, y: 0 });
+  // GSAP hover scale effect
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const handleEnter = () => {
+      gsap.to(el, { scale: 0.96, duration: 0.22, ease: "power2.out" });
+    };
+    const handleLeave = () => {
+      gsap.to(el, { scale: 1, duration: 0.22, ease: "power2.out" });
+    };
+    el.addEventListener("mouseenter", handleEnter);
+    el.addEventListener("mouseleave", handleLeave);
+    return () => {
+      el.removeEventListener("mouseenter", handleEnter);
+      el.removeEventListener("mouseleave", handleLeave);
+    };
+  }, []);
 
-  // Only update overlay visibility and position via layout effect
   useLayoutEffect(() => {
+    const cardBounds = getCardBounds();
     if (!cardBounds || mouseX === null || mouseY === null) {
       setShowOverlay(false);
       return;
@@ -48,21 +65,20 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
       overlayTop < cardBounds.bottom;
     setShowOverlay(visible);
     if (overlayRef.current) {
-      // Calculate tilt based on mouse position within the card
-      const relX = (mouseX - cardBounds.left) / cardBounds.width; // 0 (left) to 1 (right)
-      const relY = (mouseY - cardBounds.top) / cardBounds.height; // 0 (top) to 1 (bottom)
-      // Centered: 0.5, 0.5
-      const maxTilt = 14; // degrees, adjust for more/less tilt
-      // Invert the tilt so the overlay tilts towards the mouse direction
-      const tiltX = -(relX - 0.5) * 2 * maxTilt; // right = positive, so negative for right tilt
-      const tiltY = (relY - 0.5) * 2 * maxTilt; // down = positive, so positive for downward tilt
-      lastPos.current.x = mouseX - cardBounds.left - overlayWidth / 2;
-      lastPos.current.y = mouseY - cardBounds.top - overlayHeight / 2;
+      const relX = (mouseX - cardBounds.left) / cardBounds.width;
+      const relY = (mouseY - cardBounds.top) / cardBounds.height;
+      const maxTilt = 14;
+      const tiltX = -(relX - 0.5) * 2 * maxTilt;
+      const tiltY = (relY - 0.5) * 2 * maxTilt;
+      const x = mouseX - cardBounds.left - overlayWidth / 2;
+      const y = mouseY - cardBounds.top - overlayHeight / 2;
       window.requestAnimationFrame(() => {
-        overlayRef.current.style.transform = `translate3d(${lastPos.current.x}px, ${lastPos.current.y}px, 0) perspective(600px) rotateX(${tiltY}deg) rotateY(${tiltX}deg)`;
+        if (overlayRef.current) {
+          overlayRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) perspective(600px) rotateX(${tiltY}deg) rotateY(${tiltX}deg)`;
+        }
       });
     }
-  }, [mouseX, mouseY, cardBounds]);
+  }, [mouseX, mouseY, getCardBounds]);
 
   return (
     <div
@@ -87,23 +103,12 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
       <div className="folder-tags">{tags}</div>
       <div
         ref={overlayRef}
+        className="folder-card-overlay"
         style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
           width: overlayWidth,
           height: overlayHeight,
-          pointerEvents: "none",
-          zIndex: 10,
           borderRadius: overlayRadius,
-          boxShadow: "0 8px 40px rgba(0,0,0,0.18)",
-          background: "transparent",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
           opacity: showOverlay ? 1 : 0,
-          transition: "opacity 0.18s, box-shadow 0.18s",
-          willChange: "transform, opacity",
         }}
       >
         {video ? (
@@ -113,27 +118,18 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
             loop
             muted
             preload="auto"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              borderRadius: overlayRadius,
-              background: "#000",
-            }}
+            className="folder-card-overlay-media"
+            style={{ borderRadius: overlayRadius }}
           />
         ) : (
           <img
             src={testImg}
             alt="Preview"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              borderRadius: overlayRadius,
-              background: "#000",
-            }}
+            className="folder-card-overlay-media"
+            style={{ borderRadius: overlayRadius }}
           />
         )}
+        <div className="folder-card-overlay-title">Explore</div>
       </div>
     </div>
   );

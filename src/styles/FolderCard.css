@@ -12,6 +12,11 @@
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  transition: transform 0.18s cubic-bezier(0.4,0,0.2,1), box-shadow 0.18s;
+}
+.folder-card:hover {
+  transform: scale(0.96);
+  z-index: 11;
 }
 .latest-projects-hero {
   position: relative;

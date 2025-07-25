@@ -755,18 +755,18 @@ html {
 }
 
 .bindery-hero-sticky {
-  position: sticky; /* <-- blijft plakken */
+  position: sticky;
   top: 0;
   width: 100vw;
-  height: 100vh; /* <-- altijd volledig in beeld */
+  height: 100vh;
   overflow: hidden;
   z-index: 10;
 }
+
 .bindery-hero-section {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: #111;
   overflow: hidden;
   display: flex;
   align-items: center;

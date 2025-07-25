@@ -1,5 +1,5 @@
 .bindery-hero-outer {
-  height: 250vh; /* <-- MEER scrollruimte voor volledige animatie */
+  height: 250vh; 
   position: relative;
   overflow: hidden;
 }
@@ -12,15 +12,26 @@
   z-index: 10;
 }
 
-.bindery-hero-section {
+.about-hero-section {
   position: relative;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  overflow: visible !important;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+.about-hero-zoom {
+  will-change: transform;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  transform-origin: center center;
+  overflow: visible !important;
+}
+.about-hero-section {
+  overflow: visible !important;
+}
+
 .bindery-hero-title-wrapper {
   width: 100vw;
   display: flex;
@@ -57,11 +68,9 @@
   height: 200px;
   object-fit: cover;
   border-radius: 12px;
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.12);
   z-index: 1;
   transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .bindery-hero-img:hover {
   transform: scale(1.06) rotate(-2deg);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
 }

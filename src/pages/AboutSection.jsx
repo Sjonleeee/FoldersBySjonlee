@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef, useEffect } from "react";
+import { gsap } from "gsap";
 import "../styles/aboutsection.css";
 import img1 from "../assets/images/sjonlee.jpeg";
 import img2 from "../assets/images/sjonlee2.jpeg";
@@ -8,86 +8,125 @@ import img4 from "../assets/images/sjonlee4.jpeg";
 import img5 from "../assets/images/sjonlee6.jpeg";
 import img6 from "../assets/images/sjonlee7.jpeg";
 
-const gridPositions = [
-  // Eindposities voor de grid (2 rijen x 3 kolommen)
-  { x: "-22vw", y: "-13vh" },
-  { x: "0vw",   y: "-13vh" },
-  { x: "22vw",  y: "-13vh" },
-  { x: "-22vw", y: "13vh" },
-  { x: "0vw",   y: "13vh" },
-  { x: "22vw",  y: "13vh" },
+const startPositions = [
+  { x: "-40vw", y: "-20vh" },
+  { x: "40vw", y: "-20vh" },
+  { x: "-45vw", y: "20vh" },
+  { x: "45vw", y: "20vh" },
+  { x: "-20vw", y: "40vh" },
+  { x: "20vw", y: "40vh" },
 ];
 
 export default function AboutSection() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"]
-  });
+  const sectionRef = useRef(null);
+  const imgRefs = useRef([]);
+  const titleRef = useRef(null);
+  const zoomRef = useRef(null);
+  const extraTextRef = useRef(null);
 
-  // Startposities (zoals je nu hebt)
-  const images = [
-    { src: img1, x0: "-40vw", y0: "-20vh" },
-    { src: img2, x0: "40vw", y0: "-20vh" },
-    { src: img3, x0: "-45vw", y0: "20vh" },
-    { src: img4, x0: "45vw", y0: "20vh" },
-    { src: img5, x0: "-20vw", y0: "40vh" },
-    { src: img6, x0: "20vw", y0: "40vh" },
-  ];
+  useEffect(() => {
+    // Zet startposities en opacity 0
+    imgRefs.current.forEach((img, i) => {
+      gsap.set(img, {
+        x: startPositions[i].x,
+        y: startPositions[i].y,
+        scale: 1.1,
+        opacity: 0,
+        zIndex: 1,
+      });
+    });
+    gsap.set(titleRef.current, { opacity: 1, zIndex: 2 });
+    gsap.set(zoomRef.current, { scale: 1 });
+    gsap.set(extraTextRef.current, { opacity: 0 });
 
-  // Animatie: van verspreid naar grid
-  const xTransforms = images.map((img, i) =>
-    useTransform(
-      scrollYProgress,
-      [0, 0.7, 1],
-      [img.x0, "0vw", gridPositions[i].x]
-    )
-  );
-  const yTransforms = images.map((img, i) =>
-    useTransform(
-      scrollYProgress,
-      [0, 0.7, 1],
-      [img.y0, "0vh", gridPositions[i].y]
-    )
-  );
-  // Scale: van groot naar normaal
-  const imgScale = useTransform(scrollYProgress, [0, 0.7, 1], [1.12, 1, 1]);
-  // Fade-in
-  const opacity = useTransform(scrollYProgress, [0, 0.08], [0, 1]);
+    // Timeline animatie
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "+=60%",
+        scrub: 1,
+        pin: true,
+      },
+    });
 
-  // Titel: fade in, blijft altijd zichtbaar
+    // 1. Foto's faden in en bewegen naar het midden, worden gestapeld
+    imgRefs.current.forEach((img, i) => {
+      tl.to(
+        img,
+        {
+          x: "0vw",
+          y: "0vh",
+          scale: 1,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power3.out",
+          zIndex: 1,
+        },
+        "<+0.08"
+      ); // Stagger effect
+    });
+
+    // 2. Zoom-in animatie op de hele hero
+    tl.to(
+      zoomRef.current,
+      {
+        scale: 1.18,
+        duration: 1.5,
+        ease: "power2.out",
+      },
+      "+=0.2"
+    );
+
+    // 3. Fade-in van extra tekst onder de titel
+    tl.to(
+      extraTextRef.current,
+      {
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out",
+      },
+      ">"
+    );
+
+    return () => tl.kill();
+  }, []);
+
+  const images = [img1, img2, img3, img4, img5, img6];
+
   return (
-    <section className="bindery-hero-outer" ref={ref}>
-      <motion.div
-        className="bindery-hero-sticky"
-        style={{ opacity }}
-      >
-        <div className="bindery-hero-section">
-          {images.map((img, i) => (
-            <motion.img
-              key={i}
-              src={img.src}
-              className="bindery-hero-img"
-              style={{
-                x: xTransforms[i],
-                y: yTransforms[i],
-                scale: imgScale,
-                zIndex: 1
-              }}
-              alt=""
-              draggable={false}
-            />
-          ))}
-          <div className="bindery-hero-title-wrapper">
-            <motion.h1
-              className="bindery-hero-title hermaiona-title-style"
-              style={{ zIndex: 2, opacity }}
-            >
-              Sjonlee Ha
-            </motion.h1>
+    <section className="about-hero-outer" ref={sectionRef}>
+      <div className="about-hero-sticky">
+        <div className="about-hero-zoom" ref={zoomRef}>
+          <div className="about-hero-section">
+            {images.map((src, i) => (
+              <img
+                key={i}
+                ref={(el) => (imgRefs.current[i] = el)}
+                src={src}
+                className="bindery-hero-img"
+                alt=""
+                draggable={false}
+                style={{ position: "absolute" }}
+              />
+            ))}
+            <div className="bindery-hero-title-wrapper">
+              <h1
+                className="bindery-hero-title hermaiona-title-style"
+                ref={titleRef}
+                style={{ zIndex: 2 }}
+              >
+                Sjonlee Ha
+              </h1>
+            </div>
           </div>
         </div>
-      </motion.div>
+        <div
+          className="about-hero-extra-text"
+          ref={extraTextRef}
+          style={{ opacity: 0 }}
+        ></div>
+      </div>
     </section>
   );
-} 
+}

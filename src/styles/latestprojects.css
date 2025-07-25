@@ -4,27 +4,12 @@
 
 .latest-projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(480px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr); /* 3 gelijke kolommen */
+  gap: 0.5rem; /* minder ruimte tussen de kaarten */
   justify-items: center;
   width: 100%;
   padding-left: 2vw;
   padding-right: 2vw;
-}
-
-.project-folder-card {
-  background-size: cover;
-  background-position: top center;
-  width: 100%;
-  min-width: 380px;
-  max-width: 600px;
-  height: 450px;
-  min-height: 400px;
-  max-height: 700px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
 }
 
 .folder-content {

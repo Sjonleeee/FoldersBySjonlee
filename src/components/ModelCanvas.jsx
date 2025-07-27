@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect } from "react";
+import React, { Suspense, useState, useEffect, forwardRef } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import { OrbitControls, PresentationControls } from "@react-three/drei";
 import Model from "../three/Model";
@@ -36,7 +36,7 @@ const CameraMovement = ({ inputPosition }) => {
   return null;
 };
 
-const ModelCanvas = () => {
+const ModelCanvas = forwardRef((props, ref) => {
   const [inputPosition, setInputPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const ModelCanvas = () => {
   }, []);
 
   return (
-    <div className="canvas-wrapper">
+    <div className="canvas-wrapper" ref={ref}>
       <Canvas
         camera={{
           position: [0, 0, 7],
@@ -117,6 +117,8 @@ const ModelCanvas = () => {
       </Canvas>
     </div>
   );
-};
+});
+
+ModelCanvas.displayName = 'ModelCanvas';
 
 export default ModelCanvas;

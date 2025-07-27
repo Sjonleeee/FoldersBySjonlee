@@ -13,7 +13,7 @@
 }
 
 .about-hero-outer {
-  height: 600vh; /* Extra ruimte voor 3 sec extra leestijd aan het einde */
+  height: 600vh;
   position: relative;
   overflow: visible !important;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import { motion } from "framer-motion";
 import rinkitouVideo from "../assets/videos/rinkitou.mp4";
 import deskImg from "../assets/images/DESK.png";
@@ -47,7 +47,7 @@ const fadeInCenter = {
   },
 };
 
-export default function StatsSection() {
+const StatsSection = forwardRef((props, ref) => {
   const isMobile = useIsMobile();
   const [showStats, setShowStats] = useState(false);
 
@@ -66,7 +66,7 @@ export default function StatsSection() {
   });
 
   return (
-    <div className="stats-video-section">
+    <div className="stats-video-section" ref={ref}>
       <div className="stats-content-flex">
         {isMobile ? (
           <>
@@ -211,4 +211,8 @@ export default function StatsSection() {
       </div>
     </div>
   );
-} 
+});
+
+StatsSection.displayName = 'StatsSection';
+
+export default StatsSection; 

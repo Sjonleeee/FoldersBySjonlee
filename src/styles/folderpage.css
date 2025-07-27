@@ -1,11 +1,40 @@
 /* =====================
-   Layout & Centering
+   Sticky Animation Structure
    ===================== */
-.page-root {
+.folder-hero-outer {
+  height: 250vh; /* Minder scroll ruimte om zwarte ruimte te verminderen */
   position: relative;
+  overflow: visible !important;
+}
+
+.folder-hero-sticky {
+  position: sticky;
+  top: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  z-index: 10;
+}
+
+/* =====================
+   Layout & Centering
+   ===================== */
+.folder-page-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.main-content-centered {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .full-screen,
@@ -14,14 +43,6 @@
   width: 100vw;
   min-height: 100vh;
   left: 0;
-}
-
-.main-content-centered,
-.main-content,
-.folder-page-container {
-  width: 100vw;
-  margin: 0;
-  max-width: none;
 }
 
 /* =====================
@@ -198,15 +219,29 @@
    Stats Video Section
    ===================== */
 .stats-video-section {
-  position: absolute;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #111;
+}
+
+.stats-side.left {
+  transform: translateX(-100vw);
+  opacity: 0;
+}
+
+.stats-side.right {
+  transform: translateX(100vw);
+  opacity: 0;
+}
+
+.stats-laptop-stack {
+  transform: scale(0.5);
+  opacity: 0;
 }
 
 .stats-content-flex {

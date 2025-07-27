@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import FolderLanding from "../components/FolderLanding";
@@ -9,6 +9,10 @@ import ContactSection from "./ContactSection";
 
 export default function MainPage() {
   const [folderOpen, setFolderOpen] = useState(false);
+  const [isScrollBlocked, setIsScrollBlocked] = useState(true);
+  const showScrollIndicator = true;
+  const headerRef = useRef(null);
+  const footerRef = useRef(null);
 
   const handleOpen = () => {
     setFolderOpen(true);
@@ -18,6 +22,27 @@ export default function MainPage() {
     setFolderOpen(false);
   };
 
+  const handleAnimationsComplete = () => {
+    setIsScrollBlocked(false);
+    // Re-enable scrolling on body and html
+    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'auto';
+    document.body.classList.remove('scroll-blocked');
+  };
+
+  // Block scrolling when component mounts
+  useEffect(() => {
+    if (folderOpen && isScrollBlocked) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      document.body.classList.add('scroll-blocked');
+    } else {
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
+      document.body.classList.remove('scroll-blocked');
+    }
+  }, [folderOpen, isScrollBlocked]);
+
   if (!folderOpen) {
     return <FolderLanding onOpen={handleOpen} />;
   }
@@ -25,10 +50,16 @@ export default function MainPage() {
   return (
     <div
       className="onepager-root"
-      style={{ width: "100%", overflowX: "hidden" }}
+      style={{ 
+        width: "100%", 
+        overflowX: "hidden",
+        overflowY: isScrollBlocked ? "hidden" : "auto",
+        height: isScrollBlocked ? "100vh" : "auto"
+      }}
     >
       {/* Header */}
       <div
+        ref={headerRef}
         style={{
           position: "fixed",
           top: 0,
@@ -42,7 +73,11 @@ export default function MainPage() {
 
       <div className="onepager-content">
         <section style={{ minHeight: "1400px", position: "relative" }}>
-          <FolderPage />
+          <FolderPage 
+            headerRef={headerRef} 
+            footerRef={footerRef}
+            onAnimationsComplete={handleAnimationsComplete}
+          />
         </section>
         <section style={{ minHeight: "100vh" }}>
           <AboutSection />
@@ -57,6 +92,7 @@ export default function MainPage() {
 
       {/* Footer */}
       <div
+        ref={footerRef}
         style={{
           position: "fixed",
           bottom: 0,
@@ -65,7 +101,7 @@ export default function MainPage() {
           zIndex: 5000,
         }}
       >
-        <Footer />
+        <Footer showScrollIndicator={showScrollIndicator} />
       </div>
     </div>
   );

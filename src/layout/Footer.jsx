@@ -3,10 +3,17 @@ import iconData from "../config/iconData";
 import { useMenu } from "../context/MenuContext";
 import "../styles/footer.css";
 
-const Footer = ({ hideIconBar, showCopyright }) => {
+const Footer = ({ hideIconBar, showScrollIndicator }) => {
   const { menuOpen } = useMenu();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activePopup, setActivePopup] = useState(null);
+  const [scrollIndicatorVisible, setScrollIndicatorVisible] = useState(false);
+
+  useEffect(() => {
+    if (showScrollIndicator && !scrollIndicatorVisible) {
+      setScrollIndicatorVisible(true);
+    }
+  }, [showScrollIndicator, scrollIndicatorVisible]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -76,8 +83,8 @@ const Footer = ({ hideIconBar, showCopyright }) => {
         )}
       </div>
       <div className="footer-right">
-          {!menuOpen && !showCopyright ? (
-          <div className="footer-scroll-card">
+          {!menuOpen && showScrollIndicator ? (
+          <div className={`footer-scroll-card ${scrollIndicatorVisible ? 'fade-in' : ''}`}>
             <div className="footer-scroll-content">
               <div className="footer-scroll-textblock">
                 <span className="footer-scroll-label">Scroll Down</span>

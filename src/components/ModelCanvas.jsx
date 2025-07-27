@@ -83,7 +83,7 @@ const ModelCanvas = forwardRef((props, ref) => {
       window.addEventListener("mousemove", handleMouseMove);
       return () => window.removeEventListener("mousemove", handleMouseMove);
     }
-  }, []);
+  }, []); // Add isVisible to dependency array
 
   return (
     <div className="canvas-wrapper" ref={ref} style={{ zIndex: 1 }}>

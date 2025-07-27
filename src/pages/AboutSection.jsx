@@ -15,8 +15,8 @@ const startPositions = [
   { x: "45vw", y: "20vh" },
   { x: "-20vw", y: "40vh" },
   { x: "20vw", y: "40vh" },
-  { x: "-15vw", y: "-40vh" }, // Nieuwe foto boven links - meer naar rechts
-  { x: "15vw", y: "-40vh" },  // Nieuwe foto boven rechts - meer naar links
+  { x: "-15vw", y: "-40vh" }, 
+  { x: "15vw", y: "-40vh" }, // Nieuwe foto boven rechts - meer naar links
 ];
 
 export default function AboutSection() {
@@ -59,35 +59,51 @@ export default function AboutSection() {
 
     // 1. Eerst Sjonlee Ha fade-in
     tl.to(titleRef.current, { opacity: 1, duration: 1.2, ease: "power3.out" });
-    
+
     // 2. Dan één voor één de foto's fade-in (speciale volgorde)
     // Foto 1 (img1)
-    tl.to(imgRefs.current[0], {
-      opacity: 1,
-      duration: 1.2,
-      ease: "power3.out",
-    }, "+=0.3");
-    
-    // Foto 7 & 8 (img2 & img3 hergebruikt) - als 2e en 3e
-    tl.to(imgRefs.current[6], {
-      opacity: 1,
-      duration: 1.2,
-      ease: "power3.out",
-    }, "+=0.3");
-    
-    tl.to(imgRefs.current[7], {
-      opacity: 1,
-      duration: 1.2,
-      ease: "power3.out",
-    }, "+=0.3");
-    
-    // Foto 2, 3, 4, 5, 6 (originele volgorde)
-    for (let i = 1; i <= 5; i++) {
-      tl.to(imgRefs.current[i], {
+    tl.to(
+      imgRefs.current[0],
+      {
         opacity: 1,
         duration: 1.2,
         ease: "power3.out",
-      }, "+=0.3");
+      },
+      "+=0.3"
+    );
+
+    // Foto 7 & 8 (img2 & img3 hergebruikt) - als 2e en 3e
+    tl.to(
+      imgRefs.current[6],
+      {
+        opacity: 1,
+        duration: 1.2,
+        ease: "power3.out",
+      },
+      "+=0.3"
+    );
+
+    tl.to(
+      imgRefs.current[7],
+      {
+        opacity: 1,
+        duration: 1.2,
+        ease: "power3.out",
+      },
+      "+=0.3"
+    );
+
+    // Foto 2, 3, 4, 5, 6 (originele volgorde)
+    for (let i = 1; i <= 5; i++) {
+      tl.to(
+        imgRefs.current[i],
+        {
+          opacity: 1,
+          duration: 1.2,
+          ease: "power3.out",
+        },
+        "+=0.3"
+      );
     }
 
     // 3. Foto's bewegen naar het midden, worden gestapeld (met klein tijdverschil)
@@ -176,7 +192,11 @@ export default function AboutSection() {
             style={{ opacity: 0 }}
           >
             <p>
-              is a 24-year-old creative developer / CEO of Rinkitou with a big curiosity for how things work and how they're made. He believes vision is more than words — and love learning new stuff, building cool things, and creating something meaningful for for others, myself and for my fam.
+              is a 24-year-old creative developer / CEO of Rinkitou with a big
+              curiosity for how things work and how they're made. He believes
+              vision is more than words — and love learning new stuff, building
+              cool things, and creating something meaningful for for others,
+              myself and for my fam.
             </p>
           </div>
         </div>
@@ -195,17 +215,17 @@ export default function AboutSection() {
               />
             ))}
             {/* Donkere overlay voor leesbaarheid */}
-            <div 
-              className="about-hero-overlay" 
+            <div
+              className="about-hero-overlay"
               ref={overlayRef}
               style={{
-                position: "absolute", 
-                top: 0, 
-                left: 0, 
-                width: "100%", 
-                height: "100%", 
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
                 backgroundColor: "rgba(0, 0, 0, 1)",
-                zIndex: 1
+                zIndex: 1,
               }}
             />
           </div>

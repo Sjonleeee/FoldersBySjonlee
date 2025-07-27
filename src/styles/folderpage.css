@@ -121,34 +121,34 @@
 }
 
 .role-label.top-left {
-  top: 18%;
-  left: 7%;
+  top: 25%;
+  left: 15%;
 }
 .role-label.top-center {
-  top: 8%;
+  top: 15%;
   left: 50%;
   transform: translateX(-50%);
 }
 .role-label.top-right {
-  top: 18%;
-  right: 7%;
+  top: 25%;
+  right: 15%;
 }
 .role-label.mid-right {
-  top: 48%;
-  right: 7%;
+  top: 50%;
+  right: 15%;
 }
 .role-label.bottom-left {
-  bottom: 25%;
-  left: 10%;
+  bottom: 30%;
+  left: 20%;
 }
 .role-label.bottom-center {
-  bottom: 15%;
+  bottom: 20%;
   left: 50%;
   transform: translateX(-50%);
 }
 .role-label.bottom-right {
-  bottom: 25%;
-  right: 10%;
+  bottom: 30%;
+  right: 20%;
 }
 
 /* =====================
@@ -546,5 +546,20 @@
 @media (max-width: 600px) {
   .stats-number {
     font-size: 2.5rem;
+  }
+}
+
+/* Typewriter cursor animation */
+.cursor {
+  animation: blink 1s infinite;
+  color: inherit;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
   }
 }

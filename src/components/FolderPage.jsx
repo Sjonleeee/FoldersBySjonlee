@@ -42,7 +42,7 @@ export default function FolderPage() {
     tl.to(creativeRef.current, {
       x: "-100vw",
       opacity: 0,
-      duration: 1,
+      duration: 2,
       ease: "power2.inOut",
     });
 
@@ -50,7 +50,7 @@ export default function FolderPage() {
     tl.to(developerRef.current, {
       x: "100vw",
       opacity: 0,
-      duration: 1,
+      duration: 2,
       ease: "power2.inOut",
     }, "<");
 
@@ -58,7 +58,7 @@ export default function FolderPage() {
     tl.to(folderRef.current, {
       opacity: 0,
       scale: 0.5,
-      duration: 1,
+      duration: 2,
       ease: "power2.inOut",
     }, "<");
 
@@ -67,7 +67,7 @@ export default function FolderPage() {
            bottomLeftRef.current, bottomRightRef.current, midRightRef.current, 
            bottomCenterRef.current], {
       opacity: 0,
-      duration: 1,
+      duration: 2,
       ease: "power2.inOut",
     }, "<");
 
@@ -75,7 +75,7 @@ export default function FolderPage() {
     tl.to(videoSectionRef.current, {
       opacity: 1,
       scale: 1,
-      duration: 1,
+      duration: 2.5,
       ease: "power2.out",
     }, "+=0.5");
 
@@ -83,7 +83,7 @@ export default function FolderPage() {
     tl.to(".stats-side.left", {
       x: 0,
       opacity: 1,
-      duration: 1,
+      duration: 2.5,
       ease: "power2.out",
     }, "<");
 
@@ -91,7 +91,7 @@ export default function FolderPage() {
     tl.to(".stats-side.right", {
       x: 0,
       opacity: 1,
-      duration: 1,
+      duration: 2.5,
       ease: "power2.out",
     }, "<");
 
@@ -99,14 +99,14 @@ export default function FolderPage() {
     tl.to(".stats-laptop-stack", {
       scale: 1,
       opacity: 1,
-      duration: 1,
+      duration: 2.5,
       ease: "power2.out",
     }, "<");
 
     // 9. 3D model wegfaden (tegelijkertijd met video section volledig infaden)
     tl.to(modelRef.current, {
       opacity: 0,
-      duration: 1,
+      duration: 2.5,
       ease: "power2.inOut",
     }, "<");
 
@@ -124,7 +124,7 @@ export default function FolderPage() {
         {/* Main Content */}
         <div className="main-content-centered">
           {/* Folder icon */}
-          <div className="absolute-center pointer-events-none z-[1000]" ref={folderRef}>
+          <div className="absolute-center pointer-events-none" ref={folderRef} style={{ zIndex: 9999 }}>
             <div className="z-front center-folder">
               <img
                 src={folderIcon}

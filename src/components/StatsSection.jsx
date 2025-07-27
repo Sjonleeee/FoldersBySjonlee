@@ -3,23 +3,30 @@ import { motion } from "framer-motion";
 import rinkitouVideo from "../assets/videos/rinkitou.mp4";
 import deskImg from "../assets/images/DESK.png";
 
-function useIsMobile(breakpoint = 900) {
+const useIsMobile = (breakpoint = 900) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= breakpoint);
+  
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= breakpoint);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [breakpoint]);
+  
   return isMobile;
-}
+};
 
-function CountUpNumber({ end, suffix = "", duration = 1.2 }) {
+const CountUpNumber = ({ end, suffix = "", duration = 1.2, key }) => {
   const [count, setCount] = useState(0);
+  
   useEffect(() => {
+    // Reset count to 0 when component mounts or key changes
+    setCount(0);
+    
     let start = 0;
-    const increment = end / (duration * 60); // 60fps
+    const increment = end / (duration * 60);
     let frame;
-    function animate() {
+    
+    const animate = () => {
       start += increment;
       if (start < end) {
         setCount(Math.floor(start));
@@ -27,17 +34,26 @@ function CountUpNumber({ end, suffix = "", duration = 1.2 }) {
       } else {
         setCount(end);
       }
-    }
-    animate();
-    return () => cancelAnimationFrame(frame);
-  }, [end, duration]);
+    };
+    
+    // Small delay to ensure the component is visible
+    const timer = setTimeout(() => {
+      animate();
+    }, 100);
+    
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(timer);
+    };
+  }, [end, duration, key]);
+
   return (
     <span>
       {count}
       {suffix}
     </span>
   );
-}
+};
 
 const fadeInCenter = {
   hidden: { opacity: 0 },
@@ -50,8 +66,14 @@ const fadeInCenter = {
 const StatsSection = forwardRef((props, ref) => {
   const isMobile = useIsMobile();
   const [showStats, setShowStats] = useState(false);
+  const [animationKey, setAnimationKey] = useState(0);
 
-  // Custom fadeBlock with faster duration on mobile
+  // Trigger animation when component mounts
+  useEffect(() => {
+    setShowStats(true);
+    setAnimationKey(prev => prev + 1);
+  }, []);
+
   const fadeBlockCustom = (delay = 0) => ({
     hidden: { opacity: 0, y: 30 },
     show: {
@@ -75,9 +97,8 @@ const StatsSection = forwardRef((props, ref) => {
               variants={fadeInCenter}
               initial="hidden"
               animate="show"
-              onAnimationComplete={() => setShowStats(true)}
             >
-              <div className="stats-laptop-wrapper"></div>
+              <div className="stats-laptop-wrapper" />
               <img src={deskImg} alt="Desk" className="stats-desk-img" />
               <video
                 src={rinkitouVideo}
@@ -87,12 +108,7 @@ const StatsSection = forwardRef((props, ref) => {
                 className="laptop-video"
               />
             </motion.div>
-            <div
-              className="stats-blocks-grid"
-              style={
-                !showStats ? { visibility: "hidden", minHeight: "8rem" } : {}
-              }
-            >
+            <div className="stats-blocks-grid">
               <motion.div
                 className="stats-block"
                 variants={fadeBlockCustom(0)}
@@ -100,7 +116,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={4} suffix="+" duration={2.2} />
+                  <CountUpNumber end={4} suffix="+" duration={2.2} key={animationKey} />
                 </span>
                 <span className="stats-label">Years of creating</span>
               </motion.div>
@@ -111,7 +127,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={150} suffix="+" duration={2.2} />
+                  <CountUpNumber end={150} suffix="+" duration={2.2} key={animationKey} />
                 </span>
                 <span className="stats-label">Completed Projects</span>
               </motion.div>
@@ -122,7 +138,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={26} suffix="+" duration={2.2} />
+                  <CountUpNumber end={26} suffix="+" duration={2.2} key={animationKey} />
                 </span>
                 <span className="stats-label">Collaborations</span>
               </motion.div>
@@ -133,7 +149,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={100} suffix="%" duration={2.2} />
+                  <CountUpNumber end={100} suffix="%" duration={2.2} key={animationKey} />
                 </span>
                 <span className="stats-label">On-Time Delivery rate</span>
               </motion.div>
@@ -149,7 +165,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={4} suffix="+" duration={2.2} />
+                  <CountUpNumber end={4} suffix="+" duration={2.2} key={animationKey} />
                 </span>
                 <span className="stats-label">Years of creating</span>
               </motion.div>
@@ -160,7 +176,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={150} suffix="+" duration={2.2} />
+                  <CountUpNumber end={150} suffix="+" duration={2.2} key={animationKey} />
                 </span>
                 <span className="stats-label">Completed Projects</span>
               </motion.div>
@@ -170,9 +186,8 @@ const StatsSection = forwardRef((props, ref) => {
               variants={fadeInCenter}
               initial="hidden"
               animate="show"
-              onAnimationComplete={() => setShowStats(true)}
             >
-              <div className="stats-laptop-wrapper"></div>
+              <div className="stats-laptop-wrapper" />
               <img src={deskImg} alt="Desk" className="stats-desk-img" />
               <video
                 src={rinkitouVideo}
@@ -190,7 +205,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={26} suffix="+" duration={2.2} />
+                  <CountUpNumber end={26} suffix="+" duration={2.2} key={animationKey} />
                 </span>
                 <span className="stats-label">Collaborations</span>
               </motion.div>
@@ -201,7 +216,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={100} suffix="%" duration={2.2} />
+                  <CountUpNumber end={100} suffix="%" duration={2.2} key={animationKey} />
                 </span>
                 <span className="stats-label">On-Time Delivery rate</span>
               </motion.div>
@@ -215,4 +230,4 @@ const StatsSection = forwardRef((props, ref) => {
 
 StatsSection.displayName = 'StatsSection';
 
-export default StatsSection; 
+export default StatsSection;

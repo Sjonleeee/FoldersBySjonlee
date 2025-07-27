@@ -5,25 +5,36 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 0 2rem 0;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
 }
 
-.contact-hero {
+.contact-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2.5rem;
+  justify-content: center;
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
 }
 
-.contact-fancy-name {
-  /* Styling wordt nu volledig bepaald door .hermaiona-title-style */
-}
-
-.contact-subtitle {
+.contact-title {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 4rem;
+  font-weight: 400;
   color: #fff;
+  margin-bottom: 2rem;
+  letter-spacing: 0.02em;
+}
+
+.contact-description {
   font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
+  color: #ccc;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+  max-width: 600px;
 }
 
 .contact-socials {
@@ -39,6 +50,7 @@
   text-decoration: none;
   transition: transform 0.2s, color 0.2s;
 }
+
 .contact-social-icon:hover {
   color: #38bdf8;
   transform: scale(1.2);
@@ -47,74 +59,311 @@
 .contact-buttons {
   display: flex;
   gap: 2rem;
+  flex-wrap: wrap;
   justify-content: center;
-  margin-top: 1.5rem;
-}
-
-.folder-btn-bg {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-color: transparent;
-  color: #fff;
-  border: none;
-  outline: none;
-  position: relative;
-  z-index: 1;
+  align-items: center;
 }
 
 .contact-folder-btn {
-  color: #fff;
-  width: 100%; /* Set to your image's width */
-  height: 80px;
+  padding: 1.2rem 2.5rem;
   font-size: 1.1rem;
-  font-family: inherit;
+  font-weight: 500;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border: none;
-  padding: 1rem 2.5rem;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
   cursor: pointer;
-  letter-spacing: 0.1em;
-  transition: transform 0.2s;
-  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  height: 60px;
   position: relative;
-  z-index: 2;
-  background: none; /* Remove fallback color */
+  overflow: hidden;
 }
 
 .contact-folder-btn:hover {
-  /* No background color, just animation */
-  transform: translateY(-4px) scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
 }
 
-.folder-btn-bg {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  background-color: transparent;
-  color: #fff;
-  border: none;
-  outline: none;
-  position: relative;
-  z-index: 1;
+.contact-folder-btn:active {
+  transform: translateY(0);
 }
 
-@media (max-width: 700px) {
-  .contact-fancy-name {
-    font-size: 5.3rem;
-    margin: 0 0 -2rem 0;
+/* =====================
+   Responsive Design
+   ===================== */
+
+/* Mobile (max-width: 599px) */
+@media (max-width: 599px) {
+  .contact-section {
+    padding: 3rem 1.5rem;
+    min-height: 100vh;
   }
-  .contact-subtitle {
-    font-size: 0.75rem;
+  
+  .contact-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
   }
-  .contact-buttons {
-    gap: 1rem;
-  }
-  .contact-folder-btn {
-    padding: 0.7rem 1.2rem;
+  
+  .contact-description {
     font-size: 1rem;
+    margin-bottom: 2rem;
   }
+  
+  .contact-socials {
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
   .contact-social-icon {
+    font-size: 1.5rem;
+  }
+  
+  .contact-buttons {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .contact-folder-btn {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    min-width: 180px;
+    height: 50px;
+  }
+}
+
+/* Large Mobile (600px - 767px) */
+@media (min-width: 600px) and (max-width: 767px) {
+  .contact-section {
+    padding: 3.5rem 2rem;
+    min-height: 100vh;
+  }
+  
+  .contact-title {
+    font-size: 3rem;
+    margin-bottom: 1.8rem;
+  }
+  
+  .contact-description {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .contact-socials {
+    gap: 1.8rem;
+    margin-bottom: 2.2rem;
+  }
+  
+  .contact-social-icon {
+    font-size: 1.8rem;
+  }
+  
+  .contact-buttons {
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+  
+  .contact-folder-btn {
+    padding: 1.1rem 2.2rem;
+    font-size: 1.05rem;
+    min-width: 190px;
+    height: 55px;
+  }
+}
+
+/* Tablet Portrait (768px - 899px) */
+@media (min-width: 768px) and (max-width: 899px) {
+  .contact-section {
+    padding: 4rem 2.5rem;
+    min-height: 100vh;
+  }
+  
+  .contact-title {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .contact-description {
+    font-size: 1.15rem;
+    margin-bottom: 2.8rem;
+  }
+  
+  .contact-socials {
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .contact-social-icon {
+    font-size: 1.9rem;
+  }
+  
+  .contact-buttons {
+    gap: 2.2rem;
+  }
+  
+  .contact-folder-btn {
+    padding: 1.15rem 2.3rem;
+    font-size: 1.08rem;
+    min-width: 195px;
+    height: 58px;
+  }
+}
+
+/* Tablet Landscape (900px - 999px) */
+@media (min-width: 900px) and (max-width: 999px) {
+  .contact-section {
+    padding: 4.5rem 3rem;
+    min-height: 100vh;
+  }
+  
+  .contact-title {
+    font-size: 3.8rem;
+    margin-bottom: 2.2rem;
+  }
+  
+  .contact-description {
+    font-size: 1.18rem;
+    margin-bottom: 3rem;
+  }
+  
+  .contact-socials {
+    gap: 2.2rem;
+    margin-bottom: 2.8rem;
+  }
+  
+  .contact-social-icon {
+    font-size: 2rem;
+  }
+  
+  .contact-buttons {
+    gap: 2.5rem;
+  }
+  
+  .contact-folder-btn {
+    padding: 1.2rem 2.4rem;
+    font-size: 1.1rem;
+    min-width: 200px;
+    height: 60px;
+  }
+}
+
+/* Small Desktop (1000px - 1199px) */
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .contact-section {
+    padding: 5rem 3.5rem;
+    min-height: 100vh;
+  }
+  
+  .contact-title {
+    font-size: 4.2rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .contact-description {
+    font-size: 1.22rem;
+    margin-bottom: 3.2rem;
+  }
+  
+  .contact-socials {
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .contact-social-icon {
+    font-size: 2.1rem;
+  }
+  
+  .contact-buttons {
+    gap: 2.8rem;
+  }
+  
+  .contact-folder-btn {
+    padding: 1.25rem 2.6rem;
+    font-size: 1.12rem;
+    min-width: 210px;
+    height: 62px;
+  }
+}
+
+/* Desktop (1200px - 1399px) */
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .contact-section {
+    padding: 5.5rem 4rem;
+    min-height: 100vh;
+  }
+  
+  .contact-title {
+    font-size: 4.5rem;
+    margin-bottom: 2.8rem;
+  }
+  
+  .contact-description {
+    font-size: 1.25rem;
+    margin-bottom: 3.5rem;
+  }
+  
+  .contact-socials {
+    gap: 2.8rem;
+    margin-bottom: 3.2rem;
+  }
+  
+  .contact-social-icon {
+    font-size: 2.2rem;
+  }
+  
+  .contact-buttons {
+    gap: 3rem;
+  }
+  
+  .contact-folder-btn {
+    padding: 1.3rem 2.8rem;
+    font-size: 1.15rem;
+    min-width: 220px;
+    height: 65px;
+  }
+}
+
+/* Large Desktop (1400px+) */
+@media (min-width: 1400px) {
+  .contact-section {
+    padding: 6rem 4.5rem;
+    min-height: 100vh;
+  }
+  
+  .contact-title {
+    font-size: 4.8rem;
+    margin-bottom: 3rem;
+  }
+  
+  .contact-description {
     font-size: 1.3rem;
+    margin-bottom: 3.8rem;
+  }
+  
+  .contact-socials {
+    gap: 3rem;
+    margin-bottom: 3.5rem;
+  }
+  
+  .contact-social-icon {
+    font-size: 2.3rem;
+  }
+  
+  .contact-buttons {
+    gap: 3.2rem;
+  }
+  
+  .contact-folder-btn {
+    padding: 1.35rem 3rem;
+    font-size: 1.18rem;
+    min-width: 230px;
+    height: 68px;
   }
 }
  

@@ -1,7 +1,0 @@
-:root {
-  --color-background: #191919;
-}
-
-html, body {
-  background-color: var(--color-background) !important;
-} 

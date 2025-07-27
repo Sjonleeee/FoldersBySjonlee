@@ -86,12 +86,13 @@ const ModelCanvas = forwardRef((props, ref) => {
   }, []);
 
   return (
-    <div className="canvas-wrapper" ref={ref}>
+    <div className="canvas-wrapper" ref={ref} style={{ zIndex: 1 }}>
       <Canvas
         camera={{
           position: [0, 0, 7],
           fov: 45,
         }}
+        style={{ zIndex: 1 }}
       >
         <Suspense fallback={null}>
           <PresentationControls

@@ -100,7 +100,11 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
           {subtitle && <span className="folder-subtitle">{subtitle}</span>}
         </div>
       </div>
-      <div className="folder-tags">{tags}</div>
+      <div className="project-tags">
+        {tags && tags.map((tag, i) => (
+          <span key={i} className="project-tag-pill">{tag}</span>
+        ))}
+      </div>
       <div
         ref={overlayRef}
         className="folder-card-overlay"

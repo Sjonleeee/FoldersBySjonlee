@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/aboutsection.css";
 import img1 from "../assets/images/sjonlee.jpeg";
 import img2 from "../assets/images/sjonlee2.jpeg";
@@ -8,16 +9,41 @@ import img4 from "../assets/images/sjonlee4.jpeg";
 import img5 from "../assets/images/sjonlee6.jpeg";
 import img6 from "../assets/images/sjonlee7.jpeg";
 
-const startPositions = [
+gsap.registerPlugin(ScrollTrigger);
+
+// Image starting positions
+const IMAGE_POSITIONS = [
   { x: "-40vw", y: "-20vh" },
   { x: "40vw", y: "-20vh" },
   { x: "-45vw", y: "20vh" },
   { x: "45vw", y: "20vh" },
   { x: "-20vw", y: "40vh" },
   { x: "20vw", y: "40vh" },
-  { x: "-15vw", y: "-40vh" }, 
-  { x: "15vw", y: "-40vh" }, // Nieuwe foto boven rechts - meer naar links
+  { x: "-15vw", y: "-40vh" },
+  { x: "15vw", y: "-40vh" },
 ];
+
+// Animation durations
+const DURATIONS = {
+  titleFadeIn: 1.6, // 1.2 * 1.3
+  imagesFadeIn: 1.3, // 1.0 * 1.3
+  imagesMoveToCenter: 2.3, // 1.8 * 1.3
+  zoomAndDarken: 2.6, // 2.0 * 1.3
+  textFadeIn: 2.0, // 1.5 * 1.3
+  pause: 1.2, // unchanged
+  fadeOut: 1.3, // 1.0 * 1.3
+  imagesFadeOut: 1.0, // 0.8 * 1.3
+};
+
+// Animation delays
+const DELAYS = {
+  afterTitle: 0.4, // Increased for smoother transition
+  afterImagesFadeIn: 0.5, // Increased for smoother transition
+  afterImagesMove: 0.3, // Increased for smoother transition
+  afterZoom: 0.6, // Increased for more reading time
+  afterPause: 0.3, // Increased for more reading time
+  afterTextFadeOut: 0.4, // Increased for more reading time
+};
 
 export default function AboutSection() {
   const sectionRef = useRef(null);
@@ -26,171 +52,195 @@ export default function AboutSection() {
   const zoomRef = useRef(null);
   const extraTextRef = useRef(null);
   const overlayRef = useRef(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const triggerId = useRef(`about-section-${Math.random()}`);
 
   useEffect(() => {
-    // Zet startposities - alles start met opacity 0
+    // Clean up existing trigger
+    const existingTrigger = ScrollTrigger.getById(triggerId.current);
+    if (existingTrigger) existingTrigger.kill();
+    
+    if (hasAnimated) return;
+
+    // Set initial states
+    setupInitialStates();
+    
+    // Create animation timeline
+    const timeline = createAnimationTimeline();
+    
+    return () => {
+      timeline.kill();
+      // Only kill triggers with our specific ID
+      ScrollTrigger.getAll().forEach(t => {
+        if (t.vars.id === triggerId.current) t.kill();
+      });
+    };
+  }, [hasAnimated]);
+
+  const setupInitialStates = () => {
+    // Set images initial positions
     imgRefs.current.forEach((img, i) => {
       gsap.set(img, {
-        x: startPositions[i].x,
-        y: startPositions[i].y,
+        x: IMAGE_POSITIONS[i].x,
+        y: IMAGE_POSITIONS[i].y,
         scale: 1.1,
-        opacity: 0, // Foto's starten onzichtbaar
+        opacity: 0,
         zIndex: 1,
+        filter: "brightness(1)",
       });
     });
-    gsap.set(titleRef.current, { opacity: 0, zIndex: 2, scale: 1, y: "8vh" }); // Titel ook onzichtbaar
+
+    // Set other elements initial states
+    gsap.set(titleRef.current, { 
+      opacity: 0, 
+      zIndex: 2, 
+      scale: 1, 
+      y: "8vh" 
+    });
     gsap.set(zoomRef.current, { scale: 1 });
     gsap.set(extraTextRef.current, { opacity: 0 });
-    gsap.set(overlayRef.current, { opacity: 0, zIndex: 1 });
+    gsap.set(overlayRef.current, { 
+      backgroundColor: "rgba(0, 0, 0, 0)",
+      opacity: 1,
+      zIndex: 1 
+    });
+  };
 
-    // Timeline animatie
+  const createAnimationTimeline = () => {
     const tl = gsap.timeline({
       scrollTrigger: {
+        // === AboutSection ScrollTrigger ===
         trigger: sectionRef.current,
         start: "top top",
-        end: "+=400%", // Nog meer scroll ruimte voor 3 sec extra leestijd
-        scrub: 1,
+        end: "+=130%", // Much longer scroll for more time
+        scrub: 2.0, // Increased scrub for smoother feel
         pin: true,
+        id: triggerId.current,
+        markers: true, // Show GSAP markers for debugging
+        onComplete: () => setHasAnimated(true),
       },
     });
 
-    // 0. Eerst een pauze zodat je alles kunt zien
-    tl.to({}, { duration: 1 });
-
-    // 1. Eerst Sjonlee Ha fade-in
-    tl.to(titleRef.current, { opacity: 1, duration: 1.2, ease: "power3.out" });
-
-    // 2. Dan één voor één de foto's fade-in (speciale volgorde)
-    // Foto 1 (img1)
-    tl.to(
-      imgRefs.current[0],
-      {
-        opacity: 1,
-        duration: 1.2,
-        ease: "power3.out",
-      },
-      "+=0.3"
-    );
-
-    // Foto 7 & 8 (img2 & img3 hergebruikt) - als 2e en 3e
-    tl.to(
-      imgRefs.current[6],
-      {
-        opacity: 1,
-        duration: 1.2,
-        ease: "power3.out",
-      },
-      "+=0.3"
-    );
-
-    tl.to(
-      imgRefs.current[7],
-      {
-        opacity: 1,
-        duration: 1.2,
-        ease: "power3.out",
-      },
-      "+=0.3"
-    );
-
-    // Foto 2, 3, 4, 5, 6 (originele volgorde)
-    for (let i = 1; i <= 5; i++) {
-      tl.to(
-        imgRefs.current[i],
-        {
-          opacity: 1,
-          duration: 1.2,
-          ease: "power3.out",
-        },
-        "+=0.3"
-      );
-    }
-
-    // 3. Foto's bewegen naar het midden, worden gestapeld (met klein tijdverschil)
-    imgRefs.current.forEach((img, i) => {
-      tl.to(
-        img,
-        {
-          x: "0vw",
-          y: "0vh",
-          scale: 1,
-          duration: 1.8,
-          ease: "power2.inOut",
-          zIndex: 1,
-        },
-        "<+0.1" // Klein tijdverschil van 0.1s tussen elke foto
-      );
+    // PHASE 1: Title fade in
+    tl.to(titleRef.current, { 
+      opacity: 1, 
+      duration: DURATIONS.titleFadeIn, 
+      ease: "power2.out" 
     });
 
-    // 4. Zoom-in animatie op de hele hero (fullscreen effect)
-    tl.to(
-      zoomRef.current,
-      {
-        scale: 5,
-        duration: 3,
-        ease: "power1.inOut",
-      },
-      "+=0.2"
-    );
+    // PHASE 2: Images fade in
+    tl.to(imgRefs.current, {
+      opacity: 1,
+      duration: DURATIONS.imagesFadeIn,
+      ease: "power2.out",
+      stagger: 0.15, // Increased stagger for smoother effect
+    }, `+=${DELAYS.afterTitle}`);
 
-    // 4a. Donkere overlay fade-in voor leesbaarheid
-    tl.to(
-      overlayRef.current,
-      {
-        opacity: 0.7,
-        duration: 3,
-        ease: "power1.inOut",
-      },
-      "<"
-    );
+    // PHASE 3: Images move to center
+    tl.to(imgRefs.current, {
+      x: "0vw",
+      y: "0vh",
+      scale: 1,
+      duration: DURATIONS.imagesMoveToCenter,
+      ease: "power1.inOut", // Smoother easing
+      stagger: 0.08, // Increased stagger for smoother movement
+    }, `+=${DELAYS.afterImagesFadeIn}`);
 
-    // 4b. Titel wrapper beweegt naar beneden om gecentreerd te blijven EN tekst verschijnt tegelijk
-    tl.to(
-      titleRef.current,
-      {
-        scale: 1.05,
-        y: "2rem", // Beweegt naar beneden om gecentreerd te blijven
-        duration: 3,
-        ease: "power1.inOut",
-      },
-      "<"
-    );
+    // PHASE 4: Zoom and darken (all together)
+    tl.to(zoomRef.current, {
+      scale: 5,
+      duration: DURATIONS.zoomAndDarken,
+      ease: "power1.out", // Smoother easing for zoom
+    }, `+=${DELAYS.afterImagesMove}`);
 
-    // 5. Fade-in van extra tekst onder de titel (tegelijk met titel beweging)
-    tl.to(
-      extraTextRef.current,
-      {
-        opacity: 1,
-        duration: 1.5,
-        ease: "power2.out",
-      },
-      "<"
-    );
+    // Darken overlay
+    tl.to(overlayRef.current, {
+      backgroundColor: "rgba(0, 0, 0, 0.9)",
+      duration: DURATIONS.zoomAndDarken,
+      ease: "power1.out", // Smoother easing
+    }, "<");
 
-    // 6. Extra pauze aan het einde om de tekst te kunnen lezen
-    tl.to({}, { duration: 3 });
+    // Darken images - CHANGE THIS LINE
+    tl.to(imgRefs.current, {
+      filter: "brightness(0.8) saturate(1.1)", // Changed from 0.6 to 0.8
+      duration: DURATIONS.zoomAndDarken,
+      ease: "power1.out", // Smoother easing
+    }, "<");
 
-    return () => tl.kill();
-  }, []);
+    // Scale title
+    tl.to(titleRef.current, {
+      scale: 1.05,
+      y: "2rem",
+      duration: DURATIONS.zoomAndDarken,
+      ease: "power1.inOut",
+    }, "<");
 
-  const images = [img1, img2, img3, img4, img5, img6, img2, img3]; // Extra foto's zijn img2 en img3
+    // Show extra text
+    tl.to(extraTextRef.current, {
+      opacity: 1,
+      duration: DURATIONS.textFadeIn,
+      ease: "power2.out",
+    }, "<");
+
+    // PHASE 5: Pause for reading
+    tl.to({}, { duration: DURATIONS.pause });
+
+    // PHASE 6: Additional reading time
+    tl.to({}, { duration: 2.0 }); // Extra 2 seconds for reading
+
+    // PHASE 7: Fade out title first
+    tl.to(titleRef.current, {
+      opacity: 0,
+      duration: 1.5,
+      ease: "power1.out",
+    }, `+=${DELAYS.afterZoom}`);
+
+    // PHASE 8: Fade out extra text
+    tl.to(extraTextRef.current, {
+      opacity: 0,
+      duration: 1.2,
+      ease: "power1.out",
+    }, "+=0.3");
+
+    // PHASE 9: Hide text elements
+    tl.to([titleRef.current, extraTextRef.current], {
+      visibility: "hidden",
+      zIndex: -1,
+      duration: 0,
+    }, "+=0.2");
+
+    // PHASE 10: Additional pause before images fade
+    tl.to({}, { duration: 1.0 }); // Extra pause before images fade
+
+    // PHASE 11: Fade out images with stagger
+    tl.to(imgRefs.current, {
+      opacity: 0,
+      duration: 1.0,
+      ease: "power1.out",
+      stagger: 0.08, // Stagger effect for smoother fade
+    }, `+=${DELAYS.afterTextFadeOut}`);
+
+    // PHASE 12: Hide images completely
+    tl.to(imgRefs.current, {
+      visibility: "hidden",
+      zIndex: -1,
+      duration: 0,
+    }, "+=0.5");
+
+    return tl;
+  };
+
+  const images = [img1, img2, img3, img4, img5, img6, img2, img3];
 
   return (
     <section className="about-hero-outer" ref={sectionRef}>
       <div className="about-hero-sticky">
-        {/* Titel los erbovenop */}
+        {/* Title */}
         <div className="bindery-hero-title-wrapper" ref={titleRef}>
-          <h1
-            className="bindery-hero-title hermaiona-title-style"
-            style={{ zIndex: 2 }}
-          >
+          <h1 className="bindery-hero-title hermaiona-title-style" style={{ zIndex: 2 }}>
             Sjonlee Ha
           </h1>
-          <div
-            className="about-hero-extra-text"
-            ref={extraTextRef}
-            style={{ opacity: 0 }}
-          >
+          <div className="about-hero-extra-text" ref={extraTextRef} style={{ opacity: 0 }}>
             <p>
               is a 24-year-old creative developer / CEO of Rinkitou with a big
               curiosity for how things work and how they're made. He believes
@@ -200,21 +250,21 @@ export default function AboutSection() {
             </p>
           </div>
         </div>
-        {/* Alleen de images worden gezoomd */}
+        
+        {/* Images */}
         <div className="about-hero-zoom" ref={zoomRef}>
           <div className="about-hero-section">
             {images.map((src, i) => (
               <img
-              key={i}
+                key={i}
                 ref={(el) => (imgRefs.current[i] = el)}
                 src={src}
-              className="bindery-hero-img"
+                className="bindery-hero-img"
                 alt=""
                 draggable={false}
                 style={{ position: "absolute" }}
               />
             ))}
-            {/* Donkere overlay voor leesbaarheid */}
             <div
               className="about-hero-overlay"
               ref={overlayRef}
@@ -224,7 +274,7 @@ export default function AboutSection() {
                 left: 0,
                 width: "100%",
                 height: "100%",
-                backgroundColor: "rgba(0, 0, 0, 1)",
+                backgroundColor: "rgba(0, 0, 0, 0)",
                 zIndex: 1,
               }}
             />
@@ -233,4 +283,4 @@ export default function AboutSection() {
       </div>
     </section>
   );
-} 
+}

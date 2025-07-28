@@ -1,5 +1,5 @@
 .bindery-hero-outer {
-  height: 250vh;
+  height: 200vh;
   position: relative;
   overflow: hidden;
 }
@@ -13,7 +13,7 @@
 }
 
 .about-hero-outer {
-  height: 600vh; /* Extra ruimte voor 3 sec extra leestijd aan het einde */
+  height: 90vh; /* Increased height for more reading time */
   position: relative;
   overflow: visible !important;
 }
@@ -36,7 +36,7 @@
 
 .about-hero-zoom {
   will-change: transform;
-  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center center;
   overflow: visible !important;
 }
@@ -76,10 +76,8 @@
 }
 .bindery-hero-img {
   position: absolute;
-  width: 280px;
-  height: 180px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 10px;
   z-index: 1;
   transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -159,10 +157,6 @@
   position: relative;
 }
 
-.about-title {
-  /* Styling wordt nu volledig bepaald door .hermaiona-title-style */
-}
-
 .about-text {
   font-size: 1.35rem;
   max-width: 700px;
@@ -176,10 +170,6 @@
   background: rgba(0, 0, 0, 0);
 }
 
-.about-name-script {
-  /* Styling wordt nu volledig bepaald door .hermaiona-title-style */
-}
-
 /* =====================
    Responsive Design
    ===================== */
@@ -191,12 +181,12 @@
     -webkit-text-stroke: 1px lightgray;
     text-stroke: 1px lightgray;
   }
-  
+
   .bindery-hero-img {
     width: 200px;
     height: 130px;
   }
-  
+
   .about-hero-extra-text {
     font-size: 0.9rem;
     max-width: 90vw;
@@ -211,12 +201,12 @@
     -webkit-text-stroke: 1.2px lightgray;
     text-stroke: 1.2px lightgray;
   }
-  
+
   .bindery-hero-img {
     width: 220px;
     height: 140px;
   }
-  
+
   .about-hero-extra-text {
     font-size: 0.95rem;
     max-width: 85vw;
@@ -231,12 +221,12 @@
     -webkit-text-stroke: 1.3px lightgray;
     text-stroke: 1.3px lightgray;
   }
-  
+
   .bindery-hero-img {
     width: 240px;
     height: 150px;
   }
-  
+
   .about-hero-extra-text {
     font-size: 1rem;
     max-width: 80vw;
@@ -251,12 +241,12 @@
     -webkit-text-stroke: 1.4px lightgray;
     text-stroke: 1.4px lightgray;
   }
-  
+
   .bindery-hero-img {
     width: 260px;
     height: 165px;
   }
-  
+
   .about-hero-extra-text {
     font-size: 1.05rem;
     max-width: 75vw;
@@ -271,12 +261,12 @@
     -webkit-text-stroke: 1.45px lightgray;
     text-stroke: 1.45px lightgray;
   }
-  
+
   .bindery-hero-img {
     width: 270px;
     height: 172px;
   }
-  
+
   .about-hero-extra-text {
     font-size: 1.1rem;
     max-width: 70vw;
@@ -291,12 +281,12 @@
     -webkit-text-stroke: 1.5px lightgray;
     text-stroke: 1.5px lightgray;
   }
-  
+
   .bindery-hero-img {
-    width: 275px;
-    height: 176px;
+    width: 500px;
+    height: 500px;
   }
-  
+
   .about-hero-extra-text {
     font-size: 1.15rem;
     max-width: 65vw;
@@ -311,12 +301,12 @@
     -webkit-text-stroke: 1.5px lightgray;
     text-stroke: 1.5px lightgray;
   }
-  
+
   .bindery-hero-img {
-    width: 280px;
-    height: 180px;
+    width: 400px;
+    height: 350px;
   }
-  
+
   .about-hero-extra-text {
     font-size: 1.2rem;
     max-width: 60vw;

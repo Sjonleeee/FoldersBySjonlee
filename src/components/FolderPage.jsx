@@ -236,7 +236,7 @@ export default function FolderPage({
   return (
     <section className="folder-hero-outer" ref={sectionRef}>
       <div className="folder-hero-sticky">
-        {/* Main Content */}
+      {/* Main Content */}
         <div className="main-content-centered">
           {/* Folder icon */}
           <div
@@ -244,21 +244,21 @@ export default function FolderPage({
             ref={folderRef}
             style={{ zIndex: 9999 }}
           >
-            <div className="z-front center-folder">
-              <img
-                src={folderIcon}
-                alt="Folder"
-                className="folder-icon"
-                draggable={false}
-              />
-            </div>
+          <div className="z-front center-folder">
+            <img
+              src={folderIcon}
+              alt="Folder"
+              className="folder-icon"
+              draggable={false}
+            />
           </div>
+        </div>
 
-          <div className="folder-page-container relative">
-            <div className="main-content main-content-z1">
-              <section className="main-section flex-column center-content relative">
-                <div className="full-screen full-screen-z10">
-                  {/* Role labels */}
+        <div className="folder-page-container relative">
+          <div className="main-content main-content-z1">
+            <section className="main-section flex-column center-content relative">
+              <div className="full-screen full-screen-z10">
+                {/* Role labels */}
                   <span className="role-label top-left" ref={topLeftRef}>
                     3D Designer
                   </span>
@@ -287,42 +287,42 @@ export default function FolderPage({
                     Hussler
                   </span>
 
-                  <div className="absolute-center title-container">
-                    <div className="title-center-flex">
+                <div className="absolute-center title-container">
+                  <div className="title-center-flex">
                       <div
                         className="pointer-none left-title"
                         ref={creativeRef}
                       >
-                        <span className="title-text">Creative</span>
-                      </div>
+                    <span className="title-text">Creative</span>
+                  </div>
                       <div
                         className="pointer-none right-title"
                         ref={developerRef}
                       >
-                        <span className="title-text">Developer</span>
+                    <span className="title-text">Developer</span>
                       </div>
                     </div>
                   </div>
                 </div>
                 <ModelCanvas ref={modelRef} />
               </section>
-            </div>
-          </div>
+                </div>
+              </div>
 
           {/* Video Section - Hidden initially */}
-          <div
-            ref={videoSectionRef}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              opacity: 0,
-              transform: "scale(0.5)",
-              zIndex: 10,
-            }}
-          >
+                      <div
+              ref={videoSectionRef}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                opacity: 0,
+                transform: "scale(0.5)",
+                zIndex: 10,
+              }}
+            >
             <StatsSection />
           </div>
         </div>

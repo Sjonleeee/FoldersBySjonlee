@@ -15,11 +15,11 @@ const useIsMobile = (breakpoint = 900) => {
   return isMobile;
 };
 
-const CountUpNumber = ({ end, suffix = "", duration = 1.2, key }) => {
+const CountUpNumber = ({ end, suffix = "", duration = 1.2, resetTrigger }) => {
   const [count, setCount] = useState(0);
   
   useEffect(() => {
-    // Reset count to 0 when component mounts or key changes
+    // Reset count to 0 when component mounts or resetTrigger changes
     setCount(0);
     
     let start = 0;
@@ -45,7 +45,7 @@ const CountUpNumber = ({ end, suffix = "", duration = 1.2, key }) => {
       cancelAnimationFrame(frame);
       clearTimeout(timer);
     };
-  }, [end, duration, key]);
+  }, [end, duration, resetTrigger]); // Gebruik resetTrigger in plaats van key
 
   return (
     <span>
@@ -88,7 +88,11 @@ const StatsSection = forwardRef((props, ref) => {
   });
 
   return (
-    <div className="stats-video-section" ref={ref}>
+    <div 
+      className="stats-video-section" 
+      ref={ref}
+
+    >
       <div className="stats-content-flex">
         {isMobile ? (
           <>
@@ -116,7 +120,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={4} suffix="+" duration={2.2} key={animationKey} />
+                  <CountUpNumber end={4} suffix="+" duration={2.2} resetTrigger={animationKey} />
                 </span>
                 <span className="stats-label">Years of creating</span>
               </motion.div>
@@ -127,7 +131,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={150} suffix="+" duration={2.2} key={animationKey} />
+                  <CountUpNumber end={150} suffix="+" duration={2.2} resetTrigger={animationKey} />
                 </span>
                 <span className="stats-label">Completed Projects</span>
               </motion.div>
@@ -138,7 +142,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={26} suffix="+" duration={2.2} key={animationKey} />
+                  <CountUpNumber end={26} suffix="+" duration={2.2} resetTrigger={animationKey} />
                 </span>
                 <span className="stats-label">Collaborations</span>
               </motion.div>
@@ -149,7 +153,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={100} suffix="%" duration={2.2} key={animationKey} />
+                  <CountUpNumber end={100} suffix="%" duration={2.2} resetTrigger={animationKey} />
                 </span>
                 <span className="stats-label">On-Time Delivery rate</span>
               </motion.div>
@@ -165,7 +169,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={4} suffix="+" duration={2.2} key={animationKey} />
+                  <CountUpNumber end={4} suffix="+" duration={2.2} resetTrigger={animationKey} />
                 </span>
                 <span className="stats-label">Years of creating</span>
               </motion.div>
@@ -176,7 +180,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={150} suffix="+" duration={2.2} key={animationKey} />
+                  <CountUpNumber end={150} suffix="+" duration={2.2} resetTrigger={animationKey} />
                 </span>
                 <span className="stats-label">Completed Projects</span>
               </motion.div>
@@ -205,7 +209,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={26} suffix="+" duration={2.2} key={animationKey} />
+                  <CountUpNumber end={26} suffix="+" duration={2.2} resetTrigger={animationKey} />
                 </span>
                 <span className="stats-label">Collaborations</span>
               </motion.div>
@@ -216,7 +220,7 @@ const StatsSection = forwardRef((props, ref) => {
                 animate={showStats ? "show" : "hidden"}
               >
                 <span className="stats-number">
-                  <CountUpNumber end={100} suffix="%" duration={2.2} key={animationKey} />
+                  <CountUpNumber end={100} suffix="%" duration={2.2} resetTrigger={animationKey} />
                 </span>
                 <span className="stats-label">On-Time Delivery rate</span>
               </motion.div>

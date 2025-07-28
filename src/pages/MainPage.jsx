@@ -72,20 +72,38 @@ export default function MainPage() {
       </div>
 
       <div className="onepager-content">
-        <section style={{ minHeight: "1400px", position: "relative" }}>
+        {/* FolderPage */}
+        <section style={{ 
+          minHeight: "1400px", 
+          position: "relative"
+        }}>
           <FolderPage 
             headerRef={headerRef} 
             footerRef={footerRef}
             onAnimationsComplete={handleAnimationsComplete}
           />
         </section>
-        <section style={{ minHeight: "100vh" }}>
+        
+        {/* AboutSection */}
+        <section style={{ 
+          minHeight: "0", 
+          position: "relative"
+        }}>
           <AboutSection />
         </section>
-        <section style={{ minHeight: "100vh" }}>
+        
+        {/* AnimatedFolderStack */}
+        <section style={{ 
+          minHeight: "0", 
+          position: "relative"
+        }}>
           <AnimatedFolderStack />
         </section>
-        <section style={{ minHeight: "60vh" }}>
+        
+        {/* ContactSection */}
+        <section style={{ 
+          minHeight: "40vh"
+        }}>
           <ContactSection />
         </section>
       </div>

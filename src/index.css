@@ -407,6 +407,21 @@ html {
   width: 100%;
   position: relative;
 }
+
+/* Global section spacing optimization */
+.onepager-content > section {
+  margin-bottom: 0; /* Remove default margins */
+  padding-bottom: 0; /* Remove default padding */
+}
+
+.onepager-content > section:not(:last-child) {
+  margin-bottom: -10vh; /* Balanced negative margin */
+}
+
+/* Specific spacing for About and Latest Projects sections */
+.about-hero-outer + section {
+  margin-top: -50vh; /* Much more negative margin to bring Latest Projects even closer */
+}
 .main-section {
   width: 100%;
   height: 70vh;

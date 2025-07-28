@@ -84,7 +84,7 @@ export default function AllProjectsPage() {
   return (
     <div className="allprojects-root">
       {/* Header (bovenaan, niet meer fixed) */}
-      <Header onLogoClick={() => navigate('/')} />
+      <Header onLogoClick={() => navigate("/")} />
       {/* Sidebar */}
       <aside className="allprojects-sidebar">
         <nav className="sidebar-menu">

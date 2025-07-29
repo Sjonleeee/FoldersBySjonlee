@@ -34,10 +34,14 @@
   font-size: 0.875rem;
   display: flex;
   align-items: center;
-  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  cursor: pointer;
 }
+
 .header-logo:hover {
-  transform: scale(1.2);
+  transform: translateY(-2px);
+  color: #fff; /* Changed from #38bdf8 to #fff */
 }
 
 .header-status-dot {
@@ -81,6 +85,14 @@
 
 .header-email {
   color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+}
+
+.header-email:hover {
+  color: #fff; /* Changed from #38bdf8 to #fff */
+  transform: translateY(-1px);
 }
 
 .header-skills {
@@ -119,9 +131,33 @@
 }
 
 .header-dropdown-item {
-  transition: color 0.18s, background 0.18s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: none;
   color: #f3f4f6;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+}
+
+.header-dropdown-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(56, 189, 248, 0.1),
+    transparent
+  );
+  transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-dropdown-item:hover::before {
+  left: 100%;
 }
 
 .header-dropdown-item .menu-initial {
@@ -131,40 +167,27 @@
 }
 
 .header-dropdown-item:hover {
-  color: transparent;
-  background: linear-gradient(
-    90deg,
-    #ffffff 0%,
-    #e0e6eb 10%,
-    #bfc6ce 18%,
-    #eaf3fa 25%,
-    #f8f8f8 32%,
-    #bdbcbc 40%,
-    #e0e0e0 50%,
-    #f8f8f8 60%,
-    #eaf3fa 70%,
-    #bfc6ce 80%,
-    #e0e6eb 90%,
-    #ffffff 100%
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
-  filter: drop-shadow(0 2px 8px #fff) drop-shadow(0 0px 16px #eaf3fa88);
+  color: #38bdf8;
+  transform: translateX(8px);
+  background: rgba(56, 189, 248, 0.05);
+  border-radius: 4px;
 }
 
 .header-menu {
   position: relative;
 }
 
-.header-menu span {
-  transition: color 0.18s;
+/* Specific selector for the MENU button only */
+.header-menu-span {
+  transition: color 0.18s, background 0.18s;
   background: none !important;
   color: #f3f4f6;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
 }
 
-.header-menu span:hover {
+.header-menu-span:hover {
   color: transparent !important;
   background: linear-gradient(
     90deg,
@@ -184,9 +207,65 @@
   background-clip: text !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
-  text-fill-color: transparent !important;
-  filter: drop-shadow(0 2px 8px #fff) drop-shadow(0 0px 16px #eaf3fa88) !important;
+  filter: drop-shadow(0 2px 10px #fff) drop-shadow(0 0px 16px #f1f6fa88) !important;
 }
+
+/* Individual letter hover effect for MENU button only */
+.header-menu-span span {
+  display: inline-block;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+  position: relative;
+  color: inherit; /* Inherit color from parent */
+}
+
+.header-menu-span:hover span {
+  animation: menuLetterTilt 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.header-menu-span span:nth-child(1) { animation-delay: 0s; }
+.header-menu-span span:nth-child(2) { animation-delay: 0.05s; }
+.header-menu-span span:nth-child(3) { animation-delay: 0.1s; }
+.header-menu-span span:nth-child(4) { animation-delay: 0.15s; }
+
+@keyframes menuLetterTilt {
+  0% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0));
+}
+  25% {
+    transform: rotate(-5deg) scale(1.05);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  }
+  50% {
+    transform: rotate(5deg) scale(1.1);
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
+  }
+  75% {
+    transform: rotate(-3deg) scale(1.05);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+  }
+}
+
+/* Remove blue underline - commented out */
+/* .header-menu span::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #38bdf8;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-menu span:hover::after {
+  width: 100%;
+} */
 
 .header-fullscreen-menu {
   position: fixed;
@@ -233,53 +312,36 @@
   word-break: break-word;
 }
 
+/* Fullscreen menu items - keep original styling */
 .header-fullscreen-menu .header-dropdown-item {
   font-size: 3.6rem;
   border-radius: 16px;
   transition: none;
   cursor: pointer;
   line-height: 2.3em;
+  color: #f3f4f6;
+  background: none;
+  border: none;
+  padding: 0.7rem 0 0.7rem 0.2rem;
+  text-align: center;
+  letter-spacing: 0.09em;
+}
+
+.header-fullscreen-menu .header-dropdown-item:hover {
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 .header-fullscreen-menu .header-dropdown-item .menu-initial {
   font-family: "Hermaiona", cursive, serif;
-  font-size: 1.9em;
+  font-size: 1.2em;
   font-style: italic;
-  color: #fff;
+  letter-spacing: 0.09em;
+  margin-right: 0.08em;
 }
 
 .header-logo-clickable {
   cursor: pointer;
-}
-
-.header-menu-span {
-  cursor: pointer;
-  font-weight: 600;
-  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.header-menu-span:hover {
-  transform: scale(1.2);
-  color: transparent !important;
-  background: linear-gradient(
-    90deg,
-    #ffffff 0%,
-    #e0e6eb 10%,
-    #bfc6ce 18%,
-    #eaf3fa 25%,
-    #f8f8f8 32%,
-    #bdbcbc 40%,
-    #e0e0e0 50%,
-    #f8f8f8 60%,
-    #eaf3fa 70%,
-    #bfc6ce 80%,
-    #e0e6eb 90%,
-    #ffffff 100%
-  ) !important;
-  background-clip: text !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  text-fill-color: transparent !important;
-  filter: drop-shadow(0 2px 8px #fff) drop-shadow(0 0px 16px #eaf3fa88) !important;
 }
 
 @media (max-width: 768px) {

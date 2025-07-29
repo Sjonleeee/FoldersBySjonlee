@@ -36,34 +36,34 @@ export default function ContactSection() {
       },
     });
 
-    // Fade in animatie met stagger
+    // Ultra smooth fade in animatie met stagger
     tl.to(titleRef.current, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      ease: "power2.out",
+      duration: 1.5,
+      ease: "power4.out", // Ultra soepelere easing
     });
 
     tl.to(descriptionRef.current, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      ease: "power2.out",
-    }, "+=0.2");
+      duration: 1.5,
+      ease: "power4.out", // Ultra soepelere easing
+    }, "+=0.6"); // Langzamere stagger
 
     tl.to(socialsRef.current, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      ease: "power2.out",
-    }, "+=0.2");
+      duration: 1.5,
+      ease: "power4.out", // Ultra soepelere easing
+    }, "+=0.6"); // Langzamere stagger
 
     tl.to(buttonsRef.current, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      ease: "power2.out",
-    }, "+=0.2");
+      duration: 1.5,
+      ease: "power4.out", // Ultra soepelere easing
+    }, "+=0.6"); // Langzamere stagger
 
     return () => {
       tl.kill();

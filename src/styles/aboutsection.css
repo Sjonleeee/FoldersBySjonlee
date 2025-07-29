@@ -13,7 +13,7 @@
 }
 
 .about-hero-outer {
-  height: 90vh; /* Increased height for more reading time */
+  height: 60vh; /* Meer ruimte voor smooth animatie */
   position: relative;
   overflow: visible !important;
 }
@@ -68,18 +68,106 @@
   margin: 0;
   text-align: center;
   letter-spacing: 0.04em;
-  pointer-events: none;
+  pointer-events: auto;
   position: static;
   width: auto;
   max-width: 100vw;
   transform-origin: center center;
+  display: inline-block;
+  cursor: pointer;
+  transition: color 0.18s, background 0.18s;
+}
+
+.bindery-hero-title:hover {
+  color: transparent !important;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #e0e6eb 10%,
+    #bfc6ce 18%,
+    #eaf3fa 25%,
+    #f8f8f8 32%,
+    #bdbcbc 40%,
+    #e0e0e0 50%,
+    #f8f8f8 60%,
+    #eaf3fa 70%,
+    #bfc6ce 80%,
+    #e0e6eb 90%,
+    #ffffff 100%
+  ) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 2px 10px #fff) drop-shadow(0 0px 16px #f1f6fa88) !important;
+}
+
+/* Individual letter hover effect */
+.bindery-hero-title span {
+  display: inline-block;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+  position: relative;
+  color: inherit; /* Inherit color from parent */
+  -webkit-text-stroke: inherit; /* Inherit stroke from parent */
+}
+
+.bindery-hero-title:hover span {
+  animation: letterFlip 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.bindery-hero-title span:nth-child(1) { animation-delay: 0s; }
+.bindery-hero-title span:nth-child(2) { animation-delay: 0.05s; }
+.bindery-hero-title span:nth-child(3) { animation-delay: 0.1s; }
+.bindery-hero-title span:nth-child(4) { animation-delay: 0.15s; }
+.bindery-hero-title span:nth-child(5) { animation-delay: 0.2s; }
+.bindery-hero-title span:nth-child(6) { animation-delay: 0.25s; }
+.bindery-hero-title span:nth-child(7) { animation-delay: 0.3s; }
+.bindery-hero-title span:nth-child(8) { animation-delay: 0.35s; }
+.bindery-hero-title span:nth-child(9) { animation-delay: 0.4s; }
+.bindery-hero-title span:nth-child(10) { animation-delay: 0.45s; }
+.bindery-hero-title span:nth-child(11) { animation-delay: 0.5s; }
+.bindery-hero-title span:nth-child(12) { animation-delay: 0.55s; }
+.bindery-hero-title span:nth-child(13) { animation-delay: 0.6s; }
+.bindery-hero-title span:nth-child(14) { animation-delay: 0.65s; }
+.bindery-hero-title span:nth-child(15) { animation-delay: 0.7s; }
+.bindery-hero-title span:nth-child(16) { animation-delay: 0.75s; }
+
+@keyframes letterFlip {
+  0% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0));
+  }
+  25% {
+    transform: rotate(-5deg) scale(1.05);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  }
+  50% {
+    transform: rotate(5deg) scale(1.1);
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
+  }
+  75% {
+    transform: rotate(-3deg) scale(1.05);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+  }
 }
 .bindery-hero-img {
   position: absolute;
   object-fit: cover;
   border-radius: 10px;
   z-index: 1;
-  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Verwijder transition - GSAP handelt dit af */
+  transform: translateZ(0); /* Force GPU acceleration */
+  backface-visibility: hidden; /* Performance optimalisatie */
+  width: 80px; /* Nog kleinere afbeeldingen */
+  height: 80px; /* Nog kleinere afbeeldingen */
+  /* Performance optimalisatie */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  /* Verwijder will-change - veroorzaakt soms lag */
 }
 .bindery-hero-img:hover {
   transform: scale(1.06) rotate(-2deg);
@@ -303,13 +391,46 @@
   }
 
   .bindery-hero-img {
-    width: 400px;
-    height: 350px;
+    width: 350px;
+    height: 250px;
   }
 
   .about-hero-extra-text {
     font-size: 1.2rem;
     max-width: 60vw;
     margin-top: 1.4rem;
+  }
+}
+
+@keyframes letterFlip {
+  0% {
+    transform: rotate(0deg) scale(1);
+    color: #fff;
+    -webkit-text-stroke: 1.5px lightgray;
+    filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0));
+  }
+  25% {
+    transform: rotate(-5deg) scale(1.05);
+    color: #fff;
+    -webkit-text-stroke: 1.5px lightgray;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  }
+  50% {
+    transform: rotate(5deg) scale(1.1);
+    color: #fff;
+    -webkit-text-stroke: 1.5px lightgray;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
+  }
+  75% {
+    transform: rotate(-3deg) scale(1.05);
+    color: #fff;
+    -webkit-text-stroke: 1.5px lightgray;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+    color: #fff;
+    -webkit-text-stroke: 1.5px lightgray;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
   }
 }

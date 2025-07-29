@@ -41,6 +41,9 @@ body {
   margin: 0;
   padding: 0;
   overflow-y: auto;
+  /* Cosmos-stijl smooth scroll */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 #root {
   min-height: 100vh;

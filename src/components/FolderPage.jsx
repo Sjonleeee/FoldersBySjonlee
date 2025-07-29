@@ -144,16 +144,18 @@ export default function FolderPage({
             scale: 0.5,
           });
 
-          // Start scroll animations
+          // Start parallax scroll animations
           tl.to(creativeRef.current, {
             x: "-100vw",
-            duration: 2,
+            y: "-20vh", // Parallax beweging naar boven
+            duration: 2.5,
             ease: "power2.inOut",
           });
 
           tl.to(developerRef.current, {
             x: "100vw",
-            duration: 2,
+            y: "20vh", // Parallax beweging naar beneden
+            duration: 2.5,
             ease: "power2.inOut",
           }, "<");
 
@@ -169,8 +171,10 @@ export default function FolderPage({
             ],
             {
               opacity: 0,
-              duration: 2,
+              y: (i) => (i % 2 === 0 ? "-15vh" : "15vh"), // Parallax beweging voor labels
+              duration: 2.5,
               ease: "power2.inOut",
+              stagger: 0.1,
             },
             "<"
           );
@@ -178,14 +182,16 @@ export default function FolderPage({
           tl.to(folderRef.current, {
             opacity: 0,
             scale: 0.5,
-            duration: 2,
+            y: "-30vh", // Parallax beweging naar boven
+            duration: 2.5,
             ease: "power2.inOut",
           }, "<");
 
           tl.to(videoSectionRef.current, {
             opacity: 1,
             scale: 1,
-            duration: 2.5,
+            y: "10vh", // Parallax beweging naar beneden
+            duration: 3.0,
             ease: "power2.out",
           }, "+=0.5");
 
@@ -212,7 +218,8 @@ export default function FolderPage({
 
           tl.to(modelRef.current, {
             opacity: 0,
-            duration: 2.5,
+            y: "25vh", // Parallax beweging naar beneden
+            duration: 3.0,
             ease: "power2.inOut",
           }, "<");
 
@@ -310,19 +317,19 @@ export default function FolderPage({
               </div>
 
           {/* Video Section - Hidden initially */}
-                      <div
-              ref={videoSectionRef}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                opacity: 0,
-                transform: "scale(0.5)",
-                zIndex: 10,
-              }}
-            >
+          <div
+            ref={videoSectionRef}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              opacity: 0,
+              transform: "scale(0.5)",
+              zIndex: 10,
+            }}
+          >
             <StatsSection />
           </div>
         </div>

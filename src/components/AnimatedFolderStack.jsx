@@ -7,7 +7,6 @@ import video1 from "../assets/videos/video1.mp4";
 import video2 from "../assets/videos/video2.mp4";
 import video3 from "../assets/videos/video3.MP4";
 
-// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 const folders = [
@@ -16,23 +15,40 @@ const folders = [
     title: "Volkswagen Project",
     subtitle: "®",
     tags: ["UX / UI", "Interface Design", "Concept"],
-    video: video1, // Gebruik geïmporteerde video
+    video: video1,
   },
   {
     fancy: "C",
     title: "Chrome Magazine",
     subtitle: "®",
     tags: ["Magazine design", "Graphic Assistant", "Video editting"],
-    video: video2, // Gebruik geïmporteerde video
+    video: video2,
   },
   {
     fancy: "R",
     title: "Rinkitou Creative Agency",
     subtitle: "®",
     tags: ["Branding", "Entrepreneurship", "Management"],
-    video: video3, // Gebruik geïmporteerde video
+    video: video3,
   },
 ];
+
+// Animation durations - Performance geoptimaliseerd
+const DURATIONS = {
+  titleFadeIn: 1.5, // Smooth voor mobile
+  foldersFadeIn: 1.2, // Smooth voor mobile
+  foldersMoveToPosition: 2.0, // Smooth voor mobile
+  pause: 1.5, // Kortere pause
+  fadeOut: 1.5, // Smooth voor mobile
+};
+
+// Animation delays - Performance geoptimaliseerd
+const DELAYS = {
+  afterTitle: 0.3, // Smooth delays
+  afterFoldersFadeIn: 0.2, // Smooth delays
+  afterFoldersMove: 0.2, // Smooth delays
+  afterPause: 0.4, // Smooth delays
+};
 
 function AnimatedFolderStack() {
   const sectionRef = useRef(null);
@@ -41,190 +57,212 @@ function AnimatedFolderStack() {
   const [mouseX, setMouseX] = useState(null);
   const [mouseY, setMouseY] = useState(null);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const triggerId = useRef(`latest-projects-trigger-${Math.random()}`);
+  const triggerId = useRef(`latest-projects-${Math.random()}`);
 
   useEffect(() => {
-    // Kill any existing ScrollTrigger with this specific ID
+    // Clean up existing trigger
     const existingTrigger = ScrollTrigger.getById(triggerId.current);
-    if (existingTrigger) {
-      existingTrigger.kill();
-    }
-
+    if (existingTrigger) existingTrigger.kill();
+    
     if (hasAnimated) return;
 
-    let ctx;
-
-    function createAnimation() {
-      ctx = gsap.context(() => {
-        function isMobile() {
-          return window.innerWidth <= 600;
-        }
-
-        // Set initial positions - behoud originele styling
-        gsap.set(titleRef.current, {
-          top: "50%",
-          transform: "translateX(-50%)",
-          fontSize: "8.4rem",
-          opacity: 0,
-        });
-
-        folderRefs.current.forEach((ref, i) => {
-          gsap.set(ref.current, {
-            y: "100vh",
-            x: isMobile() ? 0 : i === 0 ? -16 : i === 2 ? 16 : 0,
-            rotation: isMobile() ? 0 : i === 0 ? 4 : i === 2 ? -4 : 0,
-            zIndex: i + 1,
-          });
-        });
-
-        // Timeline met originele animaties
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            // === Latest Projects ScrollTrigger ===
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "+=60%", // Balanced timing
-            scrub: 1.5, // Slightly smoother scrub for better feel
-            pin: true,
-            id: triggerId.current,
-            markers: true, // Show GSAP markers for debugging
-            onComplete: () => setHasAnimated(true),
-          },
-        });
-
-        // Titel animatie - originele styling
-        tl.fromTo(
-          titleRef.current,
-          {
-            top: "50%",
-            transform: "translateX(-50%)",
-            fontSize: "8.4rem",
-            opacity: 0,
-          },
-          {
-            top: "15vh",
-            fontSize: "8.4rem",
-            opacity: 1,
-            duration: 0.3, // Verkort van 0.38 naar 0.3
-            ease: "power2.inOut",
-          }
-        );
-
-        if (isMobile()) {
-          // Mobile animatie - originele styling
-          const sectionHeight = window.innerHeight * 0.6;
-          const folderGap = 6;
-          const folderHeight = (sectionHeight - 2 * folderGap) / 3;
-          const stackStartY = -120;
-          const foldersOffsetY = 40;
-
-          folderRefs.current.forEach((ref, i) => {
-            tl.fromTo(
-              ref.current,
-              { y: "100vh", x: 0, rotation: 0, zIndex: i + 1 },
-              {
-                y:
-                  stackStartY + foldersOffsetY + i * (folderHeight + folderGap),
-                x: 0,
-                rotation: 0,
-                zIndex: i + 1,
-                duration: 0.25, // Verkort van 0.32 naar 0.25
-              }
-            );
-          });
-        } else {
-          // Desktop animatie - originele styling
-          folderRefs.current.forEach((ref, i) => {
-            const xOffset = i === 0 ? -16 : i === 2 ? 16 : 0;
-            const yOffset = i * 16;
-            const rotation = i === 0 ? 4 : i === 2 ? -4 : 0;
-
-            tl.fromTo(
-              ref.current,
-              { y: "100vh", x: xOffset, rotation, zIndex: i + 1 },
-              {
-                y: yOffset,
-                x: xOffset,
-                rotation,
-                zIndex: i + 1,
-                duration: 0.25,
-              } // Verkort van 0.32 naar 0.25
-            );
-          });
-
-          // Desktop folder posities - originele styling
-          tl.to(folderRefs.current[0].current, {
-            x: "-30.5vw",
-            y: "10vh",
-            scale: 1,
-            rotation: 0,
-            zIndex: 1,
-            duration: 0.25, // Verkort van 0.32 naar 0.25
-          });
-          tl.to(
-            folderRefs.current[1].current,
-            {
-              x: "0vw",
-              y: "10vh",
-              scale: 1,
-              rotation: 0,
-              zIndex: 2,
-              duration: 0.25, // Verkort van 0.32 naar 0.25
-            },
-            "<"
-          );
-          tl.to(
-            folderRefs.current[2].current,
-            {
-              x: "30.5vw",
-              y: "10vh",
-              scale: 1,
-              rotation: 0,
-              zIndex: 3,
-              duration: 0.25, // Verkort van 0.32 naar 0.25
-            },
-            "<"
-          );
-        }
-
-        tl.to({}, { duration: 1.2 }); // Increased pause for reading time
-
-        // Fade out everything together
-        tl.to(
-          [titleRef.current, ...folderRefs.current.map((ref) => ref.current)],
-          {
-            opacity: 0,
-            duration: 1.2,
-            ease: "power1.out",
-          },
-          "+=0.5"
-        );
-
-        // Final cleanup
-        tl.to(
-          [...folderRefs.current.map((ref) => ref.current), titleRef.current],
-          {
-            visibility: "hidden",
-            zIndex: -1,
-            duration: 0,
-          },
-          "+=0.5"
-        );
-      }, sectionRef);
-    }
-
-    createAnimation();
-
-    window.addEventListener("resize", createAnimation);
-
+    // Set initial states
+    setupInitialStates();
+    
+    // Create animation timeline
+    const timeline = createAnimationTimeline();
+    
     return () => {
-      // Only kill triggers with our specific ID
-      ScrollTrigger.getAll().forEach((t) => {
-        if (t.vars.id === triggerId.current) t.kill();
+      timeline.kill();
+      // Cosmos-stijl cleanup - kill all related triggers
+      ScrollTrigger.getAll().forEach(t => {
+        if (t.vars.id === triggerId.current) {
+          t.kill();
+        }
       });
-      if (ctx) ctx.revert();
+      // Force refresh to prevent glitches
+      ScrollTrigger.refresh();
     };
   }, [hasAnimated]);
+
+  const setupInitialStates = () => {
+    function isMobile() {
+      return window.innerWidth <= 600;
+    }
+
+    // Set title initial state
+    gsap.set(titleRef.current, {
+      top: "50%",
+      transform: "translateX(-50%)",
+      fontSize: "8.4rem",
+      opacity: 0,
+    });
+
+    // Set folders initial states
+    folderRefs.current.forEach((ref, i) => {
+      gsap.set(ref.current, {
+        y: "100vh",
+        x: isMobile() ? 0 : i === 0 ? -16 : i === 2 ? 16 : 0,
+        rotation: isMobile() ? 0 : i === 0 ? 4 : i === 2 ? -4 : 0,
+        zIndex: i + 1,
+        opacity: 0,
+      });
+    });
+  };
+
+  const createAnimationTimeline = () => {
+    function isMobile() {
+      return window.innerWidth <= 600;
+    }
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        // === Latest Projects ScrollTrigger ===
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "+=150%", // Langere scroll voor smooth mobile
+        scrub: 1.5, // Hogere scrub voor smooth mobile
+        pin: true,
+        id: triggerId.current,
+        markers: false, // Disable markers for smooth performance
+        onComplete: () => setHasAnimated(true),
+      },
+    });
+
+    // PHASE 1: Title fade in - Smooth en natuurlijk
+    tl.fromTo(
+      titleRef.current,
+      {
+        top: "50%",
+        transform: "translateX(-50%)",
+        fontSize: "8.4rem",
+        opacity: 0,
+      },
+      {
+        top: "15vh",
+        fontSize: "8.4rem",
+        opacity: 1,
+        duration: DURATIONS.titleFadeIn,
+        ease: "power3.out", // Soepelere easing
+      }
+    );
+
+    // PHASE 2: Folders fade in with stagger - Smooth
+    tl.to(folderRefs.current.map(ref => ref.current), {
+      opacity: 1,
+      duration: DURATIONS.foldersFadeIn,
+      ease: "power2.out", // Smooth easing
+      stagger: 0.3, // Smooth stagger voor mobile
+    }, `+=${DELAYS.afterTitle}`);
+
+    if (isMobile()) {
+      // PHASE 3A: Mobile - Folders move to stack position - Smooth
+      const sectionHeight = window.innerHeight * 0.6;
+      const folderGap = 6;
+      const folderHeight = (sectionHeight - 2 * folderGap) / 3;
+      const stackStartY = -120;
+      const foldersOffsetY = 40;
+
+      folderRefs.current.forEach((ref, i) => {
+        tl.fromTo(
+          ref.current,
+          { y: "100vh", x: 0, rotation: 0, zIndex: i + 1 },
+          {
+            y: stackStartY + foldersOffsetY + i * (folderHeight + folderGap),
+            x: 0,
+            rotation: 0,
+            zIndex: i + 1,
+            duration: DURATIONS.foldersMoveToPosition,
+            ease: "power2.inOut", // Smooth easing voor mobile
+          },
+          `+=${DELAYS.afterFoldersFadeIn}`
+        );
+      });
+    } else {
+      // PHASE 3B: Desktop - Folders move to initial positions - Smooth
+      folderRefs.current.forEach((ref, i) => {
+        const xOffset = i === 0 ? -16 : i === 2 ? 16 : 0;
+        const yOffset = i * 16;
+        const rotation = i === 0 ? 4 : i === 2 ? -4 : 0;
+
+        tl.fromTo(
+          ref.current,
+          { y: "100vh", x: xOffset, rotation, zIndex: i + 1 },
+          { 
+            y: yOffset, 
+            x: xOffset, 
+            rotation, 
+            zIndex: i + 1, 
+            duration: DURATIONS.foldersMoveToPosition,
+            ease: "power2.inOut", // Smooth easing
+          },
+          `+=${DELAYS.afterFoldersFadeIn}`
+        );
+      });
+
+      // PHASE 4: Desktop - Folders move to final positions - Smooth
+      tl.to(folderRefs.current[0].current, {
+        x: "-30.5vw",
+        y: "10vh",
+        scale: 1,
+        rotation: 0,
+        zIndex: 1,
+        duration: DURATIONS.foldersMoveToPosition,
+        ease: "power2.inOut", // Smooth easing
+      }, `+=${DELAYS.afterFoldersMove}`);
+
+      tl.to(folderRefs.current[1].current, {
+        x: "0vw",
+        y: "10vh",
+        scale: 1,
+        rotation: 0,
+        zIndex: 2,
+        duration: DURATIONS.foldersMoveToPosition,
+        ease: "power2.inOut", // Smooth easing
+      }, "<");
+
+      tl.to(folderRefs.current[2].current, {
+        x: "30.5vw",
+        y: "10vh",
+        scale: 1,
+        rotation: 0,
+        zIndex: 3,
+        duration: DURATIONS.foldersMoveToPosition,
+        ease: "power2.inOut", // Smooth easing
+      }, "<");
+    }
+
+    // PHASE 5: Pause for viewing - KORTER
+    tl.to({}, { duration: DURATIONS.pause });
+
+    // PHASE 6: Additional viewing time - KORTER
+    tl.to({}, { duration: 1.0 }); // Extra 1 seconde voor viewing
+
+    // PHASE 7: Fade out title first - SNEL
+    tl.to(titleRef.current, {
+      opacity: 0,
+      duration: 1.0,
+      ease: "power1.out",
+    }, `+=${DELAYS.afterPause}`);
+
+    // PHASE 8: Fade out folders with stagger - SNEL
+    tl.to(folderRefs.current.map(ref => ref.current), {
+      opacity: 0,
+      duration: DURATIONS.fadeOut,
+      ease: "power1.out",
+      stagger: 0.05, // Snellere stagger
+    }, "+=0.2");
+
+    // PHASE 9: Hide everything
+    tl.to([...folderRefs.current.map(ref => ref.current), titleRef.current, sectionRef.current], {
+      visibility: "hidden",
+      zIndex: -1,
+      display: "none",
+      duration: 0,
+    }, "+=0.3");
+
+    return tl;
+  };
 
   // Track mouse X position relative to the section
   function handleMouseMove(e) {
@@ -233,7 +271,7 @@ function AnimatedFolderStack() {
     setMouseX(e.clientX - bounds.left);
     setMouseY(e.clientY - bounds.top);
   }
-
+  
   function handleMouseLeave() {
     setMouseX(null);
     setMouseY(null);
@@ -243,13 +281,13 @@ function AnimatedFolderStack() {
     <section
       className="latest-projects-hero"
       ref={sectionRef}
-      style={{
-        position: "relative",
+      style={{ 
+        position: "relative"
       }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Sticky titel van de sectie, animatie op scale/position */}
+      {/* Title */}
       <div
         className="latest-projects-title hermaiona-title-style"
         ref={titleRef}
@@ -264,7 +302,8 @@ function AnimatedFolderStack() {
       >
         Latest Projects
       </div>
-      {/* Stack/grid van folder-cards */}
+      
+      {/* Folder cards */}
       <div
         className="latest-projects-stack"
         style={{
@@ -285,7 +324,6 @@ function AnimatedFolderStack() {
               top: "46%",
               transform: "translate(-50%, 0)",
               zIndex: i + 1,
-              // GSAP will animate x/y/zIndex
             }}
           >
             <FolderCard

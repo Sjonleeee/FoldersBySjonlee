@@ -54,7 +54,10 @@ export default function MainPage() {
         width: "100%", 
         overflowX: "hidden",
         overflowY: isScrollBlocked ? "hidden" : "auto",
-        height: isScrollBlocked ? "100vh" : "auto"
+        height: isScrollBlocked ? "100vh" : "auto",
+        // Cosmos-stijl smooth scroll
+        scrollBehavior: "smooth",
+        WebkitOverflowScrolling: "touch"
       }}
     >
       {/* Header */}

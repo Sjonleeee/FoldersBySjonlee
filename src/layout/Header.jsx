@@ -68,7 +68,9 @@ const Header = ({ onLogoClick }) => {
           className="header-menu-span"
           onClick={() => setMenuOpen((open) => !open)}
         >
-          MENU
+          {"MENU".split('').map((letter, index) => (
+            <span key={index}>{letter}</span>
+          ))}
         </span>
         {menuOpen && (
           <div className="header-fullscreen-menu">

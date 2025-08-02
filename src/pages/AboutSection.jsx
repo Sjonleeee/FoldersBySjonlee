@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/aboutsection.css";
-import profileImg from "../assets/images/sjonlee2.jpeg";
+import profileImg from "../assets/images/sjonlee.jpeg";
 import img1 from "../assets/images/sjonlee2.jpeg";
 import img2 from "../assets/images/sjonlee3.jpeg";
 import img3 from "../assets/images/sjonlee4.jpeg";
@@ -18,6 +18,7 @@ export default function AboutSection() {
   const containerRef = useRef(null);
   const titleRef = useRef(null);
   const imageRef = useRef(null);
+  const descriptionRef = useRef(null);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [visibleImages, setVisibleImages] = useState([]);
 
@@ -34,6 +35,11 @@ export default function AboutSection() {
     gsap.set(imageRef.current, { 
       opacity: 0, 
       scale: 0.8
+    });
+
+    gsap.set(descriptionRef.current, {
+      opacity: 0,
+      y: 30
     });
 
     // Create the main timeline
@@ -66,12 +72,29 @@ export default function AboutSection() {
       ease: "power2.out"
     }, 0.3);
 
-    // Phase 3: Subtle parallax movement
+    // Phase 3: Move image and title up, description appears
     tl.to([imageRef.current, titleRef.current], {
-      y: -30,
+      y: -300,
+      scale: 0.8,
       duration: 1,
       ease: "power1.inOut"
     }, 1);
+
+    // Phase 4: Description appears
+    tl.to(descriptionRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power2.out"
+    }, 1.2);
+
+    // Phase 5: Clean fade out for next section
+    tl.to([imageRef.current, titleRef.current, descriptionRef.current], {
+      opacity: 0,
+      y: 50,
+      duration: 0.8,
+      ease: "power1.inOut"
+    }, 1.8);
 
     return () => {
       tl.kill();
@@ -168,6 +191,15 @@ export default function AboutSection() {
           <h1 className="about-title">
             Sjonlee Ha
           </h1>
+        </div>
+
+        {/* Description Text - appears later */}
+        <div className="about-description-container" ref={descriptionRef}>
+          <div className="about-description-content">
+            <p>
+              Sjonlee Ha is a 24-year-old creative developer / CEO of Rinkitou with a big curiosity for making everything look aestethically. He believes vision is more than words and love learning new stuff, building cool things, and creating something meaningful for for others, myself and for my fam.
+            </p>
+          </div>
         </div>
       </div>
     </section>

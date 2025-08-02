@@ -26,79 +26,105 @@ export default function AboutSection() {
     if (hasAnimated) return;
 
     // Set initial states
-    gsap.set(titleRef.current, { 
-      opacity: 0, 
+    gsap.set(titleRef.current, {
+      opacity: 0,
       y: 50,
-      scale: 0.9
+      scale: 0.9,
     });
-    
-    gsap.set(imageRef.current, { 
-      opacity: 0, 
-      scale: 0.8
+
+    gsap.set(imageRef.current, {
+      opacity: 0,
+      scale: 0.8,
     });
 
     gsap.set(descriptionRef.current, {
       opacity: 0,
-      y: 30
+      y: 30,
     });
 
     // Create the main timeline
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: sectionRef.current,
+        trigger: ".about-container",
         start: "top top",
         end: "bottom top",
-        scrub: 1,
+        scrub: 3,
         pin: true,
-        markers: false,
+
         onComplete: () => setHasAnimated(true),
-      }
+      },
     });
 
     // Phase 1: Image appears
-    tl.to(imageRef.current, {
-      opacity: 1,
-      scale: 1,
-      duration: 1,
-      ease: "power2.out"
-    }, 0);
+    tl.to(
+      imageRef.current,
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "power2.out",
+      },
+      0
+    );
 
     // Phase 2: Title appears over the image
-    tl.to(titleRef.current, {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 1,
-      ease: "power2.out"
-    }, 0.3);
+    tl.to(
+      titleRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 1,
+        ease: "power2.out",
+      },
+      0.3
+    );
 
-    // Phase 3: Move image and title up, description appears
-    tl.to([imageRef.current, titleRef.current], {
-      y: -300,
-      scale: 0.8,
-      duration: 1,
-      ease: "power1.inOut"
-    }, 1);
+    // Phase 3: Pause for reading main content (2 seconds)
+    tl.to({}, { duration: 2 }, 1.3);
 
-    // Phase 4: Description appears
-    tl.to(descriptionRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power2.out"
-    }, 1.2);
+    // Phase 4: Move image and title up, description appears
+    tl.to(
+      [imageRef.current, titleRef.current],
+      {
+        y: -300,
+        scale: 0.8,
+        duration: 2,
+        ease: "power1.inOut",
+      },
+      3.3
+    );
 
-    // Phase 5: Clean fade out for next section
-    tl.to([imageRef.current, titleRef.current, descriptionRef.current], {
-      opacity: 0,
-      y: 50,
-      duration: 0.8,
-      ease: "power1.inOut"
-    }, 1.8);
+    // Phase 5: Description appears
+    tl.to(
+      descriptionRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+      },
+      3.5
+    );
+
+    // Phase 6: Pause for reading description (3 seconds)
+    tl.to({}, { duration: 3 }, 4.5);
+
+    // Phase 7: Clean fade out for next section
+    tl.to(
+      [imageRef.current, titleRef.current, descriptionRef.current],
+      {
+        opacity: 0,
+        y: 50,
+        duration: 1.5,
+        ease: "power2.out",
+      },
+      7.5
+    );
 
     return () => {
       tl.kill();
-      ScrollTrigger.getAll().forEach(trigger => {
+      ScrollTrigger.getAll().forEach((trigger) => {
         if (trigger.vars.trigger === sectionRef.current) {
           trigger.kill();
         }
@@ -121,7 +147,7 @@ export default function AboutSection() {
 
       // Check if mouse moved enough to trigger new image
       const distance = Math.sqrt((x - lastMouseX) ** 2 + (y - lastMouseY) ** 2);
-      
+
       if (distance > 60) {
         // Add new image at mouse position
         const newImage = {
@@ -129,19 +155,21 @@ export default function AboutSection() {
           src: mouseImages[currentImageIndex],
           x: x - 75,
           y: y - 75,
-          index: currentImageIndex
+          index: currentImageIndex,
         };
 
-        setVisibleImages(prev => [...prev, newImage]);
+        setVisibleImages((prev) => [...prev, newImage]);
 
         // Remove image after delay
         setTimeout(() => {
-          setVisibleImages(prev => prev.filter(img => img.id !== newImage.id));
+          setVisibleImages((prev) =>
+            prev.filter((img) => img.id !== newImage.id)
+          );
         }, 1200);
 
         // Move to next image
         currentImageIndex = (currentImageIndex + 1) % mouseImages.length;
-        
+
         lastMouseX = x;
         lastMouseY = y;
       }
@@ -149,10 +177,10 @@ export default function AboutSection() {
 
     const container = containerRef.current;
     if (container) {
-      container.addEventListener('mousemove', handleMouseMove);
-      
+      container.addEventListener("mousemove", handleMouseMove);
+
       return () => {
-        container.removeEventListener('mousemove', handleMouseMove);
+        container.removeEventListener("mousemove", handleMouseMove);
       };
     }
   }, []);
@@ -180,7 +208,7 @@ export default function AboutSection() {
             style={{
               left: image.x,
               top: image.y,
-              zIndex: 10 + image.index
+              zIndex: 10 + image.index,
             }}
             draggable={false}
           />
@@ -188,20 +216,22 @@ export default function AboutSection() {
 
         {/* Overlay Title */}
         <div className="about-title-overlay" ref={titleRef}>
-          <h1 className="about-title">
-            Sjonlee Ha
-          </h1>
+          <h1 className="about-title">Sjonlee Ha</h1>
         </div>
 
         {/* Description Text - appears later */}
         <div className="about-description-container" ref={descriptionRef}>
           <div className="about-description-content">
             <p>
-              Sjonlee Ha is a 24-year-old creative developer / CEO of Rinkitou with a big curiosity for making everything look aestethically. He believes vision is more than words and love learning new stuff, building cool things, and creating something meaningful for for others, myself and for my fam.
+              Sjonlee Ha is a 24-year-old creative developer / CEO of Rinkitou
+              with a big curiosity for making everything look aestethically. He
+              believes vision is more than words and love learning new stuff,
+              building cool things, and creating something meaningful for for
+              others, myself and for my fam.
             </p>
           </div>
         </div>
       </div>
     </section>
   );
-} 
+}

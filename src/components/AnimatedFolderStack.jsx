@@ -63,19 +63,19 @@ function AnimatedFolderStack() {
     // Clean up existing trigger
     const existingTrigger = ScrollTrigger.getById(triggerId.current);
     if (existingTrigger) existingTrigger.kill();
-    
+
     if (hasAnimated) return;
 
     // Set initial states
     setupInitialStates();
-    
+
     // Create animation timeline
     const timeline = createAnimationTimeline();
-    
+
     return () => {
       timeline.kill();
       // Cosmos-stijl cleanup - kill all related triggers
-      ScrollTrigger.getAll().forEach(t => {
+      ScrollTrigger.getAll().forEach((t) => {
         if (t.vars.id === triggerId.current) {
           t.kill();
         }
@@ -121,7 +121,7 @@ function AnimatedFolderStack() {
         trigger: sectionRef.current,
         start: "top top",
         end: "+=150%", // Langere scroll voor smooth mobile
-        scrub: 1.5, // Hogere scrub voor smooth mobile
+        scrub: 3, // Hogere scrub voor smooth mobile
         pin: true,
         id: triggerId.current,
         markers: false, // Disable markers for smooth performance
@@ -148,12 +148,16 @@ function AnimatedFolderStack() {
     );
 
     // PHASE 2: Folders fade in with stagger - Smooth
-    tl.to(folderRefs.current.map(ref => ref.current), {
-      opacity: 1,
-      duration: DURATIONS.foldersFadeIn,
-      ease: "power2.out", // Smooth easing
-      stagger: 0.3, // Smooth stagger voor mobile
-    }, `+=${DELAYS.afterTitle}`);
+    tl.to(
+      folderRefs.current.map((ref) => ref.current),
+      {
+        opacity: 1,
+        duration: DURATIONS.foldersFadeIn,
+        ease: "power2.out", // Smooth easing
+        stagger: 0.3, // Smooth stagger voor mobile
+      },
+      `+=${DELAYS.afterTitle}`
+    );
 
     if (isMobile()) {
       // PHASE 3A: Mobile - Folders move to stack position - Smooth
@@ -188,11 +192,11 @@ function AnimatedFolderStack() {
         tl.fromTo(
           ref.current,
           { y: "100vh", x: xOffset, rotation, zIndex: i + 1 },
-          { 
-            y: yOffset, 
-            x: xOffset, 
-            rotation, 
-            zIndex: i + 1, 
+          {
+            y: yOffset,
+            x: xOffset,
+            rotation,
+            zIndex: i + 1,
             duration: DURATIONS.foldersMoveToPosition,
             ease: "power2.inOut", // Smooth easing
           },
@@ -201,35 +205,47 @@ function AnimatedFolderStack() {
       });
 
       // PHASE 4: Desktop - Folders move to final positions - Smooth
-      tl.to(folderRefs.current[0].current, {
-        x: "-30.5vw",
-        y: "10vh",
-        scale: 1,
-        rotation: 0,
-        zIndex: 1,
-        duration: DURATIONS.foldersMoveToPosition,
-        ease: "power2.inOut", // Smooth easing
-      }, `+=${DELAYS.afterFoldersMove}`);
+      tl.to(
+        folderRefs.current[0].current,
+        {
+          x: "-30.5vw",
+          y: "10vh",
+          scale: 1,
+          rotation: 0,
+          zIndex: 1,
+          duration: DURATIONS.foldersMoveToPosition,
+          ease: "power2.inOut", // Smooth easing
+        },
+        `+=${DELAYS.afterFoldersMove}`
+      );
 
-      tl.to(folderRefs.current[1].current, {
-        x: "0vw",
-        y: "10vh",
-        scale: 1,
-        rotation: 0,
-        zIndex: 2,
-        duration: DURATIONS.foldersMoveToPosition,
-        ease: "power2.inOut", // Smooth easing
-      }, "<");
+      tl.to(
+        folderRefs.current[1].current,
+        {
+          x: "0vw",
+          y: "10vh",
+          scale: 1,
+          rotation: 0,
+          zIndex: 2,
+          duration: DURATIONS.foldersMoveToPosition,
+          ease: "power2.inOut", // Smooth easing
+        },
+        "<"
+      );
 
-      tl.to(folderRefs.current[2].current, {
-        x: "30.5vw",
-        y: "10vh",
-        scale: 1,
-        rotation: 0,
-        zIndex: 3,
-        duration: DURATIONS.foldersMoveToPosition,
-        ease: "power2.inOut", // Smooth easing
-      }, "<");
+      tl.to(
+        folderRefs.current[2].current,
+        {
+          x: "30.5vw",
+          y: "10vh",
+          scale: 1,
+          rotation: 0,
+          zIndex: 3,
+          duration: DURATIONS.foldersMoveToPosition,
+          ease: "power2.inOut", // Smooth easing
+        },
+        "<"
+      );
     }
 
     // PHASE 5: Pause for viewing - KORTER
@@ -239,27 +255,43 @@ function AnimatedFolderStack() {
     tl.to({}, { duration: 1.0 }); // Extra 1 seconde voor viewing
 
     // PHASE 7: Fade out title first - SNEL
-    tl.to(titleRef.current, {
-      opacity: 0,
-      duration: 1.0,
-      ease: "power1.out",
-    }, `+=${DELAYS.afterPause}`);
+    tl.to(
+      titleRef.current,
+      {
+        opacity: 0,
+        duration: 1.0,
+        ease: "power1.out",
+      },
+      `+=${DELAYS.afterPause}`
+    );
 
     // PHASE 8: Fade out folders with stagger - SNEL
-    tl.to(folderRefs.current.map(ref => ref.current), {
-      opacity: 0,
-      duration: DURATIONS.fadeOut,
-      ease: "power1.out",
-      stagger: 0.05, // Snellere stagger
-    }, "+=0.2");
+    tl.to(
+      folderRefs.current.map((ref) => ref.current),
+      {
+        opacity: 0,
+        duration: DURATIONS.fadeOut,
+        ease: "power1.out",
+        stagger: 0.05, // Snellere stagger
+      },
+      "+=0.2"
+    );
 
     // PHASE 9: Hide everything
-    tl.to([...folderRefs.current.map(ref => ref.current), titleRef.current, sectionRef.current], {
-      visibility: "hidden",
-      zIndex: -1,
-      display: "none",
-      duration: 0,
-    }, "+=0.3");
+    tl.to(
+      [
+        ...folderRefs.current.map((ref) => ref.current),
+        titleRef.current,
+        sectionRef.current,
+      ],
+      {
+        visibility: "hidden",
+        zIndex: -1,
+        display: "none",
+        duration: 0,
+      },
+      "+=0.3"
+    );
 
     return tl;
   };
@@ -271,7 +303,7 @@ function AnimatedFolderStack() {
     setMouseX(e.clientX - bounds.left);
     setMouseY(e.clientY - bounds.top);
   }
-  
+
   function handleMouseLeave() {
     setMouseX(null);
     setMouseY(null);
@@ -281,8 +313,8 @@ function AnimatedFolderStack() {
     <section
       className="latest-projects-hero"
       ref={sectionRef}
-      style={{ 
-        position: "relative"
+      style={{
+        position: "relative",
       }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -302,7 +334,7 @@ function AnimatedFolderStack() {
       >
         Latest Projects
       </div>
-      
+
       {/* Folder cards */}
       <div
         className="latest-projects-stack"

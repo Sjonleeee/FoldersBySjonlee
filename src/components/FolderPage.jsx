@@ -133,7 +133,7 @@ export default function FolderPage({
               trigger: sectionRef.current,
               start: "top top",
               end: "+=120%",
-              scrub: 1,
+              scrub: 3,
               pin: true,
             },
           });

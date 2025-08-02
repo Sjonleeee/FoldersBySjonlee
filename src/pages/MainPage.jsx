@@ -5,6 +5,7 @@ import FolderLanding from "../components/FolderLanding";
 import FolderPage from "../components/FolderPage";
 import AboutSection from "./AboutSection";
 import AnimatedFolderStack from "../components/AnimatedFolderStack";
+import CompaniesSection from "../components/CompaniesSection";
 import ContactSection from "./ContactSection";
 
 export default function MainPage() {
@@ -101,6 +102,14 @@ export default function MainPage() {
           position: "relative"
         }}>
           <AnimatedFolderStack />
+        </section>
+        
+        {/* CompaniesSection */}
+        <section style={{ 
+          minHeight: "0", 
+          position: "relative"
+        }}>
+          <CompaniesSection />
         </section>
         
         {/* ContactSection */}

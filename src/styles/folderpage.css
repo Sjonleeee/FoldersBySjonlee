@@ -155,9 +155,10 @@
    Stats Video Section
    ===================== */
 .stats-video-section {
-  min-height: 100vh;
+  height: 100vh;
   width: 100vw;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -170,8 +171,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.1vw;
   flex-direction: row;
+  height: 100%;
 }
 
 .stats-side {
@@ -184,14 +185,12 @@
 
 .stats-side.left {
   align-items: flex-end;
-  transform: translateX(-100vw);
-  opacity: 0;
+  opacity: 1;
 }
 
 .stats-side.right {
   align-items: flex-start;
-  transform: translateX(100vw);
-  opacity: 0;
+  opacity: 1;
 }
 
 .stats-block {
@@ -223,10 +222,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   position: relative;
   z-index: 2;
-  transform: scale(0.5);
-  opacity: 0;
+  transform: scale(1);
+  opacity: 1;
 }
 
 .stats-laptop-wrapper {
@@ -350,11 +350,11 @@
     flex-direction: column;
     gap: 0.5em;
   }
-  
+
   .title-text {
     font-size: 3.5rem;
   }
-  
+
   .canvas-wrapper {
     width: 100vw;
     height: 50vh;
@@ -362,21 +362,21 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  
+
   .stats-content-flex {
     flex-direction: column;
     gap: 2rem;
     padding: 0 2rem;
   }
-  
+
   .stats-side {
     align-items: center !important;
   }
-  
+
   .stats-number {
     font-size: 5.5rem;
   }
-  
+
   .stats-label {
     font-size: 1.3rem;
   }
@@ -388,31 +388,31 @@
     flex-direction: column;
     gap: 0.8em;
   }
-  
+
   .title-text {
     font-size: 4.5rem;
   }
-  
+
   .canvas-wrapper {
     width: 100vw;
     height: 55vh;
     top: 50%;
   }
-  
+
   .stats-content-flex {
     flex-direction: column;
     gap: 2.5rem;
     padding: 0 2.5rem;
   }
-  
+
   .stats-side {
     align-items: center !important;
   }
-  
+
   .stats-number {
     font-size: 3rem;
   }
-  
+
   .stats-label {
     font-size: 1rem;
   }
@@ -423,21 +423,21 @@
   .title-text {
     font-size: 5.5rem;
   }
-  
+
   .canvas-wrapper {
     width: 100vw;
     height: 60vh;
     top: 50%;
   }
-  
+
   .stats-content-flex {
     padding: 0 3rem;
   }
-  
+
   .stats-number {
     font-size: 3.5rem;
   }
-  
+
   .stats-label {
     font-size: 1.1rem;
   }
@@ -448,21 +448,21 @@
   .title-text {
     font-size: 6.5rem;
   }
-  
+
   .canvas-wrapper {
     width: 100vw;
     height: 65vh;
     top: 50%;
   }
-  
+
   .stats-content-flex {
     padding: 0 3.5rem;
   }
-  
+
   .stats-number {
     font-size: 4rem;
   }
-  
+
   .stats-label {
     font-size: 1.2rem;
   }
@@ -473,21 +473,21 @@
   .title-text {
     font-size: 7rem;
   }
-  
+
   .canvas-wrapper {
     width: 100vw;
     height: 70vh;
     top: 50%;
   }
-  
+
   .stats-content-flex {
     padding: 0 4rem;
   }
-  
+
   .stats-number {
     font-size: 4.5rem;
   }
-  
+
   .stats-label {
     font-size: 1.3rem;
   }
@@ -498,21 +498,21 @@
   .title-text {
     font-size: 7.5rem;
   }
-  
+
   .canvas-wrapper {
     width: 100vw;
     height: 75vh;
     top: 50%;
   }
-  
+
   .stats-content-flex {
     padding: 0 4.5rem;
   }
-  
+
   .stats-number {
     font-size: 5rem;
   }
-  
+
   .stats-label {
     font-size: 1.4rem;
   }
@@ -523,21 +523,21 @@
   .title-text {
     font-size: 8rem;
   }
-  
+
   .canvas-wrapper {
     width: 100vw;
     height: 80vh;
     top: 50%;
   }
-  
+
   .stats-content-flex {
     padding: 0 5rem;
   }
-  
+
   .stats-number {
     font-size: 5.5rem;
   }
-  
+
   .stats-label {
     font-size: 1.5rem;
   }
@@ -556,10 +556,119 @@
 }
 
 @keyframes blink {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
+  }
+}
+
+/* =====================
+   Companies Section
+   ===================== */
+.companies-section {
+  min-height: 100vh;
+  width: 100vw;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.companies-container {
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+}
+
+.companies-title {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 3.5rem;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 4rem;
+  letter-spacing: 0.02em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.companies-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  align-items: start;
+}
+
+.company-item {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+  min-height: 120px;
+  width: 100%;
+}
+
+.company-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.company-logo {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.02em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+}
+
+/* Responsive Design for Companies */
+@media (max-width: 768px) {
+  .companies-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .companies-title {
+    font-size: 2rem;
+  }
+  
+  .company-item {
+    padding: 1.5rem;
+  }
+  
+  .company-logo {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .companies-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .companies-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
   }
 }

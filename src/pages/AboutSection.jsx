@@ -19,6 +19,7 @@ export default function AboutSection() {
   const titleRef = useRef(null);
   const imageRef = useRef(null);
   const descriptionRef = useRef(null);
+  const skillCardsRef = useRef(null);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [visibleImages, setVisibleImages] = useState([]);
 
@@ -47,9 +48,10 @@ export default function AboutSection() {
       scrollTrigger: {
         trigger: ".about-container",
         start: "top top",
-        end: "bottom top",
-        scrub: 3,
+        end: "+=300%", // Veel meer scroll ruimte - was "bottom top", nu 300% van de sectie hoogte
+        scrub: 8, // Veel trager - was 3, nu 8
         pin: true,
+        markers: true, // Markers aan om te debuggen
 
         onComplete: () => setHasAnimated(true),
       },
@@ -104,23 +106,63 @@ export default function AboutSection() {
         duration: 1,
         ease: "power2.out",
       },
-      8.5
+      7.3
     );
 
-    // Phase 6: Pause for reading description (6 seconds - verlengd)
-    tl.to({}, { duration: 6 }, 8.5);
+    // Phase 6: Pause for reading description (12 seconds - veel langer)
+    tl.to({}, { duration: 12 }, 8.3);
 
-    // Phase 7: Clean fade out for next section
+    // Phase 7: Skill cards appear from sides while content fades out
     tl.to(
-      [imageRef.current, titleRef.current, descriptionRef.current],
+      skillCardsRef.current,
+      {
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out",
+        onComplete: () => {
+          // Add visible class to cards for staggered animation
+          const cards = skillCardsRef.current?.querySelectorAll('.skill-card');
+          cards?.forEach((card, index) => {
+            setTimeout(() => {
+              card.classList.add('visible');
+            }, index * 200);
+          });
+        }
+      },
+      20.3
+    );
+
+    // Phase 8: Fade out description, image and title while cards come in
+    tl.to(
+      [descriptionRef.current, imageRef.current, titleRef.current],
       {
         opacity: 0,
-        y: 50,
-        duration: 3.0,
-        ease: "power2.out",
+        y: -50,
+        duration: 2,
+        ease: "power1.inOut",
       },
-      14.5
+      21.3
     );
+
+    // Phase 9: Pause for reading cards (15 seconds - veel langer)
+    tl.to({}, { duration: 15 }, 24.3);
+
+    // Phase 10: Cards fade out and move up
+    tl.to(
+      skillCardsRef.current,
+      {
+        opacity: 0,
+        y: -100,
+        duration: 3,
+        ease: "power1.inOut",
+      },
+      39.3
+    );
+
+
+
+    // Phase 11: Extra pause to ensure everything is faded before next section
+    tl.to({}, { duration: 2 }, 39.3);
 
     return () => {
       tl.kill();
@@ -229,6 +271,32 @@ export default function AboutSection() {
               building cool things, and creating something meaningful for for
               others, myself and for my fam.
             </p>
+          </div>
+        </div>
+
+        {/* Skill Cards - appear after description */}
+        <div className="skill-cards-container" ref={skillCardsRef}>
+          <div className="skill-card">
+            <h3 className="skill-card-title">Design</h3>
+            <ul className="skill-list">
+              <li className="skill-item">3D DESIGN</li>
+              <li className="skill-item">AESTHETICS</li>
+              <li className="skill-item">GRAPHIC DESIGN</li>
+              <li className="skill-item">CLOTHING</li>
+              <li className="skill-item">UX/UX DESIGN</li>
+            </ul>
+          </div>
+          
+          <div className="skill-card">
+            <h3 className="skill-card-title">Development</h3>
+            <ul className="skill-list">
+              <li className="skill-item">WEB DEVELOPMENT</li>
+              <li className="skill-item">THREE.JS</li>
+              <li className="skill-item">CREATIVE DEV</li>
+              <li className="skill-item">REACT.JS</li>
+              <li className="skill-item">TOUCHDESIGNER</li>
+              <li className="skill-item">SOMETIMES</li>
+            </ul>
           </div>
         </div>
       </div>

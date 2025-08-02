@@ -559,28 +559,7 @@ html {
     flex-direction: column;
     align-items: center;
   }
-  .stats-side.left,
-  .stats-side.right {
-    align-items: center;
-    margin: 0;
-    min-width: 0;
-  }
-  .stats-block {
-    align-items: center;
-  }
-  .stats-laptop-wrapper {
-    width: 100vw;
-    max-width: 100vw;
-  }
-  .stats-desk-img {
-    max-width: 100vw;
-  }
-  .stats-number {
-    font-size: 2.2rem;
-  }
-  .stats-label {
-    font-size: 1rem;
-  }
+
   .title-container {
     display: flex;
     flex-direction: column;

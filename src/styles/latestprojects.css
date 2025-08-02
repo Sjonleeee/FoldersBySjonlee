@@ -1,7 +1,7 @@
 .latest-projects-section {
   padding: 1.5rem 1rem; /* Balanced padding */
   background-color: green; /* Tijdelijke groene background */
-  margin-top: -25vh; /* Minder negative margin voor meer ruimte */
+  margin-top: 0; /* Geen negative margin meer - voorkomt overlap */
 }
 
 .latest-projects-grid {

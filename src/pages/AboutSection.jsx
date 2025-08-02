@@ -80,8 +80,8 @@ export default function AboutSection() {
       0.3
     );
 
-    // Phase 3: Pause for reading main content (2 seconds)
-    tl.to({}, { duration: 2 }, 1.3);
+    // Phase 3: Pause for reading main content (4 seconds - verlengd)
+    tl.to({}, { duration: 4 }, 1.3);
 
     // Phase 4: Move image and title up, description appears
     tl.to(
@@ -92,7 +92,7 @@ export default function AboutSection() {
         duration: 2,
         ease: "power1.inOut",
       },
-      3.3
+      5.3
     );
 
     // Phase 5: Description appears
@@ -104,11 +104,11 @@ export default function AboutSection() {
         duration: 1,
         ease: "power2.out",
       },
-      3.5
+      8.5
     );
 
-    // Phase 6: Pause for reading description (3 seconds)
-    tl.to({}, { duration: 3 }, 4.5);
+    // Phase 6: Pause for reading description (6 seconds - verlengd)
+    tl.to({}, { duration: 6 }, 8.5);
 
     // Phase 7: Clean fade out for next section
     tl.to(
@@ -116,10 +116,10 @@ export default function AboutSection() {
       {
         opacity: 0,
         y: 50,
-        duration: 1.5,
+        duration: 3.0,
         ease: "power2.out",
       },
-      7.5
+      14.5
     );
 
     return () => {

@@ -119,17 +119,21 @@ function AnimatedFolderStack() {
       scrollTrigger: {
         // === Latest Projects ScrollTrigger ===
         trigger: sectionRef.current,
-        start: "top top",
-        end: "+=150%", // Langere scroll voor smooth mobile
-        scrub: 3, // Hogere scrub voor smooth mobile
+        start: "bottom bottom", // Start wanneer onderkant sectie onderkant viewport raakt
+        end: "+=200%", // Meer scroll ruimte voor smooth animatie
+        scrub: 5, // Langzamere scrub voor smooth animatie
         pin: true,
+        pinSpacing: false, // Voorkomt overlap met volgende sectie
         id: triggerId.current,
         markers: false, // Disable markers for smooth performance
         onComplete: () => setHasAnimated(true),
       },
     });
 
-    // PHASE 1: Title fade in - Smooth en natuurlijk
+    // PHASE 1: Pause before title appears
+    tl.to({}, { duration: 8 }, 0);
+
+    // PHASE 2: Title fade in - Smooth en natuurlijk
     tl.fromTo(
       titleRef.current,
       {
@@ -144,10 +148,11 @@ function AnimatedFolderStack() {
         opacity: 1,
         duration: DURATIONS.titleFadeIn,
         ease: "power3.out", // Soepelere easing
-      }
+      },
+      2
     );
 
-    // PHASE 2: Folders fade in with stagger - Smooth
+    // PHASE 3: Folders fade in with stagger - Smooth
     tl.to(
       folderRefs.current.map((ref) => ref.current),
       {

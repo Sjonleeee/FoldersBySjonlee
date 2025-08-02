@@ -48,9 +48,10 @@ export default function AboutSection() {
       scrollTrigger: {
         trigger: ".about-container",
         start: "top top",
-        end: "+=300%", // Veel meer scroll ruimte - was "bottom top", nu 300% van de sectie hoogte
+        end: "+=135%", // Nog meer scroll ruimte - About section moet volledig uitgescrolld zijn
         scrub: 8, // Veel trager - was 3, nu 8
         pin: true,
+        pinSpacing: false, // Voorkomt overlap met volgende sectie
         markers: true, // Markers aan om te debuggen
 
         onComplete: () => setHasAnimated(true),
@@ -82,7 +83,7 @@ export default function AboutSection() {
       0.3
     );
 
-    // Phase 3: Pause for reading main content (4 seconds - verlengd)
+    // Phase 3: Pause for reading main content
     tl.to({}, { duration: 4 }, 1.3);
 
     // Phase 4: Move image and title up, description appears
@@ -109,10 +110,10 @@ export default function AboutSection() {
       7.3
     );
 
-    // Phase 6: Pause for reading description (12 seconds - veel langer)
+    // Phase 6: Pause for reading description
     tl.to({}, { duration: 12 }, 8.3);
 
-    // Phase 7: Skill cards appear from sides while content fades out
+    // Phase 7: Skill cards appear from sides
     tl.to(
       skillCardsRef.current,
       {
@@ -144,8 +145,8 @@ export default function AboutSection() {
       21.3
     );
 
-    // Phase 9: Pause for reading cards (15 seconds - veel langer)
-    tl.to({}, { duration: 15 }, 24.3);
+    // Phase 9: Pause for reading cards
+    tl.to({}, { duration: 15 }, 23.3);
 
     // Phase 10: Cards fade out and move up
     tl.to(
@@ -156,13 +157,11 @@ export default function AboutSection() {
         duration: 3,
         ease: "power1.inOut",
       },
-      39.3
+      38.3
     );
 
-
-
     // Phase 11: Extra pause to ensure everything is faded before next section
-    tl.to({}, { duration: 2 }, 39.3);
+    tl.to({}, { duration: 2 }, 41.3);
 
     return () => {
       tl.kill();

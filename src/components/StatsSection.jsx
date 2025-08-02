@@ -73,7 +73,7 @@ const StatsSection = forwardRef((props, ref) => {
   useEffect(() => {
     // Wait for next tick to ensure DOM is ready
     const timer = setTimeout(() => {
-      if (!laptopRef.current || !statsBlocksRef.current || !ref.current) return;
+      if (!laptopRef?.current || !statsBlocksRef?.current || !ref?.current) return;
 
       // Set initial states
       gsap.set(laptopRef.current, { opacity: 0, scale: 0.5 });
@@ -82,7 +82,7 @@ const StatsSection = forwardRef((props, ref) => {
       // Create timeline
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: ref.current,
+          trigger: ref?.current,
           start: "top center",
           end: "bottom center",
           scrub: 3,
@@ -157,6 +157,28 @@ const StatsSection = forwardRef((props, ref) => {
                     />
                   </span>
                   <span className="stats-label">Completed Projects</span>
+                </div>
+                <div className="stats-block">
+                  <span className="stats-number">
+                    <CountUpNumber
+                      end={26}
+                      suffix="+"
+                      duration={2.2}
+                      resetTrigger={animationKey}
+                    />
+                  </span>
+                  <span className="stats-label">Collaborations</span>
+                </div>
+                <div className="stats-block">
+                  <span className="stats-number">
+                    <CountUpNumber
+                      end={100}
+                      suffix="%"
+                      duration={2.2}
+                      resetTrigger={animationKey}
+                    />
+                  </span>
+                  <span className="stats-label">On-Time Delivery rate</span>
                 </div>
               </div>
             </>

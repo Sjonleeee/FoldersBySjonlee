@@ -160,7 +160,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
   overflow: hidden;
 }
@@ -295,11 +295,12 @@
   .stats-content-flex {
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
     max-width: 420px;
+    padding-top: 10vh;
   }
   .stats-laptop-stack {
     order: 0;
@@ -378,7 +379,7 @@
   }
 
   .stats-label {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 }
 
@@ -645,15 +646,15 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
-  
+
   .companies-title {
     font-size: 2rem;
   }
-  
+
   .company-item {
     padding: 1.5rem;
   }
-  
+
   .company-logo {
     font-size: 1.2rem;
   }

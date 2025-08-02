@@ -195,19 +195,23 @@ export default function FolderPage({
             ease: "power2.out",
           }, "+=0.5");
 
-          tl.to(".stats-side.left", {
-            x: 0,
-            opacity: 1,
-            duration: 2.5,
-            ease: "power2.out",
-          }, "<");
+          // Only animate stats-side elements on desktop (not mobile)
+          const isMobile = window.innerWidth <= 900;
+          if (!isMobile) {
+            tl.to(".stats-side.left", {
+              x: 0,
+              opacity: 1,
+              duration: 2.5,
+              ease: "power2.out",
+            }, "<");
 
-          tl.to(".stats-side.right", {
-            x: 0,
-            opacity: 1,
-            duration: 2.5,
-            ease: "power2.out",
-          }, "<");
+            tl.to(".stats-side.right", {
+              x: 0,
+              opacity: 1,
+              duration: 2.5,
+              ease: "power2.out",
+            }, "<");
+          }
 
           tl.to(".stats-laptop-stack", {
             scale: 1,

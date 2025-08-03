@@ -1,12 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { getScrollTriggerConfig } from "../config/scrollTriggerConfig";
 import FolderCard from "./FolderCard";
 import "../styles/latestprojects.css";
 import video1 from "../assets/videos/video1.mp4";
 import video2 from "../assets/videos/video2.mp4";
 import video3 from "../assets/videos/video3.MP4";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const folders = [
   {
@@ -65,24 +66,22 @@ function AnimatedFolderStack() {
 
     if (hasAnimated) return;
 
-    // Use GSAP context for better cleanup and performance
-    const ctx = gsap.context(() => {
-      // Set initial states with better performance
-      gsap.set([titleRef.current, ...folderRefs.current.map(ref => ref.current)], {
-        clearProps: "all" // Clear any existing animations
-      });
+    // Set initial states
+    setupInitialStates();
 
-      // Set initial states
-      setupInitialStates();
-
-      // Create animation timeline
-      createAnimationTimeline();
-
-    }, sectionRef); // Scope to section for better cleanup
+    // Create animation timeline
+    const timeline = createAnimationTimeline();
 
     return () => {
-      // Better cleanup with context revert
-      ctx.revert();
+      timeline.kill();
+      // Cosmos-stijl cleanup - kill all related triggers
+      ScrollTrigger.getAll().forEach((t) => {
+        if (t.vars.id === triggerId.current) {
+          t.kill();
+        }
+      });
+      // Force refresh to prevent glitches
+      ScrollTrigger.refresh();
     };
   }, [hasAnimated]);
 
@@ -116,26 +115,19 @@ function AnimatedFolderStack() {
       return window.innerWidth <= 600;
     }
 
-    // Use centralized config but with custom settings for this specific animation
-    const config = getScrollTriggerConfig("LATEST_PROJECTS", {
-      trigger: sectionRef.current,
-      start: "top bottom", // Start when section top hits viewport bottom (after About)
-      end: "+=200%", // Meer scroll ruimte voor smooth animatie
-      scrub: 5, // Langzamere scrub voor smooth animatie
-      pin: true,
-      pinSpacing: false, // Voorkomt overlap met volgende sectie
-      id: triggerId.current,
-      markers: false, // Disable markers for smooth performance
-      onComplete: () => setHasAnimated(true),
-    });
-
     const tl = gsap.timeline({
-      scrollTrigger: config,
-      // Better timeline defaults
-      defaults: {
-        ease: "power2.out",
-        duration: 1,
-      }
+      scrollTrigger: {
+        // === Latest Projects ScrollTrigger ===
+        trigger: sectionRef.current,
+        start: "bottom bottom", // Start wanneer onderkant sectie onderkant viewport raakt
+        end: "+=300%", // Increased from 200% to 300% for slower animation
+        scrub: 8, // Increased from 5 to 8 for much slower animation
+        pin: true,
+        pinSpacing: false, // Voorkomt overlap met volgende sectie
+        id: triggerId.current,
+        markers: false, // Disable markers for smooth performance
+        onComplete: () => setHasAnimated(true),
+      },
     });
 
     // PHASE 1: Pause before title appears
@@ -267,27 +259,27 @@ function AnimatedFolderStack() {
     // PHASE 6: Additional viewing time - KORTER
     tl.to({}, { duration: 1.0 }); // Extra 1 seconde voor viewing
 
-    // PHASE 7: Fade out title first - SNEL
+    // PHASE 7: Fade out title first - SLOWER
     tl.to(
       titleRef.current,
       {
         opacity: 0,
-        duration: 1.0,
+        duration: 3.0, // Increased from 1.0 to 3.0 for slower fade out
         ease: "power1.out",
       },
       `+=${DELAYS.afterPause}`
     );
 
-    // PHASE 8: Fade out folders with stagger - SNEL
+    // PHASE 8: Fade out folders with stagger - SLOWER
     tl.to(
       folderRefs.current.map((ref) => ref.current),
       {
         opacity: 0,
-        duration: DURATIONS.fadeOut,
+        duration: DURATIONS.fadeOut * 2, // Doubled the fade out duration
         ease: "power1.out",
-        stagger: 0.05, // Snellere stagger
+        stagger: 0.2, // Increased from 0.05 to 0.2 for slower stagger
       },
-      "+=0.2"
+      "+=0.5" // Increased delay from 0.2 to 0.5
     );
 
     // PHASE 9: Hide everything
@@ -303,7 +295,7 @@ function AnimatedFolderStack() {
         display: "none",
         duration: 0,
       },
-      "+=0.3"
+      "+=1.0" // Increased from 0.3 to 1.0 for longer pause
     );
 
     return tl;

@@ -2,7 +2,7 @@
    Sticky Animation Structure
    ===================== */
 .folder-hero-outer {
-  height: 180vh; /* Reduced from 250vh to 180vh for better flow */
+  height: 350vh; /* Increased from 250vh to 350vh for slower animations */
   position: relative;
   overflow: visible !important;
 }

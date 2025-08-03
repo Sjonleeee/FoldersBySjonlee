@@ -120,8 +120,8 @@ function AnimatedFolderStack() {
         // === Latest Projects ScrollTrigger ===
         trigger: sectionRef.current,
         start: "bottom bottom", // Start wanneer onderkant sectie onderkant viewport raakt
-        end: "+=200%", // Meer scroll ruimte voor smooth animatie
-        scrub: 5, // Langzamere scrub voor smooth animatie
+        end: "+=300%", // Increased from 200% to 300% for slower animation
+        scrub: 8, // Increased from 5 to 8 for much slower animation
         pin: true,
         pinSpacing: false, // Voorkomt overlap met volgende sectie
         id: triggerId.current,
@@ -259,27 +259,27 @@ function AnimatedFolderStack() {
     // PHASE 6: Additional viewing time - KORTER
     tl.to({}, { duration: 1.0 }); // Extra 1 seconde voor viewing
 
-    // PHASE 7: Fade out title first - SNEL
+    // PHASE 7: Fade out title first - SLOWER
     tl.to(
       titleRef.current,
       {
         opacity: 0,
-        duration: 1.0,
+        duration: 3.0, // Increased from 1.0 to 3.0 for slower fade out
         ease: "power1.out",
       },
       `+=${DELAYS.afterPause}`
     );
 
-    // PHASE 8: Fade out folders with stagger - SNEL
+    // PHASE 8: Fade out folders with stagger - SLOWER
     tl.to(
       folderRefs.current.map((ref) => ref.current),
       {
         opacity: 0,
-        duration: DURATIONS.fadeOut,
+        duration: DURATIONS.fadeOut * 2, // Doubled the fade out duration
         ease: "power1.out",
-        stagger: 0.05, // Snellere stagger
+        stagger: 0.2, // Increased from 0.05 to 0.2 for slower stagger
       },
-      "+=0.2"
+      "+=0.5" // Increased delay from 0.2 to 0.5
     );
 
     // PHASE 9: Hide everything
@@ -295,7 +295,7 @@ function AnimatedFolderStack() {
         display: "none",
         duration: 0,
       },
-      "+=0.3"
+      "+=1.0" // Increased from 0.3 to 1.0 for longer pause
     );
 
     return tl;

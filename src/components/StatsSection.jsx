@@ -82,13 +82,7 @@ const StatsSection = forwardRef((props, ref) => {
 
       // Create timeline
       const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ref?.current,
-          start: "top center",
-          end: "bottom center",
-          scrub: 3,
-          markers: true,
-        },
+        // Removed ScrollTrigger - will be controlled by parent timeline
       });
 
       // Laptop animation

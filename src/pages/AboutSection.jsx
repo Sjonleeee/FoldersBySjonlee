@@ -43,7 +43,7 @@ export default function AboutSection() {
       y: 30,
     });
 
-    // Create the main timeline
+    // Create the main timeline with ScrollTrigger for internal animations
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".about-container",
@@ -53,7 +53,6 @@ export default function AboutSection() {
         pin: true,
         pinSpacing: false, // Voorkomt overlap met volgende sectie
         markers: true, // Markers aan om te debuggen
-
         onComplete: () => setHasAnimated(true),
       },
     });
@@ -118,7 +117,7 @@ export default function AboutSection() {
       skillCardsRef.current,
       {
         opacity: 1,
-        duration: 1,
+        duration: 2.5, // Increased from 1 to 2.5 for longer animation
         ease: "power2.out",
         onComplete: () => {
           // Add visible class to cards for staggered animation
@@ -126,7 +125,7 @@ export default function AboutSection() {
           cards?.forEach((card, index) => {
             setTimeout(() => {
               card.classList.add('visible');
-            }, index * 200);
+            }, index * 300); // Increased from 200 to 300 for slower stagger
           });
         }
       },
@@ -146,7 +145,7 @@ export default function AboutSection() {
     );
 
     // Phase 9: Pause for reading cards
-    tl.to({}, { duration: 15 }, 23.3);
+    tl.to({}, { duration: 30 }, 23.3); // Increased from 20 to 30 for much longer viewing time
 
     // Phase 10: Cards fade out and move up
     tl.to(
@@ -216,14 +215,31 @@ export default function AboutSection() {
       }
     };
 
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener("mousemove", handleMouseMove);
+    // Add event listener with a small delay to ensure container exists
+    const addMouseListener = () => {
+      const container = containerRef.current;
+      if (container) {
+        container.addEventListener("mousemove", handleMouseMove);
+        return () => {
+          container.removeEventListener("mousemove", handleMouseMove);
+        };
+      }
+      return null;
+    };
 
+    // Try to add listener immediately, if not, retry after a short delay
+    let cleanup = addMouseListener();
+    if (!cleanup) {
+      const timeoutId = setTimeout(() => {
+        cleanup = addMouseListener();
+      }, 100);
       return () => {
-        container.removeEventListener("mousemove", handleMouseMove);
+        clearTimeout(timeoutId);
+        if (cleanup) cleanup();
       };
     }
+
+    return cleanup;
   }, []);
 
   return (

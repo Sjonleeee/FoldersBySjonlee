@@ -3,8 +3,6 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import FolderLanding from "../components/FolderLanding";
 import FolderPage from "../components/FolderPage";
-import AboutSection from "./AboutSection";
-import AnimatedFolderStack from "../components/AnimatedFolderStack";
 import CompaniesSection from "../components/CompaniesSection";
 import ContactSection from "./ContactSection";
 
@@ -76,10 +74,11 @@ export default function MainPage() {
       </div>
 
       <div className="onepager-content">
-        {/* FolderPage */}
+        {/* FolderPage with all animations */}
         <section style={{ 
-          minHeight: "1400px", 
-          position: "relative"
+          minHeight: "100vh", // Veel meer ruimte voor alle animaties
+          position: "relative",
+          backgroundColor: "#1a1a1a" // Donkergrijs
         }}>
           <FolderPage 
             headerRef={headerRef} 
@@ -88,33 +87,19 @@ export default function MainPage() {
           />
         </section>
         
-        {/* AboutSection */}
-        <section style={{ 
-          minHeight: "0", 
-          position: "relative"
-        }}>
-          <AboutSection />
-        </section>
-        
-        {/* AnimatedFolderStack */}
-        <section style={{ 
-          minHeight: "0", 
-          position: "relative"
-        }}>
-          <AnimatedFolderStack />
-        </section>
-        
         {/* CompaniesSection */}
         <section style={{ 
-          minHeight: "0", 
-          position: "relative"
+          minHeight: "100vh", 
+          position: "relative",
+          backgroundColor: "#666666" // Lichter grijs
         }}>
           <CompaniesSection />
         </section>
         
         {/* ContactSection */}
         <section style={{ 
-          minHeight: "40vh"
+          minHeight: "40vh",
+          backgroundColor: "#888888" // Nog lichter grijs
         }}>
           <ContactSection />
         </section>

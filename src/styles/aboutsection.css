@@ -1,16 +1,16 @@
 /* About Section - Clean Centered Design */
 .about-section {
-  height: 110vh;
+  min-height: 100vh;
   position: relative;
   overflow: hidden;
   opacity: 1;
+  padding: 2rem;
 }
 
 .about-container {
-  position: sticky;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -220,15 +220,15 @@
   color: #000;
 }
 
-/* Animation states */
+/* Animation states - updated for slide-in animation */
 .skill-cards-container.visible {
   opacity: 1;
   pointer-events: all;
 }
 
 .skill-card.visible {
-  transform: translateX(0);
   opacity: 1;
+  transform: translateX(0);
 }
 
 .skill-card:nth-child(1).visible {

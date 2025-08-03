@@ -1,13 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getScrollTriggerConfig } from "../config/scrollTriggerConfig";
 import FolderCard from "./FolderCard";
 import "../styles/latestprojects.css";
 import video1 from "../assets/videos/video1.mp4";
 import video2 from "../assets/videos/video2.mp4";
 import video3 from "../assets/videos/video3.MP4";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const folders = [
   {
@@ -66,22 +65,24 @@ function AnimatedFolderStack() {
 
     if (hasAnimated) return;
 
-    // Set initial states
-    setupInitialStates();
+    // Use GSAP context for better cleanup and performance
+    const ctx = gsap.context(() => {
+      // Set initial states with better performance
+      gsap.set([titleRef.current, ...folderRefs.current.map(ref => ref.current)], {
+        clearProps: "all" // Clear any existing animations
+      });
 
-    // Create animation timeline
-    const timeline = createAnimationTimeline();
+      // Set initial states
+      setupInitialStates();
+
+      // Create animation timeline
+      createAnimationTimeline();
+
+    }, sectionRef); // Scope to section for better cleanup
 
     return () => {
-      timeline.kill();
-      // Cosmos-stijl cleanup - kill all related triggers
-      ScrollTrigger.getAll().forEach((t) => {
-        if (t.vars.id === triggerId.current) {
-          t.kill();
-        }
-      });
-      // Force refresh to prevent glitches
-      ScrollTrigger.refresh();
+      // Better cleanup with context revert
+      ctx.revert();
     };
   }, [hasAnimated]);
 
@@ -115,19 +116,26 @@ function AnimatedFolderStack() {
       return window.innerWidth <= 600;
     }
 
+    // Use centralized config but with custom settings for this specific animation
+    const config = getScrollTriggerConfig("LATEST_PROJECTS", {
+      trigger: sectionRef.current,
+      start: "top bottom", // Start when section top hits viewport bottom (after About)
+      end: "+=200%", // Meer scroll ruimte voor smooth animatie
+      scrub: 5, // Langzamere scrub voor smooth animatie
+      pin: true,
+      pinSpacing: false, // Voorkomt overlap met volgende sectie
+      id: triggerId.current,
+      markers: false, // Disable markers for smooth performance
+      onComplete: () => setHasAnimated(true),
+    });
+
     const tl = gsap.timeline({
-      scrollTrigger: {
-        // === Latest Projects ScrollTrigger ===
-        trigger: sectionRef.current,
-        start: "bottom bottom", // Start wanneer onderkant sectie onderkant viewport raakt
-        end: "+=200%", // Meer scroll ruimte voor smooth animatie
-        scrub: 5, // Langzamere scrub voor smooth animatie
-        pin: true,
-        pinSpacing: false, // Voorkomt overlap met volgende sectie
-        id: triggerId.current,
-        markers: false, // Disable markers for smooth performance
-        onComplete: () => setHasAnimated(true),
-      },
+      scrollTrigger: config,
+      // Better timeline defaults
+      defaults: {
+        ease: "power2.out",
+        duration: 1,
+      }
     });
 
     // PHASE 1: Pause before title appears

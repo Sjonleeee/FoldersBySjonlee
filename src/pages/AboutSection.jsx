@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getScrollTriggerConfig } from "../config/scrollTriggerConfig";
 import "../styles/aboutsection.css";
 import profileImg from "../assets/images/sjonlee.jpeg";
 import img1 from "../assets/images/sjonlee2.jpeg";
@@ -8,8 +9,6 @@ import img2 from "../assets/images/sjonlee3.jpeg";
 import img3 from "../assets/images/sjonlee4.jpeg";
 import img4 from "../assets/images/sjonlee6.jpeg";
 import img5 from "../assets/images/sjonlee7.jpeg";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const mouseImages = [img1, img2, img3, img4, img5];
 
@@ -20,107 +19,104 @@ export default function AboutSection() {
   const imageRef = useRef(null);
   const descriptionRef = useRef(null);
   const skillCardsRef = useRef(null);
+  const hasShownSkillCards = useRef(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [visibleImages, setVisibleImages] = useState([]);
 
   useEffect(() => {
     if (hasAnimated) return;
 
-    // Set initial states
-    gsap.set(titleRef.current, {
-      opacity: 0,
-      y: 50,
-      scale: 0.9,
-    });
+    // Use GSAP context for better cleanup and performance
+    const ctx = gsap.context(() => {
+      // Set initial states with better performance
+      gsap.set([titleRef.current, imageRef.current, descriptionRef.current], {
+        clearProps: "all" // Clear any existing animations
+      });
 
-    gsap.set(imageRef.current, {
-      opacity: 0,
-      scale: 0.8,
-    });
+      gsap.set(titleRef.current, {
+        opacity: 0,
+        y: 50,
+        scale: 0.9,
+      });
 
-    gsap.set(descriptionRef.current, {
-      opacity: 0,
-      y: 30,
-    });
+      gsap.set(imageRef.current, {
+        opacity: 0,
+        scale: 0.8,
+      });
 
-    // Create the main timeline
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".about-container",
-        start: "top top",
-        end: "+=135%", // Nog meer scroll ruimte - About section moet volledig uitgescrolld zijn
-        scrub: 8, // Veel trager - was 3, nu 8
-        pin: true,
-        pinSpacing: false, // Voorkomt overlap met volgende sectie
-        markers: true, // Markers aan om te debuggen
+      gsap.set(descriptionRef.current, {
+        opacity: 0,
+        y: 30,
+      });
 
+      // Create the main timeline with improved ScrollTrigger config
+      const config = getScrollTriggerConfig("ABOUT", {
+        trigger: sectionRef.current,
         onComplete: () => setHasAnimated(true),
-      },
-    });
+        // Better group management to prevent overlaps
+        group: "about-section",
+        preventOverlaps: true,
+        // Improved performance settings
+        fastScrollEnd: false,
+        anticipatePin: 1,
+      });
 
-    // Phase 1: Image appears
-    tl.to(
-      imageRef.current,
-      {
+      const tl = gsap.timeline({
+        scrollTrigger: config,
+        // Better timeline defaults
+        defaults: {
+          ease: "power2.out",
+          duration: 1,
+        }
+      });
+
+      // Phase 1: Image appears with improved easing
+      tl.to(imageRef.current, {
         opacity: 1,
         scale: 1,
         duration: 1,
-        ease: "power2.out",
-      },
-      0
-    );
+        ease: "power3.out",
+      }, 0);
 
-    // Phase 2: Title appears over the image
-    tl.to(
-      titleRef.current,
-      {
+      // Phase 2: Title appears over the image
+      tl.to(titleRef.current, {
         opacity: 1,
         y: 0,
         scale: 1,
         duration: 1,
-        ease: "power2.out",
-      },
-      0.3
-    );
+        ease: "power3.out",
+      }, 0.3);
 
-    // Phase 3: Pause for reading main content
-    tl.to({}, { duration: 4 }, 1.3);
+      // Phase 3: Pause for reading main content
+      tl.to({}, { duration: 4 }, 1.3);
 
-    // Phase 4: Move image and title up, description appears
-    tl.to(
-      [imageRef.current, titleRef.current],
-      {
+      // Phase 4: Move image and title up, description appears
+      tl.to([imageRef.current, titleRef.current], {
         y: -300,
         scale: 0.8,
         duration: 2,
-        ease: "power1.inOut",
-      },
-      5.3
-    );
+        ease: "power2.inOut",
+      }, 5.3);
 
-    // Phase 5: Description appears
-    tl.to(
-      descriptionRef.current,
-      {
+      // Phase 5: Description appears
+      tl.to(descriptionRef.current, {
         opacity: 1,
         y: 0,
         duration: 1,
-        ease: "power2.out",
-      },
-      7.3
-    );
+        ease: "power3.out",
+      }, 7.3);
 
-    // Phase 6: Pause for reading description
-    tl.to({}, { duration: 12 }, 8.3);
+      // Phase 6: Pause for reading description
+      tl.to({}, { duration: 12 }, 8.3);
 
-    // Phase 7: Skill cards appear from sides
-    tl.to(
-      skillCardsRef.current,
-      {
+      // Phase 7: Skill cards start sliding in from sides
+      tl.to(skillCardsRef.current, {
         opacity: 1,
         duration: 1,
         ease: "power2.out",
-        onComplete: () => {
+        onStart: () => {
+          if (hasShownSkillCards.current) return;
+
           // Add visible class to cards for staggered animation
           const cards = skillCardsRef.current?.querySelectorAll('.skill-card');
           cards?.forEach((card, index) => {
@@ -128,56 +124,56 @@ export default function AboutSection() {
               card.classList.add('visible');
             }, index * 200);
           });
+
+          hasShownSkillCards.current = true;
         }
-      },
-      20.3
-    );
+      }, 20.3); // Start earlier, before description fade
 
-    // Phase 8: Fade out description, image and title while cards come in
-    tl.to(
-      [descriptionRef.current, imageRef.current, titleRef.current],
-      {
+      // Phase 8: Description, image and title fade out as cards push them away
+      tl.to([descriptionRef.current, imageRef.current, titleRef.current], {
         opacity: 0,
-        y: -50,
-        duration: 2,
-        ease: "power1.inOut",
-      },
-      21.3
-    );
+        y: -100, // Push them further up as cards come in
+        scale: 0.8, // Make them smaller as they fade
+        duration: 1.5, // Same duration as cards sliding in
+        ease: "power2.inOut",
+      }, 21.3); // Cards are already sliding when this starts
 
-    // Phase 9: Pause for reading cards
-    tl.to({}, { duration: 15 }, 23.3);
+      // Phase 9: Pause for reading cards
+      tl.to({}, { duration: 15 }, 23.3);
 
-    // Phase 10: Cards fade out and move up
-    tl.to(
-      skillCardsRef.current,
-      {
+      // Phase 10: Cards fade out and move up
+      tl.to(skillCardsRef.current, {
         opacity: 0,
         y: -100,
         duration: 3,
-        ease: "power1.inOut",
-      },
-      38.3
-    );
+        ease: "power2.inOut",
+      }, 38.3);
 
-    // Phase 11: Extra pause to ensure everything is faded before next section
-    tl.to({}, { duration: 2 }, 41.3);
+      // Phase 11: Extra pause to ensure everything is faded before next section
+      tl.to({}, { duration: 2 }, 41.3);
+
+    }, sectionRef); // Scope to section for better cleanup
 
     return () => {
-      tl.kill();
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === sectionRef.current) {
-          trigger.kill();
-        }
-      });
+      // Better cleanup with context revert
+      ctx.revert();
     };
   }, [hasAnimated]);
 
-  // Mouse follow effect
+  // Separate useEffect for skill cards to prevent glitches
+  useEffect(() => {
+    if (!hasAnimated) return;
+
+    // Reset skill cards state when section is completed
+    hasShownSkillCards.current = false;
+  }, [hasAnimated]);
+
+  // Improved mouse follow effect with better performance
   useEffect(() => {
     let lastMouseX = 0;
     let lastMouseY = 0;
     let currentImageIndex = 0;
+    let animationFrameId = null;
 
     const handleMouseMove = (e) => {
       const rect = containerRef.current?.getBoundingClientRect();
@@ -190,38 +186,48 @@ export default function AboutSection() {
       const distance = Math.sqrt((x - lastMouseX) ** 2 + (y - lastMouseY) ** 2);
 
       if (distance > 60) {
-        // Add new image at mouse position
-        const newImage = {
-          id: Date.now(),
-          src: mouseImages[currentImageIndex],
-          x: x - 75,
-          y: y - 75,
-          index: currentImageIndex,
-        };
+        // Use requestAnimationFrame for better performance
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
 
-        setVisibleImages((prev) => [...prev, newImage]);
+        animationFrameId = requestAnimationFrame(() => {
+          // Add new image at mouse position
+          const newImage = {
+            id: Date.now(),
+            src: mouseImages[currentImageIndex],
+            x: x - 75,
+            y: y - 75,
+            index: currentImageIndex,
+          };
 
-        // Remove image after delay
-        setTimeout(() => {
-          setVisibleImages((prev) =>
-            prev.filter((img) => img.id !== newImage.id)
-          );
-        }, 1200);
+          setVisibleImages((prev) => [...prev, newImage]);
 
-        // Move to next image
-        currentImageIndex = (currentImageIndex + 1) % mouseImages.length;
+          // Remove image after delay
+          setTimeout(() => {
+            setVisibleImages((prev) =>
+              prev.filter((img) => img.id !== newImage.id)
+            );
+          }, 1200);
 
-        lastMouseX = x;
-        lastMouseY = y;
+          // Move to next image
+          currentImageIndex = (currentImageIndex + 1) % mouseImages.length;
+
+          lastMouseX = x;
+          lastMouseY = y;
+        });
       }
     };
 
     const container = containerRef.current;
     if (container) {
-      container.addEventListener("mousemove", handleMouseMove);
+      container.addEventListener("mousemove", handleMouseMove, { passive: true });
 
       return () => {
         container.removeEventListener("mousemove", handleMouseMove);
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
       };
     }
   }, []);

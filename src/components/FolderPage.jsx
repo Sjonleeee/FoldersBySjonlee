@@ -1,13 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getScrollTriggerConfig } from "../config/scrollTriggerConfig";
 import folderIcon from "../assets/images/folder.svg";
 import ModelCanvas from "../components/ModelCanvas";
 import StatsSection from "../components/StatsSection";
 import "../styles/folderpage.css";
-
-// Register ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
 
 export default function FolderPage({
   headerRef,
@@ -127,15 +125,14 @@ export default function FolderPage({
         if (!scrollTriggerCreated) {
           scrollTriggerCreated = true;
           
+          // Use centralized config
+          const config = getScrollTriggerConfig("FOLDER_PAGE", {
+            trigger: sectionRef.current,
+          });
+          
           // Clean, simple approach - one timeline for everything
           const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top top",
-              end: "+=120%",
-              scrub: 3,
-              pin: true,
-            },
+            scrollTrigger: config,
           });
 
           // Set initial states for elements that need it

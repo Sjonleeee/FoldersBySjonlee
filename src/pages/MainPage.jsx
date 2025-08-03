@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { animationManager } from "../utils/animationManager";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import FolderLanding from "../components/FolderLanding";
@@ -7,6 +8,7 @@ import AboutSection from "./AboutSection";
 import AnimatedFolderStack from "../components/AnimatedFolderStack";
 import CompaniesSection from "../components/CompaniesSection";
 import ContactSection from "./ContactSection";
+import AnimationDebugger from "../components/AnimationDebugger";
 
 export default function MainPage() {
   const [folderOpen, setFolderOpen] = useState(false);
@@ -15,12 +17,24 @@ export default function MainPage() {
   const headerRef = useRef(null);
   const footerRef = useRef(null);
 
+  // Initialize animation manager
+  useEffect(() => {
+    animationManager.init();
+    
+    return () => {
+      // Clean up animations when component unmounts
+      animationManager.cleanup();
+    };
+  }, []);
+
   const handleOpen = () => {
     setFolderOpen(true);
   };
 
   const handleBackToLanding = () => {
     setFolderOpen(false);
+    // Clean up animations when going back to landing
+    animationManager.cleanup();
   };
 
   const handleAnimationsComplete = () => {
@@ -29,6 +43,11 @@ export default function MainPage() {
     document.body.style.overflow = 'auto';
     document.documentElement.style.overflow = 'auto';
     document.body.classList.remove('scroll-blocked');
+    
+    // Refresh animations after scroll is enabled
+    setTimeout(() => {
+      animationManager.refresh();
+    }, 100);
   };
 
   // Block scrolling when component mounts
@@ -61,6 +80,9 @@ export default function MainPage() {
         WebkitOverflowScrolling: "touch"
       }}
     >
+      {/* Debug component for development */}
+      <AnimationDebugger />
+      
       {/* Header */}
       <div
         ref={headerRef}
@@ -105,19 +127,19 @@ export default function MainPage() {
         </section>
         
         {/* CompaniesSection */}
-        <section style={{ 
+        {/* <section style={{ 
           minHeight: "0", 
           position: "relative"
         }}>
           <CompaniesSection />
-        </section>
+        </section> */}
         
         {/* ContactSection */}
-        <section style={{ 
+        {/* <section style={{ 
           minHeight: "40vh"
         }}>
           <ContactSection />
-        </section>
+        </section> */}
       </div>
 
       {/* Footer */}

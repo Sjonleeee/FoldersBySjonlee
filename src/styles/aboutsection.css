@@ -164,19 +164,24 @@
 }
 
 .skill-card {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.95); /* Blue like folders */
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: 16px;
   padding: 2rem;
   min-width: 280px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(56, 189, 248, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   opacity: 0; /* GSAP will control this */
-  transform: translateX(-100px); /* Initial position for GSAP */
+  transform: translateY(100vh) rotateY(-45deg) rotateX(15deg); /* 3D initial position - from below page */
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 .skill-card:nth-child(2) {
-  transform: translateX(100px); /* Initial position for GSAP */
+  transform: translateY(100vh) rotateY(45deg) rotateX(-15deg); /* 3D initial position - from below page */
 }
 
 .skill-card:hover {
@@ -188,10 +193,11 @@
   font-family: "Hermaiona", cursive, serif;
   font-size: 1.8rem;
   font-weight: 600;
-  color: #000;
+  color: #fff; /* White text for blue background */
   margin-bottom: 1.5rem;
   text-align: center;
   letter-spacing: 0.02em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .skill-list {
@@ -202,9 +208,9 @@
 
 .skill-item {
   padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 0.95rem;
-  color: #333;
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   transition: color 0.3s ease;
 }
@@ -214,7 +220,7 @@
 }
 
 .skill-item:hover {
-  color: #000;
+  color: #fff;
 }
 
 /* GSAP will handle all animations - no CSS classes needed */

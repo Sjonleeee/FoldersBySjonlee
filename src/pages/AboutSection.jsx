@@ -48,8 +48,8 @@ export default function AboutSection() {
           scrollTrigger: {
             trigger: ".about-container",
             start: "top top",
-            end: "+=600%", // Much more scroll space since other sections are hidden
-            scrub: 1.5, // Very smooth scrub for nice scrolling
+            end: "+=1200%", // Much more scroll space for smooth animations
+            scrub: 3.5, // Ultra smooth scrub for professional scrolling
             pin: true,
             pinSpacing: false, // Prevents overlap
             markers: false, // Disable markers for performance
@@ -57,29 +57,29 @@ export default function AboutSection() {
           },
         });
 
-    // Phase 1: Image appears
+    // Phase 1: Image appears - SMOOTH
     tl.to(
       imageRef.current,
       {
         opacity: 1,
         scale: 1,
-        duration: 1,
-        ease: "power2.out",
+        duration: 2.5, // Much longer
+        ease: "power3.out", // Smoother easing
       },
       0
     );
 
-    // Phase 2: Title appears over the image
+    // Phase 2: Title appears over the image - SMOOTH
     tl.to(
       titleRef.current,
       {
         opacity: 1,
         y: 0,
         scale: 1,
-        duration: 1,
-        ease: "power2.out",
+        duration: 2.5, // Much longer
+        ease: "power3.out", // Smoother easing
       },
-      0.3
+      0.8 // Longer delay
     );
 
     // Phase 3: LONGER PAUSE for reading main content (image + title)
@@ -97,77 +97,110 @@ export default function AboutSection() {
       13.3 // Adjusted timing
     );
 
-    // Phase 5: Description appears
+    // Phase 5: Description appears - SMOOTH
     tl.to(
       descriptionRef.current,
       {
         opacity: 1,
         y: 0,
-        duration: 1,
-        ease: "power2.out",
+        duration: 3.0, // Much longer
+        ease: "power3.out", // Smoother easing
       },
       15.3 // Adjusted timing
     );
 
-    // Phase 6: Pause for reading description
-    tl.to({}, { duration: 8 }, 16.3); // Adjusted timing
+    // Phase 6: Pause for reading description - SHORTER
+    tl.to({}, { duration: 4 }, 16.3); // Shorter pause
 
-    // Phase 7: Skill cards appear from sides with GSAP
+    // Phase 7: Skill cards appear from sides with GSAP - ULTRA SMOOTH
     tl.to(
       skillCardsRef.current,
       {
         opacity: 1,
-        duration: 1,
-        ease: "power2.out",
+        duration: 3.0, // Slightly faster but still smooth
+        ease: "power4.out", // Ultra smooth easing
       },
-      28.3 // Adjusted timing
+      20.3 // Earlier timing (was 28.3)
     );
 
-    // Phase 7.5: Individual skill cards slide in with stagger
-    const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
-    if (skillCards) {
-      tl.to(
-        skillCards,
-        {
-          opacity: 1,
-          x: 0, // Slide to center
-          duration: 1.5,
-          ease: "power2.out",
-          stagger: 0.2, // Stagger effect
-        },
-      29.3 // Adjusted timing
-      );
-    }
-
-    // Phase 8: Fade out description, image and title while cards come in
+    // Phase 7.5: Fade out description, image and title to top FIRST - ULTRA SMOOTH
     tl.to(
       [descriptionRef.current, imageRef.current, titleRef.current],
       {
         opacity: 0,
-        y: -50,
-        duration: 2,
-        ease: "power1.inOut",
+        y: -500, // Move up much much more - really disappear
+        duration: 8, // Much longer duration for ultra smooth fade
+        ease: "power5.inOut", // Ultra smooth easing
       },
-      29.3 // Adjusted timing
+      18.5 // Earlier timing (was 28.5)
     );
 
-    // Phase 9: Pause for reading cards
-    tl.to({}, { duration: 45 }, 31.3); // Adjusted timing
+    // Phase 7.6: Individual skill cards slide up with 3D rotation to final position - ULTRA SMOOTH
+    const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
+    if (skillCards) {
+      tl.to(
+        skillCards[0], // Left card (DESIGN) - direct to final position
+        {
+          opacity: 1,
+          y: -20, // Direct to final position (up)
+          x: -50, // Direct to final position (left)
+          rotateY: 0, // Rotate to flat
+          rotateX: 0, // Rotate to flat
+          rotateZ: 5, // Final rotation
+          duration: 4.5, // Slightly faster but still smooth
+          ease: "power4.out", // Smooth easing
+        },
+      21.3 // Earlier timing (was 29.3)
+      );
+      
+      tl.to(
+        skillCards[1], // Right card (DEVELOPMENT) - direct to final position
+        {
+          opacity: 1,
+          y: 20, // Direct to final position (down)
+          x: 50, // Direct to final position (right)
+          rotateY: 0, // Rotate to flat
+          rotateX: 0, // Rotate to flat
+          rotateZ: -5, // Final rotation
+          duration: 4.5, // Slightly faster but still smooth
+          ease: "power4.out", // Smooth easing
+        },
+      21.9 // Slight stagger (21.3 + 0.6)
+      );
+    }
 
-    // Phase 10: Cards fade out and move up
-    tl.to(
-      skillCardsRef.current,
-      {
-        opacity: 0,
-        y: -100,
-        duration: 3,
-        ease: "power1.inOut",
-      },
-      76.3 // Adjusted timing (31.3 + 45 = 76.3)
-    );
+    // Phase 9: Pause for reading cards - SHORTER
+    tl.to({}, { duration: 25 }, 31.3); // Shorter pause
+
+    // Phase 10: Cards fade out and move up with stagger - ULTRA SMOOTH
+    const skillCardsForFadeOut = skillCardsRef.current?.querySelectorAll('.skill-card');
+    if (skillCardsForFadeOut) {
+      // Fade out left card first, then right card
+      tl.to(
+        skillCardsForFadeOut[0], // Left card (DESIGN) - fade out first
+        {
+          opacity: 0,
+          y: -200, // Move up more
+          duration: 6, // Smooth fade out
+          ease: "power3.inOut", // Smooth easing
+        },
+      56.3 // Adjusted timing (31.3 + 25 = 56.3)
+      );
+      
+      tl.to(
+        skillCardsForFadeOut[1], // Right card (DEVELOPMENT) - fade out second
+        {
+          opacity: 0,
+          y: -200, // Move up more
+          duration: 6, // Smooth fade out
+          ease: "power3.inOut", // Smooth easing
+        },
+      56.6 // Small delay after left card (56.3 + 0.3)
+      );
+    }
 
     // Phase 11: Extra pause to ensure everything is faded before next section
-    tl.to({}, { duration: 2 }, 79.3); // Adjusted timing
+    tl.to({}, { duration: 2 }, 64.3); // Adjusted timing (56.3 + 6 + 2 = 64.3)
 
     return () => {
       tl.kill();
@@ -228,6 +261,86 @@ export default function AboutSection() {
 
       return () => {
         container.removeEventListener("mousemove", handleMouseMove);
+      };
+    }
+  }, []);
+
+  // 3D mouse tracking effect for skill cards
+  useEffect(() => {
+    const handleSkillCardMouseMove = (e) => {
+      const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
+      if (!skillCards) return;
+
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      // Calculate center of container
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      // Calculate mouse position relative to center
+      const relativeX = mouseX - centerX;
+      const relativeY = mouseY - centerY;
+
+      // Calculate rotation based on mouse position
+      const maxRotation = 15; // Maximum rotation in degrees
+      const rotateX = -(relativeY / centerY) * maxRotation;
+      const rotateY = (relativeX / centerX) * maxRotation;
+
+      // Apply 3D transform to each skill card while preserving their skewed position
+      skillCards.forEach((card, index) => {
+        // Get the current skewed position from CSS
+        const isLeftCard = index === 0;
+        const baseX = isLeftCard ? -50 : 50; // Left card: -50px, Right card: 50px
+        const baseY = isLeftCard ? -20 : 20;  // Left card: -20px, Right card: 20px
+        const baseRotateZ = isLeftCard ? 5 : -5; // Left card: 5deg, Right card: -5deg
+        
+        card.style.transform = `
+          perspective(1000px)
+          translateX(${baseX}px)
+          translateY(${baseY}px)
+          rotateZ(${baseRotateZ}deg)
+          rotateX(${rotateX}deg)
+          rotateY(${rotateY}deg)
+          translateZ(20px)
+        `;
+      });
+    };
+
+    const handleSkillCardMouseLeave = () => {
+      const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
+      if (!skillCards) return;
+
+      // Reset to original skewed position
+      skillCards.forEach((card, index) => {
+        const isLeftCard = index === 0;
+        const baseX = isLeftCard ? -50 : 50;
+        const baseY = isLeftCard ? -20 : 20;
+        const baseRotateZ = isLeftCard ? 5 : -5;
+        
+        card.style.transform = `
+          perspective(1000px)
+          translateX(${baseX}px)
+          translateY(${baseY}px)
+          rotateZ(${baseRotateZ}deg)
+          rotateX(0deg)
+          rotateY(0deg)
+          translateZ(0px)
+        `;
+      });
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("mousemove", handleSkillCardMouseMove);
+      container.addEventListener("mouseleave", handleSkillCardMouseLeave);
+
+      return () => {
+        container.removeEventListener("mousemove", handleSkillCardMouseMove);
+        container.removeEventListener("mouseleave", handleSkillCardMouseLeave);
       };
     }
   }, []);

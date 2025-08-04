@@ -140,7 +140,7 @@ export default function FolderPage({
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top top",
-              end: "+=1000%", // Much more scroll space since other sections are hidden
+              end: "+=1400%", // Much more scroll space since other sections are hidden
               scrub: 2, // Very smooth scrub for nice scrolling
               pin: true,
               pinSpacing: false, // Prevents overlap

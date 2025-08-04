@@ -33,21 +33,21 @@ const folders = [
   },
 ];
 
-// Animation durations - Smooth en relaxed
+// Animation durations - SUPER SMOOTH
 const DURATIONS = {
-  titleFadeIn: 2.5, // Langzamer voor smooth effect
-  foldersFadeIn: 2.0, // Langzamer voor smooth effect
-  foldersMoveToPosition: 3.5, // Langzamer voor smooth effect
-  pause: 3.0, // Meer tijd om te kijken
-  fadeOut: 2.5, // Langzamer fade out
+  titleFadeIn: 4.0, // Much longer voor ultra smooth effect
+  foldersFadeIn: 3.5, // Much longer voor ultra smooth effect
+  foldersMoveToPosition: 5.0, // Much longer voor ultra smooth effect
+  pause: 4.0, // Meer tijd om te kijken
+  fadeOut: 4.0, // Much longer fade out
 };
 
-// Animation delays - Smooth en relaxed
+// Animation delays - SUPER SMOOTH
 const DELAYS = {
-  afterTitle: 0.8, // Meer tijd tussen phases
-  afterFoldersFadeIn: 0.5, // Meer tijd tussen phases
-  afterFoldersMove: 0.5, // Meer tijd tussen phases
-  afterPause: 1.0, // Meer tijd voor fade out
+  afterTitle: 1.2, // Meer tijd tussen phases
+  afterFoldersFadeIn: 0.8, // Meer tijd tussen phases
+  afterFoldersMove: 0.8, // Meer tijd tussen phases
+  afterPause: 1.5, // Meer tijd voor fade out
 };
 
 function AnimatedFolderStack() {
@@ -120,8 +120,8 @@ function AnimatedFolderStack() {
         // === Latest Projects ScrollTrigger ===
         trigger: sectionRef.current,
         start: "top top", // Consistent start position
-        end: "+=1200%", // Much more scroll space for smooth, relaxed animations
-        scrub: 1, // Very smooth scrub for nice scrolling
+        end: "+=1500%", // Much more scroll space for ultra smooth animations
+        scrub: 3, // Ultra smooth scrub for professional scrolling
         pin: true,
         pinSpacing: false, // Prevents overlap
         id: triggerId.current,
@@ -130,8 +130,8 @@ function AnimatedFolderStack() {
       },
     });
 
-    // PHASE 1: Pause before title appears
-    tl.to({}, { duration: 12 }, 0);
+    // PHASE 1: Pause before title appears - ULTRA SMOOTH
+    tl.to({}, { duration: 16 }, 0);
 
     // PHASE 2: Title fade in - Smooth en natuurlijk
     tl.fromTo(
@@ -256,30 +256,30 @@ function AnimatedFolderStack() {
     // PHASE 5: Pause for viewing
     tl.to({}, { duration: DURATIONS.pause });
 
-    // PHASE 6: Additional viewing time
-    tl.to({}, { duration: 4.0 }); // Much more time to enjoy the final state
+    // PHASE 6: Additional viewing time - ULTRA SMOOTH
+    tl.to({}, { duration: 6.0 }); // Much more time to enjoy the final state
 
-    // PHASE 7: Fade out title first
+    // PHASE 7: Fade out title first - ULTRA SMOOTH
     tl.to(
       titleRef.current,
       {
         opacity: 0,
-        duration: 3.0, // Langzamer fade out
-        ease: "power1.out",
+        duration: 5.0, // Much longer fade out
+        ease: "power2.out", // Smoother easing
       },
       `+=${DELAYS.afterPause}`
     );
 
-    // PHASE 8: Fade out folders with stagger
+    // PHASE 8: Fade out folders with stagger - ULTRA SMOOTH
     tl.to(
       folderRefs.current.map((ref) => ref.current),
       {
         opacity: 0,
         duration: DURATIONS.fadeOut,
-        ease: "power1.out",
-        stagger: 0.2, // Langzamere stagger
+        ease: "power2.out", // Smoother easing
+        stagger: 0.4, // Much longer stagger
       },
-      "+=0.5" // Meer tijd voor fade out
+      "+=0.8" // Meer tijd voor fade out
     );
 
     // PHASE 9: Hide everything

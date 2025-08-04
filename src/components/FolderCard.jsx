@@ -54,30 +54,34 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
       setShowOverlay(false);
       return;
     }
-    const overlayLeft = mouseX - overlayWidth / 2;
-    const overlayRight = mouseX + overlayWidth / 2;
-    const overlayTop = mouseY - overlayHeight / 2;
-    const overlayBottom = mouseY + overlayHeight / 2;
-    const visible =
-      overlayRight > cardBounds.left &&
-      overlayLeft < cardBounds.right &&
-      overlayBottom > cardBounds.top &&
-      overlayTop < cardBounds.bottom;
-    setShowOverlay(visible);
-    if (overlayRef.current) {
-      const relX = (mouseX - cardBounds.left) / cardBounds.width;
-      const relY = (mouseY - cardBounds.top) / cardBounds.height;
-      const maxTilt = 14;
-      const tiltX = -(relX - 0.5) * 2 * maxTilt;
-      const tiltY = (relY - 0.5) * 2 * maxTilt;
-      const x = mouseX - cardBounds.left - overlayWidth / 2;
-      const y = mouseY - cardBounds.top - overlayHeight / 2;
-      window.requestAnimationFrame(() => {
-        if (overlayRef.current) {
-          overlayRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) perspective(600px) rotateX(${tiltY}deg) rotateY(${tiltX}deg)`;
-        }
-      });
-    }
+    
+    // Throttle overlay updates for better performance
+    const updateOverlay = () => {
+      const overlayLeft = mouseX - overlayWidth / 2;
+      const overlayRight = mouseX + overlayWidth / 2;
+      const overlayTop = mouseY - overlayHeight / 2;
+      const overlayBottom = mouseY + overlayHeight / 2;
+      const visible =
+        overlayRight > cardBounds.left &&
+        overlayLeft < cardBounds.right &&
+        overlayBottom > cardBounds.top &&
+        overlayTop < cardBounds.bottom;
+      setShowOverlay(visible);
+      
+      if (overlayRef.current && visible) {
+        const relX = (mouseX - cardBounds.left) / cardBounds.width;
+        const relY = (mouseY - cardBounds.top) / cardBounds.height;
+        const maxTilt = 14;
+        const tiltX = -(relX - 0.5) * 2 * maxTilt;
+        const tiltY = (relY - 0.5) * 2 * maxTilt;
+        const x = mouseX - cardBounds.left - overlayWidth / 2;
+        const y = mouseY - cardBounds.top - overlayHeight / 2;
+        overlayRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) perspective(600px) rotateX(${tiltY}deg) rotateY(${tiltX}deg)`;
+      }
+    };
+    
+    // Use requestAnimationFrame for smooth updates
+    requestAnimationFrame(updateOverlay);
   }, [mouseX, mouseY, getCardBounds]);
 
   return (

@@ -33,21 +33,21 @@ const folders = [
   },
 ];
 
-// Animation durations - Performance geoptimaliseerd
+// Animation durations - Smooth en relaxed
 const DURATIONS = {
-  titleFadeIn: 1.5, // Smooth voor mobile
-  foldersFadeIn: 1.2, // Smooth voor mobile
-  foldersMoveToPosition: 2.0, // Smooth voor mobile
-  pause: 1.5, // Kortere pause
-  fadeOut: 1.5, // Smooth voor mobile
+  titleFadeIn: 2.5, // Langzamer voor smooth effect
+  foldersFadeIn: 2.0, // Langzamer voor smooth effect
+  foldersMoveToPosition: 3.5, // Langzamer voor smooth effect
+  pause: 3.0, // Meer tijd om te kijken
+  fadeOut: 2.5, // Langzamer fade out
 };
 
-// Animation delays - Performance geoptimaliseerd
+// Animation delays - Smooth en relaxed
 const DELAYS = {
-  afterTitle: 0.3, // Smooth delays
-  afterFoldersFadeIn: 0.2, // Smooth delays
-  afterFoldersMove: 0.2, // Smooth delays
-  afterPause: 0.4, // Smooth delays
+  afterTitle: 0.8, // Meer tijd tussen phases
+  afterFoldersFadeIn: 0.5, // Meer tijd tussen phases
+  afterFoldersMove: 0.5, // Meer tijd tussen phases
+  afterPause: 1.0, // Meer tijd voor fade out
 };
 
 function AnimatedFolderStack() {
@@ -119,19 +119,19 @@ function AnimatedFolderStack() {
       scrollTrigger: {
         // === Latest Projects ScrollTrigger ===
         trigger: sectionRef.current,
-        start: "bottom bottom", // Start wanneer onderkant sectie onderkant viewport raakt
-        end: "+=300%", // Increased from 200% to 300% for slower animation
-        scrub: 8, // Increased from 5 to 8 for much slower animation
+        start: "top top", // Consistent start position
+        end: "+=1200%", // Much more scroll space for smooth, relaxed animations
+        scrub: 1, // Very smooth scrub for nice scrolling
         pin: true,
-        pinSpacing: false, // Voorkomt overlap met volgende sectie
+        pinSpacing: false, // Prevents overlap
         id: triggerId.current,
-        markers: false, // Disable markers for smooth performance
+        markers: false, // Disable markers for performance
         onComplete: () => setHasAnimated(true),
       },
     });
 
     // PHASE 1: Pause before title appears
-    tl.to({}, { duration: 8 }, 0);
+    tl.to({}, { duration: 12 }, 0);
 
     // PHASE 2: Title fade in - Smooth en natuurlijk
     tl.fromTo(
@@ -253,33 +253,33 @@ function AnimatedFolderStack() {
       );
     }
 
-    // PHASE 5: Pause for viewing - KORTER
+    // PHASE 5: Pause for viewing
     tl.to({}, { duration: DURATIONS.pause });
 
-    // PHASE 6: Additional viewing time - KORTER
-    tl.to({}, { duration: 1.0 }); // Extra 1 seconde voor viewing
+    // PHASE 6: Additional viewing time
+    tl.to({}, { duration: 4.0 }); // Much more time to enjoy the final state
 
-    // PHASE 7: Fade out title first - SLOWER
+    // PHASE 7: Fade out title first
     tl.to(
       titleRef.current,
       {
         opacity: 0,
-        duration: 3.0, // Increased from 1.0 to 3.0 for slower fade out
+        duration: 3.0, // Langzamer fade out
         ease: "power1.out",
       },
       `+=${DELAYS.afterPause}`
     );
 
-    // PHASE 8: Fade out folders with stagger - SLOWER
+    // PHASE 8: Fade out folders with stagger
     tl.to(
       folderRefs.current.map((ref) => ref.current),
       {
         opacity: 0,
-        duration: DURATIONS.fadeOut * 2, // Doubled the fade out duration
+        duration: DURATIONS.fadeOut,
         ease: "power1.out",
-        stagger: 0.2, // Increased from 0.05 to 0.2 for slower stagger
+        stagger: 0.2, // Langzamere stagger
       },
-      "+=0.5" // Increased delay from 0.2 to 0.5
+      "+=0.5" // Meer tijd voor fade out
     );
 
     // PHASE 9: Hide everything
@@ -295,21 +295,35 @@ function AnimatedFolderStack() {
         display: "none",
         duration: 0,
       },
-      "+=1.0" // Increased from 0.3 to 1.0 for longer pause
+      "+=0.3"
     );
+
+
 
     return tl;
   };
 
-  // Track mouse X position relative to the section
+  // Track mouse X position relative to the section with throttling
+  let mouseMoveTimeout;
   function handleMouseMove(e) {
     if (!sectionRef.current) return;
-    const bounds = sectionRef.current.getBoundingClientRect();
-    setMouseX(e.clientX - bounds.left);
-    setMouseY(e.clientY - bounds.top);
+    
+    // Throttle mouse events for better performance
+    if (mouseMoveTimeout) return;
+    
+    mouseMoveTimeout = setTimeout(() => {
+      const bounds = sectionRef.current.getBoundingClientRect();
+      setMouseX(e.clientX - bounds.left);
+      setMouseY(e.clientY - bounds.top);
+      mouseMoveTimeout = null;
+    }, 16); // ~60fps
   }
 
   function handleMouseLeave() {
+    if (mouseMoveTimeout) {
+      clearTimeout(mouseMoveTimeout);
+      mouseMoveTimeout = null;
+    }
     setMouseX(null);
     setMouseY(null);
   }

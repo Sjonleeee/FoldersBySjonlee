@@ -2,7 +2,7 @@
    Sticky Animation Structure
    ===================== */
 .folder-hero-outer {
-  height: 350vh; /* Increased from 250vh to 350vh for slower animations */
+  height: 420vh; 
   position: relative;
   overflow: visible !important;
 }
@@ -344,8 +344,6 @@
 }
 
 .company-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }

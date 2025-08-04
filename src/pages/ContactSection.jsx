@@ -29,8 +29,8 @@ export default function ContactSection() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 80%", // Start when section is 80% in view
-        end: "bottom 20%",
+        start: "top 70%", // Start earlier for end section
+        end: "bottom 10%",
         scrub: false, // No scrub for this one
         toggleActions: "play none none reverse",
       },

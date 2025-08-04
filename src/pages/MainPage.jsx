@@ -77,8 +77,7 @@ export default function MainPage() {
         {/* FolderPage with all animations */}
         <section style={{ 
           minHeight: "100vh", // Veel meer ruimte voor alle animaties
-          position: "relative",
-          backgroundColor: "#1a1a1a" // Donkergrijs
+          position: "relative"
         }}>
           <FolderPage 
             headerRef={headerRef} 
@@ -87,22 +86,20 @@ export default function MainPage() {
           />
         </section>
         
-        {/* CompaniesSection */}
-        <section style={{ 
+        {/* CompaniesSection - HIDDEN */}
+        {/* <section style={{ 
           minHeight: "100vh", 
-          position: "relative",
-          backgroundColor: "#666666" // Lichter grijs
+          position: "relative"
         }}>
           <CompaniesSection />
-        </section>
+        </section> */}
         
-        {/* ContactSection */}
-        <section style={{ 
-          minHeight: "40vh",
-          backgroundColor: "#888888" // Nog lichter grijs
+        {/* ContactSection - HIDDEN */}
+        {/* <section style={{ 
+          minHeight: "100vh" // Full height for end section
         }}>
           <ContactSection />
-        </section>
+        </section> */}
       </div>
 
       {/* Footer */}

@@ -44,18 +44,18 @@ export default function AboutSection() {
     });
 
     // Create the main timeline with ScrollTrigger for internal animations
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".about-container",
-        start: "top top",
-        end: "+=135%", // Nog meer scroll ruimte - About section moet volledig uitgescrolld zijn
-        scrub: 8, // Veel trager - was 3, nu 8
-        pin: true,
-        pinSpacing: false, // Voorkomt overlap met volgende sectie
-        markers: true, // Markers aan om te debuggen
-        onComplete: () => setHasAnimated(true),
-      },
-    });
+            const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".about-container",
+            start: "top top",
+            end: "+=600%", // Much more scroll space since other sections are hidden
+            scrub: 1.5, // Very smooth scrub for nice scrolling
+            pin: true,
+            pinSpacing: false, // Prevents overlap
+            markers: false, // Disable markers for performance
+            onComplete: () => setHasAnimated(true),
+          },
+        });
 
     // Phase 1: Image appears
     tl.to(
@@ -110,14 +110,14 @@ export default function AboutSection() {
     );
 
     // Phase 6: Pause for reading description
-    tl.to({}, { duration: 12 }, 8.3);
+    tl.to({}, { duration: 8 }, 8.3);
 
     // Phase 7: Skill cards appear from sides
     tl.to(
       skillCardsRef.current,
       {
         opacity: 1,
-        duration: 2.5, // Increased from 1 to 2.5 for longer animation
+        duration: 1,
         ease: "power2.out",
         onComplete: () => {
           // Add visible class to cards for staggered animation
@@ -125,7 +125,7 @@ export default function AboutSection() {
           cards?.forEach((card, index) => {
             setTimeout(() => {
               card.classList.add('visible');
-            }, index * 300); // Increased from 200 to 300 for slower stagger
+            }, index * 200);
           });
         }
       },
@@ -145,7 +145,7 @@ export default function AboutSection() {
     );
 
     // Phase 9: Pause for reading cards
-    tl.to({}, { duration: 30 }, 23.3); // Increased from 20 to 30 for much longer viewing time
+    tl.to({}, { duration: 45 }, 23.3); // Extended duration for longer viewing
 
     // Phase 10: Cards fade out and move up
     tl.to(
@@ -156,11 +156,11 @@ export default function AboutSection() {
         duration: 3,
         ease: "power1.inOut",
       },
-      38.3
+      53.3
     );
 
     // Phase 11: Extra pause to ensure everything is faded before next section
-    tl.to({}, { duration: 2 }, 41.3);
+    tl.to({}, { duration: 2 }, 56.3);
 
     return () => {
       tl.kill();
@@ -215,31 +215,14 @@ export default function AboutSection() {
       }
     };
 
-    // Add event listener with a small delay to ensure container exists
-    const addMouseListener = () => {
-      const container = containerRef.current;
-      if (container) {
-        container.addEventListener("mousemove", handleMouseMove);
-        return () => {
-          container.removeEventListener("mousemove", handleMouseMove);
-        };
-      }
-      return null;
-    };
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("mousemove", handleMouseMove);
 
-    // Try to add listener immediately, if not, retry after a short delay
-    let cleanup = addMouseListener();
-    if (!cleanup) {
-      const timeoutId = setTimeout(() => {
-        cleanup = addMouseListener();
-      }, 100);
       return () => {
-        clearTimeout(timeoutId);
-        if (cleanup) cleanup();
+        container.removeEventListener("mousemove", handleMouseMove);
       };
     }
-
-    return cleanup;
   }, []);
 
   return (

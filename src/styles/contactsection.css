@@ -1,6 +1,6 @@
 .contact-section {
   width: 100vw;
-  min-height: 80vh; /* Reduced from 100vh to 80vh */
+  min-height: 100vh; /* Full height for end section */
   display: flex;
   flex-direction: column;
   align-items: center;

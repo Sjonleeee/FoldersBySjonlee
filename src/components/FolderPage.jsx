@@ -136,16 +136,17 @@ export default function FolderPage({
           scrollTriggerCreated = true;
           
           // Clean, simple approach - one timeline for everything
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top top",
-              end: "+=400%", // Increased for slower animations
-              scrub: 1.5, // Slower scrub for cleaner animations
-              pin: true, // Restored original pinning
-              markers: false,
-            },
-          });
+                  const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "+=1000%", // Much more scroll space since other sections are hidden
+            scrub: 1, // Very smooth scrub for nice scrolling
+            pin: true,
+            pinSpacing: false, // Prevents overlap
+            markers: true,
+          },
+        });
 
           // Set initial states for elements that need it
           tl.set(videoSectionRef.current, {
@@ -156,15 +157,15 @@ export default function FolderPage({
           // PHASE 1: Original FolderPage parallax animations
           tl.to(creativeRef.current, {
             x: "-100vw",
-            y: "-20vh", // Parallax beweging naar boven
-            duration: 4,
+            y: "-20vh",
+            duration: 6,
             ease: "power2.inOut",
           });
 
           tl.to(developerRef.current, {
             x: "100vw",
-            y: "20vh", // Parallax beweging naar beneden
-            duration: 4,
+            y: "20vh",
+            duration: 6,
             ease: "power2.inOut",
           }, "<");
 
@@ -180,10 +181,10 @@ export default function FolderPage({
             ],
             {
               opacity: 0,
-              y: (i) => (i % 2 === 0 ? "-15vh" : "15vh"), // Parallax beweging voor labels
-              duration: 4,
+              y: (i) => (i % 2 === 0 ? "-15vh" : "15vh"),
+              duration: 6,
               ease: "power2.inOut",
-              stagger: 0.2,
+              stagger: 0.3,
             },
             "<"
           );
@@ -191,19 +192,19 @@ export default function FolderPage({
           tl.to(folderRef.current, {
             opacity: 0,
             scale: 0.5,
-            y: "-30vh", // Parallax beweging naar boven
-            duration: 4,
+            y: "-30vh",
+            duration: 6,
             ease: "power2.inOut",
           }, "<");
 
-          // PHASE 2: StatsSection appears (original flow)
+          // PHASE 2: StatsSection appears
           tl.to(videoSectionRef.current, {
             opacity: 1,
             scale: 1,
-            y: "10vh", // Parallax beweging naar beneden
-            duration: 4,
+            y: "10vh",
+            duration: 6,
             ease: "power2.out",
-          }, "+=1");
+          }, "+=2");
 
           // Only animate stats-side elements on desktop (not mobile)
           const isMobile = window.innerWidth <= 900;
@@ -211,14 +212,14 @@ export default function FolderPage({
             tl.to(".stats-side.left", {
               x: 0,
               opacity: 1,
-              duration: 3,
+              duration: 4,
               ease: "power2.out",
             }, "<");
 
             tl.to(".stats-side.right", {
               x: 0,
               opacity: 1,
-              duration: 3,
+              duration: 4,
               ease: "power2.out",
             }, "<");
           }
@@ -226,54 +227,55 @@ export default function FolderPage({
           tl.to(".stats-laptop-stack", {
             scale: 1,
             opacity: 1,
-            duration: 3,
+            duration: 4,
             ease: "power2.out",
           }, "<");
 
           tl.to(modelRef.current, {
             opacity: 0,
-            y: "25vh", // Parallax beweging naar beneden
-            duration: 4,
+            y: "25vh",
+            duration: 6,
             ease: "power2.inOut",
           }, "<");
 
-          // PHASE 3: StatsSection fades out, AboutSection appears
+          // PHASE 3: StatsSection fades up out, AboutSection appears
           tl.to(videoSectionRef.current, {
             opacity: 0,
-            scale: 0.5,
-            duration: 3,
+            y: "-50vh", // Fade up out
+            duration: 5,
             ease: "power2.inOut",
-          }, "+=5");
+          }, "+=8");
 
           tl.to(aboutSectionRef.current, {
             opacity: 1,
             y: 0,
-            duration: 3,
+            duration: 5,
             ease: "power2.out",
-          }, "+=1");
+          }, "+=2");
 
           // PHASE 4: AboutSection animations (let it handle its own animations)
-          tl.to({}, { duration: 45 }, "+=2"); // Extended from 15 to 45 for skills cards (30s) + extra time
+          tl.to({}, { duration: 75 }, "+=3"); // Extended duration for longer skill cards
 
-          // PHASE 5: AboutSection fades out, Latest Projects appears
+          // PHASE 5: AboutSection fades out
           tl.to(aboutSectionRef.current, {
             opacity: 0,
             y: "-50vh",
-            duration: 3,
+            duration: 5,
             ease: "power2.inOut",
           });
 
+          // PHASE 6: Latest Projects appears immediately after skill cards fade out
           tl.to(latestProjectsRef.current, {
             opacity: 1,
             y: 0,
             duration: 3,
             ease: "power2.out",
-          }, "-=1");
+          }, "+=0.5"); // Start immediately after AboutSection fade out
 
-          // PHASE 6: Latest Projects animations (let it handle its own animations)
-          tl.to({}, { duration: 40 }, "+=2"); // Extended from 20 to 40 for Latest Projects full animation
+          // PHASE 7: Latest Projects animations (let it handle its own animations)
+          tl.to({}, { duration: 100 }, "+=2"); // Much more time for full animation
 
-          tl.to({}, { duration: 5 }); // Final pause
+          tl.to({}, { duration: 10 }); // Extended final pause
           
           // Remove scroll listener after creating ScrollTrigger
           window.removeEventListener('scroll', handleScroll);
@@ -377,7 +379,7 @@ export default function FolderPage({
               height: "100%",
               opacity: 0,
               transform: "translateY(100vh)",
-              zIndex: 20,
+              zIndex: 50,
             }}
           >
             <AboutSection />
@@ -394,7 +396,7 @@ export default function FolderPage({
               height: "100%",
               opacity: 0,
               transform: "translateY(100vh)",
-              zIndex: 30,
+              zIndex: 60,
             }}
           >
             <AnimatedFolderStack />

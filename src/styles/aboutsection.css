@@ -171,16 +171,12 @@
   padding: 2rem;
   min-width: 280px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.skill-card:nth-child(1) {
-  transform: translateX(-100px);
+  opacity: 0; /* GSAP will control this */
+  transform: translateX(-100px); /* Initial position for GSAP */
 }
 
 .skill-card:nth-child(2) {
-  transform: translateX(100px);
+  transform: translateX(100px); /* Initial position for GSAP */
 }
 
 .skill-card:hover {
@@ -221,24 +217,7 @@
   color: #000;
 }
 
-/* Animation states - updated for slide-in animation */
-.skill-cards-container.visible {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.skill-card.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.skill-card:nth-child(1).visible {
-  transition-delay: 0.1s;
-}
-
-.skill-card:nth-child(2).visible {
-  transition-delay: 0.2s;
-}
+/* GSAP will handle all animations - no CSS classes needed */
 
 /* Responsive Design */
 @media (max-width: 768px) {

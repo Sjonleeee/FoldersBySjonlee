@@ -118,7 +118,7 @@
 
 .folder-card {
   position: absolute;
-  width: 450px;
+  width: 420px;
   height: 420px;
   z-index: 3;
   left: 50%;
@@ -142,11 +142,6 @@
 }
 
 @media (max-width: 900px) {
-  .folder-card {
-    width: 200px;
-    height: 260px;
-    padding: 0 0.7rem 1.2rem 0.7rem;
-  }
   .folder-fancy {
     font-size: 2.2rem;
   }
@@ -155,11 +150,7 @@
   }
 }
 @media (max-width: 900px) {
-  .folder-card {
-    min-width: 200px;
-    max-width: 260px;
-    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
-  }
+  
   .folder-fancy {
     font-size: 2.2rem;
   }
@@ -187,7 +178,6 @@
     transform: translate(-50%, -50%) !important;
     width: 96vw !important;
     max-width: 96vw !important;
-    padding: 1.2rem 1rem 1.1rem 1.2rem !important; /* mooie binnenruimte */
     background-position: top center !important;
   }
   .folder-card-content {

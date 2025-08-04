@@ -130,66 +130,65 @@ export default function FolderPage({
       // Don't create ScrollTrigger immediately
       // Wait for user to actually start scrolling
       let scrollTriggerCreated = false;
-      
+
       const handleScroll = () => {
         if (!scrollTriggerCreated) {
           scrollTriggerCreated = true;
-          
-          // Clean, simple approach - one timeline for everything
-                  const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "+=1000%", // Much more scroll space since other sections are hidden
-            scrub: 1, // Very smooth scrub for nice scrolling
-            pin: true,
-            pinSpacing: false, // Prevents overlap
-            markers: true,
-          },
-        });
 
-          // Set initial states for elements that need it
-          tl.set(videoSectionRef.current, {
+          // Main timeline for section coordination
+          const mainTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top top",
+              end: "+=1000%", // Much more scroll space since other sections are hidden
+              scrub: 2, // Very smooth scrub for nice scrolling
+              pin: true,
+              pinSpacing: false, // Prevents overlap
+              markers: true,
+            },
+          });
+
+          // ===== SEPARATE TIMELINES PER SECTION =====
+
+          // PHASE 1: Main Page Parallax Timeline
+          const mainPageTl = gsap.timeline();
+          
+          mainPageTl.set(videoSectionRef.current, {
             opacity: 0,
             scale: 0.5,
           });
 
-          // PHASE 1: Original FolderPage parallax animations
-          tl.to(creativeRef.current, {
+          mainPageTl.to(creativeRef.current, {
             x: "-100vw",
             y: "-20vh",
             duration: 6,
             ease: "power2.inOut",
           });
 
-          tl.to(developerRef.current, {
+          mainPageTl.to(developerRef.current, {
             x: "100vw",
             y: "20vh",
             duration: 6,
             ease: "power2.inOut",
           }, "<");
 
-          tl.to(
-            [
-              topLeftRef.current,
-              topCenterRef.current,
-              topRightRef.current,
-              bottomLeftRef.current,
-              bottomRightRef.current,
-              midRightRef.current,
-              bottomCenterRef.current,
-            ],
-            {
-              opacity: 0,
-              y: (i) => (i % 2 === 0 ? "-15vh" : "15vh"),
-              duration: 6,
-              ease: "power2.inOut",
-              stagger: 0.3,
-            },
-            "<"
-          );
+          mainPageTl.to([
+            topLeftRef.current,
+            topCenterRef.current,
+            topRightRef.current,
+            bottomLeftRef.current,
+            bottomRightRef.current,
+            midRightRef.current,
+            bottomCenterRef.current,
+          ], {
+            opacity: 0,
+            y: (i) => (i % 2 === 0 ? "-15vh" : "15vh"),
+            duration: 6,
+            ease: "power2.inOut",
+            stagger: 0.3,
+          }, "<");
 
-          tl.to(folderRef.current, {
+          mainPageTl.to(folderRef.current, {
             opacity: 0,
             scale: 0.5,
             y: "-30vh",
@@ -197,26 +196,27 @@ export default function FolderPage({
             ease: "power2.inOut",
           }, "<");
 
-          // PHASE 2: StatsSection appears
-          tl.to(videoSectionRef.current, {
+          // PHASE 2: StatsSection Timeline
+          const statsTl = gsap.timeline();
+          
+          statsTl.to(videoSectionRef.current, {
             opacity: 1,
             scale: 1,
             y: "10vh",
             duration: 6,
             ease: "power2.out",
-          }, "+=2");
+          });
 
-          // Only animate stats-side elements on desktop (not mobile)
           const isMobile = window.innerWidth <= 900;
           if (!isMobile) {
-            tl.to(".stats-side.left", {
+            statsTl.to(".stats-side.left", {
               x: 0,
               opacity: 1,
               duration: 4,
               ease: "power2.out",
             }, "<");
 
-            tl.to(".stats-side.right", {
+            statsTl.to(".stats-side.right", {
               x: 0,
               opacity: 1,
               duration: 4,
@@ -224,66 +224,115 @@ export default function FolderPage({
             }, "<");
           }
 
-          tl.to(".stats-laptop-stack", {
+          statsTl.to(".stats-laptop-stack", {
             scale: 1,
             opacity: 1,
             duration: 4,
             ease: "power2.out",
           }, "<");
 
-          tl.to(modelRef.current, {
+          statsTl.to(modelRef.current, {
             opacity: 0,
             y: "25vh",
             duration: 6,
             ease: "power2.inOut",
           }, "<");
 
-          // PHASE 3: StatsSection fades up out, AboutSection appears
-          tl.to(videoSectionRef.current, {
-            opacity: 0,
-            y: "-50vh", // Fade up out
-            duration: 5,
-            ease: "power2.inOut",
-          }, "+=8");
-
-          tl.to(aboutSectionRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 5,
-            ease: "power2.out",
-          }, "+=2");
-
-          // PHASE 4: AboutSection animations (let it handle its own animations)
-          tl.to({}, { duration: 75 }, "+=3"); // Extended duration for longer skill cards
-
-          // PHASE 5: AboutSection fades out
-          tl.to(aboutSectionRef.current, {
+          // PHASE 3: Transition Timeline (StatsSection fade out, AboutSection appear)
+          const transitionTl = gsap.timeline();
+          
+          transitionTl.to(videoSectionRef.current, {
             opacity: 0,
             y: "-50vh",
             duration: 5,
             ease: "power2.inOut",
           });
 
-          // PHASE 6: Latest Projects appears immediately after skill cards fade out
-          tl.to(latestProjectsRef.current, {
+          transitionTl.to(folderRef.current, {
+            className: "folder-icon-container",
+            duration: 0,
+          }, "<");
+
+          transitionTl.to(folderRef.current, {
+            opacity: 0,
+            duration: 2,
+            ease: "power2.inOut",
+          }, "<");
+
+          transitionTl.to(aboutSectionRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 5,
+            ease: "power2.out",
+          }, "+=2");
+
+          // PHASE 4: AboutSection Timeline (handled by AboutSection component)
+          const aboutTl = gsap.timeline();
+          aboutTl.to({}, { duration: 75 }); // Placeholder for AboutSection
+
+          // PHASE 5: AboutSection Fade Out Timeline
+          const aboutFadeOutTl = gsap.timeline();
+          
+          aboutFadeOutTl.to(aboutSectionRef.current, {
+            opacity: 0,
+            y: "-50vh",
+            duration: 5,
+            ease: "power2.inOut",
+          });
+
+          // PHASE 6: Latest Projects Timeline
+          const latestProjectsTl = gsap.timeline();
+          
+          latestProjectsTl.to(latestProjectsRef.current, {
             opacity: 1,
             y: 0,
             duration: 3,
             ease: "power2.out",
-          }, "+=0.5"); // Start immediately after AboutSection fade out
+          });
 
-          // PHASE 7: Latest Projects animations (let it handle its own animations)
-          tl.to({}, { duration: 100 }, "+=2"); // Much more time for full animation
+          // PHASE 7: Latest Projects Animation Timeline (handled by component)
+          const latestProjectsAnimTl = gsap.timeline();
+          latestProjectsAnimTl.to({}, { duration: 100 }); // Placeholder
 
-          tl.to({}, { duration: 10 }); // Extended final pause
+          // PHASE 8: Latest Projects Fade Out Timeline
+          const latestProjectsFadeOutTl = gsap.timeline();
           
+          latestProjectsFadeOutTl.to(latestProjectsRef.current, {
+            opacity: 0,
+            y: "50vh",
+            duration: 3,
+            ease: "power2.inOut",
+          });
+
+          latestProjectsFadeOutTl.to(folderRef.current, {
+            className: "folder-icon-container absolute-center pointer-events-none",
+            opacity: 1,
+            duration: 2,
+            ease: "power2.inOut",
+          }, "<");
+
+          // PHASE 9: Final Timeline
+          const finalTl = gsap.timeline();
+          finalTl.to({}, { duration: 10 });
+
+          // ===== ADD ALL TIMELINES TO MAIN TIMELINE =====
+          mainTl.add(mainPageTl, 0);
+          mainTl.add(statsTl, "+=2");
+          mainTl.add(transitionTl, "+=8");
+          mainTl.add(aboutTl, "+=2");
+          mainTl.add(aboutFadeOutTl, "+=3");
+          mainTl.add(latestProjectsTl, "+=0.5");
+          mainTl.add(latestProjectsAnimTl, "+=2");
+          mainTl.add(latestProjectsFadeOutTl, "+=0.5");
+          mainTl.add(finalTl, "+=0.5");
+
           // Remove scroll listener after creating ScrollTrigger
-          window.removeEventListener('scroll', handleScroll);
+          window.removeEventListener("scroll", handleScroll);
         }
       };
-      
+
       // Add scroll listener
-      window.addEventListener('scroll', handleScroll);
+      window.addEventListener("scroll", handleScroll);
     };
 
     return () => {
@@ -295,29 +344,29 @@ export default function FolderPage({
   return (
     <section className="folder-hero-outer" ref={sectionRef}>
       <div className="folder-hero-sticky">
-      {/* Main Content */}
+        {/* Main Content */}
         <div className="main-content-centered">
           {/* Folder icon */}
           <div
-            className="absolute-center pointer-events-none"
+            className="folder-icon-container absolute-center pointer-events-none"
             ref={folderRef}
             style={{ zIndex: 9999 }}
           >
-          <div className="z-front center-folder">
-            <img
-              src={folderIcon}
-              alt="Folder"
-              className="folder-icon"
-              draggable={false}
-            />
+            <div className="z-front center-folder">
+              <img
+                src={folderIcon}
+                alt="Folder"
+                className="folder-icon"
+                draggable={false}
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="folder-page-container relative">
-          <div className="main-content main-content-z1">
-            <section className="main-section flex-column center-content relative">
-              <div className="full-screen full-screen-z10">
-                {/* Role labels */}
+          <div className="folder-page-container relative">
+            <div className="main-content main-content-z1">
+              <section className="main-section flex-column center-content relative">
+                <div className="full-screen full-screen-z10">
+                  {/* Role labels */}
                   <span className="role-label top-left" ref={topLeftRef}>
                     3D Designer
                   </span>
@@ -346,27 +395,27 @@ export default function FolderPage({
                     Hussler
                   </span>
 
-                <div className="absolute-center title-container">
-                  <div className="title-center-flex">
+                  <div className="absolute-center title-container">
+                    <div className="title-center-flex">
                       <div
                         className="pointer-none left-title"
                         ref={creativeRef}
                       >
-                    <span className="title-text">Creative</span>
-                  </div>
+                        <span className="title-text">Creative</span>
+                      </div>
                       <div
                         className="pointer-none right-title"
                         ref={developerRef}
                       >
-                    <span className="title-text">Developer</span>
+                        <span className="title-text">Developer</span>
                       </div>
                     </div>
                   </div>
                 </div>
                 <ModelCanvas ref={modelRef} />
               </section>
-                </div>
-              </div>
+            </div>
+          </div>
 
           {/* AboutSection - Hidden initially */}
           <div

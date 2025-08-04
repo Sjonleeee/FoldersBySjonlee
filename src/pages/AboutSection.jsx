@@ -82,8 +82,8 @@ export default function AboutSection() {
       0.3
     );
 
-    // Phase 3: Pause for reading main content
-    tl.to({}, { duration: 4 }, 1.3);
+    // Phase 3: LONGER PAUSE for reading main content (image + title)
+    tl.to({}, { duration: 12 }, 1.3); // Much longer pause
 
     // Phase 4: Move image and title up, description appears
     tl.to(
@@ -94,7 +94,7 @@ export default function AboutSection() {
         duration: 2,
         ease: "power1.inOut",
       },
-      5.3
+      13.3 // Adjusted timing
     );
 
     // Phase 5: Description appears
@@ -106,31 +106,38 @@ export default function AboutSection() {
         duration: 1,
         ease: "power2.out",
       },
-      7.3
+      15.3 // Adjusted timing
     );
 
     // Phase 6: Pause for reading description
-    tl.to({}, { duration: 8 }, 8.3);
+    tl.to({}, { duration: 8 }, 16.3); // Adjusted timing
 
-    // Phase 7: Skill cards appear from sides
+    // Phase 7: Skill cards appear from sides with GSAP
     tl.to(
       skillCardsRef.current,
       {
         opacity: 1,
         duration: 1,
         ease: "power2.out",
-        onComplete: () => {
-          // Add visible class to cards for staggered animation
-          const cards = skillCardsRef.current?.querySelectorAll('.skill-card');
-          cards?.forEach((card, index) => {
-            setTimeout(() => {
-              card.classList.add('visible');
-            }, index * 200);
-          });
-        }
       },
-      20.3
+      28.3 // Adjusted timing
     );
+
+    // Phase 7.5: Individual skill cards slide in with stagger
+    const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
+    if (skillCards) {
+      tl.to(
+        skillCards,
+        {
+          opacity: 1,
+          x: 0, // Slide to center
+          duration: 1.5,
+          ease: "power2.out",
+          stagger: 0.2, // Stagger effect
+        },
+      29.3 // Adjusted timing
+      );
+    }
 
     // Phase 8: Fade out description, image and title while cards come in
     tl.to(
@@ -141,11 +148,11 @@ export default function AboutSection() {
         duration: 2,
         ease: "power1.inOut",
       },
-      21.3
+      29.3 // Adjusted timing
     );
 
     // Phase 9: Pause for reading cards
-    tl.to({}, { duration: 45 }, 23.3); // Extended duration for longer viewing
+    tl.to({}, { duration: 45 }, 31.3); // Adjusted timing
 
     // Phase 10: Cards fade out and move up
     tl.to(
@@ -156,11 +163,11 @@ export default function AboutSection() {
         duration: 3,
         ease: "power1.inOut",
       },
-      53.3
+      76.3 // Adjusted timing (31.3 + 45 = 76.3)
     );
 
     // Phase 11: Extra pause to ensure everything is faded before next section
-    tl.to({}, { duration: 2 }, 56.3);
+    tl.to({}, { duration: 2 }, 79.3); // Adjusted timing
 
     return () => {
       tl.kill();

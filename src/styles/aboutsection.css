@@ -170,10 +170,7 @@
   border-radius: 16px;
   padding: 2rem;
   min-width: 280px;
-  box-shadow: 
-    0 8px 32px rgba(56, 189, 248, 0.2),
-    0 4px 16px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: none;
   opacity: 0; /* GSAP will control this */
   transform: translateY(100vh) rotateY(-45deg) rotateX(15deg); /* 3D initial position - from below page */
   transform-style: preserve-3d;
@@ -186,7 +183,7 @@
 
 .skill-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 }
 
 .skill-card-title {

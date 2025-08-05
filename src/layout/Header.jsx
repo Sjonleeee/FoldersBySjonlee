@@ -1,14 +1,12 @@
 import React, { useRef, useEffect } from "react";
 import { useMenu } from "../context/MenuContext";
 import '../styles/header.css';
-import { useNavigate } from "react-router-dom";
 
 const menuItems = ["Home", "Projects", "About", "Contact"];
 
 const Header = ({ onLogoClick }) => {
   const { menuOpen, setMenuOpen } = useMenu();
   const menuRef = useRef(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -26,10 +24,10 @@ const Header = ({ onLogoClick }) => {
 
   const handleMenuClick = (item) => {
     if (item === "Home") {
-      navigate("/");
+      // For now, just close menu - navigation handled by parent
       setMenuOpen(false);
     } else if (item === "Projects") {
-      navigate("/projects");
+      // For now, just close menu - navigation handled by parent
       setMenuOpen(false);
     }
     // You can add more navigation for About/Contact if needed

@@ -13,6 +13,33 @@
   box-sizing: border-box;
 }
 
+/* Performance optimizations */
+.reduced-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Hardware acceleration for smooth animations */
+.folder-card,
+.skill-card,
+.about-mouse-image,
+.latest-projects-title {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  overflow-x: hidden;
+}
+
 /* === Root Variables === */
 :root {
   --color-background: #111111;

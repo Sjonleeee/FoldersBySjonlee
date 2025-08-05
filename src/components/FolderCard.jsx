@@ -55,7 +55,7 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
       return;
     }
     
-    // Throttle overlay updates for better performance
+    // Optimized overlay updates for smooth video performance
     const updateOverlay = () => {
       const overlayLeft = mouseX - overlayWidth / 2;
       const overlayRight = mouseX + overlayWidth / 2;
@@ -66,6 +66,7 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
         overlayLeft < cardBounds.right &&
         overlayBottom > cardBounds.top &&
         overlayTop < cardBounds.bottom;
+      
       setShowOverlay(visible);
       
       if (overlayRef.current && visible) {
@@ -80,8 +81,8 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
       }
     };
     
-    // Use requestAnimationFrame for smooth updates
-    requestAnimationFrame(updateOverlay);
+    // Direct execution for smooth video performance
+    updateOverlay();
   }, [mouseX, mouseY, getCardBounds]);
 
   return (
@@ -126,6 +127,7 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
             loop
             muted
             preload="auto"
+            playsInline
             className="folder-card-overlay-media"
             style={{ borderRadius: overlayRadius }}
           />
@@ -135,6 +137,7 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
             alt="Preview"
             className="folder-card-overlay-media"
             style={{ borderRadius: overlayRadius }}
+            loading="lazy"
           />
         )}
         <div className="folder-card-overlay-title">Explore</div>

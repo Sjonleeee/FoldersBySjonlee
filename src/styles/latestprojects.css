@@ -2,6 +2,8 @@
   padding: 1.5rem 1rem; /* Balanced padding */
   background-color: green; /* Tijdelijke groene background */
   margin-top: 0; /* Geen negative margin meer - voorkomt overlap */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .latest-projects-grid {
@@ -52,6 +54,9 @@
   color: #fff;
   text-align: center;
   letter-spacing: 0.01em;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .project-tag-pill {
@@ -153,19 +158,7 @@
   }
 }
 
-@media (max-width: 900px) {
-  .folder-card {
-    width: 200px;
-    height: 260px;
-    padding: 0 0.7rem 1.2rem 0.7rem;
-  }
-  .folder-fancy {
-    font-size: 2.2rem;
-  }
-  .folder-title {
-    font-size: 1rem;
-  }
-}
+/* Removed duplicate folder-card styles - using FolderCard.css instead */
 
 @media (max-width: 600px) {
   .latest-projects-title {
@@ -174,8 +167,4 @@
   }
 }
 
-@media (max-width: 600px) {
-  .folder-fancy {
-    font-size: 2.5rem !important; /* Groter dan eerst */
-  }
-}
+/* Removed duplicate folder-fancy styles - using FolderCard.css instead */

@@ -2,9 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import FolderLanding from "../components/FolderLanding";
-import FolderPage from "../components/FolderPage";
-import CompaniesSection from "../components/CompaniesSection";
-import ContactSection from "./ContactSection";
+import OnePager from "../components/OnePager";
 
 export default function MainPage() {
   const [folderOpen, setFolderOpen] = useState(false);
@@ -42,6 +40,14 @@ export default function MainPage() {
     }
   }, [folderOpen, isScrollBlocked]);
 
+  // Performance optimization: Reduce motion for users who prefer it
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      document.body.classList.add('reduced-motion');
+    }
+  }, []);
+
   if (!folderOpen) {
     return <FolderLanding onOpen={handleOpen} />;
   }
@@ -74,12 +80,12 @@ export default function MainPage() {
       </div>
 
       <div className="onepager-content">
-        {/* FolderPage with all animations */}
+        {/* OnePager with all animations */}
         <section style={{ 
           minHeight: "100vh", // Veel meer ruimte voor alle animaties
           position: "relative"
         }}>
-          <FolderPage 
+          <OnePager 
             headerRef={headerRef} 
             footerRef={footerRef}
             onAnimationsComplete={handleAnimationsComplete}

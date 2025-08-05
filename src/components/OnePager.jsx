@@ -2,16 +2,19 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import folderIcon from "../assets/images/folder.svg";
-import ModelCanvas from "../components/ModelCanvas";
+import HeroSection from "./sections/HeroSection";
 import StatsSection from "../components/StatsSection";
 import AboutSection from "../pages/AboutSection";
 import AnimatedFolderStack from "../components/AnimatedFolderStack";
-import "../styles/folderpage.css";
+import { createEntranceAnimations } from "./animations/EntranceAnimations";
+import { createScrollTriggerManager } from "./animations/ScrollTriggerManager";
+import CompaniesSection from "./sections/CompaniesSection";
+import "../styles/onepager.css";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-export default function FolderPage({
+export default function OnePager({
   headerRef,
   footerRef,
   onAnimationsComplete,
@@ -24,6 +27,7 @@ export default function FolderPage({
   const videoSectionRef = useRef(null);
   const aboutSectionRef = useRef(null);
   const latestProjectsRef = useRef(null);
+  const companiesSectionRef = useRef(null);
 
   // Role labels refs
   const topLeftRef = useRef(null);
@@ -35,95 +39,27 @@ export default function FolderPage({
   const bottomCenterRef = useRef(null);
 
   useEffect(() => {
-    // Initial entrance animations
-    const entranceTl = gsap.timeline({
+    // Create entrance animations using extracted logic
+    const entranceTl = createEntranceAnimations({
+      creativeRef,
+      developerRef,
+      headerRef,
+      footerRef,
+      modelRef,
+      topLeftRef,
+      topCenterRef,
+      topRightRef,
+      bottomLeftRef,
+      bottomRightRef,
+      midRightRef,
+      bottomCenterRef,
+      aboutSectionRef,
+      latestProjectsRef,
       onComplete: () => {
-        // Wait a bit more to ensure everything is settled
-        setTimeout(() => {
-          // Enable scrolling after all animations are complete
-          onAnimationsComplete();
-
-          // Create ScrollTrigger after initial animations are complete
-          createScrollTrigger();
-        }, 500);
+        onAnimationsComplete();
+        createScrollTrigger();
       },
     });
-
-    // Set initial positions
-    gsap.set(creativeRef.current, { x: "-100vw", opacity: 0 });
-    gsap.set(developerRef.current, { x: "100vw", opacity: 0 });
-    gsap.set(headerRef.current, { y: "-100vh", opacity: 0 });
-    gsap.set(footerRef.current, { y: "100vh", opacity: 0 });
-    gsap.set(modelRef.current, { opacity: 0 });
-    gsap.set(".footer-scroll-card", { opacity: 0 });
-    gsap.set(
-      [
-        topLeftRef.current,
-        topCenterRef.current,
-        topRightRef.current,
-        bottomLeftRef.current,
-        bottomRightRef.current,
-        midRightRef.current,
-        bottomCenterRef.current,
-      ],
-      { opacity: 0 }
-    );
-
-    // Set initial states for AboutSection and Latest Projects
-    gsap.set(aboutSectionRef.current, { opacity: 0, y: "100vh" });
-    gsap.set(latestProjectsRef.current, { opacity: 0, y: "100vh" });
-
-    // 1. Creative slides in from left
-    entranceTl.to(creativeRef.current, {
-      x: 0,
-      opacity: 1,
-      duration: 1.2,
-      ease: "power2.out",
-    });
-
-    // 2. Developer slides in from right (together with Creative)
-    entranceTl.to(
-      developerRef.current,
-      {
-        x: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: "power2.out",
-      },
-      "<"
-    );
-
-    // 3. Header and Footer slide in together (same time as Creative/Developer)
-    entranceTl.to(
-      [headerRef.current, footerRef.current],
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: "power2.out",
-      },
-      "<"
-    );
-
-    // 4. 3D model and all labels fade in together
-    entranceTl.to(
-      [
-        modelRef.current,
-        topLeftRef.current,
-        topCenterRef.current,
-        topRightRef.current,
-        bottomLeftRef.current,
-        bottomRightRef.current,
-        midRightRef.current,
-        bottomCenterRef.current,
-      ],
-      {
-        opacity: 1,
-        duration: 1.2,
-        ease: "power2.out",
-      },
-      "+=0.6"
-    );
 
     // Function to create scroll trigger
     const createScrollTrigger = () => {
@@ -140,7 +76,7 @@ export default function FolderPage({
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top top",
-              end: "+=1400%", // Much more scroll space since other sections are hidden
+              end: "+=1600%", // Verhoogd van 1400% naar 1600% voor Companies section
               scrub: 2, // Very smooth scrub for nice scrolling
               pin: true,
               pinSpacing: false, // Prevents overlap
@@ -300,18 +236,28 @@ export default function FolderPage({
           latestProjectsFadeOutTl.to(latestProjectsRef.current, {
             opacity: 0,
             y: "50vh",
-            duration: 3,
+            duration: 1.2,
             ease: "power2.inOut",
           });
 
           latestProjectsFadeOutTl.to(folderRef.current, {
             className: "folder-icon-container absolute-center pointer-events-none",
             opacity: 1,
-            duration: 2,
+            duration: 1,
             ease: "power2.inOut",
           }, "<");
 
-          // PHASE 9: Final Timeline
+          // PHASE 9: Companies Section Timeline
+          const companiesTl = gsap.timeline();
+          companiesTl.set(companiesSectionRef.current, { opacity: 0, y: 100 });
+          companiesTl.to(companiesSectionRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 2,
+            ease: "power2.out",
+          });
+
+          // PHASE 10: Final Timeline
           const finalTl = gsap.timeline();
           finalTl.to({}, { duration: 10 });
 
@@ -324,6 +270,7 @@ export default function FolderPage({
           mainTl.add(latestProjectsTl, "+=0.5");
           mainTl.add(latestProjectsAnimTl, "+=2");
           mainTl.add(latestProjectsFadeOutTl, "+=0.5");
+          mainTl.add(companiesTl, "+=0"); // Direct na fadeout, geen delay
           mainTl.add(finalTl, "+=0.5");
 
           // Remove scroll listener after creating ScrollTrigger
@@ -365,54 +312,18 @@ export default function FolderPage({
           <div className="folder-page-container relative">
             <div className="main-content main-content-z1">
               <section className="main-section flex-column center-content relative">
-                <div className="full-screen full-screen-z10">
-                  {/* Role labels */}
-                  <span className="role-label top-left" ref={topLeftRef}>
-                    3D Designer
-                  </span>
-                  <span className="role-label top-center" ref={topCenterRef}>
-                    Entrepreneur
-                  </span>
-                  <span className="role-label top-right" ref={topRightRef}>
-                    Designer
-                  </span>
-                  <span className="role-label bottom-left" ref={bottomLeftRef}>
-                    Teamplayer
-                  </span>
-                  <span
-                    className="role-label bottom-right"
-                    ref={bottomRightRef}
-                  >
-                    Thinker
-                  </span>
-                  <span className="role-label mid-right" ref={midRightRef}>
-                    Director
-                  </span>
-                  <span
-                    className="role-label bottom-center"
-                    ref={bottomCenterRef}
-                  >
-                    Hussler
-                  </span>
-
-                  <div className="absolute-center title-container">
-                    <div className="title-center-flex">
-                      <div
-                        className="pointer-none left-title"
-                        ref={creativeRef}
-                      >
-                        <span className="title-text">Creative</span>
-                      </div>
-                      <div
-                        className="pointer-none right-title"
-                        ref={developerRef}
-                      >
-                        <span className="title-text">Developer</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <ModelCanvas ref={modelRef} />
+                <HeroSection
+                  creativeRef={creativeRef}
+                  developerRef={developerRef}
+                  modelRef={modelRef}
+                  topLeftRef={topLeftRef}
+                  topCenterRef={topCenterRef}
+                  topRightRef={topRightRef}
+                  bottomLeftRef={bottomLeftRef}
+                  bottomRightRef={bottomRightRef}
+                  midRightRef={midRightRef}
+                  bottomCenterRef={bottomCenterRef}
+                />
               </section>
             </div>
           </div>
@@ -429,6 +340,7 @@ export default function FolderPage({
               opacity: 0,
               transform: "translateY(100vh)",
               zIndex: 50,
+              backgroundColor: "rgba(255, 0, 0, 0.3)", // Rood voor AboutSection
             }}
           >
             <AboutSection />
@@ -446,9 +358,28 @@ export default function FolderPage({
               opacity: 0,
               transform: "translateY(100vh)",
               zIndex: 60,
+              backgroundColor: "rgba(0, 255, 0, 0.3)", // Groen voor Latest Projects
             }}
           >
             <AnimatedFolderStack />
+          </div>
+
+          {/* Companies Section - Hidden initially */}
+          <div
+            ref={companiesSectionRef}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              opacity: 0,
+              zIndex: 70,
+              pointerEvents: "none", // wordt true als zichtbaar
+              backgroundColor: "rgba(255, 255, 0, 0.3)", // Geel voor Companies Section
+            }}
+          >
+            <CompaniesSection />
           </div>
 
           {/* Video Section - Hidden initially */}
@@ -463,6 +394,7 @@ export default function FolderPage({
               opacity: 0,
               transform: "scale(0.5)",
               zIndex: 40,
+              backgroundColor: "rgba(0, 0, 255, 0.3)", // Blauw voor Video Section
             }}
           >
             <StatsSection />

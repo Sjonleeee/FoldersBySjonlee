@@ -30,8 +30,8 @@ export const SCROLL_TRIGGER_CONFIG = {
   
   // Latest Projects - Start after About section is completely finished
   LATEST_PROJECTS: {
-    start: "top bottom", // Start when section top hits viewport bottom (after About)
-    end: "+=200%", // Meer scroll ruimte voor smooth animatie
+    start: "top top", // Start when section top hits viewport top (much later)
+    end: "+=400%", // Meer scroll ruimte voor smooth animatie
     scrub: 5, // Langzamere scrub voor smooth animatie
     pin: true,
     pinSpacing: false, // Voorkomt overlap met volgende sectie

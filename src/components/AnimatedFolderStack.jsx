@@ -33,21 +33,21 @@ const folders = [
   },
 ];
 
-// Animation durations - SUPER SMOOTH
+// Animation durations - ORIGINAL FLOW
 const DURATIONS = {
-  titleFadeIn: 4.0, // Much longer voor ultra smooth effect
-  foldersFadeIn: 3.5, // Much longer voor ultra smooth effect
-  foldersMoveToPosition: 5.0, // Much longer voor ultra smooth effect
-  pause: 4.0, // Meer tijd om te kijken
-  fadeOut: 4.0, // Much longer fade out
+  titleFadeIn: 3.0, // Smooth duration for title
+  foldersFadeIn: 2.0, // Smooth duration for folders
+  foldersMoveToPosition: 3.0, // Smooth duration for folder movement
+  pause: 4.0, // Smooth pause to see final state
+  fadeOut: 3.0, // Smooth fade out
 };
 
-// Animation delays - SUPER SMOOTH
+// Animation delays - FULL ANIMATION VISIBLE
 const DELAYS = {
-  afterTitle: 1.2, // Meer tijd tussen phases
-  afterFoldersFadeIn: 0.8, // Meer tijd tussen phases
-  afterFoldersMove: 0.8, // Meer tijd tussen phases
-  afterPause: 1.5, // Meer tijd voor fade out
+  afterTitle: 1.5, // Smooth delay after title
+  afterFoldersFadeIn: 0.8, // Smooth delay after folders fade
+  afterFoldersMove: 0.8, // Smooth delay after folders move
+  afterPause: 1.5, // Smooth delay before fade out
 };
 
 function AnimatedFolderStack() {
@@ -120,8 +120,8 @@ function AnimatedFolderStack() {
         // === Latest Projects ScrollTrigger ===
         trigger: sectionRef.current,
         start: "top top", // Consistent start position
-        end: "+=1500%", // Much more scroll space for ultra smooth animations
-        scrub: 3, // Ultra smooth scrub for professional scrolling
+        end: "+=2000%", // Much more scroll space to see full animation
+        scrub: 2, // Smooth scrub for elegant response
         pin: true,
         pinSpacing: false, // Prevents overlap
         id: triggerId.current,
@@ -130,10 +130,10 @@ function AnimatedFolderStack() {
       },
     });
 
-    // PHASE 1: Pause before title appears - ULTRA SMOOTH
-    tl.to({}, { duration: 16 }, 0);
+    // PHASE 1: Pause before title appears - TITLE FIRST
+    tl.to({}, { duration: 4 }, 0);
 
-    // PHASE 2: Title fade in - Smooth en natuurlijk
+    // PHASE 2: Title fade in - TITLE FIRST
     tl.fromTo(
       titleRef.current,
       {
@@ -146,20 +146,23 @@ function AnimatedFolderStack() {
         top: "15vh",
         fontSize: "8.4rem",
         opacity: 1,
-        duration: DURATIONS.titleFadeIn,
-        ease: "power3.out", // Soepelere easing
+        duration: 4.0, // Longer fade in for title
+        ease: "power3.out", // Smooth easing
       },
-      2
+      4
     );
 
-    // PHASE 3: Folders fade in with stagger - Smooth
+    // PHASE 3: Pause after title appears - SMOOTH FLOW
+    tl.to({}, { duration: 2 }, `+=3.0`); // Smooth pause to see title
+
+    // PHASE 4: Folders fade in with stagger - SMOOTH FLOW
     tl.to(
       folderRefs.current.map((ref) => ref.current),
       {
         opacity: 1,
         duration: DURATIONS.foldersFadeIn,
         ease: "power2.out", // Smooth easing
-        stagger: 0.3, // Smooth stagger voor mobile
+        stagger: 0.2, // Smooth stagger for elegant appearance
       },
       `+=${DELAYS.afterTitle}`
     );
@@ -209,7 +212,7 @@ function AnimatedFolderStack() {
         );
       });
 
-      // PHASE 4: Desktop - Folders move to final positions - Smooth
+      // PHASE 5: Desktop - Folders move to final positions - ORIGINAL FLOW
       tl.to(
         folderRefs.current[0].current,
         {
@@ -253,36 +256,36 @@ function AnimatedFolderStack() {
       );
     }
 
-    // PHASE 5: Pause for viewing
+    // PHASE 6: Pause for viewing - ORIGINAL FLOW
     tl.to({}, { duration: DURATIONS.pause });
 
-    // PHASE 6: Additional viewing time - ULTRA SMOOTH
-    tl.to({}, { duration: 6.0 }); // Much more time to enjoy the final state
+    // PHASE 7: Additional viewing time - FULL ANIMATION VISIBLE
+    tl.to({}, { duration: 8.0 }); // Much more time to enjoy the final state
 
-    // PHASE 7: Fade out title first - ULTRA SMOOTH
+    // PHASE 8: Fade out title first - ORIGINAL FLOW
     tl.to(
       titleRef.current,
       {
         opacity: 0,
-        duration: 5.0, // Much longer fade out
-        ease: "power2.out", // Smoother easing
+        duration: 4.0, // Longer fade out
+        ease: "power2.out", // Smooth easing
       },
       `+=${DELAYS.afterPause}`
     );
 
-    // PHASE 8: Fade out folders with stagger - ULTRA SMOOTH
+    // PHASE 9: Fade out folders with stagger - ORIGINAL FLOW
     tl.to(
       folderRefs.current.map((ref) => ref.current),
       {
         opacity: 0,
         duration: DURATIONS.fadeOut,
-        ease: "power2.out", // Smoother easing
-        stagger: 0.4, // Much longer stagger
+        ease: "power2.out", // Smooth easing
+        stagger: 0.4, // Original stagger
       },
-      "+=0.8" // Meer tijd voor fade out
+      "+=0.8" // More time for fade out
     );
 
-    // PHASE 9: Hide everything
+    // PHASE 10: Hide everything - ORIGINAL FLOW
     tl.to(
       [
         ...folderRefs.current.map((ref) => ref.current),
@@ -303,8 +306,11 @@ function AnimatedFolderStack() {
     return tl;
   };
 
-  // Track mouse X position relative to the section with throttling
+  // Track mouse X position relative to the section with optimized throttling
   let mouseMoveTimeout;
+  let lastMouseX = 0;
+  let lastMouseY = 0;
+  
   function handleMouseMove(e) {
     if (!sectionRef.current) return;
     
@@ -313,10 +319,20 @@ function AnimatedFolderStack() {
     
     mouseMoveTimeout = setTimeout(() => {
       const bounds = sectionRef.current.getBoundingClientRect();
-      setMouseX(e.clientX - bounds.left);
-      setMouseY(e.clientY - bounds.top);
+      const newMouseX = e.clientX - bounds.left;
+      const newMouseY = e.clientY - bounds.top;
+      
+      // Only update if mouse moved significantly (performance optimization)
+      const distance = Math.sqrt((newMouseX - lastMouseX) ** 2 + (newMouseY - lastMouseY) ** 2);
+      if (distance > 10) { // Increased threshold for better performance
+        setMouseX(newMouseX);
+        setMouseY(newMouseY);
+        lastMouseX = newMouseX;
+        lastMouseY = newMouseY;
+      }
+      
       mouseMoveTimeout = null;
-    }, 16); // ~60fps
+    }, 50); // ~20fps for much better performance
   }
 
   function handleMouseLeave() {

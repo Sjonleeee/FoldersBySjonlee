@@ -22,6 +22,7 @@ export default function AboutSection() {
   const skillCardsRef = useRef(null);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [visibleImages, setVisibleImages] = useState([]);
+  const [hoverImagesDisabled, setHoverImagesDisabled] = useState(false);
 
   useEffect(() => {
     if (hasAnimated) return;
@@ -131,6 +132,7 @@ export default function AboutSection() {
         y: -500, // Move up much much more - really disappear
         duration: 8, // Much longer duration for ultra smooth fade
         ease: "power5.inOut", // Ultra smooth easing
+        onComplete: () => setHoverImagesDisabled(true), // Disable hover images after description fadeout
       },
       18.5 // Earlier timing (was 28.5)
     );
@@ -212,109 +214,104 @@ export default function AboutSection() {
     };
   }, [hasAnimated]);
 
-  // Mouse follow effect
+  // Combined mouse tracking effect for both hover images and skill cards
   useEffect(() => {
+    let mouseMoveTimeout;
     let lastMouseX = 0;
     let lastMouseY = 0;
     let currentImageIndex = 0;
 
     const handleMouseMove = (e) => {
-      const rect = containerRef.current?.getBoundingClientRect();
-      if (!rect) return;
+      // Throttle mouse events for better performance
+      if (mouseMoveTimeout) return;
+      
+      mouseMoveTimeout = setTimeout(() => {
+        const rect = containerRef.current?.getBoundingClientRect();
+        if (!rect) return;
 
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-      // Check if mouse moved enough to trigger new image
-      const distance = Math.sqrt((x - lastMouseX) ** 2 + (y - lastMouseY) ** 2);
+        // === HOVER IMAGES EFFECT (only active when not disabled) ===
+        // Check if mouse moved enough to trigger new image
+        const distance = Math.sqrt((x - lastMouseX) ** 2 + (y - lastMouseY) ** 2);
 
-      if (distance > 60) {
-        // Add new image at mouse position
-        const newImage = {
-          id: Date.now(),
-          src: mouseImages[currentImageIndex],
-          x: x - 75,
-          y: y - 75,
-          index: currentImageIndex,
-        };
+        if (distance > 60 && !hoverImagesDisabled) {
+          // Add new image at mouse position
+          const newImage = {
+            id: Date.now(),
+            src: mouseImages[currentImageIndex],
+            x: x - 75,
+            y: y - 75,
+            index: currentImageIndex,
+          };
 
-        setVisibleImages((prev) => [...prev, newImage]);
+          setVisibleImages((prev) => [...prev, newImage]);
 
-        // Remove image after delay
-        setTimeout(() => {
-          setVisibleImages((prev) =>
-            prev.filter((img) => img.id !== newImage.id)
-          );
-        }, 1200);
+          // Remove image after delay
+          setTimeout(() => {
+            setVisibleImages((prev) =>
+              prev.filter((img) => img.id !== newImage.id)
+            );
+          }, 1200);
 
-        // Move to next image
-        currentImageIndex = (currentImageIndex + 1) % mouseImages.length;
+          // Move to next image
+          currentImageIndex = (currentImageIndex + 1) % mouseImages.length;
+        }
+
+        // === SKILL CARDS 3D EFFECT (only when skill cards are visible) ===
+        const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
+        if (skillCards && skillCards.length > 0) {
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        // Only update if mouse moved significantly (performance optimization)
+          const cardDistance = Math.sqrt((mouseX - lastMouseX) ** 2 + (mouseY - lastMouseY) ** 2);
+          if (cardDistance > 10) {
+        // Calculate center of container
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // Calculate mouse position relative to center
+        const relativeX = mouseX - centerX;
+        const relativeY = mouseY - centerY;
+
+        // Calculate rotation based on mouse position
+        const maxRotation = 15; // Maximum rotation in degrees
+        const rotateX = -(relativeY / centerY) * maxRotation;
+        const rotateY = (relativeX / centerX) * maxRotation;
+
+        // Apply 3D transform to each skill card while preserving their skewed position
+        skillCards.forEach((card, index) => {
+          // Get the current skewed position from CSS
+          const isLeftCard = index === 0;
+          const baseX = isLeftCard ? -50 : 50; // Left card: -50px, Right card: 50px
+          const baseY = isLeftCard ? -20 : 20;  // Left card: -20px, Right card: 20px
+          const baseRotateZ = isLeftCard ? 5 : -5; // Left card: 5deg, Right card: -5deg
+          
+          card.style.transform = `
+            perspective(1000px)
+            translateX(${baseX}px)
+            translateY(${baseY}px)
+            rotateZ(${baseRotateZ}deg)
+            rotateX(${rotateX}deg)
+            rotateY(${rotateY}deg)
+            translateZ(20px)
+          `;
+        });
+          }
+        }
 
         lastMouseX = x;
         lastMouseY = y;
-      }
+        mouseMoveTimeout = null;
+      }, 32); // ~30fps for better performance
     };
 
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener("mousemove", handleMouseMove);
-
-      return () => {
-        container.removeEventListener("mousemove", handleMouseMove);
-      };
-    }
-  }, []);
-
-  // 3D mouse tracking effect for skill cards
-  useEffect(() => {
-    const handleSkillCardMouseMove = (e) => {
+    const handleMouseLeave = () => {
+      // Reset skill cards to original position
       const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
-      if (!skillCards) return;
-
-      const rect = containerRef.current?.getBoundingClientRect();
-      if (!rect) return;
-
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-
-      // Calculate center of container
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      // Calculate mouse position relative to center
-      const relativeX = mouseX - centerX;
-      const relativeY = mouseY - centerY;
-
-      // Calculate rotation based on mouse position
-      const maxRotation = 15; // Maximum rotation in degrees
-      const rotateX = -(relativeY / centerY) * maxRotation;
-      const rotateY = (relativeX / centerX) * maxRotation;
-
-      // Apply 3D transform to each skill card while preserving their skewed position
-      skillCards.forEach((card, index) => {
-        // Get the current skewed position from CSS
-        const isLeftCard = index === 0;
-        const baseX = isLeftCard ? -50 : 50; // Left card: -50px, Right card: 50px
-        const baseY = isLeftCard ? -20 : 20;  // Left card: -20px, Right card: 20px
-        const baseRotateZ = isLeftCard ? 5 : -5; // Left card: 5deg, Right card: -5deg
-        
-        card.style.transform = `
-          perspective(1000px)
-          translateX(${baseX}px)
-          translateY(${baseY}px)
-          rotateZ(${baseRotateZ}deg)
-          rotateX(${rotateX}deg)
-          rotateY(${rotateY}deg)
-          translateZ(20px)
-        `;
-      });
-    };
-
-    const handleSkillCardMouseLeave = () => {
-      const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
-      if (!skillCards) return;
-
-      // Reset to original skewed position
+      if (skillCards) {
       skillCards.forEach((card, index) => {
         const isLeftCard = index === 0;
         const baseX = isLeftCard ? -50 : 50;
@@ -331,19 +328,20 @@ export default function AboutSection() {
           translateZ(0px)
         `;
       });
+      }
     };
 
     const container = containerRef.current;
     if (container) {
-      container.addEventListener("mousemove", handleSkillCardMouseMove);
-      container.addEventListener("mouseleave", handleSkillCardMouseLeave);
+      container.addEventListener("mousemove", handleMouseMove);
+      container.addEventListener("mouseleave", handleMouseLeave);
 
       return () => {
-        container.removeEventListener("mousemove", handleSkillCardMouseMove);
-        container.removeEventListener("mouseleave", handleSkillCardMouseLeave);
+        container.removeEventListener("mousemove", handleMouseMove);
+        container.removeEventListener("mouseleave", handleMouseLeave);
       };
     }
-  }, []);
+  }, [hoverImagesDisabled]);
 
   return (
     <section className="about-section" ref={sectionRef}>

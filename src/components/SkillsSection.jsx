@@ -65,8 +65,8 @@ export default function SkillsSection() {
         }
       }, 1);
 
-      // Phase 3: Pause for reading cards
-      tl.to({}, { duration: 6 }, 2);
+      // Phase 3: Pause for reading cards (shorter)
+      tl.to({}, { duration: 4 }, 2);
 
       // Phase 4: Cards fade out
       tl.to(skillCardsRef.current, {
@@ -74,10 +74,10 @@ export default function SkillsSection() {
         y: -50,
         duration: 1.5,
         ease: "power2.inOut",
-      }, 8);
+      }, 6);
 
-      // Phase 5: Final pause to ensure complete fade
-      tl.to({}, { duration: 1 }, 9.5);
+      // Phase 5: Final pause to ensure complete fade (shorter)
+      tl.to({}, { duration: 0.5 }, 7.5);
 
       // Note: Section will be hidden by ScrollTrigger onLeave callback
       // instead of hiding it here to allow Latest Projects section to be visible

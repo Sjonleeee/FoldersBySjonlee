@@ -3,13 +3,17 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import FolderLanding from "../components/FolderLanding";
 import OnePager from "../components/OnePager";
+import AllProjectsPage from "./AllProjectsPage";
+
 
 export default function MainPage() {
   const [folderOpen, setFolderOpen] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
   const [isScrollBlocked, setIsScrollBlocked] = useState(true);
   const showScrollIndicator = true;
   const headerRef = useRef(null);
   const footerRef = useRef(null);
+
 
   const handleOpen = () => {
     setFolderOpen(true);
@@ -17,7 +21,10 @@ export default function MainPage() {
 
   const handleBackToLanding = () => {
     setFolderOpen(false);
+    setShowAllProjects(false);
   };
+
+
 
   const handleAnimationsComplete = () => {
     setIsScrollBlocked(false);
@@ -50,6 +57,10 @@ export default function MainPage() {
 
   if (!folderOpen) {
     return <FolderLanding onOpen={handleOpen} />;
+  }
+
+  if (showAllProjects) {
+    return <AllProjectsPage />;
   }
 
   return (

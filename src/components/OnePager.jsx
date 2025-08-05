@@ -6,9 +6,9 @@ import HeroSection from "./sections/HeroSection";
 import StatsSection from "../components/StatsSection";
 import AboutSection from "../pages/AboutSection";
 import AnimatedFolderStack from "../components/AnimatedFolderStack";
-import { createEntranceAnimations } from "./animations/EntranceAnimations";
-import { createScrollTriggerManager } from "./animations/ScrollTriggerManager";
 import CompaniesSection from "./sections/CompaniesSection";
+import { createEntranceAnimations } from "./animations/EntranceAnimations";
+import { ONEPAGER_CONFIG, FADE_OUT_CONFIG } from "../config/animationConfig";
 import "../styles/onepager.css";
 
 // Register ScrollTrigger plugin
@@ -63,8 +63,6 @@ export default function OnePager({
 
     // Function to create scroll trigger
     const createScrollTrigger = () => {
-      // Don't create ScrollTrigger immediately
-      // Wait for user to actually start scrolling
       let scrollTriggerCreated = false;
 
       const handleScroll = () => {
@@ -76,10 +74,10 @@ export default function OnePager({
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top top",
-              end: "+=1600%", // Verhoogd van 1400% naar 1600% voor Companies section
-              scrub: 2, // Very smooth scrub for nice scrolling
+              end: ONEPAGER_CONFIG.scrollSpace,
+              scrub: ONEPAGER_CONFIG.scrub,
               pin: true,
-              pinSpacing: false, // Prevents overlap
+              pinSpacing: false,
               markers: true,
             },
           });
@@ -88,7 +86,7 @@ export default function OnePager({
 
           // PHASE 1: Main Page Parallax Timeline
           const mainPageTl = gsap.timeline();
-          
+
           mainPageTl.set(videoSectionRef.current, {
             opacity: 0,
             scale: 0.5,
@@ -101,40 +99,52 @@ export default function OnePager({
             ease: "power2.inOut",
           });
 
-          mainPageTl.to(developerRef.current, {
-            x: "100vw",
-            y: "20vh",
-            duration: 6,
-            ease: "power2.inOut",
-          }, "<");
+          mainPageTl.to(
+            developerRef.current,
+            {
+              x: "100vw",
+              y: "20vh",
+              duration: 6,
+              ease: "power2.inOut",
+            },
+            "<"
+          );
 
-          mainPageTl.to([
-            topLeftRef.current,
-            topCenterRef.current,
-            topRightRef.current,
-            bottomLeftRef.current,
-            bottomRightRef.current,
-            midRightRef.current,
-            bottomCenterRef.current,
-          ], {
-            opacity: 0,
-            y: (i) => (i % 2 === 0 ? "-15vh" : "15vh"),
-            duration: 6,
-            ease: "power2.inOut",
-            stagger: 0.3,
-          }, "<");
+          mainPageTl.to(
+            [
+              topLeftRef.current,
+              topCenterRef.current,
+              topRightRef.current,
+              bottomLeftRef.current,
+              bottomRightRef.current,
+              midRightRef.current,
+              bottomCenterRef.current,
+            ],
+            {
+              opacity: 0,
+              y: (i) => (i % 2 === 0 ? "-15vh" : "15vh"),
+              duration: 6,
+              ease: "power2.inOut",
+              stagger: 0.3,
+            },
+            "<"
+          );
 
-          mainPageTl.to(folderRef.current, {
-            opacity: 0,
-            scale: 0.5,
-            y: "-30vh",
-            duration: 6,
-            ease: "power2.inOut",
-          }, "<");
+          mainPageTl.to(
+            folderRef.current,
+            {
+              opacity: 0,
+              scale: 0.5,
+              y: "-30vh",
+              duration: 6,
+              ease: "power2.inOut",
+            },
+            "<"
+          );
 
           // PHASE 2: StatsSection Timeline
           const statsTl = gsap.timeline();
-          
+
           statsTl.to(videoSectionRef.current, {
             opacity: 1,
             scale: 1,
@@ -145,38 +155,54 @@ export default function OnePager({
 
           const isMobile = window.innerWidth <= 900;
           if (!isMobile) {
-            statsTl.to(".stats-side.left", {
-              x: 0,
-              opacity: 1,
-              duration: 4,
-              ease: "power2.out",
-            }, "<");
+            statsTl.to(
+              ".stats-side.left",
+              {
+                x: 0,
+                opacity: 1,
+                duration: 4,
+                ease: "power2.out",
+              },
+              "<"
+            );
 
-            statsTl.to(".stats-side.right", {
-              x: 0,
-              opacity: 1,
-              duration: 4,
-              ease: "power2.out",
-            }, "<");
+            statsTl.to(
+              ".stats-side.right",
+              {
+                x: 0,
+                opacity: 1,
+                duration: 4,
+                ease: "power2.out",
+              },
+              "<"
+            );
           }
 
-          statsTl.to(".stats-laptop-stack", {
-            scale: 1,
-            opacity: 1,
-            duration: 4,
-            ease: "power2.out",
-          }, "<");
+          statsTl.to(
+            ".stats-laptop-stack",
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 4,
+              ease: "power2.out",
+            },
+            "<"
+          );
 
-          statsTl.to(modelRef.current, {
-            opacity: 0,
-            y: "25vh",
-            duration: 6,
-            ease: "power2.inOut",
-          }, "<");
+          statsTl.to(
+            modelRef.current,
+            {
+              opacity: 0,
+              y: "25vh",
+              duration: 6,
+              ease: "power2.inOut",
+            },
+            "<"
+          );
 
           // PHASE 3: Transition Timeline (StatsSection fade out, AboutSection appear)
           const transitionTl = gsap.timeline();
-          
+
           transitionTl.to(videoSectionRef.current, {
             opacity: 0,
             y: "-50vh",
@@ -184,23 +210,35 @@ export default function OnePager({
             ease: "power2.inOut",
           });
 
-          transitionTl.to(folderRef.current, {
-            className: "folder-icon-container",
-            duration: 0,
-          }, "<");
+          transitionTl.to(
+            folderRef.current,
+            {
+              className: "folder-icon-container",
+              duration: 0,
+            },
+            "<"
+          );
 
-          transitionTl.to(folderRef.current, {
-            opacity: 0,
-            duration: 2,
-            ease: "power2.inOut",
-          }, "<");
+          transitionTl.to(
+            folderRef.current,
+            {
+              opacity: 0,
+              duration: 2,
+              ease: "power2.inOut",
+            },
+            "<"
+          );
 
-          transitionTl.to(aboutSectionRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 5,
-            ease: "power2.out",
-          }, "+=2");
+          transitionTl.to(
+            aboutSectionRef.current,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 5,
+              ease: "power2.out",
+            },
+            "+=2"
+          );
 
           // PHASE 4: AboutSection Timeline (handled by AboutSection component)
           const aboutTl = gsap.timeline();
@@ -208,22 +246,22 @@ export default function OnePager({
 
           // PHASE 5: AboutSection Fade Out Timeline
           const aboutFadeOutTl = gsap.timeline();
-          
+
           aboutFadeOutTl.to(aboutSectionRef.current, {
             opacity: 0,
             y: "-50vh",
-            duration: 5,
-            ease: "power2.inOut",
+            duration: 8, // Langere fade out
+            ease: "power3.inOut", // Soepelere easing
           });
 
           // PHASE 6: Latest Projects Timeline
           const latestProjectsTl = gsap.timeline();
-          
+
           latestProjectsTl.to(latestProjectsRef.current, {
             opacity: 1,
             y: 0,
-            duration: 3,
-            ease: "power2.out",
+            duration: 8, // Langere duration voor smooth fade in
+            ease: "power3.out", // Soepelere easing
           });
 
           // PHASE 7: Latest Projects Animation Timeline (handled by component)
@@ -232,28 +270,40 @@ export default function OnePager({
 
           // PHASE 8: Latest Projects Fade Out Timeline
           const latestProjectsFadeOutTl = gsap.timeline();
-          
+
           latestProjectsFadeOutTl.to(latestProjectsRef.current, {
             opacity: 0,
             y: "50vh",
-            duration: 1.2,
+            duration: FADE_OUT_CONFIG.latestProjects,
             ease: "power2.inOut",
           });
 
-          latestProjectsFadeOutTl.to(folderRef.current, {
-            className: "folder-icon-container absolute-center pointer-events-none",
-            opacity: 1,
-            duration: 1,
-            ease: "power2.inOut",
-          }, "<");
+          latestProjectsFadeOutTl.to(
+            folderRef.current,
+            {
+              className:
+                "folder-icon-container absolute-center pointer-events-none",
+              opacity: 1,
+              duration: 1,
+              ease: "power2.inOut",
+            },
+            "<"
+          );
 
           // PHASE 9: Companies Section Timeline
           const companiesTl = gsap.timeline();
-          companiesTl.set(companiesSectionRef.current, { opacity: 0, y: 100 });
+
+          companiesTl.set(companiesSectionRef.current, {
+            opacity: 0,
+            y: 100,
+            pointerEvents: "none",
+          });
+
           companiesTl.to(companiesSectionRef.current, {
             opacity: 1,
             y: 0,
-            duration: 2,
+            pointerEvents: "auto",
+            duration: FADE_OUT_CONFIG.companies,
             ease: "power2.out",
           });
 
@@ -263,15 +313,24 @@ export default function OnePager({
 
           // ===== ADD ALL TIMELINES TO MAIN TIMELINE =====
           mainTl.add(mainPageTl, 0);
-          mainTl.add(statsTl, "+=2");
-          mainTl.add(transitionTl, "+=8");
-          mainTl.add(aboutTl, "+=2");
-          mainTl.add(aboutFadeOutTl, "+=3");
-          mainTl.add(latestProjectsTl, "+=0.5");
-          mainTl.add(latestProjectsAnimTl, "+=2");
-          mainTl.add(latestProjectsFadeOutTl, "+=0.5");
-          mainTl.add(companiesTl, "+=0"); // Direct na fadeout, geen delay
-          mainTl.add(finalTl, "+=0.5");
+          mainTl.add(statsTl, ONEPAGER_CONFIG.delays.afterStats);
+          mainTl.add(transitionTl, ONEPAGER_CONFIG.delays.afterTransition);
+          mainTl.add(aboutTl, ONEPAGER_CONFIG.delays.afterAbout);
+          mainTl.add(aboutFadeOutTl, ONEPAGER_CONFIG.delays.afterAboutFadeOut);
+          mainTl.add(
+            latestProjectsTl,
+            ONEPAGER_CONFIG.delays.afterLatestProjects
+          );
+          mainTl.add(
+            latestProjectsAnimTl,
+            ONEPAGER_CONFIG.delays.afterLatestProjectsAnim
+          );
+          mainTl.add(
+            latestProjectsFadeOutTl,
+            ONEPAGER_CONFIG.delays.afterLatestProjectsFadeOut
+          );
+          mainTl.add(companiesTl, ONEPAGER_CONFIG.delays.afterCompanies);
+          mainTl.add(finalTl, ONEPAGER_CONFIG.delays.afterFinal);
 
           // Remove scroll listener after creating ScrollTrigger
           window.removeEventListener("scroll", handleScroll);
@@ -327,7 +386,21 @@ export default function OnePager({
               </section>
             </div>
           </div>
-
+          <div
+            ref={videoSectionRef}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              opacity: 0,
+              transform: "scale(0.5)",
+              zIndex: 40,
+            }}
+          >
+            <StatsSection />
+          </div>
           {/* AboutSection - Hidden initially */}
           <div
             ref={aboutSectionRef}
@@ -340,11 +413,11 @@ export default function OnePager({
               opacity: 0,
               transform: "translateY(100vh)",
               zIndex: 50,
-              backgroundColor: "rgba(255, 0, 0, 0.3)", // Rood voor AboutSection
             }}
           >
             <AboutSection />
           </div>
+          {/* Video Section - Hidden initially */}
 
           {/* Latest Projects - Hidden initially */}
           <div
@@ -380,24 +453,6 @@ export default function OnePager({
             }}
           >
             <CompaniesSection />
-          </div>
-
-          {/* Video Section - Hidden initially */}
-          <div
-            ref={videoSectionRef}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              opacity: 0,
-              transform: "scale(0.5)",
-              zIndex: 40,
-              backgroundColor: "rgba(0, 0, 255, 0.3)", // Blauw voor Video Section
-            }}
-          >
-            <StatsSection />
           </div>
         </div>
       </div>

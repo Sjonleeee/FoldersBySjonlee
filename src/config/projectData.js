@@ -9,24 +9,36 @@ export const projects = [
     slug: "volkswagenproject",
     title: "Volkswagen Project",
     image: volkswagen,
-    body: ["Volkswagen Project content."],
-    tags: ["Graphic design", "Posters", "Clothing"],
+    body: [
+      "A comprehensive branding project for Volkswagen, focusing on modern automotive design principles.",
+      "Created visual identity elements including logos, color schemes, and marketing materials that reflect Volkswagen's heritage while embracing contemporary design trends.",
+      "The project involved extensive research into automotive industry standards and consumer preferences."
+    ],
+    tags: ["Graphic design", "Branding", "Automotive"],
     dropcap: "V",
   },
   {
     slug: "chromemagazine",
     title: "Chrome Magazine",
     image: project1Img,
-    body: ["Chrome Magazine content."],
-    tags: ["Magazine", "Design"],
+    body: [
+      "Editorial design project for Chrome Magazine, a cutting-edge publication focused on technology and innovation.",
+      "Designed layouts, typography, and visual elements that capture the dynamic nature of the tech industry.",
+      "Collaborated with writers and photographers to create compelling visual narratives."
+    ],
+    tags: ["Magazine", "Editorial", "Typography"],
     dropcap: "C",
   },
   {
     slug: "rinkitoucreativeagency",
     title: "Rinkitou Creative Agency",
     image: project1Img,
-    body: ["Rinkitou Creative Agency content."],
-    tags: ["Agency", "Branding"],
+    body: [
+      "Founded and designed the complete brand identity for Rinkitou Creative Agency.",
+      "Developed a comprehensive visual system including logo design, color palette, typography, and brand guidelines.",
+      "Created marketing materials, website design, and business collateral that established the agency's professional presence."
+    ],
+    tags: ["Agency", "Branding", "Entrepreneurship"],
     dropcap: "R",
   },
   {

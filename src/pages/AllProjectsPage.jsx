@@ -327,4 +327,4 @@ export default function AllProjectsPage() {
       </main>
     </div>
   );
-}
+} 

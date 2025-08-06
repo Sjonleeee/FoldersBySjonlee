@@ -392,3 +392,89 @@
     gap: 2rem;
   }
 }
+
+
+/* =====================
+   Contact Section
+   ===================== */
+.contact-section {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+.contact-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+.contact-title {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 4rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 16px #000, 0 1px 0 #fff;
+}
+.contact-icons {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.contact-icon {
+  font-size: 2.2rem;
+  color: #fff;
+  transition: color 0.2s, transform 0.2s;
+}
+.contact-icon:hover {
+  color: #e0bfff;
+  transform: scale(1.15);
+}
+.contact-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.contact-input, .contact-textarea {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  background: #181818;
+  color: #fff;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px #0004;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+.contact-input:focus, .contact-textarea:focus {
+  box-shadow: 0 0 0 2px #e0bfff;
+}
+.contact-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+.contact-submit {
+  background: linear-gradient(90deg, #e0bfff 0%, #a18cd1 100%);
+  color: #181818;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 1.2rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.contact-submit:hover {
+  background: linear-gradient(90deg, #a18cd1 0%, #e0bfff 100%);
+  color: #fff;
+}

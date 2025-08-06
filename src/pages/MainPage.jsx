@@ -4,6 +4,7 @@ import Footer from "../layout/Footer";
 import FolderLanding from "../components/FolderLanding";
 import OnePager from "../components/OnePager";
 import AllProjectsPage from "./AllProjectsPage";
+import ContactSection from "../components/sections/ContactSection";
 
 
 export default function MainPage() {
@@ -110,6 +111,12 @@ export default function MainPage() {
         }}>
           <CompaniesSection />
         </section> */}
+        <section style={{ minHeight: "100vh", position: "relative" }}>
+          <CompaniesSection />
+        </section>
+        <section style={{ minHeight: "100vh", position: "relative" }}>
+          <ContactSection />
+        </section>
         
         {/* ContactSection - HIDDEN */}
         {/* <section style={{ 

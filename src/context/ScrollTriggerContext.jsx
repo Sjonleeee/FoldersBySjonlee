@@ -84,31 +84,48 @@ export const ScrollTriggerProvider = ({ children }) => {
 
   // Add section-specific animations
   const addSectionAnimations = (tl, section, sectionType) => {
+    // Added GPU-accelerated properties and optimized easing for Companies section
     if (sectionType === "COMPANIES") {
-      tl.fromTo(section, {
-        opacity: 0,
-        y: 50,
-      }, {
-        opacity: 1,
-        y: 0,
-        duration: COMPANIES_CONFIG.durations.titleFadeIn,
-        ease: COMPANIES_CONFIG.fadeInEase,
-      });
-      tl.fromTo(section.querySelectorAll(".company-item"), {
-        opacity: 0,
-        y: 50,
-      }, {
-        opacity: 1,
-        y: 0,
-        stagger: COMPANIES_CONFIG.stagger,
-        duration: COMPANIES_CONFIG.durations.itemsFadeIn,
-        ease: COMPANIES_CONFIG.fadeInEase,
-      });
-      tl.to(section, {
-        opacity: 0,
-        duration: COMPANIES_CONFIG.durations.fadeOut,
-        ease: COMPANIES_CONFIG.fadeOutEase,
-      });
+      tl.fromTo(
+        section,
+        {
+          opacity: 0,
+          y: 50,
+          willChange: "transform, opacity", // GPU optimization
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: COMPANIES_CONFIG.durations.titleFadeIn,
+          ease: COMPANIES_CONFIG.fadeInEase,
+          willChange: "transform, opacity",
+        }
+      );
+      tl.fromTo(
+        section.querySelectorAll(".company-item"),
+        {
+          opacity: 0,
+          y: 50,
+          willChange: "transform, opacity", // GPU optimization
+        },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: COMPANIES_CONFIG.stagger,
+          duration: COMPANIES_CONFIG.durations.itemsFadeIn,
+          ease: COMPANIES_CONFIG.fadeInEase,
+          willChange: "transform, opacity",
+        }
+      );
+      tl.to(
+        section,
+        {
+          opacity: 0,
+          duration: COMPANIES_CONFIG.durations.fadeOut,
+          ease: COMPANIES_CONFIG.fadeOutEase,
+          willChange: "opacity",
+        }
+      );
     }
   };
 

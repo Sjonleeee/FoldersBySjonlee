@@ -96,7 +96,8 @@ export default function OnePager({
             x: "-100vw",
             y: "-20vh",
             duration: 6,
-            ease: "power2.inOut",
+            ease: "power3.out", // Smoother easing
+            willChange: "transform", // GPU optimization
           });
 
           mainPageTl.to(
@@ -105,7 +106,8 @@ export default function OnePager({
               x: "100vw",
               y: "20vh",
               duration: 6,
-              ease: "power2.inOut",
+              ease: "power3.out",
+              willChange: "transform",
             },
             "<"
           );
@@ -124,8 +126,9 @@ export default function OnePager({
               opacity: 0,
               y: (i) => (i % 2 === 0 ? "-15vh" : "15vh"),
               duration: 6,
-              ease: "power2.inOut",
+              ease: "power3.out",
               stagger: 0.3,
+              willChange: "transform, opacity",
             },
             "<"
           );
@@ -137,7 +140,8 @@ export default function OnePager({
               scale: 0.5,
               y: "-30vh",
               duration: 6,
-              ease: "power2.inOut",
+              ease: "power3.out",
+              willChange: "transform, opacity",
             },
             "<"
           );

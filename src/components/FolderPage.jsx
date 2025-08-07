@@ -1,5 +1,4 @@
 
-import React, { useRef } from "react";
 import folderIcon from "../assets/images/folder.svg";
 import ModelCanvas from "../components/ModelCanvas";
 import StatsSection from "../components/StatsSection";

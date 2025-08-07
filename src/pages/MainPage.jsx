@@ -5,7 +5,6 @@ import FolderLanding from "../components/FolderLanding";
 import OnePager from "../components/OnePager";
 import AllProjectsPage from "./AllProjectsPage";
 
-
 export default function MainPage() {
   const [folderOpen, setFolderOpen] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
@@ -13,7 +12,6 @@ export default function MainPage() {
   const showScrollIndicator = true;
   const headerRef = useRef(null);
   const footerRef = useRef(null);
-
 
   const handleOpen = () => {
     setFolderOpen(true);
@@ -24,34 +22,34 @@ export default function MainPage() {
     setShowAllProjects(false);
   };
 
-
-
   const handleAnimationsComplete = () => {
     setIsScrollBlocked(false);
     // Re-enable scrolling on body and html
-    document.body.style.overflow = 'auto';
-    document.documentElement.style.overflow = 'auto';
-    document.body.classList.remove('scroll-blocked');
+    document.body.style.overflow = "auto";
+    document.documentElement.style.overflow = "auto";
+    document.body.classList.remove("scroll-blocked");
   };
 
   // Block scrolling when component mounts
   useEffect(() => {
     if (folderOpen && isScrollBlocked) {
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-      document.body.classList.add('scroll-blocked');
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+      document.body.classList.add("scroll-blocked");
     } else {
-      document.body.style.overflow = 'auto';
-      document.documentElement.style.overflow = 'auto';
-      document.body.classList.remove('scroll-blocked');
+      document.body.style.overflow = "auto";
+      document.documentElement.style.overflow = "auto";
+      document.body.classList.remove("scroll-blocked");
     }
   }, [folderOpen, isScrollBlocked]);
 
   // Performance optimization: Reduce motion for users who prefer it
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     if (prefersReducedMotion) {
-      document.body.classList.add('reduced-motion');
+      document.body.classList.add("reduced-motion");
     }
   }, []);
 
@@ -66,14 +64,14 @@ export default function MainPage() {
   return (
     <div
       className="onepager-root"
-      style={{ 
-        width: "100%", 
+      style={{
+        width: "100%",
         overflowX: "hidden",
         overflowY: isScrollBlocked ? "hidden" : "auto",
         height: isScrollBlocked ? "100vh" : "auto",
         // Cosmos-stijl smooth scroll
         scrollBehavior: "smooth",
-        WebkitOverflowScrolling: "touch"
+        WebkitOverflowScrolling: "touch",
       }}
     >
       {/* Header */}
@@ -92,31 +90,18 @@ export default function MainPage() {
 
       <div className="onepager-content">
         {/* OnePager with all animations */}
-        <section style={{ 
-          minHeight: "100vh", // Veel meer ruimte voor alle animaties
-          position: "relative"
-        }}>
-          <OnePager 
-            headerRef={headerRef} 
+        <section
+          style={{
+            minHeight: "100vh", // Veel meer ruimte voor alle animaties
+            position: "relative",
+          }}
+        >
+          <OnePager
+            headerRef={headerRef}
             footerRef={footerRef}
             onAnimationsComplete={handleAnimationsComplete}
           />
         </section>
-        
-        {/* CompaniesSection - HIDDEN */}
-        {/* <section style={{ 
-          minHeight: "100vh", 
-          position: "relative"
-        }}>
-          <CompaniesSection />
-        </section> */}
-        
-        {/* ContactSection - HIDDEN */}
-        {/* <section style={{ 
-          minHeight: "100vh" // Full height for end section
-        }}>
-          <ContactSection />
-        </section> */}
       </div>
 
       {/* Footer */}

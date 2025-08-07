@@ -207,7 +207,7 @@ export default function OnePager({
             opacity: 0,
             y: "-50vh",
             duration: 5,
-            ease: "power2.inOut",
+            ease: "power3.inOut",
           });
 
           transitionTl.to(
@@ -224,7 +224,7 @@ export default function OnePager({
             {
               opacity: 0,
               duration: 2,
-              ease: "power2.inOut",
+              ease: "power3.inOut",
             },
             "<"
           );
@@ -235,7 +235,7 @@ export default function OnePager({
               opacity: 1,
               y: 0,
               duration: 5,
-              ease: "power2.out",
+              ease: "power3.out",
             },
             "+=2"
           );
@@ -273,22 +273,10 @@ export default function OnePager({
 
           latestProjectsFadeOutTl.to(latestProjectsRef.current, {
             opacity: 0,
-            y: "50vh",
-            duration: FADE_OUT_CONFIG.latestProjects,
-            ease: "power2.inOut",
+            y: "-50vh", // Adjusted to move upwards instead of downwards
+            duration: 6, // Keep the smooth duration
+            ease: "power3.inOut", // Smoother easing
           });
-
-          latestProjectsFadeOutTl.to(
-            folderRef.current,
-            {
-              className:
-                "folder-icon-container absolute-center pointer-events-none",
-              opacity: 1,
-              duration: 1,
-              ease: "power2.inOut",
-            },
-            "<"
-          );
 
           // PHASE 9: Companies Section Timeline
           const companiesTl = gsap.timeline();
@@ -303,8 +291,8 @@ export default function OnePager({
             opacity: 1,
             y: 0,
             pointerEvents: "auto",
-            duration: FADE_OUT_CONFIG.companies,
-            ease: "power2.out",
+            duration: 6, // Adjusted duration for smoother fade in
+            ease: "power3.out", // Smoother easing
           });
 
           // PHASE 10: Final Timeline
@@ -431,7 +419,6 @@ export default function OnePager({
               opacity: 0,
               transform: "translateY(100vh)",
               zIndex: 60,
-              backgroundColor: "rgba(0, 255, 0, 0.3)", // Groen voor Latest Projects
             }}
           >
             <AnimatedFolderStack />
@@ -448,8 +435,7 @@ export default function OnePager({
               height: "100%",
               opacity: 0,
               zIndex: 70,
-              pointerEvents: "none", // wordt true als zichtbaar
-              backgroundColor: "rgba(255, 255, 0, 0.3)", // Geel voor Companies Section
+              transform: "translateY(100vh)",
             }}
           >
             <CompaniesSection />

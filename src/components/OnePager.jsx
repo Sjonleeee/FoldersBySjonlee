@@ -6,7 +6,7 @@ import HeroSection from "./sections/HeroSection";
 import StatsSection from "../components/StatsSection";
 import AboutSection from "../pages/AboutSection";
 import AnimatedFolderStack from "../components/AnimatedFolderStack";
-import CompaniesSection from "./sections/CompaniesSection";
+import ContactSection from "../pages/ContactSection";
 import { createEntranceAnimations } from "./animations/EntranceAnimations";
 import { ONEPAGER_CONFIG, FADE_OUT_CONFIG } from "../config/animationConfig";
 import "../styles/onepager.css";
@@ -442,7 +442,7 @@ export default function OnePager({
               transform: "translateY(100vh)",
             }}
           >
-            <CompaniesSection />
+            <ContactSection />
           </div>
         </div>
       </div>

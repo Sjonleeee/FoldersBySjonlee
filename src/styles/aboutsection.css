@@ -1,6 +1,8 @@
-/* About Section - Clean Centered Design */
+/* -----------------------------
+   ABOUT SECTION - CLEAN CENTERED DESIGN
+------------------------------ */
 .about-section {
-  min-height: 100vh;
+  min-height: 100%;
   position: relative;
   overflow: hidden;
   opacity: 1;
@@ -17,19 +19,22 @@
   overflow: hidden;
 }
 
+/* -----------------------------
+   PROFILE IMAGE
+------------------------------ */
 .about-image-container {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 50;
   width: 400px;
   height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translate(-50%, -50%);
+  z-index: 50;
   opacity: 1;
-  pointer-events: none; /* Allow mouse events to pass through */
+  pointer-events: none;
 }
 
 .about-profile-image {
@@ -39,25 +44,25 @@
   object-position: center;
   border-radius: 8px;
   z-index: 100;
+  pointer-events: none;
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none; /* Allow mouse events to pass through */
 }
 
 .about-mouse-image {
   position: absolute;
-  width: auto;
-  height: auto;
   max-width: 300px;
   max-height: 300px;
+  width: auto;
+  height: auto;
   object-fit: cover;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, opacity;
   filter: brightness(0.9);
   transform: scale(0.9);
-  opacity: 1; /* Changed from 0 to 1 to make images visible */
+  opacity: 1;
+  z-index: 10;
   pointer-events: none;
-  z-index: 10; /* Original z-index */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  will-change: transform, opacity;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   animation: fadeInOut 1.2s ease-in-out forwards;
 }
 
@@ -65,6 +70,9 @@
   transform: scale(1.05) rotate(1deg);
 }
 
+/* -----------------------------
+   MOUSE IMAGE ANIMATION
+------------------------------ */
 @keyframes fadeInOut {
   0% {
     opacity: 0;
@@ -84,18 +92,21 @@
   }
 }
 
+/* -----------------------------
+   TITLE OVERLAY
+------------------------------ */
 .about-title-overlay {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 200;
-  text-align: center;
   width: auto;
-  pointer-events: none; /* Allow mouse events to pass through */
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translate(-50%, -50%);
+  z-index: 200;
+  text-align: center;
+  pointer-events: none;
   opacity: 1;
 }
 
@@ -106,33 +117,34 @@
   margin: 0;
   letter-spacing: 0.02em;
   line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
-  white-space: nowrap;
-  text-align: center;
   transform: translateY(0px);
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Description Container - inside about section */
+/* -----------------------------
+   DESCRIPTION
+------------------------------ */
 .about-description-container {
   position: absolute;
   top: 42vh;
   left: 50%;
-  transform: translateX(-50%);
-  z-index: 50;
   width: 100%;
   max-width: 800px;
   padding: 0 2rem;
+  transform: translateX(-50%);
+  z-index: 50;
   opacity: 0;
 }
 
 .about-description-content {
   max-width: 800px;
   text-align: center;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 1.5rem;
   border-radius: 8px;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .about-description-content p {
@@ -145,50 +157,52 @@
   transition: all 0.4s ease;
 }
 
-/* =====================
-   Skill Cards
-   ===================== */
-
+/* -----------------------------
+   SKILL CARDS
+------------------------------ */
 .skill-cards-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: fixed; /* Make it span the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  gap: 2rem;
-  z-index: 20;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  z-index: 1000; /* Ensure it appears above everything else */
   opacity: 0;
   pointer-events: none;
 }
 
 .skill-card {
-  background: rgba(15, 169, 177, 0); /* Blue like folders */
+  background: rgba(15, 169, 177, 0);
   backdrop-filter: blur(15px);
   border-radius: 16px;
   padding: 2rem;
-  min-width: 280px;
-  opacity: 0; /* GSAP will control this */
-  transform: translateY(100vh) rotateY(-45deg) rotateX(15deg); /* 3D initial position - from below page */
+  width: 280px;
+  opacity: 0;
+  transform: translateY(100px); /* Start onderaan */
   transform-style: preserve-3d;
   perspective: 5000px;
-
-  /* Glow effect */
-  box-shadow: 0 0 50px 2px rgba(255, 255, 255, 0.6),
-    /* main glow */ 0 0 5px 2px rgba(255, 255, 255, 0.3); /* subtle bigger glow */
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 0 30px 2px rgba(255, 255, 255, 0.6),
+    0 0 5px 2px rgba(255, 255, 255, 0.3);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
 }
 
-.skill-card:nth-child(2) {
-  transform: translateY(100vh) rotateY(45deg) rotateX(-15deg);
-  box-shadow: 0 0 50px 2px rgba(255, 255, 255, 0.6),
-    0 05px 10px rgba(255, 255, 255, 0.3);
+/* Na animatie omhoog en fade in, zonder rotatie */
+.skill-card.animated {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 .skill-card-title {
   font-family: "Hermaiona", cursive, serif;
   font-size: 4rem;
   font-weight: 500;
-  color: #fff; /* White text for blue background */
+  color: #fff;
   margin-bottom: 1.5rem;
   text-align: center;
   letter-spacing: 0.02em;
@@ -218,46 +232,70 @@
   color: #fff;
 }
 
-/* GSAP will handle all animations - no CSS classes needed */
-
-/* Responsive Design */
+/* -----------------------------
+   MOBILE RESPONSIVE
+------------------------------ */
 @media (max-width: 768px) {
+  .about-container {
+    max-width: 90vw;
+    margin: 0 auto;
+  }
+
   .about-image-container {
     width: 280px;
   }
-
   .about-title {
-    font-size: 4rem; /* Reduce title size for mobile */
+    font-size: 4rem;
   }
-  .about-description-container {
-    padding: 0;
+
+  /* About description full width on mobile */
+  .about-description-container,
+  .about-description-content {
+    max-width: 100%;
+    left: 0;
+    padding: 1rem;
+    text-align: center;
+    transform: none;
   }
 
   .about-description-content p {
-    font-size: 1rem; /* Adjust paragraph text size */
-    line-height: 1.5; /* Improve readability */
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0;
   }
 
-  .skill-card-title {
-    font-size: 1.2rem; /* Adjust skill card title size */
-  }
-
-  .skill-list .skill-item {
-    font-size: 0.9rem; /* Adjust skill item text size */
-  }
+  /* Skill cards stacked en gecentreerd zonder rotatie */
   .skill-cards-container {
-    top: 50%;
-    transform: translate(-50%, -50%);
+    width: 100%;
+    position: relative;
+    top: auto;
+    left: auto;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
+    transform: none;
+    pointer-events: auto;
+    opacity: 1 !important;
   }
 
   .skill-card {
-    min-width: 220px;
+    width: 90%; /* Adjust skill card width to fit within full-width container */
+    min-width: unset;
     padding: 1.25rem;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: none !important;
+  }
+
+  .skill-card.animated {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.4s ease, opacity 0.4s ease;
   }
 
   .skill-card-title {
-    font-size: 1.3rem;
+    font-size: 2.5rem;
+    margin: 5px;
   }
 
   .skill-item {
@@ -265,37 +303,36 @@
   }
 }
 
+/* -----------------------------
+   TABLET RESPONSIVE
+------------------------------ */
 @media (min-width: 769px) and (max-width: 1024px) {
   .about-image-container {
     width: 320px;
     height: 400px;
   }
-
   .about-title {
     font-size: 10rem;
   }
-
   .about-mouse-image {
     max-width: 250px;
     max-height: 250px;
   }
 }
 
+/* -----------------------------
+   DESKTOP RESPONSIVE
+------------------------------ */
 @media (min-width: 1025px) {
   .about-image-container {
     width: 400px;
     height: 500px;
   }
-
   .about-title {
     font-size: 10rem;
   }
-
   .about-mouse-image {
     max-width: 300px;
     max-height: 300px;
   }
-}
-
-@media (max-width: 480px) {
 }

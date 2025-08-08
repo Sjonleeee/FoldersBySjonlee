@@ -23,7 +23,9 @@ export const createEntranceAnimations = ({
   gsap.set(headerRef.current, { y: "-100vh", opacity: 0 });
   gsap.set(footerRef.current, { y: "100vh", opacity: 0 });
   gsap.set(modelRef.current, { opacity: 0 });
-  gsap.set(".footer-scroll-card", { opacity: 0 });
+  if (document.querySelector(".footer-scroll-card")) {
+    gsap.set(".footer-scroll-card", { opacity: 0 });
+  }
   gsap.set(
     [
       topLeftRef.current,
@@ -104,4 +106,4 @@ export const createEntranceAnimations = ({
   );
 
   return entranceTl;
-}; 
+};

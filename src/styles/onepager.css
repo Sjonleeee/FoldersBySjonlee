@@ -229,8 +229,6 @@ canvas {
   }
 }
 
-
-
 /* =====================
    Contact Section
    ===================== */
@@ -279,7 +277,7 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.4s ease;
+  transition: all 0.8s ease; /* Increased duration for slower animations */
   backdrop-filter: blur(10px);
   min-height: 120px;
   width: 100%;

@@ -376,17 +376,32 @@ html {
   background: none;
   border-radius: 16px;
   padding: 0.7rem 0 0.7rem 0.2rem;
-  transition: none;
   cursor: pointer;
   text-align: center;
   letter-spacing: 0.09em;
+  transition: color 0.18s, background 0.18s;
 }
-.header-fullscreen-menu .header-dropdown-item .menu-initial {
-  font-family: "Hermaiona", cursive, serif;
-  font-size: 1.2em;
-  font-style: italic;
-  letter-spacing: 0.09em;
-  margin-right: 0.08em;
+.header-fullscreen-menu .header-dropdown-item:hover {
+  color: transparent !important;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #e0e6eb 10%,
+    #bfc6ce 18%,
+    #eaf3fa 25%,
+    #f8f8f8 32%,
+    #bdbcbc 40%,
+    #e0e0e0 50%,
+    #f8f8f8 60%,
+    #eaf3fa 70%,
+    #bfc6ce 80%,
+    #e0e6eb 90%,
+    #ffffff 100%
+  ) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 2px 10px #fff) drop-shadow(0 0px 16px #f1f6fa88) !important;
 }
 
 /* Footer */

@@ -14,7 +14,7 @@ export default function FolderPage() {
       ([entry]) => {
         setIsStatsSectionVisible(entry.isIntersecting);
       },
-      { threshold: 0.5 } // Adjust threshold as needed
+      { threshold: 1 } // Increased threshold for slower transition
     );
 
     const currentRef = statsSectionRef.current;

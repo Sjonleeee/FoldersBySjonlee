@@ -72,7 +72,8 @@ const StatsSection = forwardRef((props, ref) => {
   useEffect(() => {
     // Wait for next tick to ensure DOM is ready
     const timer = setTimeout(() => {
-      if (!laptopRef?.current || !statsBlocksRef?.current || !ref?.current) return;
+      if (!laptopRef?.current || !statsBlocksRef?.current || !ref?.current)
+        return;
 
       // Set initial states
       gsap.set(laptopRef.current, { opacity: 0, scale: 0.5 });
@@ -110,33 +111,18 @@ const StatsSection = forwardRef((props, ref) => {
       );
 
       // Trigger animationKey increment after fade-in animation
-      tl.call(() => {
-        setAnimationKey((prev) => prev + 1);
-      }, null, "+=0.5"); // Delay to ensure fade-in is complete
+      tl.call(
+        () => {
+          setAnimationKey((prev) => prev + 1);
+        },
+        null,
+        "+=0.5"
+      ); // Delay to ensure fade-in is complete
 
       return () => {
         tl.kill();
       };
     }, 0);
-
-    // Ensure refs are not null before initializing ScrollTrigger
-    if (!laptopRef?.current || !statsBlocksRef?.current || !ref?.current) {
-      console.warn("One or more refs are null. Skipping ScrollTrigger initialization.");
-      return;
-    }
-
-    // Ensure counters animate at a fixed speed regardless of scroll speed
-    ScrollTrigger.create({
-      trigger: ref.current,
-      start: "top 90%",
-      end: "bottom 10%",
-      onUpdate: (self) => {
-        if (self.isActive) {
-          setAnimationKey((prev) => prev + 1);
-        }
-      },
-      once: false, // Allow multiple triggers
-    });
 
     return () => {
       clearTimeout(timer);

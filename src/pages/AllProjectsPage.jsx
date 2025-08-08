@@ -91,45 +91,57 @@ export default function AllProjectsPage() {
     const grid = document.querySelector(".allprojects-grid");
 
     // Animate header and footer first
-    gsap.fromTo(
-      header,
-      { opacity: 0, y: -30 },
-      { opacity: 1, y: 0, duration: 1.5, ease: "power4.out" }
-    );
+    if (header) {
+      gsap.fromTo(
+        header,
+        { opacity: 0, y: -30 },
+        { opacity: 1, y: 0, duration: 1.5, ease: "power4.out" }
+      );
+    }
 
-    gsap.fromTo(
-      footer,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 1.5, ease: "power4.out", delay: 0.3 }
-    );
+    if (footer) {
+      gsap.fromTo(
+        footer,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1.5, ease: "power4.out", delay: 0.3 }
+      );
+    }
 
     // Animate sidebar sliding in from the left
-    gsap.fromTo(
-      sidebar,
-      { opacity: 0, x: -50 },
-      { opacity: 1, x: 0, duration: 1.5, ease: "power4.out", delay: 0.6 }
-    );
+    if (sidebar) {
+      gsap.fromTo(
+        sidebar,
+        { opacity: 0, x: -50 },
+        { opacity: 1, x: 0, duration: 1.5, ease: "power4.out", delay: 0.6 }
+      );
+    }
 
     // Animate top bar sliding in from the top
-    gsap.fromTo(
-      topBar,
-      { opacity: 0, y: -20 },
-      { opacity: 1, y: 0, duration: 1.5, ease: "power4.out", delay: 0.9 }
-    );
+    if (topBar) {
+      gsap.fromTo(
+        topBar,
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 1.5, ease: "power4.out", delay: 0.9 }
+      );
+    }
 
     // Animate folders with a staggered effect
-    gsap.fromTo(
-      folders,
-      { opacity: 0, scale: 0.8 },
-      { opacity: 1, scale: 1, duration: 1.2, ease: "power4.out", stagger: 0.2, delay: 1.2 }
-    );
+    if (folders.length > 0) {
+      gsap.fromTo(
+        folders,
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 1.2, ease: "power4.out", stagger: 0.2, delay: 1.2 }
+      );
+    }
 
     // Animate the grid last
-    gsap.fromTo(
-      grid,
-      { opacity: 0 },
-      { opacity: 1, duration: 1.5, ease: "power4.out", delay: 2 }
-    );
+    if (grid) {
+      gsap.fromTo(
+        grid,
+        { opacity: 0 },
+        { opacity: 1, duration: 1.5, ease: "power4.out", delay: 2 }
+      );
+    }
   }, []);
 
   return (

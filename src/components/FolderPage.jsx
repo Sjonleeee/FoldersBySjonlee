@@ -1,16 +1,42 @@
 import folderIcon from "../assets/images/folder.svg";
 import ModelCanvas from "../components/ModelCanvas";
 import StatsSection from "../components/StatsSection";
+import Footer from "../layout/Footer";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/onepager.css";
 
-
 export default function FolderPage() {
+  const [isStatsSectionVisible, setIsStatsSectionVisible] = useState(false);
+  const statsSectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsStatsSectionVisible(entry.isIntersecting);
+      },
+      { threshold: 0.5 } // Adjust threshold as needed
+    );
+
+    const currentRef = statsSectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
 
   return (
     <section className="folder-hero-outer">
       <div className="folder-hero-sticky">
         <div className="main-content-centered">
-          <div className="absolute-center pointer-events-none" style={{ zIndex: 9999 }}>
+          <div
+            className="absolute-center pointer-events-none"
+            style={{ zIndex: 9999 }}
+          >
             <div className="z-front center-folder">
               <img
                 src={folderIcon}
@@ -33,7 +59,10 @@ export default function FolderPage() {
                   <span className="role-label mid-right">Director</span>
                   <span className="role-label bottom-center">Hussler</span>
 
-                  <div className="absolute-center title-container" style={{ zIndex: 20 }}>
+                  <div
+                    className="absolute-center title-container"
+                    style={{ zIndex: 20 }}
+                  >
                     <div className="title-center-flex">
                       <div className="pointer-none left-title">
                         <span className="title-text">Creative</span>
@@ -50,10 +79,13 @@ export default function FolderPage() {
           </div>
 
           <div className="section-normal">
-            <StatsSection />
+            <div ref={statsSectionRef}>
+              <StatsSection />
+            </div>
           </div>
         </div>
       </div>
+      <Footer isStatsSectionVisible={isStatsSectionVisible} />
     </section>
   );
 }

@@ -5,6 +5,7 @@ import "../styles/footer.css";
 
 const Footer = ({ hideIconBar, showScrollIndicator }) => {
   const { menuOpen } = useMenu();
+
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activePopup, setActivePopup] = useState(null);
   const [scrollIndicatorVisible, setScrollIndicatorVisible] = useState(false);
@@ -44,61 +45,58 @@ const Footer = ({ hideIconBar, showScrollIndicator }) => {
   return (
     <footer className="footer">
       <div className="footer-inner">
-      <div className="footer-left">
-        <div style={{ fontSize: "0.75rem" }}>
-          Local Time:
-          <br />
-          <span style={{ color: "white" }}>{formatTime()}</span>
+        {/* LEFT: Time */}
+        <div className="footer-left">
+          <div style={{ fontSize: "0.75rem" }}>
+            Local Time:
+            <br />
+            <span style={{ color: "white" }}>{formatTime()}</span>
+          </div>
         </div>
-      </div>
-      <div className="footer-center">
+
+        {/* CENTER: Icon bar */}
+        <div className="footer-center">
           {!menuOpen && !hideIconBar && (
-          <div className="footer-icon-bar">
-            {iconData.map((icon) => (
-              <div
-                key={icon.key}
-                style={{ position: "relative", display: "inline-block" }}
-              >
-                <img
-                  src={icon.icon}
-                  alt={icon.label}
-                  className="footer-icon footer-icon-img"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActivePopup(activePopup === icon.key ? null : icon.key);
-                  }}
-                />
-                {activePopup === icon.key && (
-                  <div
-                    className="footer-icon-popup"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <strong>{icon.label}</strong>
-                    <div style={{ marginTop: "0.3rem" }}>{icon.description}</div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      <div className="footer-right">
-          {!menuOpen && showScrollIndicator ? (
-          <div className={`footer-scroll-card ${scrollIndicatorVisible ? 'fade-in' : ''}`}>
-            <div className="footer-scroll-content">
-              <div className="footer-scroll-textblock">
-                <span className="footer-scroll-label">Scroll Down</span>
-                <span className="footer-scroll-desc">to discover</span>
-              </div>
-              <span className="footer-scroll-arrow">&#x25BC;</span>
+            <div className="footer-icon-bar">
+              {iconData.map((icon) => (
+                <div
+                  key={icon.key}
+                  style={{ position: "relative", display: "inline-block" }}
+                >
+                  <img
+                    src={icon.icon}
+                    alt={icon.label}
+                    className="footer-icon footer-icon-img"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActivePopup(
+                        activePopup === icon.key ? null : icon.key
+                      );
+                    }}
+                  />
+                  {activePopup === icon.key && (
+                    <div
+                      className="footer-icon-popup"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <strong>{icon.label}</strong>
+                      <div style={{ marginTop: "0.3rem" }}>
+                        {icon.description}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
-          </div>
-        ) : (
+          )}
+        </div>
+
+        {/* RIGHT: Always show copyright */}
+        <div className="footer-right">
           <div className="footer-copyright">
             <span className="footer-copyright-label">2025</span>
             <span className="footer-copyright-value">by rinkitou®</span>
           </div>
-        )}
         </div>
       </div>
     </footer>

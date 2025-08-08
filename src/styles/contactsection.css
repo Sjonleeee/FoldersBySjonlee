@@ -25,16 +25,12 @@
   font-size: 4rem;
   font-weight: 400;
   color: #fff;
-  margin-bottom: 2rem;
-  letter-spacing: 0.02em;
 }
 
 .contact-description {
   font-size: 1.2rem;
   color: #ccc;
   margin-bottom: 3rem;
-  line-height: 1.6;
-  max-width: 600px;
 }
 
 .contact-socials {
@@ -253,116 +249,3 @@
   }
 }
 
-/* Small Desktop (1000px - 1199px) */
-@media (min-width: 1000px) and (max-width: 1199px) {
-  .contact-section {
-    padding: 5rem 3.5rem;
-    min-height: 100vh;
-  }
-
-  .contact-title {
-    font-size: 4.2rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .contact-description {
-    font-size: 1.22rem;
-    margin-bottom: 3.2rem;
-  }
-
-  .contact-socials {
-    gap: 2.5rem;
-    margin-bottom: 3rem;
-  }
-
-  .contact-social-icon {
-    font-size: 2.1rem;
-  }
-
-  .contact-buttons {
-    gap: 2.8rem;
-  }
-
-  .contact-folder-btn {
-    padding: 1.25rem 2.6rem;
-    font-size: 1.12rem;
-    min-width: 210px;
-    height: 62px;
-  }
-}
-
-/* Desktop (1200px - 1399px) */
-@media (min-width: 1200px) and (max-width: 1399px) {
-  .contact-section {
-    padding: 5.5rem 4rem;
-    min-height: 100vh;
-  }
-
-  .contact-title {
-    font-size: 4.5rem;
-    margin-bottom: 2.8rem;
-  }
-
-  .contact-description {
-    font-size: 1.25rem;
-    margin-bottom: 3.5rem;
-  }
-
-  .contact-socials {
-    gap: 2.8rem;
-    margin-bottom: 3.2rem;
-  }
-
-  .contact-social-icon {
-    font-size: 2.2rem;
-  }
-
-  .contact-buttons {
-    gap: 3rem;
-  }
-
-  .contact-folder-btn {
-    padding: 1.3rem 2.8rem;
-    font-size: 1.15rem;
-    min-width: 220px;
-    height: 65px;
-  }
-}
-
-/* Large Desktop (1400px+) */
-@media (min-width: 1400px) {
-  .contact-section {
-    padding: 6rem 4.5rem;
-    min-height: 100vh;
-  }
-
-  .contact-title {
-    font-size: 4.8rem;
-    margin-bottom: 3rem;
-  }
-
-  .contact-description {
-    font-size: 1.3rem;
-    margin-bottom: 3.8rem;
-  }
-
-  .contact-socials {
-    gap: 3rem;
-    margin-bottom: 3.5rem;
-  }
-
-  .contact-social-icon {
-    font-size: 2.3rem;
-  }
-
-  .contact-buttons {
-    gap: 3.2rem;
-  }
-
-  .contact-folder-btn {
-    padding: 1.35rem 3rem;
-    font-size: 1.18rem;
-    min-width: 230px;
-    height: 68px;
-  }
-}

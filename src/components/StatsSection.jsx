@@ -19,11 +19,10 @@ const useIsMobile = (breakpoint = 900) => {
   return isMobile;
 };
 
-const CountUpNumber = ({ end, suffix = "", duration = 1.2, resetTrigger }) => {
+const CountUpNumber = ({ end, suffix = "", duration = 40, resetTrigger }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    // Reset count to 0 when component mounts or resetTrigger changes
     setCount(0);
 
     let start = 0;
@@ -40,7 +39,6 @@ const CountUpNumber = ({ end, suffix = "", duration = 1.2, resetTrigger }) => {
       }
     };
 
-    // Small delay to ensure the component is visible
     const timer = setTimeout(() => {
       animate();
     }, 100);
@@ -82,30 +80,63 @@ const StatsSection = forwardRef((props, ref) => {
 
       // Create timeline
       const tl = gsap.timeline({
-        // Removed ScrollTrigger - will be controlled by parent timeline
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top 90%", // Adjusted to trigger earlier
+          end: "bottom 10%", // Added end to ensure proper visibility
+          toggleActions: "play none none none",
+        },
       });
 
       // Laptop animation
       tl.to(laptopRef.current, {
         opacity: 1,
         scale: 1,
-        duration: 1,
+        duration: 2, // Slower animation for laptop
         ease: "power2.out",
       });
 
       // Stats blocks animation with stagger
-      tl.to(statsBlocksRef.current.children, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power2.out",
-        stagger: 0.2,
-      }, "-=0.5");
+      tl.to(
+        statsBlocksRef.current.children,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 2, // Slower animation for stats blocks
+          ease: "power2.out",
+          stagger: 0.4, // Increased stagger for slower effect
+        },
+        "-=0.5"
+      );
+
+      // Trigger animationKey increment after fade-in animation
+      tl.call(() => {
+        setAnimationKey((prev) => prev + 1);
+      }, null, "+=0.5"); // Delay to ensure fade-in is complete
 
       return () => {
         tl.kill();
       };
     }, 0);
+
+    // Ensure refs are not null before initializing ScrollTrigger
+    if (!laptopRef?.current || !statsBlocksRef?.current || !ref?.current) {
+      console.warn("One or more refs are null. Skipping ScrollTrigger initialization.");
+      return;
+    }
+
+    // Ensure counters animate at a fixed speed regardless of scroll speed
+    ScrollTrigger.create({
+      trigger: ref.current,
+      start: "top 90%",
+      end: "bottom 10%",
+      onUpdate: (self) => {
+        if (self.isActive) {
+          setAnimationKey((prev) => prev + 1);
+        }
+      },
+      once: false, // Allow multiple triggers
+    });
 
     return () => {
       clearTimeout(timer);
@@ -136,7 +167,7 @@ const StatsSection = forwardRef((props, ref) => {
                     <CountUpNumber
                       end={4}
                       suffix="+"
-                      duration={2.2}
+                      duration={5}
                       resetTrigger={animationKey}
                     />
                   </span>
@@ -147,7 +178,7 @@ const StatsSection = forwardRef((props, ref) => {
                     <CountUpNumber
                       end={150}
                       suffix="+"
-                      duration={2.2}
+                      duration={5}
                       resetTrigger={animationKey}
                     />
                   </span>
@@ -158,7 +189,7 @@ const StatsSection = forwardRef((props, ref) => {
                     <CountUpNumber
                       end={26}
                       suffix="+"
-                      duration={2.2}
+                      duration={5}
                       resetTrigger={animationKey}
                     />
                   </span>
@@ -169,7 +200,7 @@ const StatsSection = forwardRef((props, ref) => {
                     <CountUpNumber
                       end={100}
                       suffix="%"
-                      duration={2.2}
+                      duration={5}
                       resetTrigger={animationKey}
                     />
                   </span>
@@ -185,7 +216,7 @@ const StatsSection = forwardRef((props, ref) => {
                     <CountUpNumber
                       end={4}
                       suffix="+"
-                      duration={2.2}
+                      duration={5}
                       resetTrigger={animationKey}
                     />
                   </span>
@@ -196,7 +227,7 @@ const StatsSection = forwardRef((props, ref) => {
                     <CountUpNumber
                       end={150}
                       suffix="+"
-                      duration={2.2}
+                      duration={5}
                       resetTrigger={animationKey}
                     />
                   </span>
@@ -220,7 +251,7 @@ const StatsSection = forwardRef((props, ref) => {
                     <CountUpNumber
                       end={26}
                       suffix="+"
-                      duration={2.2}
+                      duration={5}
                       resetTrigger={animationKey}
                     />
                   </span>
@@ -231,7 +262,7 @@ const StatsSection = forwardRef((props, ref) => {
                     <CountUpNumber
                       end={100}
                       suffix="%"
-                      duration={2.2}
+                      duration={5}
                       resetTrigger={animationKey}
                     />
                   </span>

@@ -78,7 +78,7 @@
 
 .title-text {
   font-family: "Hermaiona", cursive, serif;
-  font-size: 8rem;
+  font-size: 10rem;
   font-weight: 400;
   color: #fff;
   -webkit-text-stroke: 2px lightgray;
@@ -96,7 +96,7 @@
   width: 100vw;
   height: 100vh;
   position: absolute;
-  top: 60%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -229,61 +229,7 @@ canvas {
   }
 }
 
-/* Small Desktop (1000px - 1199px) */
-@media (min-width: 1000px) and (max-width: 1199px) {
-  .title-text {
-    font-size: 7rem;
-  }
 
-  .canvas-wrapper {
-    width: 100vw;
-    height: 70vh;
-    top: 50%;
-  }
-}
-
-/* Desktop (1200px - 1399px) */
-@media (min-width: 1200px) and (max-width: 1399px) {
-  .title-text {
-    font-size: 7.5rem;
-  }
-
-  .canvas-wrapper {
-    width: 100vw;
-    height: 75vh;
-    top: 50%;
-  }
-}
-
-/* Large Desktop (1400px+) */
-@media (min-width: 1400px) {
-  .title-text {
-    font-size: 8rem;
-  }
-
-  .canvas-wrapper {
-    width: 100vw;
-    height: 80vh;
-    top: 50%;
-  }
-}
-
-/* Typewriter cursor animation */
-.cursor {
-  animation: blink 1s infinite;
-  color: inherit;
-}
-
-@keyframes blink {
-  0%,
-  50% {
-    opacity: 1;
-  }
-  51%,
-  100% {
-    opacity: 0;
-  }
-}
 
 /* =====================
    Contact Section

@@ -145,8 +145,6 @@
   transition: all 0.4s ease;
 }
 
-
-
 /* =====================
    Skill Cards
    ===================== */
@@ -164,32 +162,35 @@
 }
 
 .skill-card {
-  background: rgba(0, 0, 0, 0.95); /* Blue like folders */
+  background: rgba(15, 169, 177, 0); /* Blue like folders */
   backdrop-filter: blur(15px);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  border: 2px solid rgba(56, 189, 248, 0.3);
   border-radius: 16px;
   padding: 2rem;
   min-width: 280px;
-  box-shadow: none;
   opacity: 0; /* GSAP will control this */
   transform: translateY(100vh) rotateY(-45deg) rotateX(15deg); /* 3D initial position - from below page */
   transform-style: preserve-3d;
-  perspective: 1000px;
+  perspective: 5000px;
+
+  /* Glow effect */
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.6),
+    /* main glow */ 0 0 10px 10px rgba(255, 255, 255, 0.3); /* subtle bigger glow */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .skill-card:nth-child(2) {
-  transform: translateY(100vh) rotateY(45deg) rotateX(-15deg); /* 3D initial position - from below page */
+  transform: translateY(100vh) rotateY(45deg) rotateX(-15deg);
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.6),
+    0 0 10px 10px rgba(255, 255, 255, 0.3);
 }
 
-.skill-card:hover {
-  transform: translateY(-5px);
-  box-shadow: none;
-}
+
 
 .skill-card-title {
   font-family: "Hermaiona", cursive, serif;
-  font-size: 1.8rem;
-  font-weight: 600;
+  font-size: 4rem;
+  font-weight: 500;
   color: #fff; /* White text for blue background */
   margin-bottom: 1.5rem;
   text-align: center;
@@ -245,16 +246,16 @@
     transform: translate(-50%, -50%);
     padding: 0 1rem;
   }
-  
+
   .skill-card {
     min-width: 250px;
     padding: 1.5rem;
   }
-  
+
   .skill-card-title {
     font-size: 1.5rem;
   }
-  
+
   .skill-item {
     font-size: 0.9rem;
   }
@@ -298,20 +299,17 @@
     transform: translate(-50%, -50%);
     gap: 1rem;
   }
-  
+
   .skill-card {
     min-width: 220px;
     padding: 1.25rem;
   }
-  
+
   .skill-card-title {
     font-size: 1.3rem;
   }
-  
+
   .skill-item {
     font-size: 0.85rem;
   }
 }
-
-
-

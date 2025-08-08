@@ -34,14 +34,9 @@
   font-size: 0.875rem;
   display: flex;
   align-items: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none; /* Removed hover transition */
   position: relative;
   cursor: pointer;
-}
-
-.header-logo:hover {
-  transform: translateY(-2px);
-  color: #fff; /* Changed from #38bdf8 to #fff */
 }
 
 .header-status-dot {
@@ -85,14 +80,9 @@
 
 .header-email {
   color: white;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none; /* Removed hover transition */
   cursor: pointer;
   position: relative;
-}
-
-.header-email:hover {
-  color: #fff; /* Changed from #38bdf8 to #fff */
-  transform: translateY(-1px);
 }
 
 .header-skills {

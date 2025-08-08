@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/allprojectspage.css";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
@@ -13,6 +13,7 @@ import { FiFolder } from "react-icons/fi";
 import folderIcon from "../assets/images/projectFolder.png";
 import { projects } from "../config/projectData.js";
 import { useNavigate } from "react-router-dom";
+import { gsap } from "gsap";
 
 const sidebarItems = [
   { label: "All Projects", key: "all" },
@@ -80,6 +81,56 @@ export default function AllProjectsPage() {
 
   const isMobile = useIsMobile(900);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const header = document.querySelector("header");
+    const footer = document.querySelector("footer");
+    const sidebar = document.querySelector(".allprojects-sidebar");
+    const topBar = document.querySelector(".allprojects-topbar");
+    const folders = document.querySelectorAll(".folder");
+    const grid = document.querySelector(".allprojects-grid");
+
+    // Animate header and footer first
+    gsap.fromTo(
+      header,
+      { opacity: 0, y: -30 },
+      { opacity: 1, y: 0, duration: 1.5, ease: "power4.out" }
+    );
+
+    gsap.fromTo(
+      footer,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1.5, ease: "power4.out", delay: 0.3 }
+    );
+
+    // Animate sidebar sliding in from the left
+    gsap.fromTo(
+      sidebar,
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 1.5, ease: "power4.out", delay: 0.6 }
+    );
+
+    // Animate top bar sliding in from the top
+    gsap.fromTo(
+      topBar,
+      { opacity: 0, y: -20 },
+      { opacity: 1, y: 0, duration: 1.5, ease: "power4.out", delay: 0.9 }
+    );
+
+    // Animate folders with a staggered effect
+    gsap.fromTo(
+      folders,
+      { opacity: 0, scale: 0.8 },
+      { opacity: 1, scale: 1, duration: 1.2, ease: "power4.out", stagger: 0.2, delay: 1.2 }
+    );
+
+    // Animate the grid last
+    gsap.fromTo(
+      grid,
+      { opacity: 0 },
+      { opacity: 1, duration: 1.5, ease: "power4.out", delay: 2 }
+    );
+  }, []);
 
   return (
     <div className="allprojects-root">

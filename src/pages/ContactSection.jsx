@@ -70,7 +70,13 @@ export default function ContactSection() {
   }, []);
 
   const handleProjectsClick = () => {
-    navigate("/projects");
+    gsap.to(sectionRef.current, {
+      opacity: 0,
+      y: -20, // Add slight upward motion for a smoother effect
+      duration: 0.7, // Increase duration slightly for a more gradual fade-out
+      ease: "power2.inOut", // Use a smoother easing function
+      onComplete: () => navigate("/projects"),
+    });
   };
 
   return (

@@ -1,4 +1,3 @@
-
 import folderIcon from "../assets/images/folder.svg";
 import ModelCanvas from "../components/ModelCanvas";
 import StatsSection from "../components/StatsSection";
@@ -34,7 +33,7 @@ export default function FolderPage() {
                   <span className="role-label mid-right">Director</span>
                   <span className="role-label bottom-center">Hussler</span>
 
-                  <div className="absolute-center title-container">
+                  <div className="absolute-center title-container" style={{ zIndex: 20 }}>
                     <div className="title-center-flex">
                       <div className="pointer-none left-title">
                         <span className="title-text">Creative</span>

@@ -2,7 +2,7 @@
    Sticky Animation Structure
    ===================== */
 .folder-hero-outer {
-  height: 420vh; 
+  height: 420vh;
   position: relative;
   overflow: visible !important;
 }
@@ -57,7 +57,7 @@
   justify-content: center;
   align-items: center;
   transform: translate(-50%, -50%);
-  z-index: 20;
+  z-index: 100;
   pointer-events: none;
 }
 
@@ -103,6 +103,12 @@
   align-items: center;
   justify-content: center;
   z-index: 1;
+}
+
+/* Ensure the canvas is layered behind the title-container */
+canvas {
+  z-index: 10;
+  position: relative;
 }
 
 /* =====================
@@ -151,48 +157,50 @@
   right: 20%;
 }
 
-
-
 /* Mobile (max-width: 599px) */
 @media (max-width: 599px) {
   .title-center-flex {
     flex-direction: column;
-    gap: 0.5em;
+  }
+  .title-container {
+    z-index: 3101; /* Increased to ensure it is above other elements */
   }
 
   .title-text {
-    font-size: 3.5rem;
+    font-size: 4.5rem;
   }
-
+  .pointer-none .right-title {
+    z-index: 9999;
+  }
   .canvas-wrapper {
     width: 100vw;
     height: 50vh;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 0;
   }
-
-
 }
 
 /* Large Mobile (600px - 767px) */
 @media (min-width: 600px) and (max-width: 767px) {
   .title-center-flex {
     flex-direction: column;
-    gap: 0.8em;
+    gap: 10em;
+  }
+  .title-container {
+    z-index: 9999;
   }
 
   .title-text {
-    font-size: 4.5rem;
+    font-size: 2.5rem;
   }
 
   .canvas-wrapper {
     width: 100vw;
-    height: 55vh;
+    height: 80vh;
     top: 50%;
   }
-
-
 }
 
 /* Tablet Portrait (768px - 899px) */
@@ -206,8 +214,6 @@
     height: 60vh;
     top: 50%;
   }
-
-
 }
 
 /* Tablet Landscape (900px - 999px) */
@@ -221,8 +227,6 @@
     height: 65vh;
     top: 50%;
   }
-
-
 }
 
 /* Small Desktop (1000px - 1199px) */
@@ -236,8 +240,6 @@
     height: 70vh;
     top: 50%;
   }
-
-
 }
 
 /* Desktop (1200px - 1399px) */
@@ -251,8 +253,6 @@
     height: 75vh;
     top: 50%;
   }
-
-
 }
 
 /* Large Desktop (1400px+) */
@@ -266,11 +266,7 @@
     height: 80vh;
     top: 50%;
   }
-
-
 }
-
-
 
 /* Typewriter cursor animation */
 .cursor {
@@ -290,9 +286,9 @@
 }
 
 /* =====================
-   Companies Section
+   Contact Section
    ===================== */
-.companies-section {
+.contact-section {
   min-height: 100vh;
   width: 100vw;
   display: flex;
@@ -303,13 +299,13 @@
   z-index: 1;
 }
 
-.companies-container {
+.contact-container {
   max-width: 1200px;
   width: 100%;
   text-align: center;
 }
 
-.companies-title {
+.contact-title {
   font-family: "Hermaiona", cursive, serif;
   font-size: 3.5rem;
   font-weight: 400;
@@ -319,7 +315,7 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-.companies-grid {
+.contact-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
@@ -329,7 +325,7 @@
   align-items: start;
 }
 
-.company-item {
+.contact-item {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
@@ -343,12 +339,12 @@
   width: 100%;
 }
 
-.company-item:hover {
+.contact-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.company-logo {
+.contact-logo {
   font-family: "Hermaiona", cursive, serif;
   font-size: 1.8rem;
   font-weight: 500;
@@ -359,36 +355,36 @@
   line-height: 1.2;
 }
 
-/* Responsive Design for Companies */
+/* Responsive Design for Contact */
 @media (max-width: 768px) {
-  .companies-grid {
+  .contact-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
 
-  .companies-title {
+  .contact-title {
     font-size: 2rem;
   }
 
-  .company-item {
+  .contact-item {
     padding: 1.5rem;
   }
 
-  .company-logo {
+  .contact-logo {
     font-size: 1.2rem;
   }
-}
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  .companies-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .contact-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
   }
-}
 
-@media (min-width: 1025px) {
-  .companies-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+  @media (min-width: 1025px) {
+    .contact-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
   }
 }

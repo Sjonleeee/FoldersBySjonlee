@@ -92,25 +92,46 @@ export default function OnePager({
             scale: 0.5,
           });
 
-          mainPageTl.to(creativeRef.current, {
-            x: "-100vw",
-            y: "-20vh",
-            duration: 6,
-            ease: "power3.out", // Smoother easing
-            willChange: "transform", // GPU optimization
-          });
-
-          mainPageTl.to(
-            developerRef.current,
-            {
-              x: "100vw",
-              y: "20vh",
+          const isMobile = window.innerWidth <= 900;
+          if (isMobile) {
+            mainPageTl.to(creativeRef.current, {
+              y: "-100vh",
               duration: 6,
               ease: "power3.out",
               willChange: "transform",
-            },
-            "<"
-          );
+            });
+
+            mainPageTl.to(
+              developerRef.current,
+              {
+                y: "100vh",
+                duration: 6,
+                ease: "power3.out",
+                willChange: "transform",
+              },
+              "<"
+            );
+          } else {
+            mainPageTl.to(creativeRef.current, {
+              x: "-100vw",
+              y: "-20vh",
+              duration: 6,
+              ease: "power3.out",
+              willChange: "transform",
+            });
+
+            mainPageTl.to(
+              developerRef.current,
+              {
+                x: "100vw",
+                y: "20vh",
+                duration: 6,
+                ease: "power3.out",
+                willChange: "transform",
+              },
+              "<"
+            );
+          }
 
           mainPageTl.to(
             [
@@ -133,18 +154,28 @@ export default function OnePager({
             "<"
           );
 
-          mainPageTl.to(
-            folderRef.current,
-            {
+          if (isMobile) {
+            mainPageTl.to(
+              folderRef.current,
+              {
+                opacity: 0,
+                scale: 0.5,
+                duration: 6,
+                ease: "power3.out",
+                willChange: "transform, opacity",
+              },
+              "<" // Matches the timing of 'Creative' and 'Developer'
+            );
+          } else {
+            mainPageTl.to(folderRef.current, {
               opacity: 0,
               scale: 0.5,
               y: "-30vh",
               duration: 6,
               ease: "power3.out",
               willChange: "transform, opacity",
-            },
-            "<"
-          );
+            }, "<"); // Synchronize with Creative and Developer animations
+          }
 
           // PHASE 2: StatsSection Timeline
           const statsTl = gsap.timeline();
@@ -157,7 +188,6 @@ export default function OnePager({
             ease: "power2.out",
           });
 
-          const isMobile = window.innerWidth <= 900;
           if (!isMobile) {
             statsTl.to(
               ".stats-side.left",
@@ -361,20 +391,20 @@ export default function OnePager({
           </div>
 
           <div className="folder-page-container relative">
-              <section className="main-section flex-column center-content relative">
-                <HeroSection
-                  creativeRef={creativeRef}
-                  developerRef={developerRef}
-                  modelRef={modelRef}
-                  topLeftRef={topLeftRef}
-                  topCenterRef={topCenterRef}
-                  topRightRef={topRightRef}
-                  bottomLeftRef={bottomLeftRef}
-                  bottomRightRef={bottomRightRef}
-                  midRightRef={midRightRef}
-                  bottomCenterRef={bottomCenterRef}
-                />
-              </section>
+            <section className="main-section flex-column center-content relative">
+              <HeroSection
+                creativeRef={creativeRef}
+                developerRef={developerRef}
+                modelRef={modelRef}
+                topLeftRef={topLeftRef}
+                topCenterRef={topCenterRef}
+                topRightRef={topRightRef}
+                bottomLeftRef={bottomLeftRef}
+                bottomRightRef={bottomRightRef}
+                midRightRef={midRightRef}
+                bottomCenterRef={bottomCenterRef}
+              />
+            </section>
           </div>
           <div
             ref={videoSectionRef}

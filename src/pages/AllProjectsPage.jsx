@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/allprojectspage.css";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
-import {
-  FaChevronLeft,
-} from "react-icons/fa";
+import { FaChevronLeft } from "react-icons/fa";
 import { FiFolder } from "react-icons/fi";
 import folderIcon from "../assets/images/projectFolder.png";
 import { projects } from "../config/projectData.js";
@@ -126,7 +124,14 @@ export default function AllProjectsPage() {
       gsap.fromTo(
         folders,
         { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1, duration: 1.2, ease: "power4.out", stagger: 0.2, delay: 1.2 }
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: "power4.out",
+          stagger: 0.2,
+          delay: 1.2,
+        }
       );
     }
 
@@ -145,23 +150,39 @@ export default function AllProjectsPage() {
       const image = document.querySelector(".project-detail-image img");
       const text = document.querySelector(".project-detail-info");
 
-      if (image) {
-        gsap.fromTo(
-          image,
-          { opacity: 0 },
-          { opacity: 1, duration: 1.5, ease: "power4.out" }
-        );
-      }
-
-      if (text) {
+      if (isMobile && text) {
         gsap.fromTo(
           text,
           { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 1.5, ease: "power4.out", delay: 0.3 }
+          { opacity: 1, y: 0, duration: 2, ease: "power2.out" }
         );
       }
+
+      if (isMobile && image) {
+        gsap.fromTo(
+          image,
+          { opacity: 0 },
+          { opacity: 1, duration: 2, ease: "power2.out", delay: 0.5 } // Increased delay to 0.5
+        );
+      } else {
+        if (image) {
+          gsap.fromTo(
+            image,
+            { opacity: 0 },
+            { opacity: 1, duration: 2, ease: "power2.out" }
+          );
+        }
+
+        if (text) {
+          gsap.fromTo(
+            text,
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 2, ease: "power2.out", delay: 0.3 }
+          );
+        }
+      }
     }
-  }, [selectedProject]);
+  }, [selectedProject, isMobile]);
 
   useEffect(() => {
     if (selectedProject === null) {
@@ -171,7 +192,13 @@ export default function AllProjectsPage() {
         gsap.fromTo(
           folders,
           { opacity: 0, scale: 0.8 },
-          { opacity: 1, scale: 1, duration: 1.2, ease: "power4.out", stagger: 0.2 }
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 1.2,
+            ease: "power4.out",
+            stagger: 0.2,
+          }
         );
       }
     }

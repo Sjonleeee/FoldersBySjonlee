@@ -180,6 +180,7 @@
   background: rgba(15, 169, 177, 0);
   backdrop-filter: blur(15px);
   border-radius: 16px;
+  padding: 2rem;
   width: 250px;
   opacity: 0;
   transform: translateY(100px); /* Start onderaan */

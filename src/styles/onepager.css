@@ -160,7 +160,7 @@
     z-index: 3101; 
   }
   .title-text {
-    font-size: 4rem;
+    font-size: 5rem;
   }
   .pointer-none .right-title {
     z-index: 9999;
@@ -226,106 +226,3 @@
   }
 }
 
-/* =====================
-   Contact Section
-   ===================== */
-.contact-section {
-  min-height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
-  position: relative;
-  z-index: 1;
-}
-
-.contact-container {
-  max-width: 1200px;
-  width: 100%;
-  text-align: center;
-}
-
-.contact-title {
-  font-family: "Hermaiona", cursive, serif;
-  font-size: 3.5rem;
-  font-weight: 400;
-  color: #fff;
-  margin-bottom: 4rem;
-  letter-spacing: 0.02em;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.contact-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  align-items: start;
-}
-
-.contact-item {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  padding: 2rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.8s ease; /* Increased duration for slower animations */
-  backdrop-filter: blur(10px);
-  min-height: 120px;
-  width: 100%;
-}
-
-.contact-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.contact-logo {
-  font-family: "Hermaiona", cursive, serif;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: #fff;
-  text-align: center;
-  letter-spacing: 0.02em;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  line-height: 1.2;
-}
-
-/* Responsive Design for Contact */
-@media (max-width: 768px) {
-  .contact-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-
-  .contact-title {
-    font-size: 2rem;
-  }
-
-  .contact-item {
-    padding: 1.5rem;
-  }
-
-  .contact-logo {
-    font-size: 1.2rem;
-  }
-
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .contact-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-  }
-
-  @media (min-width: 1025px) {
-    .contact-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-    }
-  }
-}

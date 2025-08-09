@@ -83,6 +83,10 @@ export default function ContactSection() {
     }
   };
 
+  const handleInstagramClick = () => {
+    window.open("https://www.instagram.com/sjonlee/?hl=en", "_blank");
+  };
+
   return (
     <section 
       className="contact-section" 
@@ -118,6 +122,7 @@ export default function ContactSection() {
           <button
             className="contact-folder-btn folder-btn-bg"
             style={{ backgroundImage: `url(${smallFolder})` }}
+            onClick={handleInstagramClick}
           >
             CONTACT_
           </button>

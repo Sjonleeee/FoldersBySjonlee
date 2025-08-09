@@ -1,6 +1,7 @@
+/* Optimized Contact Section CSS */
 .contact-section {
   width: 100vw;
-  min-height: 80vh; /* Reduced from 100vh to 80vh */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,20 +92,16 @@
   transform: translateY(0);
 }
 
-/* =====================
-   Responsive Design
-   ===================== */
-
-/* Mobile (max-width: 599px) */
+/* Responsive Design */
 @media (max-width: 599px) {
   .contact-section {
     padding: 3rem 1.5rem;
-    min-height: 100vh;
   }
 
   .contact-title {
-    font-size: 2.5rem;
+    font-size: 4.9rem;
     margin-bottom: 1.5rem;
+    line-height: 70%;
   }
 
   .contact-description {
@@ -117,15 +114,6 @@
     margin-bottom: 2rem;
   }
 
-  .contact-social-icon {
-    font-size: 1.5rem;
-  }
-
-  .contact-buttons {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
   .contact-folder-btn {
     padding: 1rem 2rem;
     font-size: 1rem;
@@ -134,15 +122,13 @@
   }
 }
 
-/* Large Mobile (600px - 767px) */
-@media (min-width: 600px) and (max-width: 767px) {
+@media (min-width: 600px) and (max-width: 899px) {
   .contact-section {
-    padding: 3.5rem 2rem;
-    min-height: 100vh;
+    padding: 4rem 2rem;
   }
 
   .contact-title {
-    font-size: 3rem;
+    font-size: 7rem;
     margin-bottom: 1.8rem;
   }
 
@@ -156,15 +142,6 @@
     margin-bottom: 2.2rem;
   }
 
-  .contact-social-icon {
-    font-size: 1.8rem;
-  }
-
-  .contact-buttons {
-    flex-direction: column;
-    gap: 1.8rem;
-  }
-
   .contact-folder-btn {
     padding: 1.1rem 2.2rem;
     font-size: 1.05rem;
@@ -173,49 +150,9 @@
   }
 }
 
-/* Tablet Portrait (768px - 899px) */
-@media (min-width: 768px) and (max-width: 899px) {
-  .contact-section {
-    padding: 4rem 2.5rem;
-    min-height: 100vh;
-  }
-
-  .contact-title {
-    font-size: 3.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .contact-description {
-    font-size: 1.15rem;
-    margin-bottom: 2.8rem;
-  }
-
-  .contact-socials {
-    gap: 2rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .contact-social-icon {
-    font-size: 1.9rem;
-  }
-
-  .contact-buttons {
-    gap: 2.2rem;
-  }
-
-  .contact-folder-btn {
-    padding: 1.15rem 2.3rem;
-    font-size: 1.08rem;
-    min-width: 195px;
-    height: 58px;
-  }
-}
-
-/* Tablet Landscape (900px - 999px) */
-@media (min-width: 900px) and (max-width: 999px) {
+@media (min-width: 900px) {
   .contact-section {
     padding: 4.5rem 3rem;
-    min-height: 100vh;
   }
 
   .contact-title {
@@ -233,14 +170,6 @@
     margin-bottom: 2.8rem;
   }
 
-  .contact-social-icon {
-    font-size: 2rem;
-  }
-
-  .contact-buttons {
-    gap: 2.5rem;
-  }
-
   .contact-folder-btn {
     padding: 1.2rem 2.4rem;
     font-size: 1.1rem;
@@ -248,4 +177,3 @@
     height: 60px;
   }
 }
-

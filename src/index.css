@@ -64,7 +64,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-color: rgba(0, 0, 0, 0.83); /* black overlay with 40% opacity */
+  background-color: rgba(0, 0, 0, 0.88);
   background-blend-mode: overlay;
 
   color: var(--color-text-primary);

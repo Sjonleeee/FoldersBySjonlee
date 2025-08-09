@@ -88,13 +88,11 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
   }, [mouseX, mouseY, getCardBounds]);
 
   const handleClick = () => {
-    if (title === "Volkswagen Project") {
-      gsap.to(cardRef.current, {
-        opacity: 0,
-        duration: 0.5,
-        onComplete: () => navigate("/projects"),
-      });
-    }
+    gsap.to(cardRef.current, {
+      opacity: 0.8,
+      duration: 0.5,
+      onComplete: () => navigate("/projects"), // Navigate to /projects only
+    });
   };
 
   return (

@@ -17,7 +17,6 @@ const folders = [
     subtitle: "®",
     tags: ["UX / UI", "Interface Design", "Concept"],
     video: video1,
-    slug: "volkswagenproject",
   },
   {
     fancy: "C",
@@ -25,7 +24,6 @@ const folders = [
     subtitle: "®",
     tags: ["Magazine design", "Graphic Assistant", "Video editting"],
     video: video2,
-    slug: "chromemagazine",
   },
   {
     fancy: "R",
@@ -33,7 +31,6 @@ const folders = [
     subtitle: "®",
     tags: ["Branding", "Entrepreneurship", "Management"],
     video: video3,
-    slug: "rinkitoucreativeagency",
   },
 ];
 
@@ -394,7 +391,6 @@ function AnimatedFolderStack({ setSelectedProject }) {
               video={folder.video}
               mouseX={mouseX}
               mouseY={mouseY}
-              slug={folder.slug}
               setSelectedProject={setSelectedProject}
             />
           </div>

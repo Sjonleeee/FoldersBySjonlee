@@ -98,16 +98,38 @@ export default function ContactSection() {
           Ready to collaborate? Get in touch
         </p>
         <div className="contact-socials" ref={socialsRef}>
-          <a href="#" className="contact-social-icon" aria-label="Email">
+          <a
+            href="mailto:info.sjonlee@gmail.com"
+            className="contact-social-icon"
+            aria-label="Email"
+          >
             <FiMail />
           </a>
-          <a href="#" className="contact-social-icon" aria-label="Behance">
+          <a
+            href="https://www.behance.net/minhtriha2?tracking_source=search_projects|mark%20forster"
+            className="contact-social-icon"
+            aria-label="Behance"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaBehance />
           </a>
-          <a href="#" className="contact-social-icon" aria-label="LinkedIn">
+          <a
+            href="https://be.linkedin.com/in/minhtriha"
+            className="contact-social-icon"
+            aria-label="LinkedIn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaLinkedin />
           </a>
-          <a href="#" className="contact-social-icon" aria-label="Instagram">
+          <a
+            href="https://www.instagram.com/Sjonlee"
+            className="contact-social-icon"
+            aria-label="Instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaInstagram />
           </a>
         </div>

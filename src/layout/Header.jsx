@@ -2,9 +2,11 @@ import React, { useRef, useEffect } from "react";
 import { useMenu } from "../context/MenuContext";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
+import { FiMail } from "react-icons/fi";
+import { FaBehance, FaLinkedin, FaInstagram } from "react-icons/fa";
 import "../styles/header.css";
 
-const menuItems = ["Home", "Projects", "About", "Contact"];
+const menuItems = ["Home", "Projects", "Rinkitou®"];
 
 const Header = ({ onLogoClick }) => {
   const { menuOpen, setMenuOpen } = useMenu();
@@ -23,7 +25,7 @@ const Header = ({ onLogoClick }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [menuOpen]);
+  }, [menuOpen, setMenuOpen]);
 
   const handleMenuClick = (item) => {
     if (item === "Home") {
@@ -47,14 +49,8 @@ const Header = ({ onLogoClick }) => {
         navigate("/projects");
         setMenuOpen(false);
       }
-    } else if (item === "About") {
-      const aboutSection = document.querySelector(".about-section");
-      if (aboutSection) {
-        aboutSection.scrollIntoView({ behavior: "smooth" });
-        setMenuOpen(false);
-      }
-    } else if (item === "Contact") {
-      // Close menu for now
+    } else if (item === "Rinkitou®") {
+      window.open("https://www.rinkitou.com", "_blank");
       setMenuOpen(false);
     }
   };
@@ -124,6 +120,42 @@ const Header = ({ onLogoClick }) => {
                     {item.slice(1)}
                   </div>
                 ))}
+                <div className="header-social-icons">
+                  <a
+                    href="mailto:info.sjonlee@gmail.com"
+                    className="header-social-icon"
+                    aria-label="Email"
+                  >
+                    <FiMail />
+                  </a>
+                  <a
+                    href="https://www.behance.net/minhtriha2?tracking_source=search_projects|mark%20forster"
+                    className="header-social-icon"
+                    aria-label="Behance"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaBehance />
+                  </a>
+                  <a
+                    href="https://be.linkedin.com/in/minhtriha"
+                    className="header-social-icon"
+                    aria-label="LinkedIn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaLinkedin />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/Sjonlee"
+                    className="header-social-icon"
+                    aria-label="Instagram"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaInstagram />
+                  </a>
+                </div>
               </nav>
             </div>
           )}

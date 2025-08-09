@@ -230,7 +230,7 @@
 
 /* Fullscreen menu items - keep original styling */
 .header-fullscreen-menu .header-dropdown-item {
-  font-size: 4.5rem;
+  font-size: 4.2rem;
   border-radius: 16px;
   transition: none;
   cursor: pointer;
@@ -240,7 +240,7 @@
   border: none;
   padding: 0.7rem 0 0.7rem 0.2rem;
   text-align: center;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.01em;
 }
 
 .header-fullscreen-menu .header-dropdown-item:hover {
@@ -258,6 +258,28 @@
 
 .header-logo-clickable {
   cursor: pointer;
+}
+
+.header-social-icons {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.header-social-icon {
+  font-size: 2rem;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.header-social-icon:hover {
+  transform: scale(1.1);
+  z-index: 11;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+  transition: text-shadow 0.3s ease, transform 0.3s ease;
+  color: inherit;
 }
 
 @media (max-width: 768px) {

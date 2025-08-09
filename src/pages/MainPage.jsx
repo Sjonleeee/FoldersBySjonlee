@@ -9,6 +9,8 @@ export default function MainPage() {
   const [folderOpen, setFolderOpen] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [isScrollBlocked, setIsScrollBlocked] = useState(true);
+  const [scrollToSection, setScrollToSection] = useState(null); // Added state for scrolling
+
   const showScrollIndicator = true;
   const headerRef = useRef(null);
   const footerRef = useRef(null);
@@ -28,6 +30,10 @@ export default function MainPage() {
     document.body.style.overflow = "auto";
     document.documentElement.style.overflow = "auto";
     document.body.classList.remove("scroll-blocked");
+  };
+
+  const handleScrollToAbout = () => {
+    setScrollToSection("about");
   };
 
   // Block scrolling when component mounts
@@ -85,7 +91,10 @@ export default function MainPage() {
           zIndex: 5000,
         }}
       >
-        <Header onLogoClick={handleBackToLanding} />
+        <Header
+          onLogoClick={handleBackToLanding}
+          onAboutClick={handleScrollToAbout}
+        />
       </div>
 
       <div className="onepager-content">
@@ -100,6 +109,7 @@ export default function MainPage() {
             headerRef={headerRef}
             footerRef={footerRef}
             onAnimationsComplete={handleAnimationsComplete}
+            scrollToSection={scrollToSection} // Pass scrollToSection prop
           />
         </section>
       </div>

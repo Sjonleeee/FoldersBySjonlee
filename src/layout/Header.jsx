@@ -48,8 +48,11 @@ const Header = ({ onLogoClick }) => {
         setMenuOpen(false);
       }
     } else if (item === "About") {
-      // Close menu for now
-      setMenuOpen(false);
+      const aboutSection = document.querySelector(".about-section");
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: "smooth" });
+        setMenuOpen(false);
+      }
     } else if (item === "Contact") {
       // Close menu for now
       setMenuOpen(false);

@@ -71,7 +71,11 @@ export default function AboutSection() {
     );
 
     // Phase 3: LONGER PAUSE for reading main content (image + title)
-    tl.to({}, { duration: ABOUT_CONFIG.durations.mainContentPause }, ABOUT_CONFIG.delays.mainContentDelay);
+    tl.to(
+      {},
+      { duration: ABOUT_CONFIG.durations.mainContentPause },
+      ABOUT_CONFIG.delays.mainContentDelay
+    );
 
     // Phase 4: Move image and title up, description appears
     tl.to(
@@ -98,7 +102,11 @@ export default function AboutSection() {
     );
 
     // Phase 6: Pause for reading description - SHORTER
-    tl.to({}, { duration: ABOUT_CONFIG.durations.descriptionPause }, ABOUT_CONFIG.delays.descriptionPauseDelay);
+    tl.to(
+      {},
+      { duration: ABOUT_CONFIG.durations.descriptionPause },
+      ABOUT_CONFIG.delays.descriptionPauseDelay
+    );
 
     // Phase 7: Skill cards appear from sides with GSAP - ULTRA SMOOTH
     tl.to(
@@ -125,7 +133,7 @@ export default function AboutSection() {
     );
 
     // Phase 7.6: Individual skill cards slide up with 3D rotation to final position - ULTRA SMOOTH
-    const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
+    const skillCards = skillCardsRef.current?.querySelectorAll(".skill-card");
     if (skillCards) {
       tl.to(
         skillCards[0], // Left card (DESIGN) - direct to final position
@@ -141,7 +149,7 @@ export default function AboutSection() {
         },
         ABOUT_CONFIG.delays.skillCardsMoveDelay
       );
-      
+
       tl.to(
         skillCards[1], // Right card (DEVELOPMENT) - direct to final position
         {
@@ -159,10 +167,18 @@ export default function AboutSection() {
     }
 
     // Phase 9: Pause for reading cards - LONGER
-    tl.to({}, { duration: ABOUT_CONFIG.durations.skillCardsPause }, ABOUT_CONFIG.delays.skillCardsPauseDelay);
+    tl.to(
+      {},
+      { duration: ABOUT_CONFIG.durations.skillCardsPause },
+      ABOUT_CONFIG.delays.skillCardsPauseDelay
+    );
 
     // Phase 10: Extra pause to ensure everything is faded before next section
-    tl.to({}, { duration: ABOUT_CONFIG.durations.extraPause }, ABOUT_CONFIG.delays.extraPauseDelay);
+    tl.to(
+      {},
+      { duration: ABOUT_CONFIG.durations.extraPause },
+      ABOUT_CONFIG.delays.extraPauseDelay
+    );
 
     return () => {
       tl.kill();
@@ -183,7 +199,8 @@ export default function AboutSection() {
       start: ABOUT_CONFIG.scrollTrigger.skillCardsFadeOut,
       end: "bottom top",
       onEnter: () => {
-        const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
+        const skillCards =
+          skillCardsRef.current?.querySelectorAll(".skill-card");
         if (skillCards) {
           // Fade out left card first, then right card
           gsap.to(skillCards[0], {
@@ -192,7 +209,7 @@ export default function AboutSection() {
             duration: 2,
             ease: "power3.inOut",
           });
-          
+
           gsap.to(skillCards[1], {
             opacity: 0,
             y: -200,
@@ -219,7 +236,7 @@ export default function AboutSection() {
     const handleMouseMove = (e) => {
       // Throttle mouse events for better performance
       if (mouseMoveTimeout) return;
-      
+
       mouseMoveTimeout = setTimeout(() => {
         const rect = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
@@ -229,7 +246,9 @@ export default function AboutSection() {
 
         // === HOVER IMAGES EFFECT (only active when not disabled) ===
         // Check if mouse moved enough to trigger new image
-        const distance = Math.sqrt((x - lastMouseX) ** 2 + (y - lastMouseY) ** 2);
+        const distance = Math.sqrt(
+          (x - lastMouseX) ** 2 + (y - lastMouseY) ** 2
+        );
 
         if (distance > 60 && !hoverImagesDisabled) {
           // Add new image at mouse position
@@ -255,13 +274,16 @@ export default function AboutSection() {
         }
 
         // === SKILL CARDS 3D EFFECT (only when skill cards are visible) ===
-        const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
+        const skillCards =
+          skillCardsRef.current?.querySelectorAll(".skill-card");
         if (skillCards && skillCards.length > 0) {
           const mouseX = e.clientX - rect.left;
           const mouseY = e.clientY - rect.top;
 
           // Only update if mouse moved significantly (performance optimization)
-          const cardDistance = Math.sqrt((mouseX - lastMouseX) ** 2 + (mouseY - lastMouseY) ** 2);
+          const cardDistance = Math.sqrt(
+            (mouseX - lastMouseX) ** 2 + (mouseY - lastMouseY) ** 2
+          );
           if (cardDistance > 10) {
             // Calculate center of container
             const centerX = rect.width / 2;
@@ -281,9 +303,9 @@ export default function AboutSection() {
               // Get the current skewed position from CSS
               const isLeftCard = index === 0;
               const baseX = isLeftCard ? -50 : 50; // Left card: -50px, Right card: 50px
-              const baseY = isLeftCard ? -20 : 20;  // Left card: -20px, Right card: 20px
+              const baseY = isLeftCard ? -20 : 20; // Left card: -20px, Right card: 20px
               const baseRotateZ = isLeftCard ? 5 : -5; // Left card: 5deg, Right card: -5deg
-              
+
               card.style.transform = `
                 perspective(1000px)
                 translateX(${baseX}px)
@@ -305,14 +327,14 @@ export default function AboutSection() {
 
     const handleMouseLeave = () => {
       // Reset skill cards to original position
-      const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
+      const skillCards = skillCardsRef.current?.querySelectorAll(".skill-card");
       if (skillCards) {
         skillCards.forEach((card, index) => {
           const isLeftCard = index === 0;
           const baseX = isLeftCard ? -50 : 50;
           const baseY = isLeftCard ? -20 : 20;
           const baseRotateZ = isLeftCard ? 5 : -5;
-          
+
           card.style.transform = `
             perspective(1000px)
             translateX(${baseX}px)
@@ -365,7 +387,7 @@ export default function AboutSection() {
     });
 
     // Set individual skill cards initial state
-    const skillCards = skillCardsRef.current?.querySelectorAll('.skill-card');
+    const skillCards = skillCardsRef.current?.querySelectorAll(".skill-card");
     if (skillCards) {
       skillCards.forEach((card, index) => {
         const isLeftCard = index === 0;
@@ -445,23 +467,25 @@ export default function AboutSection() {
           <div className="skill-card">
             <h3 className="skill-card-title">Design</h3>
             <ul className="skill-list">
-              <li className="skill-item">3D DESIGN</li>
-              <li className="skill-item">AESTHETICS</li>
-              <li className="skill-item">GRAPHIC DESIGN</li>
-              <li className="skill-item">CLOTHING</li>
+              <li className="skill-item">INTEFACE DESIGN</li>
               <li className="skill-item">UX/UX DESIGN</li>
+              <li className="skill-item">A BIT OF 3D DESIGN</li>
+              <li className="skill-item">AESTHETICS</li>
+              <li className="skill-item">CLOTHING</li>
+              <li className="skill-item">GRAPHIC DESIGN</li>
             </ul>
           </div>
-          
+
           <div className="skill-card">
             <h3 className="skill-card-title">Development</h3>
             <ul className="skill-list">
-              <li className="skill-item">WEB DEVELOPMENT</li>
               <li className="skill-item">THREE.JS</li>
+              <li className="skill-item">REACT.js</li>
               <li className="skill-item">CREATIVE DEV</li>
-              <li className="skill-item">REACT.JS</li>
+              <li className="skill-item">GSAP</li>
+              <li className="skill-item">NEXT JS LEARNING</li>
+              <li className="skill-item">WEBFLOW</li>
               <li className="skill-item">TOUCHDESIGNER</li>
-              <li className="skill-item">SOMETIMES</li>
             </ul>
           </div>
         </div>

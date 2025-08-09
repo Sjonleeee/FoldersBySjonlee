@@ -174,7 +174,7 @@ export default function OnePager({
               duration: 6,
               ease: "power3.out",
               willChange: "transform, opacity",
-            }, "<"); // Synchronize with Creative and Developer animations
+            });
           }
 
           // PHASE 2: StatsSection Timeline
@@ -391,20 +391,20 @@ export default function OnePager({
           </div>
 
           <div className="folder-page-container relative">
-            <section className="main-section flex-column center-content relative">
-              <HeroSection
-                creativeRef={creativeRef}
-                developerRef={developerRef}
-                modelRef={modelRef}
-                topLeftRef={topLeftRef}
-                topCenterRef={topCenterRef}
-                topRightRef={topRightRef}
-                bottomLeftRef={bottomLeftRef}
-                bottomRightRef={bottomRightRef}
-                midRightRef={midRightRef}
-                bottomCenterRef={bottomCenterRef}
-              />
-            </section>
+              <section className="main-section flex-column center-content relative">
+                <HeroSection
+                  creativeRef={creativeRef}
+                  developerRef={developerRef}
+                  modelRef={modelRef}
+                  topLeftRef={topLeftRef}
+                  topCenterRef={topCenterRef}
+                  topRightRef={topRightRef}
+                  bottomLeftRef={bottomLeftRef}
+                  bottomRightRef={bottomRightRef}
+                  midRightRef={midRightRef}
+                  bottomCenterRef={bottomCenterRef}
+                />
+              </section>
           </div>
           <div
             ref={videoSectionRef}

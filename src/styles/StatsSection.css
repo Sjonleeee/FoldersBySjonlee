@@ -178,18 +178,17 @@
   }
 
   .laptop-video {
-    top: 5%;
-    width: 48%;
-    height: 38%;
+    top: 0;
+    width: 49%;
+    height: 43%;
+    object-fit: cover;
   }
 }
 
 @media (max-width: 599px) {
   .stats-video-section {
-    height: calc(
-      100vh - var(--header-height)
-    ); 
-    margin-top: var(--header-height); 
+    height: calc(100vh - var(--header-height));
+    margin-top: var(--header-height);
     top: 10%;
   }
 
@@ -211,12 +210,6 @@
 
   .stats-label {
     font-size: 0.9rem;
-  }
-
-  .laptop-video {
-    top: 4%;
-    width: 47%;
-    height: 35%;
   }
 }
 

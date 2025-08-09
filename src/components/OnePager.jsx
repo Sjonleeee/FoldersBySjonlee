@@ -111,6 +111,18 @@ export default function OnePager({
               },
               "<"
             );
+
+            mainPageTl.to(
+              folderRef.current,
+              {
+                opacity: 0,
+                scale: 0.5,
+                duration: 6,
+                ease: "power3.out",
+                willChange: "transform, opacity",
+              },
+              "<" // Matches the timing of 'Creative' and 'Developer'
+            );
           } else {
             mainPageTl.to(creativeRef.current, {
               x: "-100vw",
@@ -130,6 +142,19 @@ export default function OnePager({
                 willChange: "transform",
               },
               "<"
+            );
+
+            mainPageTl.to(
+              folderRef.current,
+              {
+                opacity: 0,
+                scale: 0.5,
+                y: "-30vh",
+                duration: 6,
+                ease: "power3.out",
+                willChange: "transform, opacity",
+              },
+              "<" // Matches the timing of 'Creative' and 'Developer'
             );
           }
 
@@ -153,29 +178,6 @@ export default function OnePager({
             },
             "<"
           );
-
-          if (isMobile) {
-            mainPageTl.to(
-              folderRef.current,
-              {
-                opacity: 0,
-                scale: 0.5,
-                duration: 6,
-                ease: "power3.out",
-                willChange: "transform, opacity",
-              },
-              "<" // Matches the timing of 'Creative' and 'Developer'
-            );
-          } else {
-            mainPageTl.to(folderRef.current, {
-              opacity: 0,
-              scale: 0.5,
-              y: "-30vh",
-              duration: 6,
-              ease: "power3.out",
-              willChange: "transform, opacity",
-            });
-          }
 
           // PHASE 2: StatsSection Timeline
           const statsTl = gsap.timeline();
@@ -391,20 +393,20 @@ export default function OnePager({
           </div>
 
           <div className="folder-page-container relative">
-              <section className="main-section flex-column center-content relative">
-                <HeroSection
-                  creativeRef={creativeRef}
-                  developerRef={developerRef}
-                  modelRef={modelRef}
-                  topLeftRef={topLeftRef}
-                  topCenterRef={topCenterRef}
-                  topRightRef={topRightRef}
-                  bottomLeftRef={bottomLeftRef}
-                  bottomRightRef={bottomRightRef}
-                  midRightRef={midRightRef}
-                  bottomCenterRef={bottomCenterRef}
-                />
-              </section>
+            <section className="main-section flex-column center-content relative">
+              <HeroSection
+                creativeRef={creativeRef}
+                developerRef={developerRef}
+                modelRef={modelRef}
+                topLeftRef={topLeftRef}
+                topCenterRef={topCenterRef}
+                topRightRef={topRightRef}
+                bottomLeftRef={bottomLeftRef}
+                bottomRightRef={bottomRightRef}
+                midRightRef={midRightRef}
+                bottomCenterRef={bottomCenterRef}
+              />
+            </section>
           </div>
           <div
             ref={videoSectionRef}

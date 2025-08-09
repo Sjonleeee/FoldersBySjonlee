@@ -226,3 +226,21 @@
   }
 }
 
+/* Hide ScrollTrigger markers */
+.gsap-marker-start,
+.gsap-marker-end {
+  color: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  font-size: 0 !important;
+}
+
+/* Hide scroller-start and scroller-end markers */
+.gsap-marker-scroller-start,
+.gsap-marker-scroller-end {
+  color: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  font-size: 0 !important;
+}
+

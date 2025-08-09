@@ -193,3 +193,9 @@
     margin-bottom: -2rem !important;
   }
 }
+
+@media (min-width: 1024px) {
+  .folder-card {
+    max-width: 425px; /* Adjusted size for desktop */
+  }
+}

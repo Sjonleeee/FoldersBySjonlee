@@ -4,10 +4,6 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import {
   FaChevronLeft,
-  FaChevronRight,
-  FaTh,
-  FaRandom,
-  FaShareSquare,
 } from "react-icons/fa";
 import { FiFolder } from "react-icons/fi";
 import folderIcon from "../assets/images/projectFolder.png";

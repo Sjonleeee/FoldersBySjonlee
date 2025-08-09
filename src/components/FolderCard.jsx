@@ -1,5 +1,6 @@
 import React, { useRef, useLayoutEffect, useState, useCallback, useEffect } from "react";
 import { gsap } from "gsap";
+import { useNavigate } from "react-router-dom";
 import bigFolder from "../assets/images/folderBig.png";
 import "../styles/FolderCard.css";
 import "../styles/OverlayVideoCard.css";
@@ -8,6 +9,7 @@ import testImg from "../assets/images/sjonlee1.jpeg";
 export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX, mouseY }) {
   const cardRef = useRef();
   const overlayRef = useRef();
+  const navigate = useNavigate();
   const [showOverlay, setShowOverlay] = useState(false);
 
   // Overlay dimensions
@@ -85,6 +87,16 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
     updateOverlay();
   }, [mouseX, mouseY, getCardBounds]);
 
+  const handleClick = () => {
+    if (title === "Volkswagen Project") {
+      gsap.to(cardRef.current, {
+        opacity: 0,
+        duration: 0.5,
+        onComplete: () => navigate("/projects"),
+      });
+    }
+  };
+
   return (
     <div
       ref={cardRef}
@@ -97,6 +109,7 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
         overflow: "hidden",
         position: "relative",
       }}
+      onClick={handleClick}
     >
       <div className="folder-card-content">
         <div className="folder-title-row">
@@ -144,4 +157,4 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
       </div>
     </div>
   );
-} 
+}

@@ -8,7 +8,7 @@ import AboutSection from "../pages/AboutSection";
 import AnimatedFolderStack from "../components/AnimatedFolderStack";
 import ContactSection from "../pages/ContactSection";
 import { createEntranceAnimations } from "./animations/EntranceAnimations";
-import { ONEPAGER_CONFIG } from "../config/animationConfig";
+import { ONEPAGER_CONFIG, FADE_OUT_CONFIG } from "../config/animationConfig";
 import "../styles/onepager.css";
 
 // Register ScrollTrigger plugin
@@ -348,7 +348,7 @@ export default function OnePager({
           <div
             className="folder-icon-container absolute-center pointer-events-none"
             ref={folderRef}
-            style={{ zIndex: 9999 }}
+            style={{ zIndex: 10 }}
           >
             <div className="z-front center-folder">
               <img
@@ -361,7 +361,6 @@ export default function OnePager({
           </div>
 
           <div className="folder-page-container relative">
-            <div className="main-content main-content-z1">
               <section className="main-section flex-column center-content relative">
                 <HeroSection
                   creativeRef={creativeRef}
@@ -376,7 +375,6 @@ export default function OnePager({
                   bottomCenterRef={bottomCenterRef}
                 />
               </section>
-            </div>
           </div>
           <div
             ref={videoSectionRef}

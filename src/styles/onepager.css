@@ -49,16 +49,14 @@
    Title Centering
    ===================== */
 .title-container {
-  position: absolute;
+  position: fixed; /* breekt uit de stacking context */
   top: 50%;
   left: 50%;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   transform: translate(-50%, -50%);
-  z-index: 100;
-  pointer-events: none;
+  z-index: 999999; /* extreem hoog */
+  pointer-events: none; /* zodat je clicks doorlaat */
+  text-align: center;
+  width: 100%;
 }
 
 .title-center-flex {
@@ -95,21 +93,17 @@
 .canvas-wrapper {
   width: 100vw;
   height: 100vh;
-  position: absolute;
+  position: absolute ;
   top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 1; /* Keep the 3D model below the titles */
 }
 
-/* Ensure the canvas is layered behind the title-container */
-canvas {
-  z-index: 10;
-  position: relative;
-}
+
 
 /* =====================
    Role Labels
@@ -317,18 +311,25 @@ canvas {
   .contact-logo {
     font-size: 1.2rem;
   }
+}
 
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .contact-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
+@media screen and (max-width: 768px) {
+  .title-container {
+    font-size: 1.8rem; /* mobiel groter/schaalbaar */
+    padding: 0 15px;
   }
+}
 
-  @media (min-width: 1025px) {
-    .contact-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-    }
+@media (min-width: 769px) and (max-width: 1024px) {
+  .contact-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .contact-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
   }
 }

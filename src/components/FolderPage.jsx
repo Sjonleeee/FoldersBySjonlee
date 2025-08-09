@@ -35,7 +35,7 @@ export default function FolderPage() {
         <div className="main-content-centered">
           <div
             className="absolute-center pointer-events-none"
-            style={{ zIndex: 9999 }}
+            style={{ zIndex: 10000 }} // Ensure this is always on top
           >
             <div className="z-front center-folder">
               <img
@@ -47,10 +47,17 @@ export default function FolderPage() {
             </div>
           </div>
 
-          <div className="folder-page-container relative">
+          <div className="folder-page-container relative" style={{ zIndex: 5 }}>
+            {" "}
+            // Adjusted z-index for proper stacking
             <div className="main-content main-content-z1">
               <section className="main-section flex-column center-content relative">
-                <div className="full-screen full-screen-z10">
+                <div
+                  className="full-screen full-screen-z10"
+                  style={{ zIndex: 10 }}
+                >
+                  {" "}
+                  // Ensure this layer is above the container
                   <span className="role-label top-left">3D Designer</span>
                   <span className="role-label top-center">Entrepreneur</span>
                   <span className="role-label top-right">Designer</span>
@@ -58,11 +65,8 @@ export default function FolderPage() {
                   <span className="role-label bottom-right">Thinker</span>
                   <span className="role-label mid-right">Director</span>
                   <span className="role-label bottom-center">Hussler</span>
-
-                  <div
-                    className="absolute-center title-container"
-                    style={{ zIndex: 20 }}
-                  >
+                  <div className="title-container" style={{ zIndex: 20 }}>
+                    {" "}
                     <div className="title-center-flex">
                       <div className="pointer-none left-title">
                         <span className="title-text">Creative</span>

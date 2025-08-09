@@ -8,7 +8,7 @@ import AboutSection from "../pages/AboutSection";
 import AnimatedFolderStack from "../components/AnimatedFolderStack";
 import ContactSection from "../pages/ContactSection";
 import { createEntranceAnimations } from "./animations/EntranceAnimations";
-import { ONEPAGER_CONFIG, FADE_OUT_CONFIG } from "../config/animationConfig";
+import { ONEPAGER_CONFIG } from "../config/animationConfig";
 import "../styles/onepager.css";
 
 // Register ScrollTrigger plugin

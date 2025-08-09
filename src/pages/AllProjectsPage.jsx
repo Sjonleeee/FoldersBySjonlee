@@ -140,6 +140,43 @@ export default function AllProjectsPage() {
     }
   }, []);
 
+  useEffect(() => {
+    if (selectedProject) {
+      const image = document.querySelector(".project-detail-image img");
+      const text = document.querySelector(".project-detail-info");
+
+      if (image) {
+        gsap.fromTo(
+          image,
+          { opacity: 0 },
+          { opacity: 1, duration: 1.5, ease: "power4.out" }
+        );
+      }
+
+      if (text) {
+        gsap.fromTo(
+          text,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 1.5, ease: "power4.out", delay: 0.3 }
+        );
+      }
+    }
+  }, [selectedProject]);
+
+  useEffect(() => {
+    if (selectedProject === null) {
+      const folders = document.querySelectorAll(".project-folder");
+
+      if (folders.length > 0) {
+        gsap.fromTo(
+          folders,
+          { opacity: 0, scale: 0.8 },
+          { opacity: 1, scale: 1, duration: 1.2, ease: "power4.out", stagger: 0.2 }
+        );
+      }
+    }
+  }, [selectedProject]);
+
   return (
     <div className="allprojects-root">
       {/* Header (bovenaan, niet meer fixed) */}

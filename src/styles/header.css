@@ -39,6 +39,15 @@
   cursor: pointer;
 }
 
+/* Refine hover effect for Sjonlee Ha logo */
+.header-logo:hover {
+  transform: scale(0.96);
+  z-index: 11;
+  text-shadow: 0 0 50px rgba(255, 255, 255, 0.6);
+  transform: translateY(-3px);
+  transition: text-shadow 0.3s ease, transform 0.3s ease;
+}
+
 .header-status-dot {
   width: 0.75rem;
   height: 0.75rem;
@@ -178,67 +187,23 @@
 }
 
 .header-menu-span:hover {
-  color: transparent !important;
-  background: linear-gradient(
-    90deg,
-    #ffffff 0%,
-    #e0e6eb 10%,
-    #bfc6ce 18%,
-    #eaf3fa 25%,
-    #f8f8f8 32%,
-    #bdbcbc 40%,
-    #e0e0e0 50%,
-    #f8f8f8 60%,
-    #eaf3fa 70%,
-    #bfc6ce 80%,
-    #e0e6eb 90%,
-    #ffffff 100%
-  ) !important;
-  background-clip: text !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  filter: drop-shadow(0 2px 10px #fff) drop-shadow(0 0px 16px #f1f6fa88) !important;
+  transform: scale(0.96);
+  z-index: 11;
+  box-shadow: 0 0 50px 0px rgba(255, 255, 255, 0.6);
+  transform: translateY(-3px);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  color: inherit; /* Remove gradient hover color */
 }
 
-/* Individual letter hover effect for MENU button only */
+/* Remove individual letter hover effect */
 .header-menu-span span {
   display: inline-block;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: center center;
-  position: relative;
-  color: inherit; /* Inherit color from parent */
+  transition: all 0.3s ease;
 }
 
 .header-menu-span:hover span {
-  animation: menuLetterTilt 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.header-menu-span span:nth-child(1) { animation-delay: 0s; }
-.header-menu-span span:nth-child(2) { animation-delay: 0.05s; }
-.header-menu-span span:nth-child(3) { animation-delay: 0.1s; }
-.header-menu-span span:nth-child(4) { animation-delay: 0.15s; }
-
-@keyframes menuLetterTilt {
-  0% {
-    transform: rotate(0deg) scale(1);
-    filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0));
-}
-  25% {
-    transform: rotate(-5deg) scale(1.05);
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
-  }
-  50% {
-    transform: rotate(5deg) scale(1.1);
-    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
-  }
-  75% {
-    transform: rotate(-3deg) scale(1.05);
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
-  }
-  100% {
-    transform: rotate(0deg) scale(1);
-    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
-  }
+  transform: none;
+  animation: none;
 }
 
 /* Remove blue underline - commented out */

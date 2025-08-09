@@ -23,7 +23,7 @@
 
 .contact-title {
   font-family: "Hermaiona", cursive, serif;
-  font-size: 4rem;
+  font-size: 10rem;
   font-weight: 400;
   color: #fff;
 }
@@ -49,8 +49,11 @@
 }
 
 .contact-social-icon:hover {
-  color: #38bdf8;
-  transform: scale(1.2);
+  transform: scale(1.1);
+  z-index: 11;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+  transition: text-shadow 0.3s ease, transform 0.3s ease;
+  color: inherit; /* Ensure no color change */
 }
 
 .contact-buttons {
@@ -84,8 +87,11 @@
 }
 
 .contact-folder-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+  transform: scale(0.96);
+  z-index: 11;
+  box-shadow: 0 0 50px 0px rgba(255, 255, 255, 0.6);
+  transform: translateY(-3px);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .contact-folder-btn:active {
@@ -147,33 +153,5 @@
     font-size: 1.05rem;
     min-width: 190px;
     height: 55px;
-  }
-}
-
-@media (min-width: 900px) {
-  .contact-section {
-    padding: 4.5rem 3rem;
-  }
-
-  .contact-title {
-    font-size: 3.8rem;
-    margin-bottom: 2.2rem;
-  }
-
-  .contact-description {
-    font-size: 1.18rem;
-    margin-bottom: 3rem;
-  }
-
-  .contact-socials {
-    gap: 2.2rem;
-    margin-bottom: 2.8rem;
-  }
-
-  .contact-folder-btn {
-    padding: 1.2rem 2.4rem;
-    font-size: 1.1rem;
-    min-width: 200px;
-    height: 60px;
   }
 }

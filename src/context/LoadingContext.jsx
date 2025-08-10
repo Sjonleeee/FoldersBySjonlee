@@ -67,7 +67,7 @@ export const LoadingProvider = ({ children }) => {
   useEffect(() => {
     // Use drei's useGLTF.preload to cache the model
     import("@react-three/drei").then(({ useGLTF }) => {
-      useGLTF.preload && useGLTF.preload("/src/assets/model/3LOCKEDIN.glb");
+      useGLTF.preload && useGLTF.preload("/assets/model/3LOCKEDIN.glb");
       // Simuleer een kleine delay zodat het model echt geladen is
       setTimeout(() => setModelLoaded(true), 400);
     });

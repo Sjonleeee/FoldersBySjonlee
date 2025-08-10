@@ -5,7 +5,7 @@ import * as THREE from "three";
 
 const Model = ({ mousePosition }) => {
   const { scene, animations, cameras, lights } = useGLTF(
-    "/src/assets/model/3LOCKEDIN.glb"
+    "/assets/model/3LOCKEDIN.glb"
   );
   const { actions } = useAnimations(animations, scene);
   const headRefs = useRef([]);
@@ -14,24 +14,19 @@ const Model = ({ mousePosition }) => {
   useFrame(() => {
     headRefs.current.forEach((head) => {
       if (head) {
-        // Create a plane at the model's position
         const plane = new THREE.Plane();
         const normal = new THREE.Vector3();
         const intersectionPoint = new THREE.Vector3();
 
-        // Set up the plane
         normal.copy(camera.position).normalize();
         plane.setFromNormalAndCoplanarPoint(normal, scene.position);
 
-        // Create raycaster
         const raycaster = new THREE.Raycaster();
         raycaster.setFromCamera(mousePosition, camera);
 
-        // Get intersection point
         raycaster.ray.intersectPlane(plane, intersectionPoint);
 
-        // Limit the intersection point
-        const maxOffset = 1.2; // Increased from 0.5
+        const maxOffset = 1.5; // Increased from 1.2 for more tilt
         intersectionPoint.x = THREE.MathUtils.clamp(
           intersectionPoint.x,
           -maxOffset,
@@ -43,7 +38,6 @@ const Model = ({ mousePosition }) => {
           maxOffset
         );
 
-        // Bereken de gewenste rotatie met limieten
         const targetPosition = new THREE.Vector3(
           intersectionPoint.x,
           intersectionPoint.y,
@@ -58,15 +52,13 @@ const Model = ({ mousePosition }) => {
           direction
         );
 
-        // Limiteer de rotatiehoeken
         const euler = new THREE.Euler().setFromQuaternion(desiredRotation);
-        euler.x = THREE.MathUtils.clamp(euler.x, -Math.PI / 1.2, Math.PI / 1.2); // Increased range
-        euler.y = THREE.MathUtils.clamp(euler.y, -Math.PI / 1.2, Math.PI / 1.2); // Increased range
+        euler.x = THREE.MathUtils.clamp(euler.x, -Math.PI / 1.1, Math.PI / 1.1); // Increased range
+        euler.y = THREE.MathUtils.clamp(euler.y, -Math.PI / 1.1, Math.PI / 1.1); // Increased range
 
         const clampedRotation = new THREE.Quaternion().setFromEuler(euler);
 
-        // Pas de rotatie vloeiend toe met slerp
-        const smoothingFactor = 0.7; // More responsive
+        const smoothingFactor = 0.8; // Increased for smoother transitions
         head.quaternion.slerp(clampedRotation, smoothingFactor);
       }
     });

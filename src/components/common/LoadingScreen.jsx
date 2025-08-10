@@ -35,7 +35,7 @@ const LoadingScreen = ({ progress }) => {
 
   // Preload 3D model
   useEffect(() => {
-    useGLTF.preload("/src/assets/model/3LOCKEDIN.glb");
+    useGLTF.preload("/assets/model/3LOCKEDIN.glb");
   }, []);
 
   useEffect(() => {

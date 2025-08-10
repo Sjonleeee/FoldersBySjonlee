@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getScrollTriggerConfig } from "../config/scrollTriggerConfig";
 import "../styles/skillssection.css";
 
@@ -11,20 +10,12 @@ export default function SkillsSection() {
   const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
-    if (hasAnimated) return;
+    if (hasAnimated) return; // prevent rerunning animation
 
-    // Use GSAP context for better cleanup and performance
     const ctx = gsap.context(() => {
-      // Set initial states
-      gsap.set(skillCardsRef.current, {
-        clearProps: "all"
-      });
+      // Reset any inline styles on skillCards container for clean start
+      gsap.set(skillCardsRef.current, { clearProps: "all", opacity: 0, y: 0 });
 
-      gsap.set(skillCardsRef.current, {
-        opacity: 0,
-      });
-
-      // Create the main timeline with improved ScrollTrigger config
       const config = getScrollTriggerConfig("SKILLS", {
         trigger: sectionRef.current,
         onComplete: () => setHasAnimated(true),
@@ -36,16 +27,13 @@ export default function SkillsSection() {
 
       const tl = gsap.timeline({
         scrollTrigger: config,
-        defaults: {
-          ease: "power2.out",
-          duration: 1,
-        }
+        defaults: { ease: "power2.out", duration: 1 },
       });
 
-      // Phase 1: Initial pause to ensure About section is finished
+      // 1. Pause briefly at start (waiting for About section)
       tl.to({}, { duration: 1 }, 0);
 
-      // Phase 2: Skill cards container becomes visible
+      // 2. Fade in skill cards container & stagger adding "visible" class to children
       tl.to(skillCardsRef.current, {
         opacity: 1,
         duration: 1,
@@ -53,22 +41,21 @@ export default function SkillsSection() {
         onStart: () => {
           if (hasShownSkillCards.current) return;
 
-          // Add visible class to cards for staggered animation
-          const cards = skillCardsRef.current?.querySelectorAll('.skill-card');
-          cards?.forEach((card, index) => {
+          const cards = skillCardsRef.current.querySelectorAll(".skill-card");
+          cards.forEach((card, index) => {
             setTimeout(() => {
-              card.classList.add('visible');
-            }, index * 200); // Shorter stagger for better flow
+              card.classList.add("visible");
+            }, index * 200); // stagger faster for smooth flow
           });
 
           hasShownSkillCards.current = true;
-        }
+        },
       }, 1);
 
-      // Phase 3: Pause for reading cards (shorter)
+      // 3. Hold visible for reading time (reduced from 5 to 4 seconds)
       tl.to({}, { duration: 4 }, 2);
 
-      // Phase 4: Cards fade out
+      // 4. Fade out skill cards container with upward move
       tl.to(skillCardsRef.current, {
         opacity: 0,
         y: -50,
@@ -76,20 +63,17 @@ export default function SkillsSection() {
         ease: "power2.inOut",
       }, 6);
 
-      // Phase 5: Final pause to ensure complete fade (shorter)
+      // 5. Small pause after fade out to finish smoothly
       tl.to({}, { duration: 0.5 }, 7.5);
 
-      // Note: Section will be hidden by ScrollTrigger onLeave callback
-      // instead of hiding it here to allow Latest Projects section to be visible
+      // Section visibility handled by ScrollTrigger callbacks outside this timeline
 
     }, sectionRef);
 
-    return () => {
-      ctx.revert();
-    };
+    return () => ctx.revert(); // cleanup GSAP context on unmount or re-run
   }, [hasAnimated]);
 
-  // Reset skill cards state when section is completed
+  // Reset internal state if needed after animation completes (if you rerun animations)
   useEffect(() => {
     if (!hasAnimated) return;
     hasShownSkillCards.current = false;
@@ -98,7 +82,6 @@ export default function SkillsSection() {
   return (
     <section className="skills-section" ref={sectionRef}>
       <div className="skills-container">
-        {/* Skill Cards */}
         <div className="skill-cards-container" ref={skillCardsRef}>
           <div className="skill-card">
             <h3 className="skill-card-title">Design</h3>
@@ -110,7 +93,7 @@ export default function SkillsSection() {
               <li className="skill-item">UX/UX DESIGN</li>
             </ul>
           </div>
-          
+
           <div className="skill-card">
             <h3 className="skill-card-title">Development</h3>
             <ul className="skill-list">
@@ -126,4 +109,4 @@ export default function SkillsSection() {
       </div>
     </section>
   );
-} 
+}

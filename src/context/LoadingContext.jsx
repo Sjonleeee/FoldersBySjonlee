@@ -1,113 +1,104 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext, useEffect, useRef } from "react";
 
-// Create context
+// Create context with defaults
 const LoadingContext = createContext({
   loading: true,
   progress: 0,
   setLoading: () => {},
 });
 
-// Font loading check using FontFaceObserver
+// Font loading utility with timeout and polling
 const loadFonts = async () => {
-  // We'll use a timeout promise to make sure we don't wait forever
-  const timeoutPromise = new Promise((resolve) => setTimeout(resolve, 3000)); // 3 second timeout
+  const timeout = new Promise((resolve) => setTimeout(resolve, 3000)); // 3 seconds timeout
 
-  try {
-    // Create a font loading checker
-    const fontLoader = () => {
-      return new Promise((resolve) => {
-        // Create a test element
-        const testElement = document.createElement("span");
-        testElement.style.fontFamily = "Hermaiona, serif";
-        testElement.style.fontSize = "0px";
-        testElement.style.visibility = "hidden";
-        testElement.innerHTML = "Font loading test";
-        document.body.appendChild(testElement);
+  const fontCheck = new Promise((resolve) => {
+    const testEl = document.createElement("span");
+    testEl.style.fontFamily = "Hermaiona, serif";
+    testEl.style.fontSize = "0";
+    testEl.style.visibility = "hidden";
+    testEl.textContent = "Font loading test";
+    document.body.appendChild(testEl);
 
-        // Check if font is loaded every 100ms
-        const checkFont = () => {
-          // Try to apply the font and check if it worked
-          if (document.fonts && document.fonts.check) {
-            if (document.fonts.check("1em Hermaiona")) {
-              document.body.removeChild(testElement);
-              resolve(true);
-              return;
-            }
-          }
-
-          setTimeout(checkFont, 100);
-        };
-
-        checkFont();
-      });
+    const check = () => {
+      if (document.fonts?.check("1em Hermaiona")) {
+        document.body.removeChild(testEl);
+        resolve(true);
+      } else {
+        setTimeout(check, 100);
+      }
     };
 
-    // Race the font loading against the timeout
-    await Promise.race([fontLoader(), timeoutPromise]);
-    return true;
-  } catch (error) {
-    console.warn("Font loading issue:", error);
-    return false; // Continue even if font failed to load
-  }
+    check();
+  });
+
+  // Race font loading vs timeout
+  await Promise.race([fontCheck, timeout]).catch((e) => {
+    console.warn("Font loading issue:", e);
+  });
+
+  return true; // Always resolve true to avoid blocking
 };
 
-// Provider component
 export const LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [modelLoaded, setModelLoaded] = useState(false);
+  const fontsLoaded = useRef(false);
+  const modelLoaded = useRef(false);
+  const intervalId = useRef(null);
+  const fontCheckIntervalId = useRef(null);
 
-  // Font loading effect
+  // Load fonts once
   useEffect(() => {
-    loadFonts().then(() => setFontsLoaded(true));
-  }, []);
-
-  // Preload 3D model effect
-  useEffect(() => {
-    // Use drei's useGLTF.preload to cache the model
-    import("@react-three/drei").then(({ useGLTF }) => {
-      useGLTF.preload && useGLTF.preload("/assets/model/3LOCKEDIN.glb");
-      // Simuleer een kleine delay zodat het model echt geladen is
-      setTimeout(() => setModelLoaded(true), 400);
+    loadFonts().then(() => {
+      fontsLoaded.current = true;
     });
   }, []);
 
-  // Simulate loading progress
+  // Preload 3D model once
   useEffect(() => {
-    if (loading) {
-      let current = 0;
-      const interval = setInterval(() => {
-        // Increment by smaller amounts to allow time for font loading
-        current += 3;
-        setProgress(current);
+    import("@react-three/drei").then(({ useGLTF }) => {
+      useGLTF.preload?.("/assets/model/3LOCKEDIN.glb");
+      // Simulate small delay for real loading
+      setTimeout(() => {
+        modelLoaded.current = true;
+      }, 400);
+    });
+  }, []);
 
-        // Only complete loading when fonts AND model are ready and progress >= 100
-        if (current >= 100 && fontsLoaded && modelLoaded) {
-          clearInterval(interval);
-          setTimeout(() => {
-            setLoading(false);
-          }, 800); // Delay hiding loader for transition
-        } else if (current >= 98 && (!fontsLoaded || !modelLoaded)) {
-          // Hold at 98% until fonts and model are loaded
-          clearInterval(interval);
+  // Manage loading progress animation
+  useEffect(() => {
+    if (!loading) return;
 
-          // Check for fonts/model every 100ms
-          const fontCheckInterval = setInterval(() => {
-            if (fontsLoaded && modelLoaded) {
-              setProgress(100);
-              clearInterval(fontCheckInterval);
-              setTimeout(() => {
-                setLoading(false);
-              }, 800); // Delay hiding loader for transition
-            }
-          }, 100);
-        }
-      }, 120);
+    let current = 0;
 
-      return () => clearInterval(interval);
-    }
-  }, [loading, fontsLoaded, modelLoaded]);
+    intervalId.current = setInterval(() => {
+      current += 3;
+      setProgress(current);
+
+      if (current >= 100 && fontsLoaded.current && modelLoaded.current) {
+        clearInterval(intervalId.current);
+        setTimeout(() => setLoading(false), 800);
+      } else if (
+        current >= 98 &&
+        (!fontsLoaded.current || !modelLoaded.current)
+      ) {
+        clearInterval(intervalId.current);
+
+        fontCheckIntervalId.current = setInterval(() => {
+          if (fontsLoaded.current && modelLoaded.current) {
+            setProgress(100);
+            clearInterval(fontCheckIntervalId.current);
+            setTimeout(() => setLoading(false), 800);
+          }
+        }, 100);
+      }
+    }, 120);
+
+    return () => {
+      clearInterval(intervalId.current);
+      clearInterval(fontCheckIntervalId.current);
+    };
+  }, [loading]);
 
   return (
     <LoadingContext.Provider value={{ loading, progress, setLoading }}>
@@ -116,7 +107,7 @@ export const LoadingProvider = ({ children }) => {
   );
 };
 
-// Custom hook for using the loading context
+// Hook for consuming context
 export const useLoading = () => useContext(LoadingContext);
 
 export default LoadingContext;

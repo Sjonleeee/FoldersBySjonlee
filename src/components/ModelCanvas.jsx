@@ -12,20 +12,24 @@ const CameraMovement = ({ inputPosition }) => {
   useFrame(() => {
     if (!inputPosition) return;
 
-    const targetX = initialPosition[0] + inputPosition.x * 1.0; // Increased range
+    // Calculate target position with reduced movement range
+    const targetX = initialPosition[0] + inputPosition.x * 0.8;
     const targetY =
       initialPosition[1] +
       Math.max(
-        Math.min(inputPosition.y * 1.0, maxVerticalMovement * 1.2), // Increased range
-        -maxVerticalMovement * 1.2
+        Math.min(inputPosition.y * 0.8, maxVerticalMovement),
+        -maxVerticalMovement
       );
 
+    // Keep the Z position fixed at the initial distance
     const targetZ = initialPosition[2];
 
-    camera.position.x += (targetX - camera.position.x) * 0.2; // Smoother interpolation
-    camera.position.y += (targetY - camera.position.y) * 0.2; // Smoother interpolation
+    // Smoother interpolation with reduced speed
+    camera.position.x += (targetX - camera.position.x) * 0.3;
+    camera.position.y += (targetY - camera.position.y) * 0.3;
     camera.position.z = targetZ;
 
+    // Look at the model's body center
     camera.lookAt(0, -1.5, 0);
   });
 

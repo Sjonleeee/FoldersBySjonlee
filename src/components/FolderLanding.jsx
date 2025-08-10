@@ -13,6 +13,8 @@ export default function FolderLanding({ onOpen }) {
             className="folder-icon folder-clickable"
             draggable={false}
             onClick={onOpen}
+            loading="lazy" // Optimize image loading
+            style={{ willChange: "transform, opacity" }} // Add GPU acceleration
           />
         </div>
       </div>

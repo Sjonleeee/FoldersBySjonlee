@@ -93,7 +93,7 @@ export default function ContactSection() {
       ref={sectionRef}
     >
       <div className="contact-content">
-        <h1 className="contact-title" ref={titleRef}>Let's Connect</h1>
+        <h1 className="contact-title hermaiona-title-style" ref={titleRef}>Let's Connect</h1>
         <p className="contact-description" ref={descriptionRef}>
           Ready to collaborate? Get in touch
         </p>

@@ -88,29 +88,31 @@ function AnimatedFolderStack({ setSelectedProject }) {
     };
   }, [hasAnimated]);
 
-  const setupInitialStates = () => {
-    function isMobile() {
-      return window.innerWidth <= 600;
-    }
+  // Optimize isMobile function by moving it outside to avoid redefinition
+  const isMobile = () => window.innerWidth <= 600;
 
-    // Set title initial state - verborgen tot animatie start
+  // Optimize setupInitialStates
+  const setupInitialStates = () => {
     gsap.set(titleRef.current, {
       top: "50%",
       transform: "translateX(-50%)",
       fontSize: "8.4rem",
       opacity: 0,
-      visibility: "hidden", // Extra verborgen
+      visibility: "hidden",
+      willChange: "transform, opacity",
     });
 
-    // Set folders initial states - volledig verborgen
     folderRefs.current.forEach((ref, i) => {
+      const x = isMobile() ? 0 : i === 0 ? -16 : i === 2 ? 16 : 0;
+      const rotation = isMobile() ? 0 : i === 0 ? 4 : i === 2 ? -4 : 0;
       gsap.set(ref.current, {
         y: "100vh",
-        x: isMobile() ? 0 : i === 0 ? -16 : i === 2 ? 16 : 0,
-        rotation: isMobile() ? 0 : i === 0 ? 4 : i === 2 ? -4 : 0,
+        x,
+        rotation,
         zIndex: i + 1,
         opacity: 0,
-        visibility: "hidden", // Extra verborgen
+        visibility: "hidden",
+        willChange: "transform, opacity",
       });
     });
   };
@@ -317,23 +319,19 @@ function AnimatedFolderStack({ setSelectedProject }) {
   let lastMouseX = 0;
   let lastMouseY = 0;
 
-  function handleMouseMove(e) {
-    if (!sectionRef.current) return;
-
-    // Throttle mouse events for better performance
-    if (mouseMoveTimeout) return;
+  // Optimize handleMouseMove with better throttling
+  const handleMouseMove = (e) => {
+    if (!sectionRef.current || mouseMoveTimeout) return;
 
     mouseMoveTimeout = setTimeout(() => {
       const bounds = sectionRef.current.getBoundingClientRect();
       const newMouseX = e.clientX - bounds.left;
       const newMouseY = e.clientY - bounds.top;
 
-      // Only update if mouse moved significantly (performance optimization)
       const distance = Math.sqrt(
         (newMouseX - lastMouseX) ** 2 + (newMouseY - lastMouseY) ** 2
       );
       if (distance > 10) {
-        // Increased threshold for better performance
         setMouseX(newMouseX);
         setMouseY(newMouseY);
         lastMouseX = newMouseX;
@@ -341,8 +339,8 @@ function AnimatedFolderStack({ setSelectedProject }) {
       }
 
       mouseMoveTimeout = null;
-    }, 50); // ~20fps for much better performance
-  }
+    }, 50); // ~20fps
+  };
 
   function handleMouseLeave() {
     if (mouseMoveTimeout) {

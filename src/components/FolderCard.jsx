@@ -143,7 +143,7 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
             loop
             muted
             playsInline
-            webkit-playsinline
+            webkit-playsinline="true"
             disablePictureInPicture
             className="folder-card-overlay-media"
             style={{ borderRadius: overlayRadius }}

@@ -1,10 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 @font-face {
-  font-family: "Hermaione";
-  src: url("/assets/fonts/Hermaiona.ttf") format("truetype");
+  font-family: "Hermaiona";
+  src: url("/assets/fonts/Hermaiona.woff2") format("woff2"),
+    url("/assets/fonts/Hermaiona.woff") format("woff"),
+    url("/assets/fonts/Hermaiona.ttf") format("truetype"),
+    url("/assets/fonts/Hermaiona.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 * {
@@ -60,7 +64,7 @@ html,
 body {
   background-color: var(--color-background);
   background-image: url("https://i.pinimg.com/1200x/a1/10/0a/a1100a7d501b743aff598359c55e6dc0.jpg");
-  background-size: cover; 
+  background-size: cover;
   background-clip: border-box;
   background-position: center;
   background-repeat: no-repeat;
@@ -526,6 +530,7 @@ html {
 }
 
 /* Role Labels */
+
 .role-label {
   position: absolute;
   color: #fff;

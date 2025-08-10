@@ -302,10 +302,10 @@
   .header-menu {
     flex: 0 0 auto;
     margin-left: auto;
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding-right: 0.5rem;
   }
   .header-fullscreen-menu .header-dropdown-item {
-    font-size: 3.5rem; /* Increased font size for mobile menu */
+    font-size: 2.2rem;
   }
 }

@@ -215,7 +215,6 @@
 .project-folder {
   width: 170px;
   height: 140px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.13);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -390,12 +389,10 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background: rgba(24, 24, 24, 0.98);
   padding: 3vw 3vw 2vw 3vw;
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
   margin: 2vw 2vw 2vw 0;
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.18);
   position: sticky;
   top: 90px; /* sticky direct onder de topbar */
   height: fit-content;

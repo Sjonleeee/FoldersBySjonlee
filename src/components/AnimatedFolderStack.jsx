@@ -3,9 +3,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FolderCard from "./FolderCard";
 import "../styles/latestprojects.css";
-import video1 from "../assets/videos/video1.mp4";
-import video2 from "../assets/videos/video2.mp4";
-import video3 from "../assets/videos/video3.MP4";
+import video1 from "/assets/videos/video1.mp4";
+import video2 from "/assets/videos/video2.mp4";
+import video3 from "/assets/videos/video3.MP4";
 import { LATEST_PROJECTS_CONFIG } from "../config/animationConfig";
 
 gsap.registerPlugin(ScrollTrigger);

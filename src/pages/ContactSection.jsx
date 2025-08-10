@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/contactsection.css";
-import smallFolder from "../assets/images/smallFolder.png";
+import smallFolder from "/assets/images/smallFolder.png";
 import { FiMail } from "react-icons/fi";
 import { FaBehance, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";

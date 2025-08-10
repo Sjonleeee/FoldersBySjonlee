@@ -151,15 +151,13 @@ export default function OnePager({
         },
         // PHASE 2: Stats
         () => {
-          const tl = gsap
-            .timeline()
-            .to(refs.videoSection.current, {
-              opacity: 1,
-              scale: 1,
-              y: "10vh",
-              duration: 6,
-              ease: "power2.out",
-            });
+          const tl = gsap.timeline().to(refs.videoSection.current, {
+            opacity: 1,
+            scale: 1,
+            y: "10vh",
+            duration: 6,
+            ease: "power2.out",
+          });
           if (!isMobile) {
             tl.to(
               ".stats-side.left",
@@ -207,36 +205,31 @@ export default function OnePager({
         () => gsap.timeline().to({}, { duration: 75 }),
         // PHASE 5: Fade out About
         () =>
-          gsap
-            .timeline()
-            .to(refs.aboutSection.current, {
-              opacity: 0,
-              y: "-50vh",
-              duration: 8,
-              ease: easeInOut,
-            }),
+          gsap.timeline().to(refs.aboutSection.current, {
+            opacity: 0,
+            y: "-50vh",
+            duration: 8,
+            ease: easeInOut,
+          }),
         // PHASE 6: Latest Projects
         () =>
-          gsap
-            .timeline()
-            .to(refs.latestProjects.current, {
-              opacity: 1,
-              y: 0,
-              duration: 4,
-              ease: easeOut,
-            }),
+          gsap.timeline().to(refs.latestProjects.current, {
+            opacity: 1,
+            y: 0,
+            duration: 8, 
+            ease: easeOut,
+          }),
+
         // PHASE 7: Latest Projects placeholder
         () => gsap.timeline().to({}, { duration: 100 }),
         // PHASE 8: Fade out Latest Projects
         () =>
-          gsap
-            .timeline()
-            .to(refs.latestProjects.current, {
-              opacity: 0,
-              y: "-50vh",
-              duration: 6,
-              ease: easeInOut,
-            }),
+          gsap.timeline().to(refs.latestProjects.current, {
+            opacity: 0,
+            y: "-50vh",
+            duration: 6,
+            ease: easeInOut,
+          }),
         // PHASE 9: Companies Section
         () =>
           gsap

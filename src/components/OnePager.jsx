@@ -42,11 +42,6 @@ export default function OnePager({
   const easeOut = "power3.out";
   const easeInOut = "power3.inOut";
 
-  const fadeMove = (target, y, duration, ease = easeOut) => ({
-    targets: target,
-    vars: { opacity: 0, y, duration, ease },
-  });
-
   useEffect(() => {
     const entranceTl = createEntranceAnimations({
       creativeRef: refs.creative,
@@ -85,48 +80,15 @@ export default function OnePager({
       const phases = [
         // PHASE 1: Hero parallax
         () => {
-          const tl = gsap
-            .timeline()
-            .set(refs.videoSection.current, { opacity: 0, scale: 0.5 });
+          const tl = gsap.timeline().set(refs.videoSection.current, { opacity: 0, scale: 0.5 });
           if (isMobile) {
-            tl.to(refs.creative.current, {
-              y: "-100vh",
-              duration: 6,
-              ease: easeOut,
-            })
-              .to(
-                refs.developer.current,
-                { y: "100vh", duration: 6, ease: easeOut },
-                "<"
-              )
-              .to(
-                refs.folder.current,
-                { opacity: 0, scale: 0.5, duration: 6, ease: easeOut },
-                "<"
-              );
+            tl.to(refs.creative.current, { y: "-100vh", duration: 6, ease: easeOut })
+              .to(refs.developer.current, { y: "100vh", duration: 6, ease: easeOut }, "<")
+              .to(refs.folder.current, { opacity: 0, scale: 0.5, duration: 6, ease: easeOut }, "<");
           } else {
-            tl.to(refs.creative.current, {
-              x: "-100vw",
-              y: "-20vh",
-              duration: 6,
-              ease: easeOut,
-            })
-              .to(
-                refs.developer.current,
-                { x: "100vw", y: "20vh", duration: 6, ease: easeOut },
-                "<"
-              )
-              .to(
-                refs.folder.current,
-                {
-                  opacity: 0,
-                  scale: 0.5,
-                  y: "-30vh",
-                  duration: 6,
-                  ease: easeOut,
-                },
-                "<"
-              );
+            tl.to(refs.creative.current, { x: "-100vw", y: "-20vh", duration: 6, ease: easeOut })
+              .to(refs.developer.current, { x: "100vw", y: "20vh", duration: 6, ease: easeOut }, "<")
+              .to(refs.folder.current, { opacity: 0, scale: 0.5, y: "-30vh", duration: 6, ease: easeOut }, "<");
           }
           tl.to(
             [
@@ -159,48 +121,20 @@ export default function OnePager({
             ease: "power2.out",
           });
           if (!isMobile) {
-            tl.to(
-              ".stats-side.left",
-              { x: 0, opacity: 1, duration: 4, ease: "power2.out" },
-              "<"
-            ).to(
-              ".stats-side.right",
-              { x: 0, opacity: 1, duration: 4, ease: "power2.out" },
-              "<"
-            );
+            tl.to(".stats-side.left", { x: 0, opacity: 1, duration: 4, ease: "power2.out" }, "<")
+              .to(".stats-side.right", { x: 0, opacity: 1, duration: 4, ease: "power2.out" }, "<");
           }
           return tl
-            .to(
-              ".stats-laptop-stack",
-              { scale: 1, opacity: 1, duration: 4, ease: "power2.out" },
-              "<"
-            )
-            .to(
-              refs.model.current,
-              { opacity: 0, y: "25vh", duration: 6, ease: easeInOut },
-              "<"
-            );
+            .to(".stats-laptop-stack", { scale: 1, opacity: 1, duration: 4, ease: "power2.out" }, "<")
+            .to(refs.model.current, { opacity: 0, y: "25vh", duration: 6, ease: easeInOut }, "<");
         },
         // PHASE 3: Transition to About
         () =>
           gsap
             .timeline()
-            .to(refs.videoSection.current, {
-              opacity: 0,
-              y: "-50vh",
-              duration: 5,
-              ease: easeInOut,
-            })
-            .to(
-              refs.folder.current,
-              { opacity: 0, duration: 2, ease: easeInOut },
-              "<"
-            )
-            .to(
-              refs.aboutSection.current,
-              { opacity: 1, y: 0, duration: 5, ease: easeOut },
-              "+=2"
-            ),
+            .to(refs.videoSection.current, { opacity: 0, y: "-50vh", duration: 5, ease: easeInOut })
+            .to(refs.folder.current, { opacity: 0, duration: 2, ease: easeInOut }, "<")
+            .to(refs.aboutSection.current, { opacity: 1, y: 0, duration: 5, ease: easeOut }, "+=2"),
         // PHASE 4: About placeholder
         () => gsap.timeline().to({}, { duration: 75 }),
         // PHASE 5: Fade out About
@@ -216,10 +150,9 @@ export default function OnePager({
           gsap.timeline().to(refs.latestProjects.current, {
             opacity: 1,
             y: 0,
-            duration: 8, 
+            duration: 8,
             ease: easeOut,
           }),
-
         // PHASE 7: Latest Projects placeholder
         () => gsap.timeline().to({}, { duration: 100 }),
         // PHASE 8: Fade out Latest Projects
@@ -234,28 +167,15 @@ export default function OnePager({
         () =>
           gsap
             .timeline()
-            .set(refs.companies.current, {
-              opacity: 0,
-              y: 100,
-              pointerEvents: "none",
-            })
-            .to(refs.companies.current, {
-              opacity: 1,
-              y: 0,
-              pointerEvents: "auto",
-              duration: 6,
-              ease: easeOut,
-            }),
+            .set(refs.companies.current, { opacity: 0, y: 100, pointerEvents: "none" })
+            .to(refs.companies.current, { opacity: 1, y: 0, pointerEvents: "auto", duration: 6, ease: easeOut }),
         // PHASE 10: Final placeholder
         () => gsap.timeline().to({}, { duration: 10 }),
       ];
 
       // Voeg alle fases toe in één loop
       phases.forEach((makeTl, i) => {
-        mainTl.add(
-          makeTl(),
-          ONEPAGER_CONFIG.delays[Object.keys(ONEPAGER_CONFIG.delays)[i]]
-        );
+        mainTl.add(makeTl(), ONEPAGER_CONFIG.delays[Object.keys(ONEPAGER_CONFIG.delays)[i]]);
       });
     };
 
@@ -276,12 +196,7 @@ export default function OnePager({
             style={{ zIndex: 10 }}
           >
             <div className="z-front center-folder">
-              <img
-                src={folderIcon}
-                alt="Folder"
-                className="folder-icon"
-                draggable={false}
-              />
+              <img src={folderIcon} alt="Folder" className="folder-icon" draggable={false} />
             </div>
           </div>
 

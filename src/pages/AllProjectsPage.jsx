@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/allprojectspage.css";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
@@ -16,99 +16,181 @@ const sidebarItems = [
   { label: "Coming soon", key: "coming" },
 ];
 
-const foldersData = {
-  all: [
-    { name: "Volkswagen Project", sup: "®" },
-    { name: "Chrome Magazine", sup: "®" },
-    { name: "Rinkitou Creative Agency", sup: "®" },
-    { name: "Pop Up Store Berlin", sup: "®" },
-    { name: "Clothing Design", sup: "®" },
-    { name: "3D design", sup: "®" },
-  ],
-  hidden: [
-    { name: "Younger me", sup: "®" },
-    { name: "FirstPortfolio", sup: "®" },
-    { name: "Old Designs", sup: "®" },
-  ],
-  untitled: [
-    { name: "Moodboard 1", sup: "®" },
-    { name: "Untitled 1", sup: "®" },
-    { name: "Untitled 2", sup: "®" },
-  ],
-  coming: [
-    { name: "rinkitou new collection", sup: "®" },
-    { name: "Letter to future me", sup: "®" },
-  ],
-};
+const allFolders = [
+  { name: "Volkswagen Project", sup: "®" },
+  { name: "Chrome Magazine", sup: "®" },
+  { name: "Rinkitou Creative Agency", sup: "®" },
+  { name: "Pop Up Store Berlin", sup: "®" },
+  { name: "Clothing Design", sup: "®" },
+  { name: "3D design", sup: "®" },
+];
 
-const useIsMobile = (bp = 900) => {
+const hiddenFolders = [
+  { name: "Younger me", sup: "®" },
+  { name: "FirstPortfolio", sup: "®" },
+  { name: "Old Designs", sup: "®" },
+];
+
+const untitledFolders = [
+  { name: "Moodboard 1", sup: "®" },
+  { name: "Untitled 1", sup: "®" },
+  { name: "Untitled 2", sup: "®" },
+];
+
+const comingSoonFolders = [
+  { name: "rinkitou new collection", sup: "®" },
+  { name: "Letter to future me", sup: "®" },
+];
+
+function useIsMobile(breakpoint = 900) {
   const [isMobile, setIsMobile] = React.useState(
-    typeof window !== "undefined" ? window.innerWidth <= bp : false
+    typeof window !== "undefined" ? window.innerWidth <= breakpoint : false
   );
-  useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth <= bp);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [bp]);
+  React.useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= breakpoint);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [breakpoint]);
   return isMobile;
-};
-
-const getSlug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
 
 export default function AllProjectsPage() {
   const [activeKey, setActiveKey] = useState("all");
   const [selectedProject, setSelectedProject] = useState(null);
+  let foldersToShow = allFolders;
+  if (activeKey === "hidden") foldersToShow = hiddenFolders;
+  else if (activeKey === "untitled") foldersToShow = untitledFolders;
+  else if (activeKey === "coming") foldersToShow = comingSoonFolders;
+
+  // Helper om slug te maken
+  const getSlug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, "");
+
+  // Project lookup: altijd array -> object
+  const projectLookup = {};
+  projects.forEach((p) => {
+    if (p.slug) projectLookup[p.slug] = p;
+  });
+
+  const isMobile = useIsMobile(900);
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
 
-  // Lookup map (only once)
-  const projectLookup = useRef({});
   useEffect(() => {
-    const map = {};
-    projects.forEach((p) => p.slug && (map[p.slug] = p));
-    projectLookup.current = map;
-  }, []);
+    const header = document.querySelector("header");
+    const footer = document.querySelector("footer");
+    const sidebar = document.querySelector(".allprojects-sidebar");
+    const topBar = document.querySelector(".allprojects-topbar");
+    const folders = document.querySelectorAll(".folder");
+    const grid = document.querySelector(".allprojects-grid");
 
-  // Refs voor animaties
-  const headerRef = useRef(null);
-  const footerRef = useRef(null);
-  const sidebarRef = useRef(null);
-  const topbarRef = useRef(null);
-  const gridRef = useRef(null);
-  const foldersRefs = useRef([]);
-
-  foldersRefs.current = [];
-
-  const addFolderRef = (el) => {
-    if (el && !foldersRefs.current.includes(el)) foldersRefs.current.push(el);
-  };
-
-  // Animaties initial load & folders change
-  useEffect(() => {
-    const ctx = gsap.context(() => {
+    // Animate header and footer first
+    if (header) {
       gsap.fromTo(
-        headerRef.current,
+        header,
         { opacity: 0, y: -30 },
         { opacity: 1, y: 0, duration: 1.5, ease: "power4.out" }
       );
+    }
+
+    if (footer) {
       gsap.fromTo(
-        footerRef.current,
+        footer,
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 1.5, ease: "power4.out", delay: 0.3 }
       );
+    }
+
+    // Animate sidebar sliding in from the left
+    if (sidebar) {
       gsap.fromTo(
-        sidebarRef.current,
+        sidebar,
         { opacity: 0, x: -50 },
         { opacity: 1, x: 0, duration: 1.5, ease: "power4.out", delay: 0.6 }
       );
+    }
+
+    // Animate top bar sliding in from the top
+    if (topBar) {
       gsap.fromTo(
-        topbarRef.current,
+        topBar,
         { opacity: 0, y: -20 },
         { opacity: 1, y: 0, duration: 1.5, ease: "power4.out", delay: 0.9 }
       );
-      if (foldersRefs.current.length) {
+    }
+
+    // Animate folders with a staggered effect
+    if (folders.length > 0) {
+      gsap.fromTo(
+        folders,
+        { opacity: 0, scale: 0.8 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: "power4.out",
+          stagger: 0.2,
+          delay: 1.2,
+        }
+      );
+    }
+
+    // Animate the grid last
+    if (grid) {
+      gsap.fromTo(
+        grid,
+        { opacity: 0 },
+        { opacity: 1, duration: 1.5, ease: "power4.out", delay: 2 }
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedProject) {
+      const image = document.querySelector(".project-detail-image img");
+      const text = document.querySelector(".project-detail-info");
+
+      if (isMobile && text) {
         gsap.fromTo(
-          foldersRefs.current,
+          text,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 2, ease: "power2.out" }
+        );
+      }
+
+      if (isMobile && image) {
+        gsap.fromTo(
+          image,
+          { opacity: 0 },
+          { opacity: 1, duration: 2, ease: "power2.out", delay: 0.5 } // Increased delay to 0.5
+        );
+      } else {
+        if (image) {
+          gsap.fromTo(
+            image,
+            { opacity: 0 },
+            { opacity: 1, duration: 2, ease: "power2.out" }
+          );
+        }
+
+        if (text) {
+          gsap.fromTo(
+            text,
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 2, ease: "power2.out", delay: 0.3 }
+          );
+        }
+      }
+    }
+  }, [selectedProject, isMobile]);
+
+  useEffect(() => {
+    if (selectedProject === null) {
+      const folders = document.querySelectorAll(".project-folder");
+
+      if (folders.length > 0) {
+        gsap.fromTo(
+          folders,
           { opacity: 0, scale: 0.8 },
           {
             opacity: 1,
@@ -116,103 +198,29 @@ export default function AllProjectsPage() {
             duration: 1.2,
             ease: "power4.out",
             stagger: 0.2,
-            delay: 1.2,
           }
         );
       }
-      gsap.fromTo(
-        gridRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 1.5, ease: "power4.out", delay: 2 }
-      );
-    });
-    return () => ctx.revert();
-  }, [activeKey]);
-
-  // Animaties bij project detail
-  useEffect(() => {
-    if (!selectedProject) return;
-
-    const ctx = gsap.context(() => {
-      const image = document.querySelector(".project-detail-image img");
-      const text = document.querySelector(".project-detail-info");
-
-      if (isMobile) {
-        if (text)
-          gsap.fromTo(
-            text,
-            { opacity: 0, y: 30 },
-            { opacity: 1, y: 0, duration: 2, ease: "power2.out" }
-          );
-        if (image)
-          gsap.fromTo(
-            image,
-            { opacity: 0 },
-            { opacity: 1, duration: 2, ease: "power2.out", delay: 0.5 }
-          );
-      } else {
-        if (image)
-          gsap.fromTo(
-            image,
-            { opacity: 0 },
-            { opacity: 1, duration: 2, ease: "power2.out" }
-          );
-        if (text)
-          gsap.fromTo(
-            text,
-            { opacity: 0, y: 30 },
-            { opacity: 1, y: 0, duration: 2, ease: "power2.out", delay: 0.3 }
-          );
-      }
-    });
-
-    return () => ctx.revert();
-  }, [selectedProject, isMobile]);
-
-  const foldersToShow = foldersData[activeKey] || foldersData.all;
-  const currentProject =
-    (selectedProject && projectLookup.current[selectedProject]) ||
-    projectLookup.current["volkswagenproject"];
-
-  // Render project detail info body (DRY)
-  const renderProjectBody = (project) => {
-    if (!project) return null;
-    if (project.body) {
-      return (
-        <div className="project-detail-content-design">
-          <div className="project-detail-body-design">
-            <span className="fancy-dropcap">{project.dropcap}</span>
-            {project.body.map((line, idx) => (
-              <p key={idx} style={{ display: "inline" }}>
-                {line}
-                {idx < project.body.length - 1 && <br />}
-              </p>
-            ))}
-          </div>
-          <div className="project-detail-tags-design">
-            [ {project.tags.join(", ")} ]
-          </div>
-        </div>
-      );
     }
-    return project.description;
-  };
+  }, [selectedProject]);
 
   return (
     <div className="allprojects-root">
-      <Header onLogoClick={() => navigate("/")} ref={headerRef} />
-
-      <aside className="allprojects-sidebar" ref={sidebarRef}>
+      {/* Header (bovenaan, niet meer fixed) */}
+      <Header onLogoClick={() => navigate("/")} />
+      {/* Sidebar */}
+      <aside className="allprojects-sidebar">
         <nav className="sidebar-menu">
-          {sidebarItems.map(({ label, key }) => (
+          {sidebarItems.map((item) => (
             <div
-              key={key}
               className={`sidebar-menu-item${
-                activeKey === key ? " active" : ""
+                activeKey === item.key ? " active" : ""
               }`}
+              key={item.key}
               onClick={(e) => {
-                setActiveKey(key);
-                setSelectedProject(null);
+                setActiveKey(item.key);
+                setSelectedProject(null); // reset detail als je wisselt
+                // Scroll het aangeklikte item in beeld op mobiel
                 if (window.innerWidth <= 900 && e.currentTarget) {
                   e.currentTarget.scrollIntoView({
                     behavior: "smooth",
@@ -224,59 +232,175 @@ export default function AllProjectsPage() {
             >
               <FiFolder
                 className={`sidebar-folder-icon${
-                  activeKey === key ? " active" : ""
+                  activeKey === item.key ? " active" : ""
                 }`}
               />
-              <span>{label}</span>
+              <span>{item.label}</span>
             </div>
           ))}
         </nav>
       </aside>
-
+      {/* Main Content */}
       <main className="allprojects-main">
-        <header className="allprojects-topbar" ref={topbarRef}>
+        {/* Topbar */}
+        <header className="allprojects-topbar">
           <div className="topbar-title-row">
-            {selectedProject && (
-              <FaChevronLeft
-                className="topbar-arrow clickable"
-                style={{ marginRight: 8 }}
-                onClick={() => setSelectedProject(null)}
-              />
-            )}
+            {selectedProject ? (
+              <span className="topbar-arrows">
+                <FaChevronLeft
+                  className="topbar-arrow clickable"
+                  style={{ marginRight: 8 }}
+                  onClick={() => setSelectedProject(null)}
+                />
+              </span>
+            ) : null}
             <span className="allprojects-title">
               {selectedProject
-                ? currentProject?.title || "Project"
+                ? (
+                    projectLookup[selectedProject] ||
+                    projectLookup["volkswagenproject"]
+                  ).title || "Project"
                 : activeKey === "all"
                 ? "All projects"
-                : activeKey.charAt(0).toUpperCase() + activeKey.slice(1)}
+                : activeKey === "hidden"
+                ? "Hidden"
+                : activeKey === "untitled"
+                ? "Untitled"
+                : activeKey === "coming"
+                ? "Coming soon"
+                : "Projects"}
             </span>
+            {/* Remove the topbar-icons span completely */}
           </div>
         </header>
-
-        {selectedProject && currentProject ? (
-          <section
-            className="project-detail-section"
-            style={{ flexDirection: isMobile ? "column" : "row" }}
-          >
-            <div
-              className="project-detail-image"
-              style={{ order: isMobile ? 2 : 1 }}
-            >
-              <img
-                src={currentProject.image}
-                alt={currentProject.title}
-                style={{ width: "100%" }}
-              />
-            </div>
-            <div
-              className="project-detail-info"
-              style={{ order: isMobile ? 1 : 2 }}
-            >
-              <h2 style={{ marginTop: 0 }}>{currentProject.title}</h2>
-              <div className="project-detail-description">
-                {renderProjectBody(currentProject)}
-              </div>
-            </div>
+        {/* Project Detail of Grid */}
+        {selectedProject &&
+        (projectLookup[selectedProject] ||
+          projectLookup["volkswagenproject"]) ? (
+          <section className="project-detail-section">
+            {isMobile ? (
+              <>
+                <div className="project-detail-info">
+                  <h2 style={{ marginTop: 0 }}>
+                    {
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).title
+                    }
+                  </h2>
+                  <div className="project-detail-description">
+                    {projectLookup[selectedProject]?.body ? (
+                      <div className="project-detail-content-design">
+                        <div className="project-detail-body-design">
+                          <span className="fancy-dropcap">
+                            {projectLookup[selectedProject].dropcap}
+                          </span>
+                          {projectLookup[selectedProject].body.map(
+                            (line, idx) => (
+                              <p key={idx} style={{ display: "inline" }}>
+                                {line}
+                                {idx <
+                                projectLookup[selectedProject].body.length -
+                                  1 ? (
+                                  <br />
+                                ) : null}
+                              </p>
+                            )
+                          )}
+                        </div>
+                        <div className="project-detail-tags-design">
+                          [ {projectLookup[selectedProject].tags.join(", ")} ]
+                        </div>
+                      </div>
+                    ) : (
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).description
+                    )}
+                  </div>
+                </div>
+                <div className="project-detail-image">
+                  <img
+                    src={
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).image
+                    }
+                    alt={
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).title
+                    }
+                    style={{ width: "100%" }}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="project-detail-image">
+                  <img
+                    src={
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).image
+                    }
+                    alt={
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).title
+                    }
+                    style={{ width: "100%" }}
+                  />
+                </div>
+                <div className="project-detail-info">
+                  <h2 style={{ marginTop: 0 }}>
+                    {
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).title
+                    }
+                  </h2>
+                  <div className="project-detail-description">
+                    {projectLookup[selectedProject]?.body ? (
+                      <div className="project-detail-content-design">
+                        <div className="project-detail-body-design">
+                          <span className="fancy-dropcap">
+                            {projectLookup[selectedProject].dropcap}
+                          </span>
+                          {projectLookup[selectedProject].body.map(
+                            (line, idx) => (
+                              <p key={idx} style={{ display: "inline" }}>
+                                {line}
+                                {idx <
+                                projectLookup[selectedProject].body.length -
+                                  1 ? (
+                                  <br />
+                                ) : null}
+                              </p>
+                            )
+                          )}
+                        </div>
+                        <div className="project-detail-tags-design">
+                          [ {projectLookup[selectedProject].tags.join(", ")} ]
+                        </div>
+                      </div>
+                    ) : (
+                      (
+                        projectLookup[selectedProject] ||
+                        projectLookup["volkswagenproject"]
+                      ).description
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
           </section>
         ) : (
           <section className="allprojects-grid-section">
@@ -285,14 +409,15 @@ export default function AllProjectsPage() {
                 "allprojects-grid" +
                 (foldersToShow.length <= 3 ? " grid-narrow" : "")
               }
-              ref={gridRef}
             >
               {foldersToShow.map((folder, idx) => (
                 <div
-                  key={idx}
-                  ref={addFolderRef}
                   className="project-folder"
-                  onClick={() => setSelectedProject(getSlug(folder.name))}
+                  key={idx}
+                  onClick={() => {
+                    const slug = getSlug(folder.name);
+                    setSelectedProject(slug);
+                  }}
                   style={{ cursor: "pointer" }}
                 >
                   <img src={folderIcon} alt="Folder" className="folder-img" />
@@ -310,9 +435,8 @@ export default function AllProjectsPage() {
             </div>
           </section>
         )}
-
+        {/* Footer (fixed at bottom) */}
         <div
-          ref={footerRef}
           style={{
             position: "fixed",
             bottom: 0,
@@ -321,7 +445,7 @@ export default function AllProjectsPage() {
             zIndex: 5000,
           }}
         >
-          <Footer hideIconBar showCopyright />
+          <Footer hideIconBar={true} showCopyright={true} />
         </div>
       </main>
     </div>

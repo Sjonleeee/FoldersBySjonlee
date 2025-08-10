@@ -1,0 +1,378 @@
+/* -----------------------------
+   ABOUT SECTION - CLEAN CENTERED DESIGN
+------------------------------ */
+.about-section {
+  min-height: 100%;
+  position: relative;
+  overflow: hidden;
+  opacity: 1;
+  padding: 2rem;
+}
+
+.about-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* -----------------------------
+   PROFILE IMAGE
+------------------------------ */
+.about-image-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.about-profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 20px;
+  z-index: 100;
+  pointer-events: none;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about-mouse-image {
+  position: absolute;
+  max-width: 300px;
+  max-height: 300px;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  filter: brightness(0.9);
+  transform: scale(0.9);
+  opacity: 1;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  will-change: transform, opacity;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInOut 1.2s ease-in-out forwards;
+}
+
+.about-mouse-image:hover {
+  transform: scale(1.05) rotate(1deg);
+}
+
+/* -----------------------------
+   MOUSE IMAGE ANIMATION
+------------------------------ */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* -----------------------------
+   TITLE OVERLAY
+------------------------------ */
+.about-title-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  z-index: 200;
+  text-align: center;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.about-title {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 12rem;
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+  transform: translateY(0px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* -----------------------------
+   DESCRIPTION
+------------------------------ */
+.about-description-container {
+  position: absolute;
+  top: 50vh;
+  left: 50%;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 2rem;
+  transform: translateX(-50%);
+  z-index: 50;
+  opacity: 0;
+}
+
+.about-description-content {
+  max-width: 800px;
+  text-align: center;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about-description-content p {
+  font-size: 1.4rem;
+  line-height: 1.8;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s ease;
+}
+
+/* -----------------------------
+   SKILL CARDS
+------------------------------ */
+.skill-cards-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column; /* Onder elkaar */
+  align-items: center; /* Horizontaal gecentreerd */
+  gap: 1.5rem;
+  transform: translate(-50%, -50%);
+  z-index: 100; /* Ensure it appears above the container */
+  opacity: 0;
+  pointer-events: none;
+  margin-left: 55px;
+  margin-right: 55px;
+}
+
+.skill-card {
+  background: rgba(15, 169, 177, 0);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 250px;
+  opacity: 0;
+  transform: translateY(100px); /* Start onderaan */
+  transform-style: preserve-3d;
+  perspective: 5000px;
+  box-shadow: 0 0 30px 2px rgba(255, 255, 255, 0.6),
+    0 0 5px 2px rgba(255, 255, 255, 0.3);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Na animatie omhoog en fade in, zonder rotatie */
+.skill-card.animated {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.skill-card-title {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 4rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.skill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skill-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.skill-item:last-child {
+  border-bottom: none;
+}
+
+.skill-item:hover {
+  color: #fff;
+}
+
+/* -----------------------------
+   MOBILE RESPONSIVE
+------------------------------ */
+@media (max-width: 768px) {
+  .about-container {
+    max-width: 100vw;
+    margin: 0 auto;
+  }
+
+  .about-title {
+    font-size: 5rem;
+    text-shadow: 3px 1px 2px rgba(0, 0, 0, 0.8);
+  }
+
+  /* About description full width on mobile */
+  .about-description-container,
+  .about-description-content {
+    max-width: 100%;
+    left: 0;
+    padding: 1rem;
+    text-align: center;
+    transform: none;
+  }
+
+  .about-description-container {
+    top: 70%; /* Adjusted to move closer to the image */
+    transform: translateY(-50%);
+    text-align: center;
+  }
+
+  .about-description-content p {
+    font-size: 1rem;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  /* Skill cards stacked en gecentreerd zonder rotatie */
+  .skill-cards-container {
+    width: 100%;
+    position: relative;
+    top: auto;
+    left: auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    transform: none;
+    pointer-events: auto;
+    opacity: 1 !important;
+  }
+
+  .skill-card {
+    width: 90%;
+    min-width: unset;
+    padding: 1.25rem;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: none !important;
+    box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.6),
+      0 0 5px 2px rgba(255, 255, 255, 0.3);
+    transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .skill-card.animated {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .skill-card-title {
+    font-size: 2.5rem;
+    margin: 5px;
+  }
+
+  .skill-item {
+    font-size: 0.85rem;
+  }
+
+  .about-image-container {
+    top: 60%; /* Move image slightly down */
+    transform: translate(-50%, -50%);
+    width: 100%;
+  }
+
+  .about-title {
+    top: 40%; /* Move title slightly down */
+  }
+}
+
+/* -----------------------------
+   TABLET RESPONSIVE
+------------------------------ */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .about-title {
+    font-size: 10rem;
+  }
+  .about-mouse-image {
+    max-width: 250px;
+    max-height: 250px;
+  }
+}
+
+/* -----------------------------
+   DESKTOP RESPONSIVE
+------------------------------ */
+@media (min-width: 1025px) {
+  .about-image-container {
+    width: 400px;
+    height: 500px;
+  }
+  .about-title {
+    font-size: 10rem;
+  }
+  .about-mouse-image {
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .skill-cards-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  .skill-card {
+    width: 350px;
+    padding: 2rem;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .skill-card.animated {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+}

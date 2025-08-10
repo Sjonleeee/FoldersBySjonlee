@@ -1,14 +1,21 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { MenuProvider } from "./context/MenuContext";
 import { LoadingProvider } from "./context/LoadingContext";
-import MainLayout from "./layout/MainLayout";
-import FolderPage from "./sections/FolderPage";
+import MainPage from "./pages/MainPage";
+import AllProjectsPage from "./pages/AllProjectsPage";
 
 export default function App() {
   return (
-    // <LoadingProvider>
-      // <MainLayout>
-        <FolderPage />
-      // </MainLayout>
-    // </LoadingProvider>
+    <Router>
+      <LoadingProvider>
+        <MenuProvider>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/projects" element={<AllProjectsPage />} />
+          </Routes>
+        </MenuProvider>
+      </LoadingProvider>
+    </Router>
   );
 }

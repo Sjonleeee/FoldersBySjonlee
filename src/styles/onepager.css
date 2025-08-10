@@ -1,0 +1,246 @@
+/* =====================
+   Sticky Animation Structure
+   ===================== */
+.folder-hero-outer {
+  height: 420vh;
+  position: relative;
+  overflow: visible !important;
+}
+
+.folder-hero-sticky {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* =====================
+   Layout & Centering
+   ===================== */
+.folder-page-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.main-content-centered {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.full-screen,
+.full-screen-z10 {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  left: 0;
+}
+
+/* =====================
+   Title Centering
+   ===================== */
+.title-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  z-index: 10002; /* Ensure it is above the 3D model */
+  pointer-events: none;
+}
+
+.title-center-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 2vw;
+}
+
+.left-title,
+.right-title {
+  display: block;
+  text-align: center;
+}
+
+.title-text {
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 10rem;
+  font-weight: 400;
+  color: #fff;
+  -webkit-text-stroke: 2px lightgray;
+  text-stroke: 2px #fff;
+  white-space: normal;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+/* =====================
+   Canvas
+   ===================== */
+.canvas-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1; /* Keep the 3D model below the titles */
+}
+
+/* =====================
+   Role Labels
+   ===================== */
+.role-label {
+  position: absolute;
+  font-size: 0.7rem;
+  color: #ccc;
+  opacity: 0.92;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.role-label.top-left {
+  top: 25%;
+  left: 15%;
+}
+.role-label.top-center {
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.role-label.top-right {
+  top: 25%;
+  right: 15%;
+}
+.role-label.mid-right {
+  top: 50%;
+  right: 15%;
+}
+.role-label.bottom-left {
+  bottom: 30%;
+  left: 20%;
+}
+.role-label.bottom-center {
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.role-label.bottom-right {
+  bottom: 30%;
+  right: 20%;
+}
+
+/* Mobile (max-width: 599px) */
+@media (max-width: 599px) {
+  .title-center-flex {
+    flex-direction: column;
+  }
+  .title-container {
+    z-index: 3101; 
+  }
+  .title-text {
+    font-size: 5rem;
+  }
+  .pointer-none .right-title {
+    z-index: 9999;
+  }
+  .canvas-wrapper {
+    width: 100vw;
+    height: 50vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+  }
+  .left-title,
+.right-title {
+  margin: -50px;
+}
+}
+
+/* Large Mobile (600px - 767px) */
+@media (min-width: 600px) and (max-width: 767px) {
+  .title-center-flex {
+    flex-direction: column;
+    gap: 10em;
+  }
+  .title-container {
+    z-index: 9999;
+  }
+
+  .title-text {
+    font-size: 2.5rem;
+  }
+
+  .canvas-wrapper {
+    width: 100vw;
+    height: 80vh;
+    top: 50%;
+  }
+}
+
+/* Tablet Portrait (768px - 899px) */
+@media (min-width: 768px) and (max-width: 899px) {
+  .title-text {
+    font-size: 5.5rem;
+  }
+
+  .canvas-wrapper {
+    width: 100vw;
+    height: 60vh;
+    top: 50%;
+  }
+}
+
+/* Tablet Landscape (900px - 999px) */
+@media (min-width: 900px) and (max-width: 999px) {
+  .title-text {
+    font-size: 6.5rem;
+  }
+
+  .canvas-wrapper {
+    width: 100vw;
+    height: 65vh;
+    top: 50%;
+  }
+}
+
+/* Hide ScrollTrigger markers */
+.gsap-marker-start,
+.gsap-marker-end {
+  color: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  font-size: 0 !important;
+}
+
+/* Hide scroller-start and scroller-end markers */
+.gsap-marker-scroller-start,
+.gsap-marker-scroller-end {
+  color: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  font-size: 0 !important;
+}
+

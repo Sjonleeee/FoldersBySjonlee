@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
 import profileImage from "../../assets/images/sjonleeCH1.JPG";
+=======
+import profileImage from "../../assets/images/sjonlee.jpeg";
+import styles from "./LoadingScreen.module.css";
+import { useGLTF } from "@react-three/drei";
+import gsap from "gsap";
+>>>>>>> dev
 
 /**
  * LoadingScreen Component
@@ -11,12 +18,17 @@ import profileImage from "../../assets/images/sjonleeCH1.JPG";
  */
 const LoadingScreen = ({ progress }) => {
   const [fadeIn, setFadeIn] = useState(false);
+<<<<<<< HEAD
+=======
+  const [fadeOut, setFadeOut] = useState(false);
+>>>>>>> dev
 
   // Animation constants
   const FADE_IN_DELAY = 50; // ms
   const TRANSITION_DURATION = 1400; // ms
   const PROGRESS_TRANSITION = 300; // ms
 
+<<<<<<< HEAD
   // Style constants
   const styles = {
     container: {
@@ -77,17 +89,46 @@ const LoadingScreen = ({ progress }) => {
     }
   };
 
+=======
+>>>>>>> dev
   // Start fade-in animation when component mounts
   useEffect(() => {
     const fadeInTimer = setTimeout(() => setFadeIn(true), FADE_IN_DELAY);
     return () => clearTimeout(fadeInTimer);
   }, []);
 
+<<<<<<< HEAD
+=======
+  useEffect(() => {
+    if (progress >= 100) {
+      setTimeout(() => setFadeOut(true), 800); // Trigger fade-out after a delay
+    }
+  }, [progress]);
+
+  // Preload 3D model
+  useEffect(() => {
+    useGLTF.preload("/assets/model/3LOCKEDIN.glb");
+  }, []);
+
+  useEffect(() => {
+    if (fadeOut) {
+      gsap.to(`.${styles.container}`, {
+        opacity: 0,
+        duration: 1.2,
+        onComplete: () => {
+          // Trigger any additional actions after fade-out
+        },
+      });
+    }
+  }, [fadeOut]);
+
+>>>>>>> dev
   // Ensure progress values are valid for display
   const safeProgress = Math.min(progress, 100);
   const displayProgress = Math.floor(safeProgress);
 
   return (
+<<<<<<< HEAD
     <div style={styles.container}>
       {/* Profile image */}
       <div style={styles.imageContainer}>
@@ -95,21 +136,41 @@ const LoadingScreen = ({ progress }) => {
           src={profileImage}
           alt="Loading"
           style={styles.image}
+=======
+    <div className={`${styles.container} ${fadeIn ? styles.fadeIn : ""} ${fadeOut ? styles.fadeOut : ""}`}>
+      {/* Profile image */}
+      <div className={styles.imageContainer}>
+        <img
+          src={profileImage}
+          alt="Loading"
+          className={styles.image}
+>>>>>>> dev
         />
       </div>
       
       {/* Progress bar */}
+<<<<<<< HEAD
       <div style={styles.progressContainer}>
         <div
           style={{
             ...styles.progressBar,
+=======
+      <div className={styles.progressContainer}>
+        <div
+          className={styles.progressBar}
+          style={{
+>>>>>>> dev
             width: `${safeProgress}%`
           }}
         />
       </div>
       
       {/* Progress percentage */}
+<<<<<<< HEAD
       <div style={styles.progressText}>
+=======
+      <div className={styles.progressText}>
+>>>>>>> dev
         {displayProgress}%
       </div>
     </div>

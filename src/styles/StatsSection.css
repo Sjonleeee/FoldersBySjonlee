@@ -1,0 +1,289 @@
+/* =====================
+   Video Section Styles
+   ===================== */
+
+.stats-video-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stats-content-flex {
+  width: 100vw;
+  max-width: 1400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  height: 100%;
+}
+
+.stats-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4rem;
+  min-width: 200px;
+}
+
+.stats-side.left {
+  align-items: flex-end;
+  opacity: 1;
+}
+
+.stats-side.right {
+  align-items: flex-start;
+  opacity: 1;
+}
+
+.stats-block {
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  text-align: center;
+}
+
+.stats-number {
+  display: block;
+  font-family: "Hermaiona", cursive, serif;
+  font-size: 3.8rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stats-label {
+  display: block;
+  color: #666;
+  font-size: 1.2rem;
+  margin-top: 0.2em;
+  text-align: inherit;
+}
+
+.stats-laptop-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  transform: scale(1);
+  opacity: 1;
+}
+
+.stats-laptop-wrapper {
+  position: relative;
+  width: 10vw;
+  max-width: 95vw;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.laptop-video {
+  position: absolute;
+  top: 6%;
+  width: 49%;
+  height: 40%;
+  border-radius: 0.2rem;
+  object-fit: cover;
+}
+
+.laptop-img {
+  width: 100%;
+  display: block;
+  pointer-events: none;
+  position: relative;
+}
+
+.stats-desk-img {
+  width: 100%;
+  max-width: 900px;
+  position: static;
+  pointer-events: none;
+  margin-top: -32px;
+}
+
+.stats-blocks-grid {
+  /* Grid layout for mobile, flex for desktop */
+  display: none; /* Hidden by default on desktop */
+}
+
+/* =====================
+   Responsive Design
+   ===================== */
+
+@media (max-width: 1100px) {
+  .stats-laptop-wrapper {
+    width: 15vw;
+  }
+
+  .stats-desk-img {
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 900px) {
+  .stats-content-flex {
+    display: block;
+  }
+
+  .stats-laptop-stack {
+    order: -1;
+    margin-bottom: 2rem;
+  }
+
+  .stats-blocks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-items: center;
+  }
+
+  .stats-side {
+    align-items: center;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .stats-block {
+    align-items: center;
+    text-align: center;
+  }
+
+  .stats-laptop-wrapper {
+    width: 25vw;
+  }
+
+  .stats-desk-img {
+    max-width: 600px;
+  }
+
+  .stats-number {
+    font-size: 3rem;
+  }
+
+  .stats-label {
+    font-size: 1rem;
+  }
+
+  .laptop-video {
+    top: 0;
+    width: 49%;
+    height: 43%;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 599px) {
+  .stats-video-section {
+    height: calc(100vh - var(--header-height));
+    margin-top: var(--header-height);
+    top: 10%;
+  }
+
+  .stats-content-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stats-side {
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .stats-number {
+    font-size: 2.5rem;
+  }
+
+  .stats-label {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 767px) {
+  .stats-content-flex {
+    display: block;
+  }
+
+  .stats-side {
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .stats-number {
+    font-size: 2.8rem;
+  }
+
+  .stats-label {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 899px) {
+  .stats-number {
+    font-size: 3.2rem;
+  }
+
+  .stats-label {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 999px) {
+  .stats-number {
+    font-size: 3.4rem;
+  }
+
+  .stats-label {
+    font-size: 1.15rem;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .stats-number {
+    font-size: 3.6rem;
+  }
+
+  .stats-label {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .stats-number {
+    font-size: 3.7rem;
+  }
+
+  .stats-label {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .stats-number {
+    font-size: 3.8rem;
+  }
+
+  .stats-label {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-number {
+    font-size: 2.2rem;
+  }
+}

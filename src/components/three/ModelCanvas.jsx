@@ -1,40 +1,99 @@
-import React, { Suspense, useState, useEffect } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useState, useEffect, forwardRef } from "react";
+import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import { OrbitControls, PresentationControls } from "@react-three/drei";
-import Model from "./three/Model";
+import Model from "../three/Model";
 
-const ModelCanvas = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+// Camera movement component
+const CameraMovement = ({ inputPosition }) => {
+  const { camera } = useThree();
+  const initialPosition = [0, 0, 7];
+  const maxVerticalMovement = 1.5;
+
+  useFrame(() => {
+    if (!inputPosition) return;
+
+    // Calculate target position with reduced movement range
+    const targetX = initialPosition[0] + inputPosition.x * 0.8;
+    const targetY =
+      initialPosition[1] +
+      Math.max(
+        Math.min(inputPosition.y * 0.8, maxVerticalMovement),
+        -maxVerticalMovement
+      );
+
+    // Keep the Z position fixed at the initial distance
+    const targetZ = initialPosition[2];
+
+    // Smoother interpolation with reduced speed
+    camera.position.x += (targetX - camera.position.x) * 0.3;
+    camera.position.y += (targetY - camera.position.y) * 0.3;
+    camera.position.z = targetZ;
+
+    // Look at the model's body center
+    camera.lookAt(0, -1.5, 0);
+  });
+
+  return null;
+};
+
+const ModelCanvas = forwardRef((props, ref) => {
+  const [inputPosition, setInputPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleMouseMove = (event) => {
-      // Convert mouse position to normalized device coordinates (-1 to +1)
-      const x = (event.clientX / window.innerWidth) * 2 - 1;
-      const y = -(event.clientY / window.innerHeight) * 2 + 1;
-      setMousePosition({ x, y });
-    };
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    let permissionRequested = false;
+    let orientationHandler;
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    if (isMobile && window.DeviceOrientationEvent) {
+      orientationHandler = (event) => {
+        // Map device orientation to x/y in range [-1, 1]
+        const x = event.gamma ? event.gamma / 45 : 0; // gamma: left-right
+        const y = event.beta ? event.beta / 90 : 0;   // beta: front-back
+        setInputPosition({
+          x: Math.max(-1, Math.min(1, x)),
+          y: Math.max(-1, Math.min(1, y)),
+        });
+      };
+
+      // iOS 13+ requires permission
+      if (
+        typeof DeviceOrientationEvent.requestPermission === "function" &&
+        !permissionRequested
+      ) {
+        DeviceOrientationEvent.requestPermission()
+          .then((response) => {
+            if (response === "granted") {
+              window.addEventListener("deviceorientation", orientationHandler, true);
+            }
+          })
+          .catch(console.error);
+        permissionRequested = true;
+      } else {
+        window.addEventListener("deviceorientation", orientationHandler, true);
+      }
+      return () => {
+        window.removeEventListener("deviceorientation", orientationHandler, true);
+      };
+    } else {
+      const handleMouseMove = (event) => {
+        const x = (event.clientX / window.innerWidth) * 2 - 1;
+        const y = -(event.clientY / window.innerHeight) * 2 + 1;
+        setInputPosition({ x, y });
+      };
+      window.addEventListener("mousemove", handleMouseMove);
+      return () => window.removeEventListener("mousemove", handleMouseMove);
+    }
+  }, []); // Add isVisible to dependency array
 
   return (
-    <div style={{
-      position: "absolute",
-      inset: 0,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      zIndex: 0
-    }}>
-      <Canvas 
-        camera={{ 
-          position: [0, -2, 7], // Adjusted camera height to match model's new position
-          fov: 45 
+    <div className="canvas-wrapper" ref={ref} style={{ zIndex: 1 }}>
+      <Canvas
+        camera={{
+          position: [0, 0, 7],
+          fov: 45,
         }}
+        style={{ zIndex: 1 }}
       >
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
         <Suspense fallback={null}>
           <PresentationControls
             global
@@ -45,9 +104,10 @@ const ModelCanvas = () => {
             config={{ mass: 2, tension: 400 }}
             enabled={false}
           >
-            <Model mousePosition={mousePosition} />
+            <Model mousePosition={inputPosition} />
           </PresentationControls>
         </Suspense>
+        <CameraMovement inputPosition={inputPosition} />
         <OrbitControls
           enableZoom={false}
           enablePan={false}
@@ -58,6 +118,8 @@ const ModelCanvas = () => {
       </Canvas>
     </div>
   );
-};
+});
 
-export default ModelCanvas; 
+ModelCanvas.displayName = 'ModelCanvas';
+
+export default ModelCanvas;

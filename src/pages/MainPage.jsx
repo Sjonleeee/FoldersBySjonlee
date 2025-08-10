@@ -4,8 +4,11 @@ import Footer from "../layout/Footer";
 import FolderLanding from "../components/FolderLanding";
 import OnePager from "../components/OnePager";
 import AllProjectsPage from "./AllProjectsPage";
+import { useLoading } from "../context/LoadingContext";
+import LoadingScreen from "../components/common/LoadingScreen";
 
 export default function MainPage() {
+  const { loading, progress } = useLoading();
   const [folderOpen, setFolderOpen] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [isScrollBlocked, setIsScrollBlocked] = useState(true);
@@ -58,6 +61,10 @@ export default function MainPage() {
       document.body.classList.add("reduced-motion");
     }
   }, []);
+
+  if (loading) {
+    return <LoadingScreen progress={progress} />;
+  }
 
   if (!folderOpen) {
     return <FolderLanding onOpen={handleOpen} />;

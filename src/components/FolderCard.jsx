@@ -50,14 +50,15 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
     };
   }, []);
 
+  // Optimize overlay updates with requestAnimationFrame
   useLayoutEffect(() => {
     const cardBounds = getCardBounds();
     if (!cardBounds || mouseX === null || mouseY === null) {
       setShowOverlay(false);
       return;
     }
-    
-    // Optimized overlay updates for smooth video performance
+
+    let animationFrame;
     const updateOverlay = () => {
       const overlayLeft = mouseX - overlayWidth / 2;
       const overlayRight = mouseX + overlayWidth / 2;
@@ -68,9 +69,9 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
         overlayLeft < cardBounds.right &&
         overlayBottom > cardBounds.top &&
         overlayTop < cardBounds.bottom;
-      
+
       setShowOverlay(visible);
-      
+
       if (overlayRef.current && visible) {
         const relX = (mouseX - cardBounds.left) / cardBounds.width;
         const relY = (mouseY - cardBounds.top) / cardBounds.height;
@@ -80,11 +81,15 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
         const x = mouseX - cardBounds.left - overlayWidth / 2;
         const y = mouseY - cardBounds.top - overlayHeight / 2;
         overlayRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) perspective(600px) rotateX(${tiltY}deg) rotateY(${tiltX}deg)`;
+        overlayRef.current.style.willChange = "transform, opacity";
       }
+
+      animationFrame = requestAnimationFrame(updateOverlay);
     };
-    
-    // Direct execution for smooth video performance
+
     updateOverlay();
+
+    return () => cancelAnimationFrame(animationFrame);
   }, [mouseX, mouseY, getCardBounds]);
 
   const handleClick = () => {
@@ -131,14 +136,15 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
           opacity: showOverlay ? 1 : 0,
         }}
       >
-        {video ? (
+        {video && window.innerWidth > 1024 ? (
           <video
             src={video}
             autoPlay
             loop
             muted
-            preload="auto"
             playsInline
+            webkit-playsinline
+            disablePictureInPicture
             className="folder-card-overlay-media"
             style={{ borderRadius: overlayRadius }}
           />

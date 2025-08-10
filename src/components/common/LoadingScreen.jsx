@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import profileImage from "../../assets/images/sjonlee.jpeg";
+import profileImage from "/assets/images/sjonlee.jpeg";
 import styles from "./LoadingScreen.module.css";
 import { useGLTF } from "@react-three/drei";
 import gsap from "gsap";

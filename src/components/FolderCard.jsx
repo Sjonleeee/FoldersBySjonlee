@@ -1,10 +1,8 @@
 import React, { useRef, useLayoutEffect, useState, useCallback, useEffect } from "react";
 import { gsap } from "gsap";
 import { useNavigate } from "react-router-dom";
-import bigFolder from "../assets/images/folderBig.png";
 import "../styles/FolderCard.css";
 import "../styles/OverlayVideoCard.css";
-import testImg from "../assets/images/sjonlee1.jpeg";
 
 export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX, mouseY }) {
   const cardRef = useRef();
@@ -100,7 +98,7 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
       ref={cardRef}
       className="folder-card"
       style={{
-        backgroundImage: `url(${bigFolder})`,
+        backgroundImage: `url(/assets/images/folderBig.png)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -144,7 +142,7 @@ export default function FolderCard({ fancy, title, subtitle, tags, video, mouseX
           />
         ) : (
           <img
-            src={testImg}
+            src="/assets/images/sjonlee1.jpeg"
             alt="Preview"
             className="folder-card-overlay-media"
             style={{ borderRadius: overlayRadius }}

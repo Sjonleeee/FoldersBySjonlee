@@ -1,7 +1,6 @@
 import volkswagen from "/assets/images/volkswagen.jpeg";
 import project1Img from "/assets/images/latestProjects/project1.png";
 import popUpStoreBerlinImg from "/assets/images/popup.png";
-// import meer images als nodig
 
 export const projects = [
   // All Projects

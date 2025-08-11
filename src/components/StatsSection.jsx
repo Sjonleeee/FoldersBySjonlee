@@ -2,8 +2,8 @@ import React, { useState, useEffect, forwardRef, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/StatsSection.css";
-import rinkitouVideo from "../assets/videos/rinkitou.mp4";
-import deskImg from "../assets/images/DESK.png";
+import rinkitouVideo from "/assets/videos/rinkitou.mp4";
+import deskImg from "/assets/images/DESK.png";
 
 gsap.registerPlugin(ScrollTrigger);
 

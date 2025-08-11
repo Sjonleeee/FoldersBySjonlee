@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import folderIcon from "../assets/images/folder.svg";
+import folderIcon from "/assets/images/folder.svg";
 import HeroSection from "./sections/HeroSection";
 import StatsSection from "../components/StatsSection";
 import AboutSection from "../pages/AboutSection";

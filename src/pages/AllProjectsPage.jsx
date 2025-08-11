@@ -4,7 +4,7 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import { FaChevronLeft } from "react-icons/fa";
 import { FiFolder } from "react-icons/fi";
-import folderIcon from "../assets/images/projectFolder.png";
+import folderIcon from "/assets/images/projectFolder.png";
 import { projects } from "../config/projectData.js";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";

@@ -196,6 +196,6 @@
 
 @media (min-width: 1024px) {
   .folder-card {
-    max-width: 425px; /* Adjusted size for desktop */
+    max-width: 500px; /* Adjusted size for desktop */
   }
 }

@@ -745,3 +745,7 @@ html {
   height: 100%;
   object-fit: cover;
 }
+
+.folder-landing {
+  overflow: hidden;
+}

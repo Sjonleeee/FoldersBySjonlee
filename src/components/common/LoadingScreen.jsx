@@ -17,8 +17,8 @@ const LoadingScreen = ({ progress }) => {
   const [fadeOut, setFadeOut] = useState(false);
 
   // Animation constants
-  const FADE_IN_DELAY = 50; // ms
-  const TRANSITION_DURATION = 1400; // ms
+  const FADE_IN_DELAY = 100; // ms
+  const TRANSITION_DURATION = 1000; // ms
   const PROGRESS_TRANSITION = 300; // ms
 
   // Start fade-in animation when component mounts
@@ -29,7 +29,7 @@ const LoadingScreen = ({ progress }) => {
 
   useEffect(() => {
     if (progress >= 100) {
-      setTimeout(() => setFadeOut(true), 800); // Trigger fade-out after a delay
+      setTimeout(() => setFadeOut(true), 500); // Trigger fade-out after a delay
     }
   }, [progress]);
 
@@ -55,7 +55,10 @@ const LoadingScreen = ({ progress }) => {
   const displayProgress = Math.floor(safeProgress);
 
   return (
-    <div className={`${styles.container} ${fadeIn ? styles.fadeIn : ""} ${fadeOut ? styles.fadeOut : ""}`}>
+    <div
+      className={`${styles.container} ${fadeIn ? styles.fadeIn : ""} ${fadeOut ? styles.fadeOut : ""}`}
+      style={{ overflow: "hidden" }}
+    >
       {/* Profile image */}
       <div className={styles.imageContainer}>
         <img

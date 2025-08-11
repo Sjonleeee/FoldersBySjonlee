@@ -3,16 +3,14 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/aboutsection.css";
 import profileImg from "/assets/images/sjonlee.jpeg";
-import img1 from "/assets/images/sjonlee2.jpeg";
-import img2 from "/assets/images/sjonlee3.jpeg";
-import img3 from "/assets/images/sjonlee4.jpeg";
-import img4 from "/assets/images/sjonlee6.jpeg";
-import img5 from "/assets/images/sjonlee7.jpeg";
 import { ABOUT_CONFIG } from "../config/animationConfig";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const mouseImages = [img1, img2, img3, img4, img5];
+const mouseImages = Array.from(
+  { length: 22 },
+  (_, i) => `/assets/images/sjonlee${i + 2}.jpeg`
+);
 
 export default function AboutSection() {
   const sectionRef = useRef(null);
@@ -182,8 +180,9 @@ export default function AboutSection() {
 
     return () => {
       tl.kill();
+      const sectionElement = sectionRef.current; // Copy ref value to a variable
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === sectionRef.current) {
+        if (trigger.vars.trigger === sectionElement) {
           trigger.kill();
         }
       });

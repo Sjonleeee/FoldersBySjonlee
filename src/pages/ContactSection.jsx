@@ -92,6 +92,8 @@ export default function ContactSection() {
       className="contact-section" 
       ref={sectionRef}
     >
+      <div className="background-image"></div>
+      <div className="overlay"></div>
       <div className="contact-content">
         <h1 className="contact-title hermaiona-title-style" ref={titleRef}>Let's Connect</h1>
         <p className="contact-description" ref={descriptionRef}>

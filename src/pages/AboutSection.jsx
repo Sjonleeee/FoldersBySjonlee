@@ -180,9 +180,8 @@ export default function AboutSection() {
 
     return () => {
       tl.kill();
-      const sectionElement = sectionRef.current; // Copy ref value to a variable
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === sectionElement) {
+        if (trigger.vars.trigger === sectionRef.current) {
           trigger.kill();
         }
       });

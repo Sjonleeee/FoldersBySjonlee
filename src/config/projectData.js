@@ -8,6 +8,7 @@ export const projects = [
     slug: "volkswagenproject",
     title: "Volkswagen Project",
     image: volkswagen,
+    video: "/assets/videos/video1.mp4",
     body: [
       "A comprehensive branding project for Volkswagen, focusing on modern automotive design principles.",
       "Created visual identity elements including logos, color schemes, and marketing materials that reflect Volkswagen's heritage while embracing contemporary design trends.",
@@ -15,6 +16,7 @@ export const projects = [
     ],
     tags: ["Graphic design", "Branding", "Automotive"],
     dropcap: "V",
+    behanceEmbedUrl: undefined,
   },
   {
     slug: "chromemagazine",

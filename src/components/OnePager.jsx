@@ -27,7 +27,7 @@ export default function OnePager({
   const videoSectionRef = useRef(null);
   const aboutSectionRef = useRef(null);
   const latestProjectsRef = useRef(null);
-  const companiesSectionRef = useRef(null);
+  const contactSectionRef = useRef(null); // Updated from companiesSectionRef
 
   // Role labels refs
   const topLeftRef = useRef(null);
@@ -314,16 +314,16 @@ export default function OnePager({
             ease: "power3.inOut", // Smoother easing
           });
 
-          // PHASE 9: Companies Section Timeline
-          const companiesTl = gsap.timeline();
+          // PHASE 9: Contact Section Timeline
+          const contactTl = gsap.timeline();
 
-          companiesTl.set(companiesSectionRef.current, {
+          contactTl.set(contactSectionRef.current, {
             opacity: 0,
             y: 100,
             pointerEvents: "none",
           });
 
-          companiesTl.to(companiesSectionRef.current, {
+          contactTl.to(contactSectionRef.current, {
             opacity: 1,
             y: 0,
             pointerEvents: "auto",
@@ -353,7 +353,7 @@ export default function OnePager({
             latestProjectsFadeOutTl,
             ONEPAGER_CONFIG.delays.afterLatestProjectsFadeOut
           );
-          mainTl.add(companiesTl, ONEPAGER_CONFIG.delays.afterCompanies);
+          mainTl.add(contactTl, ONEPAGER_CONFIG.delays.afterCompanies);
           mainTl.add(finalTl, ONEPAGER_CONFIG.delays.afterFinal);
 
           // Remove scroll listener after creating ScrollTrigger
@@ -458,9 +458,9 @@ export default function OnePager({
             <AnimatedFolderStack />
           </div>
 
-          {/* Companies Section - Hidden initially */}
+          {/* Contact Section - Hidden initially */}
           <div
-            ref={companiesSectionRef}
+            ref={contactSectionRef}
             style={{
               position: "absolute",
               top: 0,

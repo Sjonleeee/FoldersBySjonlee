@@ -55,14 +55,27 @@ export const SCROLL_TRIGGER_CONFIG = {
 
   // Non-pinned sections (Companies, Stats, Contact)
   NON_PINNED: {
-    start: "top top",
+    start: "top-=20% top", // Start earlier by increasing top space
     end: "bottom bottom",
-    scrub: 3,
+    scrub: 0.5, // Faster animation
     pin: false,
     fastScrollEnd: true,
   },
 
   // Contact section special config
+
+  // Stats Section - Longer display during scroll
+  STATS_SECTION: {
+    start: "top top",
+    end: "+=300%", // Verhoogde waarde voor langere weergave
+    scrub: 5,
+    pin: true,
+    pinSpacing: true,
+    fastScrollEnd: false,
+    group: "stats-section",
+    preventOverlaps: true,
+    anticipatePin: 1,
+  },
 };
 
 // Helper function to get consistent config for any section

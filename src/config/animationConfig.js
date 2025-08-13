@@ -4,10 +4,10 @@
 
 // OnePager Timeline Configuration
 export const ONEPAGER_CONFIG = {
-  scrollSpace: "+=2300%", // Total scroll space
+  scrollSpace: "+=2200%", // Total scroll space
   scrub: 2, // Smoothness
   delays: {
-    afterStats: "+=2",
+    afterStats: "+=20",
     afterTransition: "+=8",
     afterAbout: "+=2",
     afterAboutFadeOut: "+=3",
@@ -53,7 +53,7 @@ export const ABOUT_CONFIG = {
   },
 };
 export const LATEST_PROJECTS_CONFIG = {
-  scrollSpace: "+=1900%",
+  scrollSpace: "+=2000%",
   scrub: 2,
   durations: {
     titleFadeIn: 6.0,

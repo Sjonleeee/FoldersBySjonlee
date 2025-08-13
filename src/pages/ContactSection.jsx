@@ -39,30 +39,30 @@ export default function ContactSection() {
     tl.to(titleRef.current, {
       opacity: 1,
       y: 0,
-      duration: 1.5,
-      ease: "power4.out",
+      duration: 1.2, // Normal fade-in duration
+      ease: "power2.out",
     });
 
     tl.to(descriptionRef.current, {
       opacity: 1,
       y: 0,
-      duration: 1.5,
-      ease: "power4.out",
-    }, "+=0.6");
+      duration: 1.2, // Normal fade-in duration
+      ease: "power2.out",
+    }, "+=0.4");
 
     tl.to(socialsRef.current, {
       opacity: 1,
       y: 0,
-      duration: 1.5,
-      ease: "power4.out",
-    }, "+=0.6");
+      duration: 1.2, // Normal fade-in duration
+      ease: "power2.out",
+    }, "+=0.4");
 
     tl.to(buttonsRef.current, {
       opacity: 1,
       y: 0,
-      duration: 1.5,
-      ease: "power4.out",
-    }, "+=0.6");
+      duration: 1.2, // Normal fade-in duration
+      ease: "power2.out",
+    }, "+=0.4");
 
     return () => {
       tl.kill();

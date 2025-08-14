@@ -1,0 +1,18 @@
+.folder-landing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #f5f5f5; /* Adjust background color as needed */
+}
+
+.folder-icon-centered {
+  width: 150px; /* Adjust size as needed */
+  height: auto;
+  cursor: pointer;
+}

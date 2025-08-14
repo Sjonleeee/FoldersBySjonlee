@@ -7,27 +7,23 @@ import Model from "../three/Model";
 const CameraMovement = ({ inputPosition }) => {
   const { camera } = useThree();
   const initialPosition = [0, 0, 7];
-  const maxVerticalMovement = 1.5;
+  const maxVerticalMovement = 2.5; // Increased range for more movement
 
   useFrame(() => {
     if (!inputPosition) return;
 
     // Calculate target position with reduced movement range
-    const targetX = initialPosition[0] + inputPosition.x * 0.8;
+    const targetX = initialPosition[0] + inputPosition.x * 1.2;
     const targetY =
       initialPosition[1] +
       Math.max(
-        Math.min(inputPosition.y * 0.8, maxVerticalMovement),
+        Math.min(inputPosition.y * 1.2, maxVerticalMovement),
         -maxVerticalMovement
       );
 
-    // Keep the Z position fixed at the initial distance
-    const targetZ = initialPosition[2];
-
-    // Smoother interpolation with reduced speed
-    camera.position.x += (targetX - camera.position.x) * 0.3;
-    camera.position.y += (targetY - camera.position.y) * 0.3;
-    camera.position.z = targetZ;
+    // Interpolate camera position
+    camera.position.x += (targetX - camera.position.x) * 0.1; // Reduced interpolation factor
+    camera.position.y += (targetY - camera.position.y) * 0.1; // Reduced interpolation factor
 
     // Look at the model's body center
     camera.lookAt(0, -1.5, 0);
@@ -49,10 +45,10 @@ const ModelCanvas = forwardRef((props, ref) => {
         // Map device orientation to x/y in range [-1, 1]
         const x = event.gamma ? event.gamma / 45 : 0; // gamma: left-right
         const y = event.beta ? event.beta / 90 : 0;   // beta: front-back
-        setInputPosition({
-          x: Math.max(-1, Math.min(1, x)),
-          y: Math.max(-1, Math.min(1, y)),
-        });
+        setInputPosition((prev) => ({
+          x: prev.x + (Math.max(-1, Math.min(1, x)) - prev.x) * 0.1, // Smoother interpolation
+          y: prev.y + (Math.max(-1, Math.min(1, y)) - prev.y) * 0.1, // Smoother interpolation
+        }));
       };
 
       // iOS 13+ requires permission
@@ -114,6 +110,10 @@ const ModelCanvas = forwardRef((props, ref) => {
           minPolarAngle={Math.PI / 2}
           maxPolarAngle={Math.PI / 2}
           enableRotate={false}
+          makeDefault
+          onWheel={(event) => {
+            event.preventDefault();
+          }}
         />
       </Canvas>
     </div>

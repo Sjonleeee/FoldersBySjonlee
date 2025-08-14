@@ -23,10 +23,10 @@ export default function MainPage() {
   const handleBackToLanding = useCallback(() => {
     setFolderOpen(false);
     setShowAllProjects(false);
+    setIsScrollBlocked(true); // Block scrolling again
   }, []);
   const handleAnimationsComplete = useCallback(() => {
-    setIsScrollBlocked(false);
-    // Restore scrolling handled in effect below
+    setIsScrollBlocked(false); // Restore scrolling after animations
   }, []);
   const handleScrollToAbout = useCallback(() => setScrollToSection("about"), []);
 
@@ -39,21 +39,16 @@ export default function MainPage() {
       if (blocked) {
         body.style.overflow = "hidden";
         html.style.overflow = "hidden";
-        body.classList.add("scroll-blocked");
       } else {
-        body.style.overflow = "auto";
-        html.style.overflow = "auto";
-        body.classList.remove("scroll-blocked");
+        body.style.overflow = "";
+        html.style.overflow = "";
       }
     };
 
-    applyScrollBlock(folderOpen && isScrollBlocked);
+    applyScrollBlock(isScrollBlocked);
 
-    return () => {
-      // Clean up on unmount
-      applyScrollBlock(false);
-    };
-  }, [folderOpen, isScrollBlocked]);
+    return () => applyScrollBlock(false);
+  }, [isScrollBlocked]);
 
   // Reduced motion preference effect (runs once)
   useEffect(() => {

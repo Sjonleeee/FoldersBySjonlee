@@ -92,7 +92,10 @@ const StatsSection = forwardRef((props, ref) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (!laptopRef.current || !statsBlocksRef.current || !ref.current) return;
+      if (!laptopRef.current || !statsBlocksRef.current || !ref?.current) {
+        // Silently return if refs are missing
+        return;
+      }
 
       gsap.set([laptopRef.current, statsBlocksRef.current.children], {
         opacity: 0,
@@ -114,23 +117,25 @@ const StatsSection = forwardRef((props, ref) => {
         scale: 1,
         duration: 2,
         ease: "power2.out",
-      }).to(
-        statsBlocksRef.current.children,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 2,
-          ease: "power2.out",
-          stagger: 0.4,
-        },
-        "-=0.5"
-      ).call(() => setAnimationKey((prev) => prev + 1), null, "+=0.5");
+      })
+        .to(
+          statsBlocksRef.current.children,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 2,
+            ease: "power2.out",
+            stagger: 0.4,
+          },
+          "-=0.5"
+        )
+        .call(() => setAnimationKey((prev) => prev + 1), null, "+=0.5");
 
       return () => tl.kill();
     }, 0);
 
     return () => clearTimeout(timer);
-  }, [ref]);
+  }, [laptopRef, statsBlocksRef, ref]);
 
   // Data voor statistieken → minder duplicatie
   const statsData = [

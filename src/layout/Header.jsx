@@ -55,6 +55,14 @@ const Header = ({ onLogoClick }) => {
     }
   };
 
+  const handleLogoClick = () => {
+    if (onLogoClick) {
+      onLogoClick();
+    } else {
+      navigate("/"); // Default to FolderLanding page
+    }
+  };
+
   return (
     <header className="header">
       <div className="header-inner">
@@ -63,7 +71,8 @@ const Header = ({ onLogoClick }) => {
             className={`header-logo${
               onLogoClick ? " header-logo-clickable" : ""
             }`}
-            onClick={onLogoClick}
+            onClick={handleLogoClick}
+            style={{ cursor: "pointer" }}
           >
             <div className="header-status-dot"></div>
             Sjonlee

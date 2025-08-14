@@ -204,6 +204,10 @@ export default function AllProjectsPage() {
     }
   }, [selectedProject]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page on mount
+  }, []);
+
   return (
     <div className="allprojects-root">
       {/* Header (bovenaan, niet meer fixed) */}

@@ -91,11 +91,16 @@ const Footer = ({ hideIconBar, showScrollIndicator }) => {
           )}
         </div>
 
-        {/* RIGHT: Always show copyright */}
+        {/* RIGHT: Scroll down indicator */}
         <div className="footer-right">
-          <div className="footer-copyright">
-            <span className="footer-copyright-label">2025</span>
-            <span className="footer-copyright-value">by rinkitou®</span>
+          <div className="footer-scroll-indicator">
+            <div className="footer-scroll-textblock">
+              <span className="footer-scroll-text">Scroll down</span>
+              <span className="footer-scroll-text">to see more</span>
+            </div>
+            <div className="footer-scroll-icon">
+              <div className="footer-scroll-arrow"></div>
+            </div>
           </div>
         </div>
       </div>

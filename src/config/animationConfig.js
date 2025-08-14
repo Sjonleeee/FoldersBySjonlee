@@ -7,7 +7,7 @@ export const ONEPAGER_CONFIG = {
   scrollSpace: "+=2200%", // Total scroll space
   scrub: 2, // Smoothness
   delays: {
-    afterStats: "+=20",
+    afterStats: "+=5",
     afterTransition: "+=8",
     afterAbout: "+=2",
     afterAboutFadeOut: "+=3",

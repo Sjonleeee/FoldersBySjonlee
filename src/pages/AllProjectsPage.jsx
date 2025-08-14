@@ -326,41 +326,45 @@ export default function AllProjectsPage() {
                   </div>
                 </div>
                 <div className="project-detail-image">
-                  <img
-                    src={
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).image
-                    }
-                    alt={
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).title
-                    }
-                    style={{ width: "100%" }}
-                  />
+                  {/* Updated to map over images array */}
+                  {(
+                    projectLookup[selectedProject] ||
+                    projectLookup["volkswagenproject"]
+                  ).images.map((img, index) => (
+                    <img
+                      key={index}
+                      src={img}
+                      alt={
+                        (
+                          projectLookup[selectedProject] ||
+                          projectLookup["volkswagenproject"]
+                        ).title
+                      }
+                      style={{ width: "100%" }}
+                    />
+                  ))}
                 </div>
               </>
             ) : (
               <>
                 <div className="project-detail-image">
-                  <img
-                    src={
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).image
-                    }
-                    alt={
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).title
-                    }
-                    style={{ width: "100%" }}
-                  />
+                  {/* Updated to map over images array */}
+                  {(
+                    projectLookup[selectedProject] ||
+                    projectLookup["volkswagenproject"]
+                  ).images.map((img, index) => (
+                    <img
+                      key={index}
+                      src={img}
+                      alt={
+                        (
+                          projectLookup[selectedProject] ||
+                          projectLookup["volkswagenproject"]
+                        ).title
+                      }
+                      style={{ width: "100%" }}
+                    />
+                  ))}
                 </div>
                 <div className="project-detail-info">
                   <h2 style={{ marginTop: 0 }}>

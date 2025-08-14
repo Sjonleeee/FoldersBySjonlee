@@ -1,18 +1,17 @@
-import volkswagen from "/assets/images/volkswagen.jpeg";
-import project1Img from "/assets/images/latestProjects/project1.png";
-import popUpStoreBerlinImg from "/assets/images/popup.png";
-
 export const projects = [
   // All Projects
-  { 
+  {
     slug: "volkswagenproject",
     title: "Volkswagen Project",
-    image: volkswagen,
+    images: [
+      "/assets/images/allprojects/volkswagen/volkswagen1.webp",
+      "/assets/images/allprojects/volkswagen/volkswagen2.webp",
+    ],
     video: "/assets/videos/video1.mp4",
     body: [
       "A comprehensive branding project for Volkswagen, focusing on modern automotive design principles.",
       "Created visual identity elements including logos, color schemes, and marketing materials that reflect Volkswagen's heritage while embracing contemporary design trends.",
-      "The project involved extensive research into automotive industry standards and consumer preferences."
+      "The project involved extensive research into automotive industry standards and consumer preferences.",
     ],
     tags: ["Graphic design", "Branding", "Automotive"],
     dropcap: "V",
@@ -21,11 +20,11 @@ export const projects = [
   {
     slug: "chromemagazine",
     title: "Chrome Magazine",
-    image: project1Img,
+    image: "/assets/images/sjonlee.jpeg",
     body: [
       "Editorial design project for Chrome Magazine, a cutting-edge publication focused on technology and innovation.",
       "Designed layouts, typography, and visual elements that capture the dynamic nature of the tech industry.",
-      "Collaborated with writers and photographers to create compelling visual narratives."
+      "Collaborated with writers and photographers to create compelling visual narratives.",
     ],
     tags: ["Magazine", "Editorial", "Typography"],
     dropcap: "C",
@@ -33,11 +32,11 @@ export const projects = [
   {
     slug: "rinkitoucreativeagency",
     title: "Rinkitou Creative Agency",
-    image: project1Img,
+    image: "/assets/images/sjonlee.jpeg",
     body: [
       "Founded and designed the complete brand identity for Rinkitou Creative Agency.",
       "Developed a comprehensive visual system including logo design, color palette, typography, and brand guidelines.",
-      "Created marketing materials, website design, and business collateral that established the agency's professional presence."
+      "Created marketing materials, website design, and business collateral that established the agency's professional presence.",
     ],
     tags: ["Agency", "Branding", "Entrepreneurship"],
     dropcap: "R",
@@ -45,7 +44,7 @@ export const projects = [
   {
     slug: "popupstoreberlin",
     title: "Pop Up Store Berlin",
-    image: popUpStoreBerlinImg,
+    image: "/assets/images/sjonlee.jpeg",
     body: [
       "Thrilled to share that my very first pop-up store in collaboration with ObeyArtSpace was a huge success!",
       "Over 280 people attended — all fresh faces, young creatives, and amazing energy throughout the event. The space was filled with curiosity, community, and great vibes.",
@@ -58,7 +57,7 @@ export const projects = [
   {
     slug: "clothingdesign",
     title: "Clothing Design",
-    image: project1Img,
+    image: "/assets/images/placeholder.png",
     body: ["Clothing Design content."],
     tags: ["Clothing", "Fashion"],
     dropcap: "C",
@@ -66,7 +65,7 @@ export const projects = [
   {
     slug: "3ddesign",
     title: "3D design",
-    image: project1Img,
+    image: "/assets/images/placeholder.png",
     body: ["3D design content."],
     tags: ["3D", "Design"],
     dropcap: "3",
@@ -75,7 +74,7 @@ export const projects = [
   {
     slug: "youngerme",
     title: "Younger me",
-    image: project1Img,
+    image: "/assets/images/sjonlee.jpeg",
     body: ["Younger me project content."],
     tags: ["Hidden", "Archive"],
     dropcap: "Y",
@@ -83,7 +82,7 @@ export const projects = [
   {
     slug: "firstportfolio",
     title: "FirstPortfolio",
-    image: project1Img,
+    image: "/assets/images/sjonlee.jpeg",
     body: ["FirstPortfolio project content."],
     tags: ["Hidden", "Archive"],
     dropcap: "F",
@@ -91,7 +90,7 @@ export const projects = [
   {
     slug: "olddesigns",
     title: "Old Designs",
-    image: project1Img,
+    image: "/assets/images/sjonlee.jpeg",
     body: ["Old Designs project content."],
     tags: ["Hidden", "Archive"],
     dropcap: "O",
@@ -100,7 +99,7 @@ export const projects = [
   {
     slug: "moodboard1",
     title: "Moodboard 1",
-    image: project1Img,
+    image: "/assets/images/sjonlee.jpeg",
     body: ["Moodboard 1 project content."],
     tags: ["Untitled"],
     dropcap: "M",
@@ -108,7 +107,7 @@ export const projects = [
   {
     slug: "untitled1",
     title: "Untitled 1",
-    image: project1Img,
+    image: "/assets/images/sjonlee.jpeg",
     body: ["Untitled 1 project content."],
     tags: ["Untitled"],
     dropcap: "U",
@@ -116,7 +115,7 @@ export const projects = [
   {
     slug: "untitled2",
     title: "Untitled 2",
-    image: project1Img,
+    image: "/assets/images/sjonlee.jpeg",
     body: ["Untitled 2 project content."],
     tags: ["Untitled"],
     dropcap: "U",
@@ -125,7 +124,7 @@ export const projects = [
   {
     slug: "rinkitounewcollection",
     title: "rinkitou® new collection",
-    image: project1Img,
+    image: "/assets/images/sjonlee.jpeg",
     body: ["rinkitou® new collection project content."],
     tags: ["Coming soon"],
     dropcap: "R",
@@ -133,7 +132,7 @@ export const projects = [
   {
     slug: "lettertofutureme",
     title: "Letter to future me",
-    image: project1Img,
+    image: "/assets/images/sjonlee.jpeg",
     body: ["Letter to future me project content."],
     tags: ["Coming soon"],
     dropcap: "L",

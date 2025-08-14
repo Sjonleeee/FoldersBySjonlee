@@ -368,6 +368,7 @@
   justify-content: flex-start;
   position: relative;
   scrollbar-width: none; /* Firefox */
+  flex-direction: column;
 }
 .project-detail-image::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
@@ -674,7 +675,6 @@ body,
   .allprojects-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.2rem 0.7rem;
- 
   }
   .project-folder {
     min-width: 120px;

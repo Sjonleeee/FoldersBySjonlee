@@ -22,24 +22,18 @@ const allFolders = [
   { name: "Chrome Magazine", slug: "chromemagazine" },
   { name: "Rinkitou Creative Agency", slug: "rinkitoucreativeagency" },
   { name: "Pop Up Store Berlin", slug: "popupstoreberlin" },
-  { name: "Clothing Design", slug: "clothingdesign" },
   { name: "3D Design", slug: "3ddesign" },
 ];
 
 const hiddenFolders = [
   { name: "Younger me", slug: "youngerme" },
   { name: "First Portfolio", slug: "firstportfolio" },
-  { name: "Old Designs", slug: "olddesigns" },
 ];
 
 const untitledFolders = [
-  { name: "Moodboard 1", slug: "moodboard1" },
-  { name: "Untitled 1", slug: "untitled1" },
-  { name: "Untitled 2", slug: "untitled2" },
 ];
 
 const comingSoonFolders = [
-  { name: "rinkitou new collection", slug: "rinkitounewcollection" },
   { name: "Letter to future me", slug: "lettertofutureme" },
 ];
 
@@ -309,6 +303,7 @@ export default function AllProjectsPage() {
                       <img
                         src={img}
                         alt={projectLookup[selectedProject].title}
+                        loading="lazy"
                         style={{ width: "100%" }}
                       />
                     </div>
@@ -323,6 +318,7 @@ export default function AllProjectsPage() {
                       <img
                         src={img}
                         alt={projectLookup[selectedProject].title}
+                        loading="lazy"
                         style={{ width: "100%" }}
                       />
                     </div>

@@ -63,15 +63,15 @@ export const projects = [
     dropcap: "I",
   },
   {
-    slug: "rinkitoucreativeagency",
-    title: "Rinkitou Creative Agency",
-    images: ["/assets/images/allprojects/rinkitou/rinkitou.webp"],
+    slug: "r/k2",
+    title: "R/K2©",
+    images: ["/assets/images/allprojects/rk2/rk2archives.webp"],
     body: [
-      "ounded and designed the complete brand identity for Rinkitou Creative Agency.",
+      "ounded and designed the complete brand identity for R/K2©.",
       "Developed a comprehensive visual system including logo design, color palette, typography, and brand guidelines.",
       "Created marketing materials, website design, and business collateral that established the agency's professional presence.",
     ],
-    tags: ["Agency", "Branding", "Entrepreneurship", "Visual identity"],
+    tags: ["Branding", "Entrepreneurship", "Visual identity"],
     dropcap: "F",
   },
   {
@@ -117,10 +117,10 @@ export const projects = [
   {
     slug: "firstportfolio",
     title: "FirstPortfolio",
-    images: [
-      "/assets/images/allprojects/portfolio/firstportfolio.webp"
+    images: ["/assets/images/allprojects/portfolio/firstportfolio.webp"],
+    body: [
+      "irstPortfolio that i created around 2022 - 2023. This was my vibe in 2022 of designing I didn't liked coding then. But now I do. Experimental style, also trying to be unique as well. It's nice because every year every chapter shows the process of who I am and you can see that in my evolution tho.",
     ],
-    body: ["irstPortfolio that i created around 2022 - 2023. This was my vibe in 2022 of designing I didn't liked coding then. But now I do. Experimental style, also trying to be unique as well. It's nice because every year every chapter shows the process of who I am and you can see that in my evolution tho."],
     tags: ["Hidden", "Archive"],
     dropcap: "F",
   },

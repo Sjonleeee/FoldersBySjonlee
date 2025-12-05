@@ -20,7 +20,7 @@ const sidebarItems = [
 const allFolders = [
   { name: "Volkswagen Project", slug: "volkswagenproject" },
   { name: "Chrome Magazine", slug: "chromemagazine" },
-  { name: "Rinkitou Creative Agency", slug: "rinkitoucreativeagency" },
+  { name: "R/K2©", slug: "r/k2" },
   { name: "Pop Up Store Berlin", slug: "popupstoreberlin" },
   { name: "3D Design", slug: "3ddesign" },
 ];

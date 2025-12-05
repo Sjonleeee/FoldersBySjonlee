@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import FolderLanding from "../components/FolderLanding";
@@ -9,70 +9,58 @@ import LoadingScreen from "../components/common/LoadingScreen";
 
 export default function MainPage() {
   const { loading, progress } = useLoading();
+
   const [folderOpen, setFolderOpen] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [isScrollBlocked, setIsScrollBlocked] = useState(true);
-  const [scrollToSection, setScrollToSection] = useState(null); // Added state for scrolling
+  const [scrollToSection, setScrollToSection] = useState(null);
 
-  const showScrollIndicator = true;
   const headerRef = useRef(null);
   const footerRef = useRef(null);
 
-  const handleOpen = () => {
-    setFolderOpen(true);
-  };
-
-  const handleBackToLanding = () => {
+  // Handlers memoized
+  const handleOpen = useCallback(() => setFolderOpen(true), []);
+  const handleBackToLanding = useCallback(() => {
     setFolderOpen(false);
     setShowAllProjects(false);
-  };
+    setIsScrollBlocked(true); // Block scrolling again
+  }, []);
+  const handleAnimationsComplete = useCallback(() => {
+    setIsScrollBlocked(false); // Restore scrolling after animations
+  }, []);
+  const handleScrollToAbout = useCallback(() => setScrollToSection("about"), []);
 
-  const handleAnimationsComplete = () => {
-    setIsScrollBlocked(false);
-    // Re-enable scrolling on body and html
-    document.body.style.overflow = "auto";
-    document.documentElement.style.overflow = "auto";
-    document.body.classList.remove("scroll-blocked");
-  };
-
-  const handleScrollToAbout = () => {
-    setScrollToSection("about");
-  };
-
-  // Block scrolling when component mounts
+  // Scroll blocking effect - only update DOM if state changes
   useEffect(() => {
-    if (folderOpen && isScrollBlocked) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-      document.body.classList.add("scroll-blocked");
-    } else {
-      document.body.style.overflow = "auto";
-      document.documentElement.style.overflow = "auto";
-      document.body.classList.remove("scroll-blocked");
-    }
-  }, [folderOpen, isScrollBlocked]);
+    const body = document.body;
+    const html = document.documentElement;
 
-  // Performance optimization: Reduce motion for users who prefer it
+    const applyScrollBlock = (blocked) => {
+      if (blocked) {
+        body.style.overflow = "hidden";
+        html.style.overflow = "hidden";
+      } else {
+        body.style.overflow = "";
+        html.style.overflow = "";
+      }
+    };
+
+    applyScrollBlock(isScrollBlocked);
+
+    return () => applyScrollBlock(false);
+  }, [isScrollBlocked]);
+
+  // Reduced motion preference effect (runs once)
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReducedMotion) {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) {
       document.body.classList.add("reduced-motion");
     }
   }, []);
 
-  if (loading) {
-    return <LoadingScreen progress={progress} />;
-  }
-
-  if (!folderOpen) {
-    return <FolderLanding onOpen={handleOpen} />;
-  }
-
-  if (showAllProjects) {
-    return <AllProjectsPage />;
-  }
+  if (loading) return <LoadingScreen progress={progress} />;
+  if (!folderOpen) return <FolderLanding onOpen={handleOpen} />;
+  if (showAllProjects) return <AllProjectsPage />;
 
   return (
     <div
@@ -82,12 +70,11 @@ export default function MainPage() {
         overflowX: "hidden",
         overflowY: isScrollBlocked ? "hidden" : "auto",
         height: isScrollBlocked ? "100vh" : "auto",
-        // Cosmos-stijl smooth scroll
         scrollBehavior: "smooth",
         WebkitOverflowScrolling: "touch",
       }}
     >
-      {/* Header */}
+      {/* Header fixed */}
       <div
         ref={headerRef}
         style={{
@@ -98,30 +85,21 @@ export default function MainPage() {
           zIndex: 5000,
         }}
       >
-        <Header
-          onLogoClick={handleBackToLanding}
-          onAboutClick={handleScrollToAbout}
-        />
+        <Header onLogoClick={handleBackToLanding} onAboutClick={handleScrollToAbout} />
       </div>
 
       <div className="onepager-content">
-        {/* OnePager with all animations */}
-        <section
-          style={{
-            minHeight: "100vh", // Veel meer ruimte voor alle animaties
-            position: "relative",
-          }}
-        >
+        <section style={{ minHeight: "100vh", position: "relative" }}>
           <OnePager
             headerRef={headerRef}
             footerRef={footerRef}
             onAnimationsComplete={handleAnimationsComplete}
-            scrollToSection={scrollToSection} // Pass scrollToSection prop
+            scrollToSection={scrollToSection}
           />
         </section>
       </div>
 
-      {/* Footer */}
+      {/* Footer fixed */}
       <div
         ref={footerRef}
         style={{
@@ -132,7 +110,7 @@ export default function MainPage() {
           zIndex: 5000,
         }}
       >
-        <Footer showScrollIndicator={showScrollIndicator} />
+        <Footer showScrollIndicator />
       </div>
     </div>
   );

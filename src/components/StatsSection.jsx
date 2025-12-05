@@ -2,8 +2,8 @@ import React, { useState, useEffect, forwardRef, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/StatsSection.css";
-import rinkitouVideo from "../assets/videos/rinkitou.mp4";
-import deskImg from "../assets/images/DESK.png";
+import rinkitouVideo from "/assets/videos/rinkitou.mp4";
+import deskImg from "/assets/images/DESK.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,7 +24,6 @@ const CountUpNumber = ({ end, suffix = "", duration = 40, resetTrigger }) => {
 
   useEffect(() => {
     setCount(0);
-
     let start = 0;
     const increment = end / (duration * 60);
     let frame;
@@ -39,10 +38,7 @@ const CountUpNumber = ({ end, suffix = "", duration = 40, resetTrigger }) => {
       }
     };
 
-    const timer = setTimeout(() => {
-      animate();
-    }, 100);
-
+    const timer = setTimeout(animate, 100);
     return () => {
       cancelAnimationFrame(frame);
       clearTimeout(timer);
@@ -57,212 +53,137 @@ const CountUpNumber = ({ end, suffix = "", duration = 40, resetTrigger }) => {
   );
 };
 
+// Reusable video component
+const VideoPlayer = ({ src, className }) => (
+  <video
+    src={src}
+    autoPlay
+    loop
+    muted
+    playsInline
+    webkit-playsinline="true"
+    controls={false}
+    className={className}
+  />
+);
+
+// Reusable stat block
+const StatBlock = ({ end, suffix, label, resetTrigger }) => (
+  <div className="stats-block">
+    <span className="stats-number">
+      <CountUpNumber
+        end={end}
+        suffix={suffix}
+        duration={5}
+        resetTrigger={resetTrigger}
+      />
+    </span>
+    <span className="stats-label">{label}</span>
+  </div>
+);
+
 const StatsSection = forwardRef((props, ref) => {
   const isMobile = useIsMobile();
   const [animationKey, setAnimationKey] = useState(0);
   const laptopRef = useRef(null);
   const statsBlocksRef = useRef(null);
 
-  // Trigger animation when component mounts
-  useEffect(() => {
-    setAnimationKey((prev) => prev + 1);
-  }, []);
+  useEffect(() => setAnimationKey((prev) => prev + 1), []);
 
-  // GSAP animations for laptop and stats blocks
   useEffect(() => {
-    // Wait for next tick to ensure DOM is ready
     const timer = setTimeout(() => {
-      if (!laptopRef?.current || !statsBlocksRef?.current || !ref?.current)
+      if (!laptopRef.current || !statsBlocksRef.current || !ref?.current) {
+        // Silently return if refs are missing
         return;
+      }
 
-      // Set initial states
-      gsap.set(laptopRef.current, { opacity: 0, scale: 0.5 });
-      gsap.set(statsBlocksRef.current.children, { opacity: 0, y: 30 });
+      gsap.set([laptopRef.current, statsBlocksRef.current.children], {
+        opacity: 0,
+      });
+      gsap.set(laptopRef.current, { scale: 0.5 });
+      gsap.set(statsBlocksRef.current.children, { y: 30 });
 
-      // Create timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: ref.current,
-          start: "top 90%", // Adjusted to trigger earlier
-          end: "bottom 10%", // Added end to ensure proper visibility
+          start: "top 90%",
+          end: "bottom 10%",
           toggleActions: "play none none none",
         },
       });
 
-      // Laptop animation
       tl.to(laptopRef.current, {
         opacity: 1,
         scale: 1,
-        duration: 2, // Slower animation for laptop
+        duration: 2,
         ease: "power2.out",
-      });
+      })
+        .to(
+          statsBlocksRef.current.children,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 2,
+            ease: "power2.out",
+            stagger: 0.4,
+          },
+          "-=0.5"
+        )
+        .call(() => setAnimationKey((prev) => prev + 1), null, "+=0.5");
 
-      // Stats blocks animation with stagger
-      tl.to(
-        statsBlocksRef.current.children,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 2, // Slower animation for stats blocks
-          ease: "power2.out",
-          stagger: 0.4, // Increased stagger for slower effect
-        },
-        "-=0.5"
-      );
-
-      // Trigger animationKey increment after fade-in animation
-      tl.call(
-        () => {
-          setAnimationKey((prev) => prev + 1);
-        },
-        null,
-        "+=0.5"
-      ); // Delay to ensure fade-in is complete
-
-      return () => {
-        tl.kill();
-      };
+      return () => tl.kill();
     }, 0);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [ref]);
+    return () => clearTimeout(timer);
+  }, [laptopRef, statsBlocksRef, ref]);
+
+  // Data voor statistieken → minder duplicatie
+  const statsData = [
+    { end: 4, suffix: "+", label: "Years of creating" },
+    { end: 150, suffix: "+", label: "Completed Projects" },
+    { end: 26, suffix: "+", label: "Collaborations" },
+    { end: 100, suffix: "%", label: "On-Time Delivery rate" },
+  ];
 
   return (
-    <>
-      {/* Stats and Video Section - Full Page */}
-      <div className="stats-video-section" ref={ref}>
-        <div className="stats-content-flex">
-          {isMobile ? (
-            <>
-              <div className="stats-laptop-stack" ref={laptopRef}>
-                <div className="stats-laptop-wrapper" />
-                <img src={deskImg} alt="Desk" className="stats-desk-img" />
-                <video
-                  src={rinkitouVideo}
-                  autoPlay
-                  loop
-                  muted
-                  className="laptop-video"
-                />
-              </div>
-              <div className="stats-blocks-grid" ref={statsBlocksRef}>
-                <div className="stats-block">
-                  <span className="stats-number">
-                    <CountUpNumber
-                      end={4}
-                      suffix="+"
-                      duration={5}
-                      resetTrigger={animationKey}
-                    />
-                  </span>
-                  <span className="stats-label">Years of creating</span>
-                </div>
-                <div className="stats-block">
-                  <span className="stats-number">
-                    <CountUpNumber
-                      end={150}
-                      suffix="+"
-                      duration={5}
-                      resetTrigger={animationKey}
-                    />
-                  </span>
-                  <span className="stats-label">Completed Projects</span>
-                </div>
-                <div className="stats-block">
-                  <span className="stats-number">
-                    <CountUpNumber
-                      end={26}
-                      suffix="+"
-                      duration={5}
-                      resetTrigger={animationKey}
-                    />
-                  </span>
-                  <span className="stats-label">Collaborations</span>
-                </div>
-                <div className="stats-block">
-                  <span className="stats-number">
-                    <CountUpNumber
-                      end={100}
-                      suffix="%"
-                      duration={5}
-                      resetTrigger={animationKey}
-                    />
-                  </span>
-                  <span className="stats-label">On-Time Delivery rate</span>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="stats-side left" ref={statsBlocksRef}>
-                <div className="stats-block">
-                  <span className="stats-number">
-                    <CountUpNumber
-                      end={4}
-                      suffix="+"
-                      duration={5}
-                      resetTrigger={animationKey}
-                    />
-                  </span>
-                  <span className="stats-label">Years of creating</span>
-                </div>
-                <div className="stats-block">
-                  <span className="stats-number">
-                    <CountUpNumber
-                      end={150}
-                      suffix="+"
-                      duration={5}
-                      resetTrigger={animationKey}
-                    />
-                  </span>
-                  <span className="stats-label">Completed Projects</span>
-                </div>
-              </div>
-              <div className="stats-laptop-stack" ref={laptopRef}>
-                <div className="stats-laptop-wrapper" />
-                <img src={deskImg} alt="Desk" className="stats-desk-img" />
-                <video
-                  src={rinkitouVideo}
-                  autoPlay
-                  loop
-                  muted
-                  className="laptop-video"
-                />
-              </div>
-              <div className="stats-side right">
-                <div className="stats-block">
-                  <span className="stats-number">
-                    <CountUpNumber
-                      end={26}
-                      suffix="+"
-                      duration={5}
-                      resetTrigger={animationKey}
-                    />
-                  </span>
-                  <span className="stats-label">Collaborations</span>
-                </div>
-                <div className="stats-block">
-                  <span className="stats-number">
-                    <CountUpNumber
-                      end={100}
-                      suffix="%"
-                      duration={5}
-                      resetTrigger={animationKey}
-                    />
-                  </span>
-                  <span className="stats-label">On-Time Delivery rate</span>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
+    <div className="stats-video-section" ref={ref}>
+      <div className="stats-content-flex">
+        {isMobile ? (
+          <>
+            <div className="stats-laptop-stack" ref={laptopRef}>
+              <div className="stats-laptop-wrapper" />
+              <img src={deskImg} alt="Desk" className="stats-desk-img" />
+              <VideoPlayer src={rinkitouVideo} className="laptop-video" />
+            </div>
+            <div className="stats-blocks-grid" ref={statsBlocksRef}>
+              {statsData.map((stat, i) => (
+                <StatBlock key={i} {...stat} resetTrigger={animationKey} />
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="stats-side left" ref={statsBlocksRef}>
+              {statsData.slice(0, 2).map((stat, i) => (
+                <StatBlock key={i} {...stat} resetTrigger={animationKey} />
+              ))}
+            </div>
+            <div className="stats-laptop-stack" ref={laptopRef}>
+              <div className="stats-laptop-wrapper" />
+              <img src={deskImg} alt="Desk" className="stats-desk-img" />
+              <VideoPlayer src={rinkitouVideo} className="laptop-video" />
+            </div>
+            <div className="stats-side right">
+              {statsData.slice(2).map((stat, i) => (
+                <StatBlock key={i} {...stat} resetTrigger={animationKey} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
-    </>
+    </div>
   );
 });
 
 StatsSection.displayName = "StatsSection";
-
 export default StatsSection;

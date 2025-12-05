@@ -4,10 +4,10 @@
 
 // OnePager Timeline Configuration
 export const ONEPAGER_CONFIG = {
-  scrollSpace: "+=2300%", // Total scroll space
+  scrollSpace: "+=2200%", // Total scroll space
   scrub: 2, // Smoothness
   delays: {
-    afterStats: "+=2",
+    afterStats: "+=5",
     afterTransition: "+=8",
     afterAbout: "+=2",
     afterAboutFadeOut: "+=3",
@@ -52,47 +52,50 @@ export const ABOUT_CONFIG = {
     skillCardsFadeOut: "top+=95% top", // When skill cards start fading
   },
 };
-
-// Latest Projects Configuration
 export const LATEST_PROJECTS_CONFIG = {
-  scrollSpace: "+=2300%", // Meer scroll space
+  scrollSpace: "+=2000%",
   scrub: 2,
   durations: {
-    titleFadeIn: 6.0, // Langere title fade in
-    foldersFadeIn: 2.0, // Langere folders fade in
-    foldersMoveToPosition: 2.0,
-    pause: 2.0, // Meer pause tijd
-    fadeOut: 3.0,
+    titleFadeIn: 6.0,
+    foldersFadeIn: 2.0, // iets langzamer fade-in
+    foldersMoveToPosition: 2.0, // langzame move
+    pause: 1.8,
+    fadeOut: 3.0, // Duration remains the same
   },
   delays: {
-    initialPause: 6, // Meer initial pause
-    afterTitle: 3.0, // Meer delay na title
-    afterFoldersFadeIn: 1.5, // Meer delay na folders fade in
-    afterFoldersMove: 0.8,
-    afterPause: 2.0, // Meer delay na pause
+    initialPause: 6.0, // Hier zet je de pauze na titel, zodat folder 1 2 seconden later start
+    afterTitle: 2.0, // Zorgt dat er 2 sec tussen titel en folder animatie zit
+    afterFoldersFadeIn: 1.5, // Increased delay for Volkswagen folder
+    afterFoldersMove: 0.6,
+    afterPause: 1.5,
   },
-  stagger: 0.3, // Langere stagger
+  stagger: 0.22,
+  fadeOutAnimation: {
+    y: "-100%", // Moves upwards during fade-out
+    opacity: 0,
+    duration: 3.0,
+    ease: "power2.inOut",
+  },
 };
-
-// Companies Section Configuration
+// Contact Section Configuration
 export const COMPANIES_CONFIG = {
-  scrollSpace: "+=2000%", // Adjust scroll space for smoother transitions
+  scrollSpace: "+=1500%", // Reduced scroll space for faster animation
   scrub: 2, // Smoothness of the animation
   durations: {
-    titleFadeIn: 5.0, // Duration for the title fade-in
-    itemsFadeIn: 8.0, // Duration for the items fade-in
-    itemsMoveToPosition: 4.0, // Duration for items moving into position
-    pause: 3.0, // Pause duration to allow users to view the content
-    fadeOut: 2.0, // Duration for fade-out animation
+    titleFadeIn: 4.0, // Faster title fade-in
+    itemsFadeIn: 6.0, // Faster items fade-in
+    itemsMoveToPosition: 3.0, // Faster move to position
+    pause: 2.0, // Shorter pause duration
+    fadeOut: 1.5, // Faster fade-out
   },
   delays: {
-    initialPause: 4.0, // Delay before starting the animation
-    afterTitle: 2.0, // Delay after the title fade-in
-    afterItemsFadeIn: 1.5, // Delay after items fade-in
-    afterItemsMove: 1.0, // Delay after items move into position
-    afterPause: 1.5, // Delay after the pause
+    initialPause: 3.0, // Shorter delay before starting the animation
+    afterTitle: 1.5, // Shorter delay after the title fade-in
+    afterItemsFadeIn: 1.0, // Shorter delay after items fade-in
+    afterItemsMove: 0.8, // Shorter delay after items move into position
+    afterPause: 1.0, // Shorter delay after the pause
   },
-  stagger: 2, // Stagger effect for animating items sequentially
+  stagger: 1.5, // Reduced stagger effect for faster sequential animations
   fadeInEase: "power2.out", // Easing function for fade-in
   fadeOutEase: "power2.in", // Easing function for fade-out
 };

@@ -3,9 +3,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const createScrollTriggerManager = ({
   sectionRef,
-  aboutSectionRef,
   latestProjectsRef,
   videoSectionRef,
+  contactSectionRef, // Updated from companiesSectionRef
   headerRef,
   footerRef,
 }) => {
@@ -20,24 +20,19 @@ export const createScrollTriggerManager = ({
       // Calculate which section should be visible based on scroll position
       if (scrollProgress < 0.25) {
         // Hero section
-        gsap.to(aboutSectionRef.current, { opacity: 0, y: "100vh" });
         gsap.to(latestProjectsRef.current, { opacity: 0, y: "100vh" });
         gsap.to(videoSectionRef.current, { opacity: 0, scale: 0.5 });
+        gsap.to(contactSectionRef.current, { opacity: 0, y: "100vh" });
       } else if (scrollProgress < 0.5) {
-        // About section
-        gsap.to(aboutSectionRef.current, { opacity: 1, y: 0 });
-        gsap.to(latestProjectsRef.current, { opacity: 0, y: "100vh" });
-        gsap.to(videoSectionRef.current, { opacity: 0, scale: 0.5 });
-      } else if (scrollProgress < 0.75) {
         // Latest Projects section
-        gsap.to(aboutSectionRef.current, { opacity: 0, y: "-100vh" });
         gsap.to(latestProjectsRef.current, { opacity: 1, y: 0 });
         gsap.to(videoSectionRef.current, { opacity: 0, scale: 0.5 });
+        gsap.to(contactSectionRef.current, { opacity: 0, y: "100vh" });
       } else {
-        // Video section
-        gsap.to(aboutSectionRef.current, { opacity: 0, y: "-100vh" });
+        // Contact section
         gsap.to(latestProjectsRef.current, { opacity: 0, y: "-100vh" });
-        gsap.to(videoSectionRef.current, { opacity: 1, scale: 1 });
+        gsap.to(videoSectionRef.current, { opacity: 0, scale: 0.5 });
+        gsap.to(contactSectionRef.current, { opacity: 1, y: 0 });
       }
     };
 
@@ -54,4 +49,4 @@ export const createScrollTriggerManager = ({
   };
 
   return { createScrollTrigger };
-}; 
+};

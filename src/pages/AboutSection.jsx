@@ -2,17 +2,15 @@ import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/aboutsection.css";
-import profileImg from "../assets/images/sjonlee.jpeg";
-import img1 from "../assets/images/sjonlee2.jpeg";
-import img2 from "../assets/images/sjonlee3.jpeg";
-import img3 from "../assets/images/sjonlee4.jpeg";
-import img4 from "../assets/images/sjonlee6.jpeg";
-import img5 from "../assets/images/sjonlee7.jpeg";
+import profileImg from "/assets/images/sjonlee.jpeg";
 import { ABOUT_CONFIG } from "../config/animationConfig";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const mouseImages = [img1, img2, img3, img4, img5];
+const mouseImages = Array.from(
+  { length: 22 },
+  (_, i) => `/assets/images/sjonlee${i + 2}.jpeg`
+);
 
 export default function AboutSection() {
   const sectionRef = useRef(null);
@@ -453,11 +451,11 @@ export default function AboutSection() {
         <div className="about-description-container" ref={descriptionRef}>
           <div className="about-description-content">
             <p>
-              Sjonlee Ha is a 24-year-old creative developer / CEO of Rinkitou
+              Sjonlee Ha is a 24-year-old creative developer / CEO of R/K2©
               with a big curiosity for making everything look aestethically. He
               believes vision is more than words and love learning new stuff,
-              building cool things, and creating something meaningful for for
-              others, myself and for my fam.
+              building cool things, and creating something meaningful for 
+              others.
             </p>
           </div>
         </div>
@@ -469,9 +467,9 @@ export default function AboutSection() {
             <ul className="skill-list">
               <li className="skill-item">INTEFACE DESIGN</li>
               <li className="skill-item">UX/UX DESIGN</li>
-              <li className="skill-item">A BIT OF 3D DESIGN</li>
+              <li className="skill-item">3D DESIGN</li>
               <li className="skill-item">AESTHETICS</li>
-              <li className="skill-item">CLOTHING</li>
+              <li className="skill-item">LUXURY GARMENTS</li>
               <li className="skill-item">GRAPHIC DESIGN</li>
             </ul>
           </div>
@@ -483,9 +481,8 @@ export default function AboutSection() {
               <li className="skill-item">REACT.js</li>
               <li className="skill-item">CREATIVE DEV</li>
               <li className="skill-item">GSAP</li>
-              <li className="skill-item">NEXT JS LEARNING</li>
-              <li className="skill-item">WEBFLOW</li>
-              <li className="skill-item">TOUCHDESIGNER</li>
+              <li className="skill-item">TAILWIND</li>
+              <li className="skill-item">SHOPIFY LIQUID DEV</li>
             </ul>
           </div>
         </div>

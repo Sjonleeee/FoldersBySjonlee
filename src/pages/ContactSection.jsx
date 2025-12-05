@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/contactsection.css";
-import smallFolder from "../assets/images/smallFolder.png";
+import smallFolder from "/assets/images/smallFolder.png";
 import { FiMail } from "react-icons/fi";
 import { FaBehance, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -39,30 +39,30 @@ export default function ContactSection() {
     tl.to(titleRef.current, {
       opacity: 1,
       y: 0,
-      duration: 1.5,
-      ease: "power4.out",
+      duration: 1.2, // Normal fade-in duration
+      ease: "power2.out",
     });
 
     tl.to(descriptionRef.current, {
       opacity: 1,
       y: 0,
-      duration: 1.5,
-      ease: "power4.out",
-    }, "+=0.6");
+      duration: 1.2, // Normal fade-in duration
+      ease: "power2.out",
+    }, "+=0.4");
 
     tl.to(socialsRef.current, {
       opacity: 1,
       y: 0,
-      duration: 1.5,
-      ease: "power4.out",
-    }, "+=0.6");
+      duration: 1.2, // Normal fade-in duration
+      ease: "power2.out",
+    }, "+=0.4");
 
     tl.to(buttonsRef.current, {
       opacity: 1,
       y: 0,
-      duration: 1.5,
-      ease: "power4.out",
-    }, "+=0.6");
+      duration: 1.2, // Normal fade-in duration
+      ease: "power2.out",
+    }, "+=0.4");
 
     return () => {
       tl.kill();
@@ -92,6 +92,8 @@ export default function ContactSection() {
       className="contact-section" 
       ref={sectionRef}
     >
+      <div className="background-image"></div>
+      <div className="overlay"></div>
       <div className="contact-content">
         <h1 className="contact-title hermaiona-title-style" ref={titleRef}>Let's Connect</h1>
         <p className="contact-description" ref={descriptionRef}>

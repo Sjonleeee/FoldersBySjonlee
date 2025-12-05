@@ -1,9 +1,9 @@
 import React from "react";
-import folderIcon from "../assets/images/folder.svg";
+import folderIcon from "/assets/images/folder.svg";
 
 export default function FolderLanding({ onOpen }) {
   return (
-    <div className="full-screen center-content" style={{ position: "relative" }}>
+    <div className="folder-landing" style={{ overflow: "hidden" }}>
       {/* Original Folder Content */}
       <div className="absolute-center" style={{ zIndex: 3 }}>
         <div className="z-front center-folder">

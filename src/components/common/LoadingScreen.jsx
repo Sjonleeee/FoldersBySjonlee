@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import profileImage from "../../assets/images/sjonleeCH1.JPG";
 =======
 import profileImage from "../../assets/images/sjonlee.jpeg";
+=======
+import profileImage from "/assets/images/sjonlee.jpeg";
+>>>>>>> dev
 import styles from "./LoadingScreen.module.css";
 import { useGLTF } from "@react-three/drei";
 import gsap from "gsap";
@@ -24,8 +28,8 @@ const LoadingScreen = ({ progress }) => {
 >>>>>>> dev
 
   // Animation constants
-  const FADE_IN_DELAY = 50; // ms
-  const TRANSITION_DURATION = 1400; // ms
+  const FADE_IN_DELAY = 100; // ms
+  const TRANSITION_DURATION = 1000; // ms
   const PROGRESS_TRANSITION = 300; // ms
 
 <<<<<<< HEAD
@@ -101,7 +105,7 @@ const LoadingScreen = ({ progress }) => {
 =======
   useEffect(() => {
     if (progress >= 100) {
-      setTimeout(() => setFadeOut(true), 800); // Trigger fade-out after a delay
+      setTimeout(() => setFadeOut(true), 500); // Trigger fade-out after a delay
     }
   }, [progress]);
 
@@ -129,6 +133,7 @@ const LoadingScreen = ({ progress }) => {
 
   return (
 <<<<<<< HEAD
+<<<<<<< HEAD
     <div style={styles.container}>
       {/* Profile image */}
       <div style={styles.imageContainer}>
@@ -138,6 +143,12 @@ const LoadingScreen = ({ progress }) => {
           style={styles.image}
 =======
     <div className={`${styles.container} ${fadeIn ? styles.fadeIn : ""} ${fadeOut ? styles.fadeOut : ""}`}>
+=======
+    <div
+      className={`${styles.container} ${fadeIn ? styles.fadeIn : ""} ${fadeOut ? styles.fadeOut : ""}`}
+      style={{ overflow: "hidden" }}
+    >
+>>>>>>> dev
       {/* Profile image */}
       <div className={styles.imageContainer}>
         <img

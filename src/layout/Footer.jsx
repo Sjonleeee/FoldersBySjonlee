@@ -3,7 +3,7 @@ import iconData from "../config/iconData";
 import { useMenu } from "../context/MenuContext";
 import "../styles/footer.css";
 
-const Footer = ({ hideIconBar, showScrollIndicator }) => {
+const Footer = ({ hideIconBar, showScrollIndicator, showCopyright }) => {
   const { menuOpen } = useMenu();
 
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -91,12 +91,27 @@ const Footer = ({ hideIconBar, showScrollIndicator }) => {
           )}
         </div>
 
-        {/* RIGHT: Always show copyright */}
+        {/* RIGHT: Scroll down indicator or Copyright */}
         <div className="footer-right">
-          <div className="footer-copyright">
-            <span className="footer-copyright-label">2025</span>
-            <span className="footer-copyright-value">by rinkitou®</span>
-          </div>
+          {showCopyright ? (
+            <div className="footer-copyright">
+              <span>
+                2025 by rinkitou®
+                <br />
+                All rights reserved.
+              </span>
+            </div>
+          ) : (
+            <div className="footer-scroll-indicator">
+              <div className="footer-scroll-textblock">
+                <span className="footer-scroll-text">Scroll down</span>
+                <span className="footer-scroll-text">to see more</span>
+              </div>
+              <div className="footer-scroll-icon">
+                <div className="footer-scroll-arrow"></div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </footer>

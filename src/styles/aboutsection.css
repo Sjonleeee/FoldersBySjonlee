@@ -164,11 +164,12 @@
   top: 50%;
   left: 50%;
   display: flex;
-  flex-direction: column; /* Onder elkaar */
-  align-items: center; /* Horizontaal gecentreerd */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 1.5rem;
   transform: translate(-50%, -50%);
-  z-index: 100; /* Ensure it appears above the container */
+  z-index: 100;
   opacity: 0;
   pointer-events: none;
   margin-left: 55px;
@@ -180,17 +181,22 @@
   backdrop-filter: blur(15px);
   border-radius: 16px;
   padding: 2rem;
-  width: 250px;
+  width: 350px;
   opacity: 0;
-  transform: translateY(100px); /* Start onderaan */
+  transform: translateY(100px);
   transform-style: preserve-3d;
   perspective: 5000px;
   box-shadow: 0 0 30px 2px rgba(255, 255, 255, 0.6),
     0 0 5px 2px rgba(255, 255, 255, 0.3);
   transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+
+  /* CENTER CONTENT */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-/* Na animatie omhoog en fade in, zonder rotatie */
 .skill-card.animated {
   transform: translateY(0);
   opacity: 1;
@@ -221,6 +227,7 @@
   color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   transition: color 0.3s ease;
+  text-align: center; /* Center text in list items */
 }
 
 .skill-item:last-child {
@@ -230,6 +237,9 @@
 .skill-item:hover {
   color: #fff;
 }
+ .skill-list {
+    font-size: 1.1rem;
+  }
 
 /* -----------------------------
    MOBILE RESPONSIVE
@@ -245,7 +255,6 @@
     text-shadow: 3px 1px 2px rgba(0, 0, 0, 0.8);
   }
 
-  /* About description full width on mobile */
   .about-description-container,
   .about-description-content {
     max-width: 100%;
@@ -256,7 +265,7 @@
   }
 
   .about-description-container {
-    top: 70%; /* Adjusted to move closer to the image */
+    top: 70%;
     transform: translateY(-50%);
     text-align: center;
   }
@@ -267,7 +276,6 @@
     padding: 0;
   }
 
-  /* Skill cards stacked en gecentreerd zonder rotatie */
   .skill-cards-container {
     width: 100%;
     position: relative;
@@ -288,15 +296,6 @@
     opacity: 0;
     transform: translateY(100px);
     transition: none !important;
-    box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.6),
-      0 0 5px 2px rgba(255, 255, 255, 0.3);
-    transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
-  }
-
-  .skill-card.animated {
-    transform: translateY(0);
-    opacity: 1;
-    transition: transform 0.4s ease, opacity 0.4s ease;
   }
 
   .skill-card-title {
@@ -307,15 +306,18 @@
   .skill-item {
     font-size: 0.85rem;
   }
+  .skill-list {
+    font-size: 0.85rem;
+  }
 
   .about-image-container {
-    top: 60%; /* Move image slightly down */
+    top: 60%;
     transform: translate(-50%, -50%);
     width: 100%;
   }
 
   .about-title {
-    top: 40%; /* Move title slightly down */
+    top: 40%;
   }
 }
 
@@ -349,30 +351,10 @@
   }
 
   .skill-cards-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-    pointer-events: auto;
-    opacity: 1;
   }
 
   .skill-card {
     width: 350px;
-    padding: 2rem;
-    opacity: 0;
-    transform: translateY(100px);
-    transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
-  }
-
-  .skill-card.animated {
-    transform: translateY(0);
-    opacity: 1;
-    transition: transform 0.4s ease, opacity 0.4s ease;
   }
 }

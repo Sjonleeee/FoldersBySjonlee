@@ -1,16 +1,17 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import folderIcon from "../assets/images/folder.svg";
+import folderIcon from "/assets/images/folder.svg";
 import HeroSection from "./sections/HeroSection";
 import StatsSection from "../components/StatsSection";
 import AboutSection from "../pages/AboutSection";
 import AnimatedFolderStack from "../components/AnimatedFolderStack";
 import ContactSection from "../pages/ContactSection";
 import { createEntranceAnimations } from "./animations/EntranceAnimations";
-import { ONEPAGER_CONFIG } from "../config/animationConfig";
+import { ONEPAGER_CONFIG, FADE_OUT_CONFIG } from "../config/animationConfig";
 import "../styles/onepager.css";
 
+// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 export default function OnePager({
@@ -18,268 +19,367 @@ export default function OnePager({
   footerRef,
   onAnimationsComplete,
 }) {
-  const refs = {
-    section: useRef(null),
-    creative: useRef(null),
-    developer: useRef(null),
-    model: useRef(null),
-    folder: useRef(null),
-    videoSection: useRef(null),
-    aboutSection: useRef(null),
-    latestProjects: useRef(null),
-    companies: useRef(null),
-    // Role labels
-    topLeft: useRef(null),
-    topCenter: useRef(null),
-    topRight: useRef(null),
-    bottomLeft: useRef(null),
-    bottomRight: useRef(null),
-    midRight: useRef(null),
-    bottomCenter: useRef(null),
-  };
+  const sectionRef = useRef(null);
+  const creativeRef = useRef(null);
+  const developerRef = useRef(null);
+  const modelRef = useRef(null);
+  const folderRef = useRef(null);
+  const videoSectionRef = useRef(null);
+  const aboutSectionRef = useRef(null);
+  const latestProjectsRef = useRef(null);
+  const contactSectionRef = useRef(null); // Updated from companiesSectionRef
 
-  const isMobile = window.innerWidth <= 900;
-  const easeOut = "power3.out";
-  const easeInOut = "power3.inOut";
-
-  const fadeMove = (target, y, duration, ease = easeOut) => ({
-    targets: target,
-    vars: { opacity: 0, y, duration, ease },
-  });
+  // Role labels refs
+  const topLeftRef = useRef(null);
+  const topCenterRef = useRef(null);
+  const topRightRef = useRef(null);
+  const bottomLeftRef = useRef(null);
+  const bottomRightRef = useRef(null);
+  const midRightRef = useRef(null);
+  const bottomCenterRef = useRef(null);
 
   useEffect(() => {
+    // Create entrance animations using extracted logic
     const entranceTl = createEntranceAnimations({
-      creativeRef: refs.creative,
-      developerRef: refs.developer,
+      creativeRef,
+      developerRef,
       headerRef,
       footerRef,
-      modelRef: refs.model,
-      topLeftRef: refs.topLeft,
-      topCenterRef: refs.topCenter,
-      topRightRef: refs.topRight,
-      bottomLeftRef: refs.bottomLeft,
-      bottomRightRef: refs.bottomRight,
-      midRightRef: refs.midRight,
-      bottomCenterRef: refs.bottomCenter,
-      aboutSectionRef: refs.aboutSection,
-      latestProjectsRef: refs.latestProjects,
+      modelRef,
+      topLeftRef,
+      topCenterRef,
+      topRightRef,
+      bottomLeftRef,
+      bottomRightRef,
+      midRightRef,
+      bottomCenterRef,
+      aboutSectionRef,
+      latestProjectsRef,
       onComplete: () => {
         onAnimationsComplete();
-        createMainScrollTrigger();
+        createScrollTrigger();
       },
     });
 
-    const createMainScrollTrigger = () => {
-      const mainTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: refs.section.current,
-          start: "top top",
-          end: ONEPAGER_CONFIG.scrollSpace,
-          scrub: ONEPAGER_CONFIG.scrub,
-          pin: true,
-          pinSpacing: false,
-          markers: true,
-        },
-      });
+    // Function to create scroll trigger
+    const createScrollTrigger = () => {
+      let scrollTriggerCreated = false;
 
-      const phases = [
-        // PHASE 1: Hero parallax
-        () => {
-          const tl = gsap
-            .timeline()
-            .set(refs.videoSection.current, { opacity: 0, scale: 0.5 });
+      const handleScroll = () => {
+        if (!scrollTriggerCreated) {
+          scrollTriggerCreated = true;
+
+          // Main timeline for section coordination
+          const mainTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top top",
+              end: ONEPAGER_CONFIG.scrollSpace,
+              scrub: ONEPAGER_CONFIG.scrub,
+              pin: true,
+              pinSpacing: false,
+              markers: true,
+            },
+          });
+
+          // ===== SEPARATE TIMELINES PER SECTION =====
+
+          // PHASE 1: Main Page Parallax Timeline
+          const mainPageTl = gsap.timeline();
+
+          mainPageTl.set(videoSectionRef.current, {
+            opacity: 0,
+            scale: 0.5,
+          });
+
+          const isMobile = window.innerWidth <= 900;
           if (isMobile) {
-            tl.to(refs.creative.current, {
+            mainPageTl.to(creativeRef.current, {
               y: "-100vh",
               duration: 6,
-              ease: easeOut,
-            })
-              .to(
-                refs.developer.current,
-                { y: "100vh", duration: 6, ease: easeOut },
-                "<"
-              )
-              .to(
-                refs.folder.current,
-                { opacity: 0, scale: 0.5, duration: 6, ease: easeOut },
-                "<"
-              );
+              ease: "power3.out",
+              willChange: "transform",
+            });
+
+            mainPageTl.to(
+              developerRef.current,
+              {
+                y: "100vh",
+                duration: 6,
+                ease: "power3.out",
+                willChange: "transform",
+              },
+              "<"
+            );
+
+            mainPageTl.to(
+              folderRef.current,
+              {
+                opacity: 0,
+                scale: 0.5,
+                duration: 6,
+                ease: "power3.out",
+                willChange: "transform, opacity",
+              },
+              "<" // Matches the timing of 'Creative' and 'Developer'
+            );
           } else {
-            tl.to(refs.creative.current, {
+            mainPageTl.to(creativeRef.current, {
               x: "-100vw",
               y: "-20vh",
               duration: 6,
-              ease: easeOut,
-            })
-              .to(
-                refs.developer.current,
-                { x: "100vw", y: "20vh", duration: 6, ease: easeOut },
-                "<"
-              )
-              .to(
-                refs.folder.current,
-                {
-                  opacity: 0,
-                  scale: 0.5,
-                  y: "-30vh",
-                  duration: 6,
-                  ease: easeOut,
-                },
-                "<"
-              );
+              ease: "power3.out",
+              willChange: "transform",
+            });
+
+            mainPageTl.to(
+              developerRef.current,
+              {
+                x: "100vw",
+                y: "20vh",
+                duration: 6,
+                ease: "power3.out",
+                willChange: "transform",
+              },
+              "<"
+            );
+
+            mainPageTl.to(
+              folderRef.current,
+              {
+                opacity: 0,
+                scale: 0.5,
+                y: "-30vh",
+                duration: 6,
+                ease: "power3.out",
+                willChange: "transform, opacity",
+              },
+              "<" // Matches the timing of 'Creative' and 'Developer'
+            );
           }
-          tl.to(
+
+          mainPageTl.to(
             [
-              refs.topLeft.current,
-              refs.topCenter.current,
-              refs.topRight.current,
-              refs.bottomLeft.current,
-              refs.bottomRight.current,
-              refs.midRight.current,
-              refs.bottomCenter.current,
+              topLeftRef.current,
+              topCenterRef.current,
+              topRightRef.current,
+              bottomLeftRef.current,
+              bottomRightRef.current,
+              midRightRef.current,
+              bottomCenterRef.current,
             ],
             {
               opacity: 0,
               y: (i) => (i % 2 === 0 ? "-15vh" : "15vh"),
               duration: 6,
-              ease: easeOut,
+              ease: "power3.out",
               stagger: 0.3,
+              willChange: "transform, opacity",
             },
             "<"
           );
-          return tl;
-        },
-        // PHASE 2: Stats
-        () => {
-          const tl = gsap
-            .timeline()
-            .to(refs.videoSection.current, {
-              opacity: 1,
-              scale: 1,
-              y: "10vh",
-              duration: 6,
-              ease: "power2.out",
-            });
+
+          // PHASE 2: StatsSection Timeline
+          const statsTl = gsap.timeline();
+
+          statsTl.to(videoSectionRef.current, {
+            opacity: 1,
+            scale: 1,
+            y: "10vh",
+            duration: 6,
+            ease: "power2.out",
+          });
+
           if (!isMobile) {
-            tl.to(
+            statsTl.to(
               ".stats-side.left",
-              { x: 0, opacity: 1, duration: 4, ease: "power2.out" },
+              {
+                x: 0,
+                opacity: 1,
+                duration: 4,
+                ease: "power2.out",
+              },
               "<"
-            ).to(
+            );
+
+            statsTl.to(
               ".stats-side.right",
-              { x: 0, opacity: 1, duration: 4, ease: "power2.out" },
+              {
+                x: 0,
+                opacity: 1,
+                duration: 4,
+                ease: "power2.out",
+              },
               "<"
             );
           }
-          return tl
-            .to(
-              ".stats-laptop-stack",
-              { scale: 1, opacity: 1, duration: 4, ease: "power2.out" },
-              "<"
-            )
-            .to(
-              refs.model.current,
-              { opacity: 0, y: "25vh", duration: 6, ease: easeInOut },
-              "<"
-            );
-        },
-        // PHASE 3: Transition to About
-        () =>
-          gsap
-            .timeline()
-            .to(refs.videoSection.current, {
-              opacity: 0,
-              y: "-50vh",
-              duration: 5,
-              ease: easeInOut,
-            })
-            .to(
-              refs.folder.current,
-              { opacity: 0, duration: 2, ease: easeInOut },
-              "<"
-            )
-            .to(
-              refs.aboutSection.current,
-              { opacity: 1, y: 0, duration: 5, ease: easeOut },
-              "+=2"
-            ),
-        // PHASE 4: About placeholder
-        () => gsap.timeline().to({}, { duration: 75 }),
-        // PHASE 5: Fade out About
-        () =>
-          gsap
-            .timeline()
-            .to(refs.aboutSection.current, {
-              opacity: 0,
-              y: "-50vh",
-              duration: 8,
-              ease: easeInOut,
-            }),
-        // PHASE 6: Latest Projects
-        () =>
-          gsap
-            .timeline()
-            .to(refs.latestProjects.current, {
-              opacity: 1,
-              y: 0,
-              duration: 4,
-              ease: easeOut,
-            }),
-        // PHASE 7: Latest Projects placeholder
-        () => gsap.timeline().to({}, { duration: 100 }),
-        // PHASE 8: Fade out Latest Projects
-        () =>
-          gsap
-            .timeline()
-            .to(refs.latestProjects.current, {
-              opacity: 0,
-              y: "-50vh",
-              duration: 6,
-              ease: easeInOut,
-            }),
-        // PHASE 9: Companies Section
-        () =>
-          gsap
-            .timeline()
-            .set(refs.companies.current, {
-              opacity: 0,
-              y: 100,
-              pointerEvents: "none",
-            })
-            .to(refs.companies.current, {
-              opacity: 1,
-              y: 0,
-              pointerEvents: "auto",
-              duration: 6,
-              ease: easeOut,
-            }),
-        // PHASE 10: Final placeholder
-        () => gsap.timeline().to({}, { duration: 10 }),
-      ];
 
-      // Voeg alle fases toe in één loop
-      phases.forEach((makeTl, i) => {
-        mainTl.add(
-          makeTl(),
-          ONEPAGER_CONFIG.delays[Object.keys(ONEPAGER_CONFIG.delays)[i]]
-        );
-      });
+          statsTl.to(
+            ".stats-laptop-stack",
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 4,
+              ease: "power2.out",
+            },
+            "<"
+          );
+
+          statsTl.to(
+            modelRef.current,
+            {
+              opacity: 0,
+              y: "25vh",
+              duration: 6,
+              ease: "power2.inOut",
+            },
+            "<"
+          );
+
+          // PHASE 3: Transition Timeline (StatsSection fade out, AboutSection appear)
+          const transitionTl = gsap.timeline();
+
+          transitionTl.to(videoSectionRef.current, {
+            opacity: 0,
+            y: "-50vh",
+            duration: 5,
+            ease: "power3.inOut",
+          });
+
+          transitionTl.to(
+            folderRef.current,
+            {
+              className: "folder-icon-container",
+              duration: 0,
+            },
+            "<"
+          );
+
+          transitionTl.to(
+            folderRef.current,
+            {
+              opacity: 0,
+              duration: 2,
+              ease: "power3.inOut",
+            },
+            "<"
+          );
+
+          transitionTl.to(
+            aboutSectionRef.current,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 5,
+              ease: "power3.out",
+            },
+            "+=2"
+          );
+
+          // PHASE 4: AboutSection Timeline (handled by AboutSection component)
+          const aboutTl = gsap.timeline();
+          aboutTl.to({}, { duration: 75 }); // Placeholder for AboutSection
+
+          // PHASE 5: AboutSection Fade Out Timeline
+          const aboutFadeOutTl = gsap.timeline();
+
+          aboutFadeOutTl.to(aboutSectionRef.current, {
+            opacity: 0,
+            y: "-50vh",
+            duration: 8, // Langere fade out
+            ease: "power3.inOut", // Soepelere easing
+          });
+
+          // PHASE 6: Latest Projects Timeline
+          const latestProjectsTl = gsap.timeline();
+
+          latestProjectsTl.to(latestProjectsRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 8, // Langere duration voor smooth fade in
+            ease: "power3.out", // Soepelere easing
+          });
+
+          // PHASE 7: Latest Projects Animation Timeline (handled by component)
+          const latestProjectsAnimTl = gsap.timeline();
+          latestProjectsAnimTl.to({}, { duration: 100 }); // Placeholder
+
+          // PHASE 8: Latest Projects Fade Out Timeline
+          const latestProjectsFadeOutTl = gsap.timeline();
+
+          latestProjectsFadeOutTl.to(latestProjectsRef.current, {
+            opacity: 0,
+            y: "-50vh", // Adjusted to move upwards instead of downwards
+            duration: 6, // Keep the smooth duration
+            ease: "power3.inOut", // Smoother easing
+          });
+
+          // PHASE 9: Contact Section Timeline
+          const contactTl = gsap.timeline();
+
+          contactTl.set(contactSectionRef.current, {
+            opacity: 0,
+            y: 100,
+            pointerEvents: "none",
+          });
+
+          contactTl.to(contactSectionRef.current, {
+            opacity: 1,
+            y: 0,
+            pointerEvents: "auto",
+            duration: 6, // Adjusted duration for smoother fade in
+            ease: "power3.out", // Smoother easing
+          });
+
+          // PHASE 10: Final Timeline
+          const finalTl = gsap.timeline();
+          finalTl.to({}, { duration: 10 });
+
+          // ===== ADD ALL TIMELINES TO MAIN TIMELINE =====
+          mainTl.add(mainPageTl, 0);
+          mainTl.add(statsTl, ONEPAGER_CONFIG.delays.afterStats);
+          mainTl.add(transitionTl, ONEPAGER_CONFIG.delays.afterTransition);
+          mainTl.add(aboutTl, ONEPAGER_CONFIG.delays.afterAbout);
+          mainTl.add(aboutFadeOutTl, ONEPAGER_CONFIG.delays.afterAboutFadeOut);
+          mainTl.add(
+            latestProjectsTl,
+            ONEPAGER_CONFIG.delays.afterLatestProjects
+          );
+          mainTl.add(
+            latestProjectsAnimTl,
+            ONEPAGER_CONFIG.delays.afterLatestProjectsAnim
+          );
+          mainTl.add(
+            latestProjectsFadeOutTl,
+            ONEPAGER_CONFIG.delays.afterLatestProjectsFadeOut
+          );
+          mainTl.add(contactTl, ONEPAGER_CONFIG.delays.afterCompanies);
+          mainTl.add(finalTl, ONEPAGER_CONFIG.delays.afterFinal);
+
+          // Remove scroll listener after creating ScrollTrigger
+          window.removeEventListener("scroll", handleScroll);
+        }
+      };
+
+      // Add scroll listener
+      window.addEventListener("scroll", handleScroll);
     };
 
     return () => {
       entranceTl.kill();
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
   return (
-    <section className="folder-hero-outer" ref={refs.section}>
+    <section className="folder-hero-outer" ref={sectionRef}>
       <div className="folder-hero-sticky">
+        {/* Main Content */}
         <div className="main-content-centered">
           {/* Folder icon */}
           <div
             className="folder-icon-container absolute-center pointer-events-none"
-            ref={refs.folder}
+            ref={folderRef}
             style={{ zIndex: 10 }}
           >
             <div className="z-front center-folder">
@@ -292,27 +392,24 @@ export default function OnePager({
             </div>
           </div>
 
-          {/* Hero Section */}
           <div className="folder-page-container relative">
             <section className="main-section flex-column center-content relative">
               <HeroSection
-                creativeRef={refs.creative}
-                developerRef={refs.developer}
-                modelRef={refs.model}
-                topLeftRef={refs.topLeft}
-                topCenterRef={refs.topCenter}
-                topRightRef={refs.topRight}
-                bottomLeftRef={refs.bottomLeft}
-                bottomRightRef={refs.bottomRight}
-                midRightRef={refs.midRight}
-                bottomCenterRef={refs.bottomCenter}
+                creativeRef={creativeRef}
+                developerRef={developerRef}
+                modelRef={modelRef}
+                topLeftRef={topLeftRef}
+                topCenterRef={topCenterRef}
+                topRightRef={topRightRef}
+                bottomLeftRef={bottomLeftRef}
+                bottomRightRef={bottomRightRef}
+                midRightRef={midRightRef}
+                bottomCenterRef={bottomCenterRef}
               />
             </section>
           </div>
-
-          {/* Stats Section */}
           <div
-            ref={refs.videoSection}
+            ref={videoSectionRef}
             style={{
               position: "absolute",
               top: 0,
@@ -326,10 +423,9 @@ export default function OnePager({
           >
             <StatsSection />
           </div>
-
-          {/* About Section */}
+          {/* AboutSection - Hidden initially */}
           <div
-            ref={refs.aboutSection}
+            ref={aboutSectionRef}
             style={{
               position: "absolute",
               top: 0,
@@ -343,10 +439,11 @@ export default function OnePager({
           >
             <AboutSection />
           </div>
+          {/* Video Section - Hidden initially */}
 
-          {/* Latest Projects */}
+          {/* Latest Projects - Hidden initially */}
           <div
-            ref={refs.latestProjects}
+            ref={latestProjectsRef}
             style={{
               position: "absolute",
               top: 0,
@@ -361,9 +458,9 @@ export default function OnePager({
             <AnimatedFolderStack />
           </div>
 
-          {/* Companies Section */}
+          {/* Contact Section - Hidden initially */}
           <div
-            ref={refs.companies}
+            ref={contactSectionRef}
             style={{
               position: "absolute",
               top: 0,
@@ -371,8 +468,8 @@ export default function OnePager({
               width: "100%",
               height: "100%",
               opacity: 0,
-              transform: "translateY(100vh)",
               zIndex: 70,
+              transform: "translateY(100vh)",
             }}
           >
             <ContactSection />

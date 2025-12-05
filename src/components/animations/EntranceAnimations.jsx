@@ -13,7 +13,6 @@ export const createEntranceAnimations = ({
   bottomRightRef,
   midRightRef,
   bottomCenterRef,
-  aboutSectionRef,
   latestProjectsRef,
   onComplete,
 }) => {
@@ -39,8 +38,7 @@ export const createEntranceAnimations = ({
     { opacity: 0 }
   );
 
-  // Set initial states for AboutSection and Latest Projects
-  gsap.set(aboutSectionRef.current, { opacity: 0, y: "100vh" });
+  // Set initial states for Latest Projects
   gsap.set(latestProjectsRef.current, { opacity: 0, y: "100vh" });
 
   // Create entrance timeline

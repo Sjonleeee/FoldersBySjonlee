@@ -4,7 +4,7 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import { FaChevronLeft } from "react-icons/fa";
 import { FiFolder } from "react-icons/fi";
-import folderIcon from "../assets/images/projectFolder.png";
+import folderIcon from "/assets/images/projectFolder.png";
 import { projects } from "../config/projectData.js";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
@@ -16,30 +16,25 @@ const sidebarItems = [
   { label: "Coming soon", key: "coming" },
 ];
 
+// ✅ Alle folders hebben nu expliciet een slug die matcht met je projectData
 const allFolders = [
-  { name: "Volkswagen Project", sup: "®" },
-  { name: "Chrome Magazine", sup: "®" },
-  { name: "Rinkitou Creative Agency", sup: "®" },
-  { name: "Pop Up Store Berlin", sup: "®" },
-  { name: "Clothing Design", sup: "®" },
-  { name: "3D design", sup: "®" },
+  { name: "Volkswagen Project", slug: "volkswagenproject" },
+  { name: "Chrome Magazine", slug: "chromemagazine" },
+  { name: "R/K2©", slug: "r/k2" },
+  { name: "Pop Up Store Berlin", slug: "popupstoreberlin" },
+  { name: "3D Design", slug: "3ddesign" },
 ];
 
 const hiddenFolders = [
-  { name: "Younger me", sup: "®" },
-  { name: "FirstPortfolio", sup: "®" },
-  { name: "Old Designs", sup: "®" },
+  { name: "Younger me", slug: "youngerme" },
+  { name: "First Portfolio", slug: "firstportfolio" },
 ];
 
 const untitledFolders = [
-  { name: "Moodboard 1", sup: "®" },
-  { name: "Untitled 1", sup: "®" },
-  { name: "Untitled 2", sup: "®" },
 ];
 
 const comingSoonFolders = [
-  { name: "rinkitou new collection", sup: "®" },
-  { name: "Letter to future me", sup: "®" },
+  { name: "Letter to future me", slug: "lettertofutureme" },
 ];
 
 function useIsMobile(breakpoint = 900) {
@@ -64,10 +59,7 @@ export default function AllProjectsPage() {
   else if (activeKey === "untitled") foldersToShow = untitledFolders;
   else if (activeKey === "coming") foldersToShow = comingSoonFolders;
 
-  // Helper om slug te maken
-  const getSlug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, "");
-
-  // Project lookup: altijd array -> object
+  // ✅ projectLookup table
   const projectLookup = {};
   projects.forEach((p) => {
     if (p.slug) projectLookup[p.slug] = p;
@@ -76,6 +68,7 @@ export default function AllProjectsPage() {
   const isMobile = useIsMobile(900);
   const navigate = useNavigate();
 
+  // --- Animations ---
   useEffect(() => {
     const header = document.querySelector("header");
     const footer = document.querySelector("footer");
@@ -84,7 +77,6 @@ export default function AllProjectsPage() {
     const folders = document.querySelectorAll(".folder");
     const grid = document.querySelector(".allprojects-grid");
 
-    // Animate header and footer first
     if (header) {
       gsap.fromTo(
         header,
@@ -101,7 +93,6 @@ export default function AllProjectsPage() {
       );
     }
 
-    // Animate sidebar sliding in from the left
     if (sidebar) {
       gsap.fromTo(
         sidebar,
@@ -110,7 +101,6 @@ export default function AllProjectsPage() {
       );
     }
 
-    // Animate top bar sliding in from the top
     if (topBar) {
       gsap.fromTo(
         topBar,
@@ -119,7 +109,6 @@ export default function AllProjectsPage() {
       );
     }
 
-    // Animate folders with a staggered effect
     if (folders.length > 0) {
       gsap.fromTo(
         folders,
@@ -135,7 +124,6 @@ export default function AllProjectsPage() {
       );
     }
 
-    // Animate the grid last
     if (grid) {
       gsap.fromTo(
         grid,
@@ -162,7 +150,7 @@ export default function AllProjectsPage() {
         gsap.fromTo(
           image,
           { opacity: 0 },
-          { opacity: 1, duration: 2, ease: "power2.out", delay: 0.5 } // Increased delay to 0.5
+          { opacity: 1, duration: 2, ease: "power2.out", delay: 0.5 }
         );
       } else {
         if (image) {
@@ -204,11 +192,13 @@ export default function AllProjectsPage() {
     }
   }, [selectedProject]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="allprojects-root">
-      {/* Header (bovenaan, niet meer fixed) */}
       <Header onLogoClick={() => navigate("/")} />
-      {/* Sidebar */}
       <aside className="allprojects-sidebar">
         <nav className="sidebar-menu">
           {sidebarItems.map((item) => (
@@ -219,8 +209,7 @@ export default function AllProjectsPage() {
               key={item.key}
               onClick={(e) => {
                 setActiveKey(item.key);
-                setSelectedProject(null); // reset detail als je wisselt
-                // Scroll het aangeklikte item in beeld op mobiel
+                setSelectedProject(null);
                 if (window.innerWidth <= 900 && e.currentTarget) {
                   e.currentTarget.scrollIntoView({
                     behavior: "smooth",
@@ -240,9 +229,8 @@ export default function AllProjectsPage() {
           ))}
         </nav>
       </aside>
-      {/* Main Content */}
+
       <main className="allprojects-main">
-        {/* Topbar */}
         <header className="allprojects-topbar">
           <div className="topbar-title-row">
             {selectedProject ? (
@@ -270,10 +258,9 @@ export default function AllProjectsPage() {
                 ? "Coming soon"
                 : "Projects"}
             </span>
-            {/* Remove the topbar-icons span completely */}
           </div>
         </header>
-        {/* Project Detail of Grid */}
+
         {selectedProject &&
         (projectLookup[selectedProject] ||
           projectLookup["volkswagenproject"]) ? (
@@ -281,14 +268,6 @@ export default function AllProjectsPage() {
             {isMobile ? (
               <>
                 <div className="project-detail-info">
-                  <h2 style={{ marginTop: 0 }}>
-                    {
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).title
-                    }
-                  </h2>
                   <div className="project-detail-description">
                     {projectLookup[selectedProject]?.body ? (
                       <div className="project-detail-content-design">
@@ -314,59 +293,38 @@ export default function AllProjectsPage() {
                         </div>
                       </div>
                     ) : (
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).description
+                      projectLookup[selectedProject]?.description
                     )}
                   </div>
                 </div>
                 <div className="project-detail-image">
-                  <img
-                    src={
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).image
-                    }
-                    alt={
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).title
-                    }
-                    style={{ width: "100%" }}
-                  />
+                  {projectLookup[selectedProject]?.images?.map((img, index) => (
+                    <div key={index}>
+                      <img
+                        src={img}
+                        alt={projectLookup[selectedProject].title}
+                        loading="lazy"
+                        style={{ width: "100%" }}
+                      />
+                    </div>
+                  ))}
                 </div>
               </>
             ) : (
               <>
                 <div className="project-detail-image">
-                  <img
-                    src={
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).image
-                    }
-                    alt={
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).title
-                    }
-                    style={{ width: "100%" }}
-                  />
+                  {projectLookup[selectedProject]?.images?.map((img, index) => (
+                    <div key={index}>
+                      <img
+                        src={img}
+                        alt={projectLookup[selectedProject].title}
+                        loading="lazy"
+                        style={{ width: "100%" }}
+                      />
+                    </div>
+                  ))}
                 </div>
                 <div className="project-detail-info">
-                  <h2 style={{ marginTop: 0 }}>
-                    {
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).title
-                    }
-                  </h2>
                   <div className="project-detail-description">
                     {projectLookup[selectedProject]?.body ? (
                       <div className="project-detail-content-design">
@@ -392,10 +350,7 @@ export default function AllProjectsPage() {
                         </div>
                       </div>
                     ) : (
-                      (
-                        projectLookup[selectedProject] ||
-                        projectLookup["volkswagenproject"]
-                      ).description
+                      projectLookup[selectedProject]?.description
                     )}
                   </div>
                 </div>
@@ -414,20 +369,12 @@ export default function AllProjectsPage() {
                 <div
                   className="project-folder"
                   key={idx}
-                  onClick={() => {
-                    const slug = getSlug(folder.name);
-                    setSelectedProject(slug);
-                  }}
+                  onClick={() => setSelectedProject(folder.slug)} // ✅ direct slug gebruiken
                   style={{ cursor: "pointer" }}
                 >
                   <img src={folderIcon} alt="Folder" className="folder-img" />
                   <div className="folder-label">
-                    {folder.name.split("\n").map((line, i) => (
-                      <React.Fragment key={i}>
-                        {line}
-                        {i < folder.name.split("\n").length - 1 && <br />}
-                      </React.Fragment>
-                    ))}
+                    {folder.name}
                     {folder.sup && <sup>{folder.sup}</sup>}
                   </div>
                 </div>
@@ -435,7 +382,7 @@ export default function AllProjectsPage() {
             </div>
           </section>
         )}
-        {/* Footer (fixed at bottom) */}
+
         <div
           style={{
             position: "fixed",

@@ -930,6 +930,7 @@ html {
   object-fit: cover;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 /* Header Styles */
 .header {
@@ -1007,4 +1008,10 @@ html {
   z-index: 0;
 }
 =======
+>>>>>>> dev
+=======
+
+.folder-landing {
+  overflow: hidden;
+}
 >>>>>>> dev
